@@ -22,35 +22,36 @@ const nextDocumentFile = path.resolve(`${__dirname}/../../pages/_document.js`);
 createEnvSettingsFile(settingsFilePath);
 getDecorator().then(createDocument);
 
-function removeStyle(htmlInput) {
-  var isValidNode = function() {
+function removeStyleTag(htmlInput) {
+  const isValidNode = function() {
     return true;
   };
-
-  // Order matters. Instructions are processed in the order they're defined
-  var processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
-  var processingInstructions = [
+  const processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
+  const replaceStyleProcessingInstructions = [
     {
-      // Custom <h1> processing
       shouldProcessNode: function(node) {
         return node.parent && node.parent.name && node.parent.name === 'style';
       },
-      processNode: function(node, children) {
-        return ''; //node.data.toUpperCase();
+      processNode: function() {
+        return '';
       }
     },
     {
-      // Anything else
       shouldProcessNode: function(node) {
         return true;
       },
       processNode: processNodeDefinitions.processDefaultNode
     }
   ];
-  var htmlToReactParser = new HtmlToReactParser();
-  var reactComponent = htmlToReactParser.parseWithInstructions(htmlInput, isValidNode, processingInstructions);
-  var reactHtml = ReactDOMServer.renderToStaticMarkup(reactComponent);
-  return reactHtml;
+
+  const htmlToReactParser = new HtmlToReactParser();
+  const reactComponent = htmlToReactParser.parseWithInstructions(
+    htmlInput,
+    isValidNode,
+    replaceStyleProcessingInstructions
+  );
+
+  return ReactDOMServer.renderToStaticMarkup(reactComponent);
 }
 
 function createDocument(decoratorFragments) {
@@ -64,7 +65,7 @@ function createDocument(decoratorFragments) {
   );
 
   fsExtra.ensureFile(nextDocumentFile).then((f) => {
-    let str = removeStyle(html);
+    let str = removeStyleTag(html);
     str = str.replace('<main></main>', '<Main/>');
     str = str.replace('<nextscript></nextscript>', '<NextScript/>');
     fsExtra.writeFileSync(nextDocumentFile, mustache.render(nextTemplate, { html: str }));
