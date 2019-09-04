@@ -10,15 +10,8 @@ author: Frode
 
 ## Tittel 2
 
-```
-const x = "abc";
-```
-
 Some tekst
 
-## Tittel 3
+## An image/SVG
 
-Some more tekst
-
-![alt text](/static/faa-svar.svg =200x200)
-[!INCLUDE[sample include file](../includes/sampleinclude.md)]
+![alt text](/static/faa-svar.svg)
