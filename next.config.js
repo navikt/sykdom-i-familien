@@ -2,7 +2,10 @@ const withLess = require('@zeit/next-less');
 
 module.exports = withLess({
   lessLoaderOptions: {
-    javascriptEnabled: true
+    globalVars: {
+      coreModulePath: '"~"',
+      nodeModulesPath: '"~"'
+    }
   },
   webpack: (config) => {
     config.module.rules.push({
