@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import Markdown from 'react-markdown';
 import matter from 'gray-matter';
 import toc from 'remark-toc';
-import Panel from 'nav-frontend-paneler';
+import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 
 import '../styles.less';
 
@@ -15,7 +15,7 @@ interface Props {}
 const Whoa: React.FunctionComponent<Props> = (props) => (
   <Layout>
     <h2>{parsed.data.title}</h2>
-    <Panel>sdf</Panel>
+    <EkspanderbartPanel tittel="ABC">Dette er panelet</EkspanderbartPanel>
     <hr />
     <Markdown source={parsed.content} plugins={[toc]} />
   </Layout>

@@ -1,8 +1,12 @@
 const withLess = require('@zeit/next-less');
 
+if (typeof require !== 'undefined') {
+  require.extensions['.less'] = () => {};
+}
+
 module.exports = withLess({
   lessLoaderOptions: {
-    globalVars: {
+    modifyVars: {
       coreModulePath: '"~"',
       nodeModulesPath: '"~"'
     }
