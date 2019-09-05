@@ -15,6 +15,7 @@ class MyDocument extends Document {
       NAV_HEADING = '',
       NAV_MENU_RESOURCES = ''
     } = decoratorFragments;
+
     return (
       <html lang="no">
         <head>
@@ -29,6 +30,7 @@ class MyDocument extends Document {
           <div dangerouslySetInnerHTML={{ __html: NAV_SCRIPTS }} />
           <div dangerouslySetInnerHTML={{ __html: NAV_MENU_RESOURCES }} />
           <div dangerouslySetInnerHTML={{ __html: NAV_STYLES }} />
+          <link rel="stylesheet" href="/_next/static/css/styles.chunk.css" />
         </head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: NAV_HEADING }} />
