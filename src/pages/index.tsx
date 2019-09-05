@@ -2,16 +2,17 @@ import React from 'react';
 import Layout from '../components/Layout';
 import Markdown from 'react-markdown';
 import matter from 'gray-matter';
-import toc from 'remark-toc';
 import MarkIt from 'markdown-to-jsx';
 import Test from '../components/Test';
 import visit from 'unist-util-visit';
+import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
+
+import '../styles.less';
 
 const content = require('../content/pleiepenger/kortFortalt.md').default;
 const parsed = matter(content);
 
 const renderers = {
-  // text: () => <span>Data</span>,
   DatePicker: () => <span>Date</span>
 };
 
@@ -19,13 +20,9 @@ interface WhoaProps {}
 
 function linker() {
   function transformer(tree) {
-    console.log(tree);
     visit(tree, 'inlineCode', function(node, index, parent) {
       const value = typeof node.value === 'string' ? (node.value as string) : '';
-      console.log(node.type);
       if (parent.type !== 'link' && /nav [a-z-.]+/.test(node.value as string)) {
-        console.log('match');
-
         parent.children[index] = {
           type: 'link',
           url: 'https://nav.no/' + value.split(' ')[1],
@@ -40,16 +37,18 @@ function linker() {
         };
       }
     });
-
     return tree;
   }
 
   return transformer;
 }
 
-const Whoa: React.FunctionComponent<WhoaProps> = (props) => (
+interface Props {}
+
+const Whoa: React.FunctionComponent<Props> = (props) => (
   <Layout>
     <h2>{parsed.data.title}</h2>
+    <EkspanderbartPanel tittel="ABC">Dette er panelet</EkspanderbartPanel>
     <hr />
     <Markdown source={parsed.content} astPlugins={[linker()]} includeNodeIndex={true} renderers={renderers} />
     <MarkIt

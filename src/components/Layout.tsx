@@ -3,10 +3,9 @@ import React from 'react';
 interface LayoutProps {}
 
 const Layout: React.FunctionComponent<LayoutProps> = (props) => (
-    <div>
-        <img src="/static/logo.png" />
-        ---{props.children}---
-    </div>
+  <div className="page">
+    <div className="contentWrapper">{props.children}</div>
+  </div>
 );
 
 export default Layout;
