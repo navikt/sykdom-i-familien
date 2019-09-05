@@ -20,14 +20,16 @@
   "dependencies": {
     "dom-parser": "^0.1.6",
     "jsdom": "^15.1.1",
+    "markdown-to-jsx": "^6.10.3",
     "next": "^9.0.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-emoji-render": "^1.0.0",
-    "react-markdown": "^4.2.1",
+    "react-markdown": "^4.2.2",
     "remark-toc": "^6.0.0",
     "remarkable": "^2.0.0",
-    "snyk": "^1.223.0"
+    "snyk": "^1.223.0",
+    "unist-util-visit": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.2",
