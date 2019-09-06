@@ -16,32 +16,32 @@ const renderers = {
   DatePicker: () => <span>Date</span>
 };
 
-interface WhoaProps {}
+interface Props {}
 
-function linker() {
-  function transformer(tree) {
-    visit(tree, 'inlineCode', function(node, index, parent) {
-      const value = typeof node.value === 'string' ? (node.value as string) : '';
-      if (parent.type !== 'link' && /nav [a-z-.]+/.test(node.value as string)) {
-        parent.children[index] = {
-          type: 'link',
-          url: 'https://nav.no/' + value.split(' ')[1],
-          children: [
-            {
-              type: node.type,
-              value: 'abcv',
-              position: node.position
-            }
-          ],
-          position: node.position
-        };
-      }
-    });
-    return tree;
-  }
+// function linker() {
+//   function transformer(tree) {
+//     visit(tree, 'inlineCode', function(node, index, parent) {
+//       const value = typeof node.value === 'string' ? (node.value as string) : '';
+//       if (parent.type !== 'link' && /nav [a-z-.]+/.test(node.value as string)) {
+//         parent.children[index] = {
+//           type: 'link',
+//           url: 'https://nav.no/' + value.split(' ')[1],
+//           children: [
+//             {
+//               type: node.type,
+//               value: 'abcv',
+//               position: node.position
+//             }
+//           ],
+//           position: node.position
+//         };
+//       }
+//     });
+//     return tree;
+//   }
 
-  return transformer;
-}
+//   return transformer;
+// }
 
 interface Props {}
 
@@ -50,7 +50,7 @@ const Whoa: React.FunctionComponent<Props> = (props) => (
     <h2>{parsed.data.title}</h2>
     <EkspanderbartPanel tittel="ABC">Dette er panelet</EkspanderbartPanel>
     <hr />
-    <Markdown source={parsed.content} astPlugins={[linker()]} includeNodeIndex={true} renderers={renderers} />
+    <Markdown source={parsed.content} renderers={renderers} />
     <MarkIt
       children={parsed.content}
       options={{
