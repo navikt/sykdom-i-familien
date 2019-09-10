@@ -1,6 +1,5 @@
 import Document, { Main, NextScript } from 'next/document';
 import fetch from 'node-fetch';
-import { decoratorFragments } from '../decorator/_fragments';
 import { NAVDecoratorFragments } from '../types/NAVDecoratorFragments';
 
 const jsdom = require('jsdom');
@@ -23,6 +22,7 @@ async function getDecoratorFragments() {
     NAV_FOOTER: document.getElementById('footer-withmenu').innerHTML,
     NAV_MENU_RESOURCES: document.getElementById('megamenu-resources').innerHTML
   };
+  console.log('NAV decorator fragments received');
   return decoratorFragments;
 }
 

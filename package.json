@@ -19,6 +19,7 @@
   "snyk": true,
   "dependencies": {
     "@zeit/next-less": "^1.0.1",
+    "babel-plugin-styled-components": "^1.10.6",
     "dom-parser": "^0.1.6",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.1.1",
@@ -43,6 +44,7 @@
     "remark-toc": "^6.0.0",
     "remarkable": "^2.0.0",
     "snyk": "^1.223.0",
+    "styled-components": "^4.3.2",
     "unist-util-visit": "^2.0.0"
   },
   "devDependencies": {

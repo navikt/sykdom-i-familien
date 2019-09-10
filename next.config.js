@@ -1,7 +1,7 @@
-const withLess = require("@zeit/next-less");
+const withLess = require('@zeit/next-less');
 
-if (typeof require !== "undefined") {
-  require.extensions[".less"] = () => {};
+if (typeof require !== 'undefined') {
+  require.extensions['.less'] = () => {};
 }
 
 module.exports = withLess({
@@ -11,10 +11,10 @@ module.exports = withLess({
       nodeModulesPath: '"~"'
     }
   },
-  webpack: config => {
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,
-      use: "raw-loader"
+      use: 'raw-loader'
     });
     return config;
   }

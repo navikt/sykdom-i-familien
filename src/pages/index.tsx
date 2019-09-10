@@ -1,47 +1,20 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import Markdown from 'react-markdown';
 import matter from 'gray-matter';
 import MarkIt from 'markdown-to-jsx';
 import Test from '../components/Test';
-import visit from 'unist-util-visit';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
-
-import '../styles.less';
+import styled from 'styled-components';
 
 const content = require('../content/pleiepenger/kortFortalt.md').default;
 const parsed = matter(content);
 
-const renderers = {
-  DatePicker: () => <span>Date</span>
-};
+import '../styles.less';
 
-interface Props {}
-
-// function linker() {
-//   function transformer(tree) {
-//     visit(tree, 'inlineCode', function(node, index, parent) {
-//       const value = typeof node.value === 'string' ? (node.value as string) : '';
-//       if (parent.type !== 'link' && /nav [a-z-.]+/.test(node.value as string)) {
-//         parent.children[index] = {
-//           type: 'link',
-//           url: 'https://nav.no/' + value.split(' ')[1],
-//           children: [
-//             {
-//               type: node.type,
-//               value: 'abcv',
-//               position: node.position
-//             }
-//           ],
-//           position: node.position
-//         };
-//       }
-//     });
-//     return tree;
-//   }
-
-//   return transformer;
-// }
+const StyledButton = styled.div({
+  padding: '20px',
+  color: 'blue'
+});
 
 interface Props {}
 
@@ -49,8 +22,7 @@ const Whoa: React.FunctionComponent<Props> = (props) => (
   <Layout>
     <h2>{parsed.data.title}</h2>
     <EkspanderbartPanel tittel="ABC">Dette er panelet</EkspanderbartPanel>
-    <hr />
-    <Markdown source={parsed.content} renderers={renderers} />
+    <StyledButton>sdf</StyledButton>
     <MarkIt
       children={parsed.content}
       options={{
@@ -61,8 +33,6 @@ const Whoa: React.FunctionComponent<Props> = (props) => (
         }
       }}
     />
-
-    <hr />
   </Layout>
 );
 
