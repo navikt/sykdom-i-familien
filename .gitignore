@@ -3,4 +3,4 @@
 /.vscode
 /node_modules
 .DS_Store
-/src/.next
+/src/.next/*

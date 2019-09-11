@@ -1,31 +1,55 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import matter from 'gray-matter';
+import matter, { GrayMatterFile } from 'gray-matter';
 import MarkIt from 'markdown-to-jsx';
-import Test from '../components/Test';
-import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
-import styled from 'styled-components';
 
-const content = require('../content/pleiepenger/kortFortalt.md').default;
-const parsed = matter(content);
+const pleiepenger = require('../content/pleiepenger/pleiepenger.md').default;
 
 import '../styles.less';
 
-const Whoa: React.FunctionComponent<{}> = () => (
-  <Layout>
-    <h2>{parsed.data.title}</h2>
-    <EkspanderbartPanel tittel="ABC">Dette er panelet</EkspanderbartPanel>
-    <MarkIt
-      children={parsed.content}
-      options={{
-        overrides: {
-          DatePicker: {
-            component: Test
-          }
-        }
-      }}
-    />
-  </Layout>
-);
+import { DocumentContext } from 'next/document';
+
+interface Props {
+  sections: {
+    content: GrayMatterFile<any>;
+  };
+}
+
+class Whoa extends React.Component<Props> {
+  static async getInitialProps(ctx: DocumentContext) {
+    const glob = require('glob');
+
+    const keys = glob.sync('./src/content/pleiepenger/**.*');
+    var sections = {};
+    for (let entry in keys) {
+      const filename = keys[entry].split('/').pop();
+      const fileContent = require('../content/pleiepenger/' + filename).default;
+      const slug = filename
+        .replace(/^.*[\\\/]/, '')
+        .split('.')
+        .slice(0, -1)
+        .join('.');
+
+      sections[slug] = matter(fileContent);
+    }
+    return { sections };
+  }
+
+  render() {
+    // const { sections } = this.props;
+    // const content: GrayMatterFile<any>[] = Object.keys(sections).map((key) => sections[key]);
+    return (
+      <Layout>
+        <MarkIt children={matter(pleiepenger).content} />
+        {/* {content.map((c) => (
+          <>
+            {c.data.title}
+            <MarkIt children={c.content} />
+          </>
+        ))} */}
+      </Layout>
+    );
+  }
+}
 
 export default Whoa;
