@@ -1,12 +1,37 @@
-import Document, { Main, NextScript } from 'next/document';
+import Document, { Main, NextScript, DocumentContext } from 'next/document';
 import { decoratorFragments } from '../decorator/_fragments';
+import { ServerStyleSheet } from 'styled-components';
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
-  }
+  static async getInitialProps(ctx: DocumentContext) {
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
+    const transform = (App) => {
+      return sheet.collectStyles(<App />);
+    };
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />)
+        });
 
+      const initialProps = await Document.getInitialProps(ctx);
+      const page = ctx.renderPage(transform as any);
+
+      return {
+        ...page,
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        )
+      };
+    } finally {
+      sheet.seal();
+    }
+  }
   render() {
     const {
       NAV_SCRIPTS = '',
@@ -30,6 +55,7 @@ class MyDocument extends Document {
           <div dangerouslySetInnerHTML={{ __html: NAV_MENU_RESOURCES }} />
           <div dangerouslySetInnerHTML={{ __html: NAV_STYLES }} />
           <link rel="stylesheet" href="/_next/static/css/styles.chunk.css" />
+          {this.props.styles}
         </head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: NAV_HEADING }} />
