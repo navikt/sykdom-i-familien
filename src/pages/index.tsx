@@ -11,18 +11,10 @@ const parsed = matter(content);
 
 import '../styles.less';
 
-const StyledButton = styled.div({
-  padding: '20px',
-  color: 'blue'
-});
-
-interface Props {}
-
-const Whoa: React.FunctionComponent<Props> = (props) => (
+const Whoa: React.FunctionComponent<{}> = () => (
   <Layout>
     <h2>{parsed.data.title}</h2>
     <EkspanderbartPanel tittel="ABC">Dette er panelet</EkspanderbartPanel>
-    <StyledButton>sdf</StyledButton>
     <MarkIt
       children={parsed.content}
       options={{
