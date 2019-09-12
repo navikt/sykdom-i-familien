@@ -5,6 +5,7 @@ import MarkdownToJsx from 'markdown-to-jsx';
 import { DocumentContext } from 'next/document';
 import remark from 'remark';
 import visit from 'unist-util-visit';
+import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 
 import slugify from 'slugify';
 
@@ -56,9 +57,12 @@ class Whoa extends React.Component<Props> {
         });
       }
     });
+
     return (
       <Layout>
-        <MarkdownToJsx>{allContent}</MarkdownToJsx>
+        <EkspanderbartPanel apen={false} tittel="aSd" tittelProps="innholdstittel">
+          <MarkdownToJsx>{allContent}</MarkdownToJsx>
+        </EkspanderbartPanel>
       </Layout>
     );
   }

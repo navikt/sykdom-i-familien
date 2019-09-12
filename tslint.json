@@ -4,6 +4,9 @@
     "indent": [true, "spaces", 4],
     "member-access": false,
     "interface-name": [true, "never-prefix"],
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strict-type-predicates": true,
     "jsx-no-lambda": false,
     "no-submodule-imports": false,
     "object-literal-sort-keys": false,
@@ -14,9 +17,10 @@
     "no-var-requires": false,
     "no-implicit-dependencies": false,
     "no-empty-interface": false,
-    "no-switch-case-fall-through": true,
     "ordered-imports": false,
     "prefer-object-spread": true,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "jsdoc-format": false,
+    "prefer-conditional-expression": false
   }
 }
