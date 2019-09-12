@@ -1,4 +1,4 @@
-import Document, { Main, NextScript, DocumentContext } from 'next/document';
+import Document, { Main, Head, Html, NextScript, DocumentContext } from 'next/document';
 import { decoratorFragments } from '../decorator/_fragments';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -41,9 +41,8 @@ class MyDocument extends Document {
       NAV_MENU_RESOURCES = ''
     } = decoratorFragments;
     return (
-      <html lang="no">
-        <head>
-          <title>Sykt barn - www.nav.no</title>
+      <Html lang="no">
+        <Head>
           <meta charSet="utf-8" />
           <meta name="description" content="Informasjon om ytelser en kan få ved sykt barn." />
           <meta property="og:title" content="Sykt barn - www.nav.no" />
@@ -54,9 +53,7 @@ class MyDocument extends Document {
           <div dangerouslySetInnerHTML={{ __html: NAV_SCRIPTS }} />
           <div dangerouslySetInnerHTML={{ __html: NAV_MENU_RESOURCES }} />
           <div dangerouslySetInnerHTML={{ __html: NAV_STYLES }} />
-          <link rel="stylesheet" href="/_next/static/css/styles.chunk.css" />
-          {this.props.styles}
-        </head>
+        </Head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: NAV_HEADING }} />
           <div role="document">
@@ -66,7 +63,7 @@ class MyDocument extends Document {
           <script type="text/javascript" src="/static/settings.js"></script>
           <div dangerouslySetInnerHTML={{ __html: NAV_FOOTER }} />
         </body>
-      </html>
+      </Html>
     );
   }
 }

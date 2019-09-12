@@ -6,6 +6,7 @@ if (typeof require !== 'undefined') {
 
 module.exports = withLess({
   lessLoaderOptions: {
+    url: false,
     modifyVars: {
       coreModulePath: '"~"',
       nodeModulesPath: '"~"'
