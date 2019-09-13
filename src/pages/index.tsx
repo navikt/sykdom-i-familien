@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../components/Layout';
+import Layout from '../components/infosider/Infoside';
 import matter, { GrayMatterFile } from 'gray-matter';
 import MarkdownToJsx from 'markdown-to-jsx';
 import { DocumentContext } from 'next/document';
@@ -11,12 +11,19 @@ import { IntlProvider } from 'react-intl';
 
 import '../styles/styles.less';
 import { Panel } from 'nav-frontend-paneler';
+import Box from '../components/box/Box';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 interface Props {
-  sections: {
-    content: GrayMatterFile<any>;
-  };
+  content: GrayMatterFile<any>[];
+  headers: ContentHeader[];
 }
+
+interface ContentHeader {
+  slug: string;
+  title: string;
+}
+[];
 
 class App extends React.Component<Props> {
   static async getInitialProps(ctx: DocumentContext) {
@@ -24,6 +31,7 @@ class App extends React.Component<Props> {
 
     const keys = glob.sync('./src/content/pleiepenger/parts/*.md');
     var sections = {};
+
     for (let entry in keys) {
       const filename = keys[entry].split('/').pop();
       const fileContent = require('../content/pleiepenger/parts/' + filename).default;
@@ -32,24 +40,17 @@ class App extends React.Component<Props> {
         .split('.')
         .slice(0, -1)
         .join('.');
-
       sections[slug] = matter(fileContent);
     }
 
-    return { sections };
-  }
-
-  render() {
-    const { sections } = this.props;
     const content: GrayMatterFile<any>[] = Object.keys(sections).map((key) => sections[key]);
     let allContent = '';
     content.forEach((c) => {
-      allContent += c.content;
+      allContent += `\n${c.content}`;
     });
 
     const tree = remark().parse(allContent);
-    const headers: { slug: string; title: string }[] = [];
-
+    const headers: ContentHeader[] = [];
     visit(tree, 'heading', (node) => {
       if (node.depth === 2) {
         const title = (node.children as any)[0].value;
@@ -59,15 +60,37 @@ class App extends React.Component<Props> {
         });
       }
     });
+    return { content, headers };
+  }
 
+  render() {
+    const { content, headers } = this.props;
     return (
       <IntlProvider locale={'no'}>
         <Layout>
           <MedInnholdsfortegnelse sections={headers.map((h) => h.title)}>
             <div className="infosider__article">
-              <Panel>
-                <MarkdownToJsx>{allContent}</MarkdownToJsx>
-              </Panel>
+              {content.map((c, index) => (
+                <Box padBottom="l" key={index}>
+                  <section>
+                    <Panel>
+                      <MarkdownToJsx
+                        options={{
+                          overrides: {
+                            h2: {
+                              component: Systemtittel,
+                              props: {
+                                tag: 'h2'
+                              }
+                            }
+                          }
+                        }}>
+                        {c.content}
+                      </MarkdownToJsx>
+                    </Panel>
+                  </section>
+                </Box>
+              ))}
             </div>
           </MedInnholdsfortegnelse>
         </Layout>

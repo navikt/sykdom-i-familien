@@ -96,12 +96,14 @@ class Seksjonslenker extends React.Component<Props, State> {
   //   this.setState(nextState);
   // };
 
-  render = () =>
-    this.props.sections.map((section, index) => {
+  render = () => {
+    const split = Math.round(this.props.sections.length / 2);
+    return this.props.sections.map((section, index) => {
       return (
-        <Normaltekst className={cls.element('lenke')} key={section}>
+        <Normaltekst className={cls.element('lenke', index < split ? 'right' : 'left')} key={section}>
           <WithLink
             url={`#${section}`}
+
             // className={this.state.currentSection === index ? cls.element('currentSection') : ''}
           >
             {section}
@@ -109,6 +111,7 @@ class Seksjonslenker extends React.Component<Props, State> {
         </Normaltekst>
       );
     });
+  };
 }
 
 export default injectIntl(Seksjonslenker);

@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../components/Layout';
+import Layout from '../components/infosider/Infoside';
 import matter, { GrayMatterFile } from 'gray-matter';
 import MarkIt from 'markdown-to-jsx';
 
@@ -37,19 +37,11 @@ class Whoa extends React.Component<Props> {
   }
 
   render() {
-    // const { sections } = this.props;
-    // const content: GrayMatterFile<any>[] = Object.keys(sections).map((key) => sections[key]);
     const content = matter(pleiepenger).content;
 
     return (
       <Layout>
         <MarkIt children={content} />
-        {/* {content.map((c) => (
-          <>
-            {c.data.title}
-            <MarkIt children={c.content} />
-          </>
-        ))} */}
       </Layout>
     );
   }
