@@ -5,11 +5,12 @@ import MarkdownToJsx from 'markdown-to-jsx';
 import { DocumentContext } from 'next/document';
 import remark from 'remark';
 import visit from 'unist-util-visit';
-import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
-
+import MedInnholdsfortegnelse from '../components/infosider/MedInnholdsfortegnelse';
 import slugify from 'slugify';
+import { IntlProvider } from 'react-intl';
 
-import '../styles.less';
+import '../styles/styles.less';
+import { Panel } from 'nav-frontend-paneler';
 
 interface Props {
   sections: {
@@ -17,7 +18,7 @@ interface Props {
   };
 }
 
-class Whoa extends React.Component<Props> {
+class App extends React.Component<Props> {
   static async getInitialProps(ctx: DocumentContext) {
     const glob = require('glob');
 
@@ -48,9 +49,10 @@ class Whoa extends React.Component<Props> {
 
     const tree = remark().parse(allContent);
     const headers: { slug: string; title: string }[] = [];
+
     visit(tree, 'heading', (node) => {
       if (node.depth === 2) {
-        const title = node.children[0].value;
+        const title = (node.children as any)[0].value;
         headers.push({
           slug: slugify(title, { lower: true, remove: /\?/ }),
           title
@@ -59,13 +61,19 @@ class Whoa extends React.Component<Props> {
     });
 
     return (
-      <Layout>
-        <EkspanderbartPanel apen={false} tittel="aSd" tittelProps="innholdstittel">
-          <MarkdownToJsx>{allContent}</MarkdownToJsx>
-        </EkspanderbartPanel>
-      </Layout>
+      <IntlProvider locale={'no'}>
+        <Layout>
+          <MedInnholdsfortegnelse sections={headers.map((h) => h.title)}>
+            <div className="infosider__article">
+              <Panel>
+                <MarkdownToJsx>{allContent}</MarkdownToJsx>
+              </Panel>
+            </div>
+          </MedInnholdsfortegnelse>
+        </Layout>
+      </IntlProvider>
     );
   }
 }
 
-export default Whoa;
+export default App;

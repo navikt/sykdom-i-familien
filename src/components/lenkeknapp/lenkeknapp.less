@@ -1,0 +1,21 @@
+@import '../../styles/assets.less';
+
+a.lenkeknapp {
+    padding: 0 1rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: @button-height;
+    justify-content: center;
+    width: 100%;
+
+    &:focus {
+        .buttonFocus();
+    }
+
+    span {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
