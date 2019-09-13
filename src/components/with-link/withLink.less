@@ -1,0 +1,33 @@
+@import '../../styles/assets.less';
+
+.withLink {
+    color: #0067c5;
+    text-decoration: none;
+    border-bottom: 1px solid lightgray;
+
+    &:hover {
+        border-bottom-color: @navBla;
+    }
+
+    &__icon {
+        margin-left: 0.5rem;
+        position: relative;
+    }
+
+    &--disabled {
+        color: gray;
+        text-shadow: 1px 1px 0px #fff;
+
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+
+    &__noStyling {
+        border-bottom: none;
+    }
+}
+
+.anchorLink {
+    cursor: pointer;
+}
