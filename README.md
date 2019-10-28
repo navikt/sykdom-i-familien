@@ -1,6 +1,6 @@
-# Sykt barn - inngang
+# Sykdom i familien - inngang
 
-Kildekoden til ny inngang for dem med sykt barn på nav.no
+Kildekoden til informasjon vedrørende området sykdom i familien på nav.no
 
 ## Icon License
 

@@ -1,0 +1,24 @@
+{
+  "root": true,
+  "project": {
+    "name": "Sykdom i familien"
+  },
+  "api": {
+    "projectId": "8ux9tyb9",
+    "dataset": "production"
+  },
+  "plugins": [
+    "@sanity/base",
+    "@sanity/components",
+    "@sanity/default-layout",
+    "@sanity/default-login",
+    "@sanity/desk-tool",
+    "inline-svg"
+  ],
+  "parts": [
+    {
+      "name": "part:@sanity/base/schema",
+      "path": "./schemas/schema.js"
+    }
+  ]
+}
