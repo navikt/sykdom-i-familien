@@ -80,8 +80,10 @@
         "@types/react-aria-menubutton": "^6.2.2",
         "@types/react-helmet": "^5.0.10",
         "@types/react-intl": "^2.3.18",
+        "@types/svg-parser": "^2.0.1",
         "babel-preset-gatsby": "^0.2.13",
         "eslint": "^6.5.1",
+        "hast-util-to-html": "^6.0.2",
         "nav-frontend-chevron-style": "^0.3.5",
         "nav-frontend-ekspanderbartpanel-style": "^0.3.21",
         "nav-frontend-lenkepanel-style": "^0.3.26",
@@ -91,6 +93,7 @@
         "nav-frontend-veileder-style": "^2.0.9",
         "nav-frontend-veilederpanel-style": "^0.0.20",
         "prettier": "^1.18.2",
+        "svg-parser": "^2.0.2",
         "ts-node": "^8.4.1"
     },
     "repository": {

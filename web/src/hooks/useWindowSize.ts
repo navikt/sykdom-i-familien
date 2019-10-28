@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { isBrowser } from '../utils/build';
 
 const getWindowSize = () => {
-    return {
-        height: window.innerHeight,
-        width: window.innerWidth
-    };
+    return isBrowser()
+        ? {
+              height: window.innerHeight,
+              width: window.innerWidth
+          }
+        : { width: 1000, height: 600 };
 };
 
 const useWindowSize = () => {
