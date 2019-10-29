@@ -34,53 +34,45 @@ const BlockRenderer = (props: any) => {
     );
 };
 
-const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({ content, intl }) => (
-    <BlockContent
-        blocks={content}
-        serializers={{
-            types: {
-                illustration: (props: { node: SanityIllustrationSchema }) => {
-                    return (
-                        <Box padBottom="l">
-                            <SanityIllustration illustration={props.node} inline={false} />
-                        </Box>
-                    );
-                },
-                // localeContent: (props: { node: SanityLocaleContentSchema }) => {
-                //     const title = getSanityContentWithLocale(props.node.title, intl.locale);
-                //     const contentBlocks = getSanityContentWithLocale(props.node.content, intl.locale);
-                //     return (
-                //         <section>
-                //             <Undertittel>{title}</Undertittel>
-                //             <BlockContent blocks={contentBlocks} />
-                //         </section>
-                //     );
-                // },
-                expandableContent: (props: { node: SanityExpandableContentSchema }) => {
-                    const title = getSanityContentWithLocale(props.node.title, intl.locale);
-                    const contentBlocks = getSanityContentWithLocale(props.node.content, intl.locale);
-                    return (
-                        <Ekspanderbartpanel tittel={title} border={true}>
-                            <BlockContent blocks={contentBlocks} />
-                        </Ekspanderbartpanel>
-                    );
-                },
-                veilederpanel: ({ node }: any) => {
-                    const contentBlocks = getSanityContentWithLocale(node.content, intl.locale);
-                    return (
-                        <Veileder ansikt={node.face || 'glad'} fargetema={node.color || 'normal'}>
-                            <BlockContent blocks={contentBlocks} />
-                        </Veileder>
-                    );
-                },
-                groupedContent: ({ node }: { node: SanityGroupedContentSchema }) => <SanityTabs node={node} />,
-                titleAndText: ({ node }: any) => {
-                    return <SanityTitleAndText node={node} />;
-                },
-                block: BlockRenderer
-            }
-        }}
-    />
-);
-
+const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({ content, intl }) => {
+    console.log(content);
+    return (
+        <BlockContent
+            blocks={content}
+            serializers={{
+                types: {
+                    illustration: (props: { node: SanityIllustrationSchema }) => {
+                        return (
+                            <Box padBottom="l">
+                                <SanityIllustration illustration={props.node} inline={false} />
+                            </Box>
+                        );
+                    },
+                    expandableContent: (props: { node: SanityExpandableContentSchema }) => {
+                        const title = getSanityContentWithLocale(props.node.title, intl.locale);
+                        const contentBlocks = getSanityContentWithLocale(props.node.content, intl.locale);
+                        return (
+                            <Ekspanderbartpanel tittel={title} border={true}>
+                                <BlockContent blocks={contentBlocks} />
+                            </Ekspanderbartpanel>
+                        );
+                    },
+                    veilederpanel: ({ node }: any) => {
+                        const contentBlocks = getSanityContentWithLocale(node.content, intl.locale);
+                        return (
+                            <Veileder ansikt={node.face || 'glad'} fargetema={node.color || 'normal'}>
+                                <BlockContent blocks={contentBlocks} />
+                            </Veileder>
+                        );
+                    },
+                    groupedContent: ({ node }: { node: SanityGroupedContentSchema }) => <SanityTabs node={node} />,
+                    titleAndText: ({ node }: any) => {
+                        return <SanityTitleAndText node={node} />;
+                    },
+                    block: BlockRenderer
+                }
+            }}
+        />
+    );
+};
 export default injectIntl(SanityBlockContent);

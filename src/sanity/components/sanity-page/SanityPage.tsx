@@ -36,6 +36,9 @@ interface Props {
 }
 
 export const extractSectionData = (data: any[]): SectionContent[] => {
+    if (!data) {
+        return [];
+    }
     return data.map((section) => {
         const title = getSanityContentWithLocale(section.title, 'nb');
         return {
@@ -83,9 +86,11 @@ const YtelsePage: React.FunctionComponent<Props> = ({ data, location, intl }: Pr
                             undefined
                         )
                     }>
-                    <Ingress className="inShortList" tag="div">
-                        <BlockContent blocks={inShort} />
-                    </Ingress>
+                    {inShort && (
+                        <Ingress className="inShortList" tag="div">
+                            <BlockContent blocks={inShort} />
+                        </Ingress>
+                    )}
                 </PanelWithTitleAndIllustration>
             </Box>
             {sections.map((section) => (
