@@ -23,7 +23,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({ tabs }: TabsProps) => {
     const [selectedTab, selectTab] = useState({ index: 0 });
 
     return (
-        <div className={bem.class}>
+        <div className={bem.block}>
             <div role="tablist" className={bem.element('tabs')}>
                 {tabs.map((tab) => (
                     <TabButton

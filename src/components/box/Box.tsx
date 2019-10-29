@@ -23,7 +23,7 @@ const Box: React.FunctionComponent<BoxProps> = ({
     children
 }) => {
     const classNames = bem.classNames(
-        bem.class,
+        bem.block,
         bem.modifierConditional(margin, margin !== undefined),
         bem.modifierConditional(`bottom-${padBottom}`, padBottom !== undefined),
         bem.modifierConditional(`horizontal-${padHorizontal}`, padHorizontal !== undefined),
