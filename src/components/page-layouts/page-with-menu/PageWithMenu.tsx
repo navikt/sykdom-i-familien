@@ -8,6 +8,7 @@ import './pageWithMenu.less';
 import { RouterProps } from '@reach/router';
 import Breadcrumbs from '../../breadcrumbs/Breadcrumbs';
 import Page from '../../page/Page';
+import { isBrowser } from '../../../utils/build';
 
 export interface MenuItem {
     label: string;
@@ -39,9 +40,11 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({ menuItems,
                     </aside>
                 </MediaQuery>
                 <div>
-                    <div className={bem.element('breadcrumbs')}>
-                        <Breadcrumbs path={location.pathname} />
-                    </div>
+                    {isBrowser() && (
+                        <div className={bem.element('breadcrumbs')}>
+                            <Breadcrumbs path={location.pathname} />
+                        </div>
+                    )}
                     <article className={bem.element('article')}>{children}</article>
                 </div>
             </div>
