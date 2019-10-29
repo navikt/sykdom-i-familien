@@ -2,31 +2,31 @@ import React from 'react';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import BlockContent from '@sanity/block-content-to-react';
 import { Locale } from '../../../types/locale';
-import Box from '../../box/Box';
-import PanelWithTitleAndIllustration from '../../panel-with-title-and-illustration/PanelWithTitleAndIllustration';
+import Box from '../../../components/box/Box';
+import PanelWithTitleAndIllustration from '../../../components/panel-with-title-and-illustration/PanelWithTitleAndIllustration';
 import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
-import { SanityIllustrationNode } from '../../../types/sanity-schema/sanityIllustrationNode';
-import CircleIllustration from '../../circle-illustration/CircleIllustration';
+import CircleIllustration from '../../../components/circle-illustration/CircleIllustration';
 import styles from '../../../styles';
 import { Ingress } from 'nav-frontend-typografi';
 import { WindowLocation } from '@reach/router';
-import Page from '../../page/Page';
-import StickyMenu from '../../sticky-menu/StickyMenu';
+import Page from '../../../components/page/Page';
+import StickyMenu from '../../../components/sticky-menu/StickyMenu';
 import slugify from 'slugify';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
+import { SanityIllustrationSchema } from '../../schema-types';
 
 export interface YtelsePageData {
     title: string;
     inShort: string;
     sections: SectionContent[];
-    illustration: SanityIllustrationNode;
+    illustration: SanityIllustrationSchema;
 }
 
 interface SectionContent {
     _key: string;
     slug: string;
     title: string;
-    illustration: SanityIllustrationNode;
+    illustration: SanityIllustrationSchema;
     content?: string;
 }
 

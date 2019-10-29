@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouterProps } from '@reach/router';
 import { graphql } from 'gatsby';
-import YtelsePage from '../../components/sanity/sanity-page/SanityPage';
+import YtelsePage from '../../sanity/components/sanity-page/SanityPage';
 
 export default (props: RouterProps & any) => {
     const { data, location } = props;

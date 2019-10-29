@@ -1,7 +1,7 @@
 import React from 'react';
 import CircleMask from '../circle-mask/CircleMask';
-import SanityInlineSVG from '../sanity/sanity-inline-svg/SanityInlineSVG';
-import { SanityIllustrationNode } from '../../types/sanity-schema/sanityIllustrationNode';
+import SanityIllustration from '../../sanity/components/sanity-illustration/SanityIllustrationContent';
+import { SanityIllustrationNode } from '../../sanity/types/sanityIllustrationNode';
 
 interface Props {
     illustration: SanityIllustrationNode;
@@ -15,7 +15,7 @@ const CircleIllustration: React.FunctionComponent<Props> = ({
     size = '6rem'
 }: Props) => (
     <CircleMask size={size} valign="bottom" color={backgroundColor}>
-        <SanityInlineSVG illustration={illustration} width={size} />
+        <SanityIllustration illustration={illustration} width={size} />
     </CircleMask>
 );
 

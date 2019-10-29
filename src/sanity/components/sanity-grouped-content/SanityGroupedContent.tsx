@@ -3,21 +3,19 @@ import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityConte
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import { Locale, defaultLocale } from '../../../types/locale';
 import { getLocale } from '../../../utils/inltUtils';
-import Tabs, { TabsProps } from '../../tabs/Tabs';
-import { SanityTabsNode } from '../../../types/sanity-schema/sanityTabsNode';
-import InlineSVG from '../../inline-svg/InlineSVG';
-import { SanityLocaleStringNode } from '../../../types/sanity-schema/sanityLocaleStringNode';
+import Tabs, { TabsProps } from '../../../components/tabs/Tabs';
+import InlineSVG from '../../../components/inline-svg/InlineSVG';
+import { SanityGroupedContentSchema, SanityLocaleStringSchema } from '../../schema-types';
 
 interface Props {
-    node: SanityTabsNode;
+    node: SanityGroupedContentSchema;
 }
 
-const hasTitleValue = (title: SanityLocaleStringNode): boolean =>
+const hasTitleValue = (title: SanityLocaleStringSchema): boolean =>
     title !== undefined && title.nb !== undefined && title[defaultLocale] !== '';
 
-export const extractTabsData = (node: SanityTabsNode, locale: Locale): TabsProps => {
+export const extractGroupedContentData = (node: SanityGroupedContentSchema, locale: Locale): TabsProps => {
     const tabsData: TabsProps = {
-        name: node.name,
         tabs: node.content.map((tab, index: number) => ({
             index,
             label: getSanityContentWithLocale(hasTitleValue(tab.title) ? tab.title : tab.content.title, locale),
@@ -34,7 +32,7 @@ export const extractTabsData = (node: SanityTabsNode, locale: Locale): TabsProps
 };
 
 const SanityTabs: React.FunctionComponent<Props & InjectedIntlProps> = ({ node, intl }) => {
-    const tabsData = extractTabsData(node, getLocale(intl));
+    const tabsData = extractGroupedContentData(node, getLocale(intl));
     return <Tabs tabs={tabsData.tabs} />;
 };
 

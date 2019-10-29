@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tab } from '../Tabs';
-import BlockContent from '../../sanity/sanity-block-content/SanityBlockContent';
+import BlockContent from '../../../sanity/components/sanity-block-content/SanityBlockContent';
 
 interface Props {
     tab: Tab;

@@ -1,4 +1,4 @@
-import { InjectedIntl, MessageValue } from 'gatsby-plugin-intl';
+import { InjectedIntl, MessageValue } from '../sanity/components/sanity-title-and-text/node_modules/gatsby-plugin-intl';
 import { Locale, defaultLocale } from '../types/locale';
 
 const intlHelper = (intl: InjectedIntl, id: string, value?: { [key: string]: MessageValue }): string =>
