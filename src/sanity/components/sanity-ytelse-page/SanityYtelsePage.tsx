@@ -1,7 +1,7 @@
 import React from 'react';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import BlockContent from '@sanity/block-content-to-react';
-import { Locale } from '../../../types/locale';
+import { Locale, defaultLocale } from '../../../types/locale';
 import Box from '../../../components/box/Box';
 import PanelWithTitleAndIllustration from '../../../components/panel-with-title-and-illustration/PanelWithTitleAndIllustration';
 import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
@@ -14,10 +14,13 @@ import StickyMenu from '../../../components/sticky-menu/StickyMenu';
 import slugify from 'slugify';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import { SanityIllustrationSchema } from '../../schema-types';
+import PageWithMenu from '../../../components/page-layouts/page-with-menu/PageWithMenu';
+import LinkButton from '../../../components/link-button/LinkButton';
 
 export interface YtelsePageData {
     title: string;
     inShort: string;
+    formUrl: string;
     sections: SectionContent[];
     illustration: SanityIllustrationSchema;
 }
@@ -40,11 +43,12 @@ export const extractSectionData = (data: any[]): SectionContent[] => {
         return [];
     }
     return data.map((section) => {
-        const title = getSanityContentWithLocale(section.title, 'nb');
+        const title = getSanityContentWithLocale(section.title, defaultLocale);
         return {
             _key: section._key,
-            slug: slugify(title),
+            slug: slugify(title || ''),
             title,
+            formUrl: section.formUrl,
             illustration: section.illustration,
             content: section.content
         };
@@ -55,44 +59,39 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
     return {
         title: getSanityContentWithLocale(data._rawTitle, locale),
         inShort: getSanityContentWithLocale(data._rawInShort, locale),
+        formUrl: data.formUrl,
         sections: extractSectionData(data._rawContent),
         illustration: data._rawIllustration
     };
 };
 
-const YtelsePage: React.FunctionComponent<Props> = ({ data, location, intl }: Props & InjectedIntlProps) => {
-    const { title, inShort, sections, illustration } = extractDataFromSanityYtelsePage(data, intl.locale);
+const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl }: Props & InjectedIntlProps) => {
+    const { title, inShort, sections, illustration, formUrl } = extractDataFromSanityYtelsePage(data, intl.locale);
     return (
-        <Page
+        <PageWithMenu
             location={location}
-            menu={
-                <StickyMenu>
-                    {sections.map((s) => (
-                        <p key={s._key}>
-                            <a href={`#${s.slug}`}>{s.title}</a>
-                        </p>
-                    ))}
-                </StickyMenu>
-            }>
-            <Box padBottom="xl">
-                <PanelWithTitleAndIllustration
-                    title={title}
-                    illustration={
-                        illustration ? (
-                            <Box textAlignCenter={true} margin="none">
-                                <CircleIllustration illustration={illustration} backgroundColor={styles.colors.theme} />
-                            </Box>
-                        ) : (
-                            undefined
-                        )
-                    }>
-                    {inShort && (
-                        <Ingress className="inShortList" tag="div">
-                            <BlockContent blocks={inShort} />
-                        </Ingress>
-                    )}
-                </PanelWithTitleAndIllustration>
-            </Box>
+            menuItems={sections.map((section) => ({
+                label: section.title,
+                slug: section.slug
+            }))}
+            menuFooter={<LinkButton href={formUrl}>Søk nå</LinkButton>}>
+            <PanelWithTitleAndIllustration
+                title={title}
+                illustration={
+                    illustration ? (
+                        <Box textAlignCenter={true} margin="none">
+                            <CircleIllustration illustration={illustration} backgroundColor={styles.colors.theme} />
+                        </Box>
+                    ) : (
+                        undefined
+                    )
+                }>
+                {inShort && (
+                    <Ingress className="inShortList" tag="div">
+                        <BlockContent blocks={inShort} />
+                    </Ingress>
+                )}
+            </PanelWithTitleAndIllustration>
             {sections.map((section) => (
                 <PanelWithTitleAndIllustration
                     key={section._key}
@@ -113,8 +112,8 @@ const YtelsePage: React.FunctionComponent<Props> = ({ data, location, intl }: Pr
                     {section.content && <SanityBlockContent content={section.content} />}
                 </PanelWithTitleAndIllustration>
             ))}
-        </Page>
+        </PageWithMenu>
     );
 };
 
-export default injectIntl(YtelsePage);
+export default injectIntl(SanityYtelsePage);

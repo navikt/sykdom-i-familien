@@ -97,7 +97,7 @@ const Breadcrumbs = (props: Props) => {
     }
 
     return (
-        <nav aria-label="Du er her" className={cls.class}>
+        <nav aria-label="Du er her" className={cls.block}>
             {breadcrumbChain}
         </nav>
     );

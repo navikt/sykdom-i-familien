@@ -23,7 +23,7 @@ const CircleMask: React.StatelessComponent<Props> = ({ color, size, active = tru
     return (
         <div
             className={bem.classNames(
-                bem.class,
+                bem.block,
                 bem.modifierConditional('inactive', active === false),
                 bem.modifierConditional(`valign-${valign}`, valign !== undefined)
             )}

@@ -1,5 +1,4 @@
 import React from 'react';
-import Page from '../components/page/Page';
 import { injectIntl, Link } from 'gatsby-plugin-intl';
 import FrontpagePoster from '../components/frontpage-poster/FrontpagePoster';
 import { InjectedIntlProps } from 'react-intl';
@@ -8,6 +7,7 @@ import FrontpagePanelWrapper from '../components/frontpage-panel-wrapper/Frontpa
 import StrokeHeader from '../components/stroke-header/StrokeHeader';
 import Box from '../components/box/Box';
 import { RouterProps } from '@reach/router';
+import Frontpage from '../components/page-layouts/frontpage/Frontpage';
 
 interface Props {}
 
@@ -16,7 +16,7 @@ const Veiviser = require('../assets/veiviser.svg');
 
 const Hovedside: React.FunctionComponent<Props> = ({ intl, location }: Props & InjectedIntlProps & RouterProps) => {
     return (
-        <Page
+        <Frontpage
             header={
                 <FrontpagePoster title={intl.formatMessage({ id: 'title' })} illustration={<PosterIllustration />}>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas architecto, ipsum a laudantium
@@ -65,7 +65,7 @@ const Hovedside: React.FunctionComponent<Props> = ({ intl, location }: Props & I
                     </FrontpagePanelWrapper>
                 </Box>
             </Box>
-        </Page>
+        </Frontpage>
     );
 };
 

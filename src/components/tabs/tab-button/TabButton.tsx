@@ -28,7 +28,7 @@ const TabButton: React.StatelessComponent<Props & InjectedIntlProps> = ({
             aria-selected={isSelected}
             onClick={onSelect}
             onKeyPress={onSelect}
-            className={bem.classNames(bem.class, {
+            className={bem.classNames(bem.block, {
                 [bem.modifier('selected')]: isSelected,
                 [bem.modifier('compact')]: compact
             })}>

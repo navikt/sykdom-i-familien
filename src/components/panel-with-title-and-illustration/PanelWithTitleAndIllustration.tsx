@@ -22,7 +22,7 @@ const PanelWithTitleAndIllustration = ({
             id={id}
             aria-label={title}
             className={bem.classNames(
-                bem.class,
+                bem.block,
                 bem.modifierConditional('withIllustration', illustration !== undefined)
             )}>
             <PanelBase>
