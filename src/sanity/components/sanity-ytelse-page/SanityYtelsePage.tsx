@@ -1,7 +1,7 @@
 import React from 'react';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import BlockContent from '@sanity/block-content-to-react';
-import { Locale, defaultLocale } from '../../../types/locale';
+import { Locale, defaultLocale } from '../../../i18n/locale';
 import Box from '../../../components/box/Box';
 import PanelWithTitleAndIllustration from '../../../components/panel-with-title-and-illustration/PanelWithTitleAndIllustration';
 import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
@@ -9,8 +9,6 @@ import CircleIllustration from '../../../components/circle-illustration/CircleIl
 import styles from '../../../styles';
 import { Ingress } from 'nav-frontend-typografi';
 import { WindowLocation } from '@reach/router';
-import Page from '../../../components/page/Page';
-import StickyMenu from '../../../components/sticky-menu/StickyMenu';
 import slugify from 'slugify';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import { SanityIllustrationSchema } from '../../schema-types';
@@ -59,7 +57,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
     return {
         title: getSanityContentWithLocale(data._rawTitle, locale),
         inShort: getSanityContentWithLocale(data._rawInShort, locale),
-        formUrl: data.formUrl,
+        formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent),
         illustration: data._rawIllustration
     };
@@ -67,15 +65,24 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
 
 const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl }: Props & InjectedIntlProps) => {
     const { title, inShort, sections, illustration, formUrl } = extractDataFromSanityYtelsePage(data, intl.locale);
+    const inShortSection: SectionContent = {
+        _key: 'inShortSection',
+        title,
+        content: inShort,
+        illustration,
+        slug: slugify(title || '')
+    };
+
     return (
         <PageWithMenu
             location={location}
-            menuItems={sections.map((section) => ({
+            menuItems={[inShortSection, ...sections].map((section) => ({
                 label: section.title,
                 slug: section.slug
             }))}
             menuFooter={<LinkButton href={formUrl}>Søk nå</LinkButton>}>
             <PanelWithTitleAndIllustration
+                id={inShortSection.slug}
                 title={title}
                 illustration={
                     illustration ? (

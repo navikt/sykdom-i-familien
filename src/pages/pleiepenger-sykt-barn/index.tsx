@@ -8,18 +8,21 @@ export default (props: RouterProps & any) => {
     const { data, location } = props;
     return (
         <Normaltekst tag="div">
-            <SanityYtelsePage data={data.allSanityPage.edges[0].node} location={location} />;
+            <SanityYtelsePage data={data.allSanityYtelsePage.edges[0].node} location={location} />;
         </Normaltekst>
     );
 };
 
 export const pageQuery = graphql`
     {
-        allSanityPage(filter: { ytelse: { key: { eq: "pp-sykt-barn" } } }) {
+        allSanityYtelsePage(filter: { ytelse: { key: { eq: "pp-sykt-barn" } } }) {
             edges {
                 node {
-                    formUrl
-                    _rawYtelse
+                    ytelse {
+                        id
+                        name
+                        formUrl
+                    }
                     _rawTitle
                     _rawIllustration(resolveReferences: { maxDepth: 4 })
                     _rawInShort

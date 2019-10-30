@@ -1,4 +1,4 @@
-import { Locale, defaultLocale } from '../../types/locale';
+import { Locale, defaultLocale } from '../../i18n/locale';
 
 export const getSanityContentWithLocale = (data: any, locale: Locale | string) => {
     if (!data) {

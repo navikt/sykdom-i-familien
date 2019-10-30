@@ -9,7 +9,7 @@ export interface Tab {
     index: number;
     label: string;
     illustration?: React.ReactNode;
-    content: string;
+    content: string | string[];
 }
 
 export interface TabsProps {

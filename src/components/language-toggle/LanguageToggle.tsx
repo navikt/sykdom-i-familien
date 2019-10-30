@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
 import { NedChevron } from 'nav-frontend-chevron';
 import NorwayFlagSVG from './NorwayFlagSVG';
-import { Locale } from '../../types/locale';
+import { Locale } from '../../i18n/locale';
 import { FormattedMessage } from 'gatsby-plugin-intl';
 import 'nav-frontend-lenker-style';
 import './languageToggle.less';

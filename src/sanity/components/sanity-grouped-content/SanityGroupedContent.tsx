@@ -1,7 +1,7 @@
 import React from 'react';
 import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import { Locale, defaultLocale } from '../../../types/locale';
+import { Locale, defaultLocale } from '../../../i18n/locale';
 import { getLocale } from '../../../utils/inltUtils';
 import Tabs, { TabsProps } from '../../../components/tabs/Tabs';
 import InlineSVG from '../../../components/inline-svg/InlineSVG';

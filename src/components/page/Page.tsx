@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
 import LanguageToggle from '../language-toggle/LanguageToggle';
 import { changeLocale, injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import { Locale } from '../../types/locale';
+import { Locale } from '../../i18n/locale';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { RouterProps } from '@reach/router';
 
