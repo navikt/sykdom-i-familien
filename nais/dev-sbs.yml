@@ -1,0 +1,40 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sykdom-i-familien
+  namespace: default
+  labels:
+    team: '{{team}}'
+spec:
+  image: '{{ image }}:{{ tag }}'
+  port: 8080
+  liveness:
+    path: isAlive
+    initialDelay: 20
+    timeout: 1
+    periodSeconds: 5
+    failureThreshold: 10
+  readiness:
+    path: isReady
+    initialDelay: 20
+    timeout: 1
+  resources:
+    limits:
+      cpu: '2'
+      memory: 1024Mi
+    requests:
+      cpu: 200m
+      memory: 768Mi
+  ingresses:
+        - https://sykdom-i-familien-q.nav.no
+        - https://sykdom-i-familien.nais.oera-q.local
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 90
+  webproxy: true
+  prometheus:
+    enabled: true
+    path: /metrics
+  vault:
+    enabled: true
