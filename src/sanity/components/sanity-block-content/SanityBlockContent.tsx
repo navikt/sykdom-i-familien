@@ -5,8 +5,7 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
-import Box from '../../../components/box/Box';
-import Veileder from '../../../components/veileder/Veileder';
+import Box from '../../../components/elements/box/Box';
 import SanityTabs from '../sanity-grouped-content/SanityGroupedContent';
 import SanityTitleAndText from '../sanity-title-and-text/SanityTitleAndText';
 import {
@@ -14,6 +13,7 @@ import {
     SanityIllustrationSchema,
     SanityExpandableContentSchema
 } from '../../schema-types';
+import Veileder from '../../../components/veileder/Veileder';
 
 interface Props {
     content: string;

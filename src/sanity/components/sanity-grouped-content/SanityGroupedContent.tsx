@@ -3,9 +3,9 @@ import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityConte
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import { Locale, defaultLocale } from '../../../i18n/locale';
 import { getLocale } from '../../../utils/inltUtils';
-import Tabs, { TabsProps } from '../../../components/tabs/Tabs';
-import InlineSVG from '../../../components/inline-svg/InlineSVG';
+import InlineSVG from '../../../components/elements/inline-svg/InlineSVG';
 import { SanityGroupedContentSchema, SanityLocaleStringSchema } from '../../schema-types';
+import Tabs, { TabsProps } from '../../../components/elements/tabs/Tabs';
 
 interface Props {
     node: SanityGroupedContentSchema;

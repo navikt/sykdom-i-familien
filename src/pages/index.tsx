@@ -1,13 +1,13 @@
 import React from 'react';
 import { injectIntl, Link } from 'gatsby-plugin-intl';
-import FrontpagePoster from '../components/frontpage-poster/FrontpagePoster';
+import FrontpagePoster from '../components/pages/frontpage/components/frontpage-poster/FrontpagePoster';
 import { InjectedIntlProps } from 'react-intl';
-import LinkPanel from '../components/link-panel/LinkPanel';
-import FrontpagePanelWrapper from '../components/frontpage-panel-wrapper/FrontpagePanelWrapper';
-import StrokeHeader from '../components/stroke-header/StrokeHeader';
-import Box from '../components/box/Box';
+import FrontpagePanelWrapper from '../components/pages/frontpage/components/frontpage-panel-wrapper/FrontpagePanelWrapper';
+import StrokeHeader from '../components/pages/frontpage/components/stroke-header/StrokeHeader';
 import { RouterProps } from '@reach/router';
-import Frontpage from '../components/page-layouts/frontpage/Frontpage';
+import Frontpage from '../components/pages/frontpage/Frontpage';
+import Box from '../components/elements/box/Box';
+import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
 
 interface Props {}
 

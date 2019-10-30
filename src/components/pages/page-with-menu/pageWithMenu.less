@@ -1,0 +1,44 @@
+@import '../../../styles/assets.less';
+
+.pageWithMenu {
+    margin-bottom: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    padding-top: 5rem;
+
+    &__breadcrumbs {
+        position: absolute;
+        margin-top: -3rem;
+    }
+
+    &__sidebar {
+        flex-shrink: 0;
+        margin-right: 1.5rem;
+        display: none;
+        min-width: 15rem;
+        position: relative;
+    }
+    &__sidebarSticky {
+        position: sticky;
+        top: 3rem;
+    }
+
+    &__article {
+        width: 100%;
+        max-width: @app-max-width;
+        flex-shrink: 1;
+    }
+
+    @media (min-width: @desktop-breakpoint) {
+        .pageWithMenu__sidebar {
+            display: block;
+        }
+    }
+}
+@media (max-width: @desktop-breakpoint) {
+    body {
+        padding-top: 4rem;
+    }
+}
