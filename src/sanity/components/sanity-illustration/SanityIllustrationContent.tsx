@@ -1,5 +1,5 @@
 import React from 'react';
-import InlineSVG from '../../../components/inline-svg/InlineSVG';
+import InlineSVG from '../../../components/elements/inline-svg/InlineSVG';
 import { SanityIllustrationSchema } from '../../schema-types';
 
 interface Props {
