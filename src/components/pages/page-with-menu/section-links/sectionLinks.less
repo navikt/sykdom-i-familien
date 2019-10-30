@@ -1,0 +1,20 @@
+@import '../../../../styles/assets.less';
+
+.sectionLinks {
+    &__item {
+        margin-bottom: 1rem;
+        .lenke {
+            text-decoration: none;
+            border-bottom: 1px solid #b7b1a9;
+        }
+        &--active {
+            font-weight: bold;
+            a {
+                color: @navMorkGra;
+            }
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

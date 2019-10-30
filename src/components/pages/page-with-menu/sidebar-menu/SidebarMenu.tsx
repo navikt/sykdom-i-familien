@@ -1,20 +1,21 @@
 import React from 'react';
-import { MenuItem } from '../PageWithMenu';
-import Lenke from 'nav-frontend-lenker';
 import bemUtils from '../../../../utils/bemUtils';
 import RocketSVG from '../../../../assets/rocketSVG';
 import styles from '../../../../styles';
 import CircleMask from '../../../elements/circle-mask/CircleMask';
 import './sidebarMenu.less';
+import SectionLinks from '../section-links/SectionLinks';
+import { SectionMenuItem } from '../PageWithMenu';
 
 interface Props {
-    items: MenuItem[];
+    items: SectionMenuItem[];
+    activeSectionSlug?: string;
     footer?: React.ReactNode;
 }
 
 const bem = bemUtils('sidebarMenu');
 
-const SidebarMenu: React.FunctionComponent<Props> = ({ items, footer }) => {
+const SidebarMenu: React.FunctionComponent<Props> = ({ items, footer, activeSectionSlug }) => {
     return (
         <nav className={bem.block}>
             <div className={bem.element('icon')}>
@@ -23,11 +24,7 @@ const SidebarMenu: React.FunctionComponent<Props> = ({ items, footer }) => {
                 </CircleMask>
             </div>
             <div className={bem.element('items')}>
-                {items.map((item) => (
-                    <div key={item.slug} className={bem.element('item')}>
-                        <Lenke href={`#${item.slug}`}>{item.label}</Lenke>
-                    </div>
-                ))}
+                <SectionLinks items={items} activeSectionSlug={activeSectionSlug} />
             </div>
             {footer && <div className={bem.element('footer')}>{footer}</div>}
         </nav>

@@ -6,7 +6,7 @@ import FrontpagePanelWrapper from '../components/pages/frontpage/components/fron
 import StrokeHeader from '../components/pages/frontpage/components/stroke-header/StrokeHeader';
 import { RouterProps } from '@reach/router';
 import Frontpage from '../components/pages/frontpage/Frontpage';
-import Box from '../components/elements/box/Box';
+import Box from '../components/layout/box/Box';
 import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
 
 interface Props {}

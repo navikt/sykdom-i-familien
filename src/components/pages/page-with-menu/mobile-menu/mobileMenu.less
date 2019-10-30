@@ -18,7 +18,7 @@
     background-color: white;
     visibility: visible;
 
-    &__hidden {
+    &--hidden {
         visibility: hidden;
         transform: translateY(-110%);
     }
@@ -41,22 +41,6 @@
     }
     &__items {
         padding: 1rem 1rem 2rem 1rem;
-        column-count: 2;
-        column-gap: 2rem;
-    }
-    &__item {
-        margin-bottom: 1rem;
-        text-align: right;
-        &--col2 {
-            text-align: left;
-        }
-        .lenke {
-            text-decoration: none;
-            border-bottom: 1px solid #b7b1a9;
-        }
-        &:last-child {
-            margin-bottom: 0;
-        }
     }
     &__footer {
         margin: 1rem auto;

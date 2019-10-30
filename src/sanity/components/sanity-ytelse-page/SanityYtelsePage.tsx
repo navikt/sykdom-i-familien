@@ -2,7 +2,7 @@ import React from 'react';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import BlockContent from '@sanity/block-content-to-react';
 import { Locale, defaultLocale } from '../../../i18n/locale';
-import Box from '../../../components/elements/box/Box';
+import Box from '../../../components/layout/box/Box';
 import PanelWithTitleAndIllustration from '../../../components/panel-with-title-and-illustration/PanelWithTitleAndIllustration';
 import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
 import CircleIllustration from '../../../components/elements/circle-illustration/CircleIllustration';
@@ -77,7 +77,7 @@ const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl
         <PageWithMenu
             title={title}
             location={location}
-            menuItems={[inShortSection, ...sections].map((section) => ({
+            sectionMenuItems={[inShortSection, ...sections].map((section) => ({
                 label: section.title,
                 slug: section.slug
             }))}
