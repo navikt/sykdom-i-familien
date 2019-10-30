@@ -46,6 +46,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: build code
         run: npm build
+      - name: debug 1
+        run: ls -la
       - name: Create Docker tag
         env:
           NAME: sykdom-i-familien
