@@ -16,6 +16,7 @@ export interface MenuItem {
 }
 
 interface Props {
+    title: string;
     menuItems: MenuItem[];
     menuFooter?: React.ReactNode;
     children: React.ReactNode;
@@ -23,9 +24,14 @@ interface Props {
 
 const bem = bemUtils('pageWithMenu');
 
-const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({ menuItems, menuFooter, children }) => {
+const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
+    title: pageTitle,
+    menuItems,
+    menuFooter,
+    children
+}) => {
     return (
-        <Page>
+        <Page title={pageTitle}>
             <div className={bem.block}>
                 <MediaQuery minWidth={1072}>
                     <div className={bem.element('sidebar')}>

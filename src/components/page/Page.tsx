@@ -8,13 +8,16 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RouterProps } from '@reach/router';
 
 interface Props {
-    header?: React.ReactNode;
-    menu?: React.ReactNode;
+    title?: string;
 }
 
 import './page.less';
 
-const Page: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({ children, intl }) => {
+const Page: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({
+    title: pageTitle,
+    children,
+    intl
+}) => {
     const data = useStaticQuery(graphql`
         query {
             site {
@@ -29,7 +32,7 @@ const Page: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = (
         <Normaltekst tag="div">
             <Helmet encodeSpecialCharacters={false}>
                 <meta charSet="utf-8" />
-                <title>{data.site.siteMetadata.title}</title>
+                <title>{pageTitle || data.site.siteMetadata.title}</title>
             </Helmet>
             <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
             {children}

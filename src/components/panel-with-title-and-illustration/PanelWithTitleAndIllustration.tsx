@@ -10,12 +10,14 @@ const PanelWithTitleAndIllustration = ({
     id,
     title,
     illustration,
-    children
+    children,
+    titleTag = 'h2'
 }: {
     title: string;
     illustration?: React.ReactNode;
     children: ReactNode;
     id?: string;
+    titleTag?: string;
 }) => {
     return (
         <section
@@ -28,7 +30,7 @@ const PanelWithTitleAndIllustration = ({
             <PanelBase>
                 {illustration && <div className={bem.element('illustration')}>{illustration}</div>}
                 <div className={bem.element('title')}>
-                    <Systemtittel>{title}</Systemtittel>
+                    <Systemtittel tag={titleTag}>{title}</Systemtittel>
                 </div>
                 {children}
             </PanelBase>

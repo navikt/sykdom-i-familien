@@ -75,6 +75,7 @@ const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl
 
     return (
         <PageWithMenu
+            title={title}
             location={location}
             menuItems={[inShortSection, ...sections].map((section) => ({
                 label: section.title,
@@ -82,6 +83,7 @@ const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl
             }))}
             menuFooter={<LinkButton href={formUrl}>Søk nå</LinkButton>}>
             <PanelWithTitleAndIllustration
+                titleTag="h1"
                 id={inShortSection.slug}
                 title={title}
                 illustration={
