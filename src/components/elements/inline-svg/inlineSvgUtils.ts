@@ -69,7 +69,7 @@ const parseOnNode = ({ illustration, width, height, viewBox, title }: InlineSVGP
 };
 
 export const parseAndModifySvg = (props: InlineSVGProps): string | undefined => {
-    if (isBrowser()) {
+    if (isBrowser) {
         return parseInBrowser(props);
     }
     return parseOnNode(props);
