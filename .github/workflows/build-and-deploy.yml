@@ -46,7 +46,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: build code
         run: |
-          npm run clean
           npm i
           npm run build
       - name: debug 1
