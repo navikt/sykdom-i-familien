@@ -47,7 +47,7 @@ jobs:
       - name: build code
         run: |
           npm run clean
-          npm ci
+          npm i
           npm run build
       - name: debug 1
         run: ls -la
