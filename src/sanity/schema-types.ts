@@ -54,4 +54,31 @@ export interface FrontpageSanityContentSchema {
     };
     _rawTitle: SanityLocaleStringSchema;
     _rawIngress: SanityLocaleRichText;
+    _rawFrontpageStories: FrontpageStorySchema[];
 }
+
+export interface SlugSchema {
+    current: string;
+}
+
+interface FrontpageStoryBase {
+    _type: string;
+    content: LocaleBlock;
+    illustration: SanityIllustrationSchema;
+}
+export interface FrontpageLinkSchema extends FrontpageStoryBase {
+    _type: 'frontpageLink';
+    title: LocaleString;
+    url: string;
+}
+
+export interface FrontpagePageLinkSchema extends FrontpageStoryBase {
+    _type: 'frontpagePageLink';
+    page: {
+        _id: string;
+        title: LocaleString;
+        slug: SlugSchema;
+    };
+}
+
+export type FrontpageStorySchema = FrontpageLinkSchema | FrontpagePageLinkSchema;

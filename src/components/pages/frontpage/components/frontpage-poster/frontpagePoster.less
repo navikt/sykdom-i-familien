@@ -1,0 +1,59 @@
+@import '../../../../../styles/assets.less';
+
+.frontpagePoster {
+    display: block;
+    border-bottom: 0.25rem solid @c-theme-dark;
+    background-color: @c-theme;
+    padding-top: 2rem;
+    &__contentWrapper {
+        display: flex;
+        position: relative;
+        max-width: @app-max-width;
+        min-height: 180px;
+        margin: 0 auto;
+        align-items: baseline;
+        flex-direction: column;
+        svg {
+            max-height: 15rem;
+            width: auto;
+        }
+        @media (min-width: @tablet-breakpoint) {
+            flex-direction: row;
+        }
+    }
+    &__text {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 1rem 1.4rem;
+        line-height: 1.45rem;
+        z-index: 1;
+        width: 100%;
+        min-height: 5rem;
+        @media (min-width: @mobile-breakpoint) {
+            max-width: 55%;
+        }
+    }
+    &__illustration {
+        align-self: flex-end;
+        justify-self: bottom;
+        margin: 0 auto;
+        line-height: 0;
+        min-width: 20rem;
+        @media (min-width: @mobile-breakpoint) {
+            position: absolute;
+            bottom: 0;
+            right: 1rem;
+            min-width: 20rem;
+        }
+        @media (min-width: @tablet-breakpoint) {
+            position: absolute;
+            bottom: 0;
+            right: 1rem;
+            min-width: 25rem;
+        }
+    }
+    &__title {
+        font-size: 2.25rem;
+        margin-bottom: 0.5rem;
+    }
+}

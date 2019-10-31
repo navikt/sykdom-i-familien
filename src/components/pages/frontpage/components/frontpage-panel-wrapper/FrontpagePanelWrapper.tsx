@@ -1,43 +1,18 @@
 import React, { Children } from 'react';
-import styled from 'styled-components';
-import styles from '../../../../../styles';
+import './frontpagePanelWrapper.less';
+import bemUtils from '../../../../../utils/bemUtils';
 
 interface Props {}
 
-const StyledWrapper = styled.div`
-    display: block;
-
-    @media (min-width: ${styles.breakpoints.medium}) {
-        display: flex;
-        align-items: stretch;
-        justify-items: stretch;
-    }
-`;
-
-const StyledItem = styled.div`
-    margin-bottom: 1rem;
-    @media (min-width: ${styles.breakpoints.medium}) {
-        margin-bottom: 0;
-        flex: 1 1 33.3334%;
-        &:nth-child(2) {
-            margin: 0 2rem;
-        }
-        > * {
-            height: 100%;
-        }
-    }
-    &:last-child {
-        margin-bottom: 0;
-    }
-`;
+const bem = bemUtils('frontpagePanelWrapper');
 
 const FrontpagePanelWrapper: React.FunctionComponent<Props> = ({ children }) => {
     return (
-        <StyledWrapper>
+        <div className={bem.block}>
             {Children.map(children, (child) => (
-                <StyledItem>{child}</StyledItem>
+                <div className={bem.element('item')}>{child}</div>
             ))}
-        </StyledWrapper>
+        </div>
     );
 };
 export default FrontpagePanelWrapper;

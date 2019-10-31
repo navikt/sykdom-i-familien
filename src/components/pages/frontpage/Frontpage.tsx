@@ -1,30 +1,27 @@
 import React from 'react';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import styled from 'styled-components';
 import { RouterProps } from '@reach/router';
+import PageWrapper from '../page-wrapper/PageWrapper';
 
 interface Props {
     header?: React.ReactNode;
     menu?: React.ReactNode;
 }
 
-const PageContent = styled.div`
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-    padding: 2rem 2rem 4rem 2rem;
-`;
-
 import './frontpage.less';
-import PageWrapper from '../page-wrapper/PageWrapper';
+import bemUtils from '../../../utils/bemUtils';
+
+const bem = bemUtils('frontpage');
 
 const Frontpage: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({ children, header }) => {
     return (
         <PageWrapper>
-            {header && <>{header}</>}
-            <PageContent>
-                <article>{children}</article>
-            </PageContent>
+            <div className={bem.block}>
+                {header && <>{header}</>}
+                <div className={bem.element('content')}>
+                    <article>{children}</article>
+                </div>
+            </div>
         </PageWrapper>
     );
 };

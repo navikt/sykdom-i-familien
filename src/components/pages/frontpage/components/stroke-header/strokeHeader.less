@@ -1,0 +1,26 @@
+.strokeHeader {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    text-align: center;
+
+    &:before {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background-color: lightgray;
+    }
+    &:after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background-color: lightgray;
+    }
+    h2 {
+        flex-shrink: 0;
+        margin: 0 1rem;
+    }
+}

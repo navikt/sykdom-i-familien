@@ -14,7 +14,7 @@ const SanityTitleAndText: React.FunctionComponent<Props & InjectedIntlProps> = (
 
     return (
         <div className="titleAndText">
-            <Undertittel tag={'h3'}>{title}</Undertittel>
+            {title && <Undertittel tag={'h3'}>{title}</Undertittel>}
             <SanityBlockContent content={content} />
         </div>
     );

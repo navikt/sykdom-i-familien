@@ -4,16 +4,16 @@ import { Undertittel } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
-import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import Box from '../../../components/layout/box/Box';
 import SanityTabs from '../sanity-grouped-content/SanityGroupedContent';
 import SanityTitleAndText from '../sanity-title-and-text/SanityTitleAndText';
 import {
     SanityGroupedContentSchema,
-    SanityIllustrationSchema,
-    SanityExpandableContentSchema
+    SanityExpandableContentSchema,
+    SanityIllustrationSchema
 } from '../../schema-types';
 import Veileder from '../../../components/veileder/Veileder';
+import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 
 interface Props {
     content: string;

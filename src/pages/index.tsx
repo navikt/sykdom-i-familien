@@ -1,9 +1,8 @@
 import React from 'react';
-import { injectIntl, Link } from 'gatsby-plugin-intl';
+import { injectIntl } from 'gatsby-plugin-intl';
 import FrontpagePoster from '../components/pages/frontpage/components/frontpage-poster/FrontpagePoster';
 import { InjectedIntlProps } from 'react-intl';
 import FrontpagePanelWrapper from '../components/pages/frontpage/components/frontpage-panel-wrapper/FrontpagePanelWrapper';
-import StrokeHeader from '../components/pages/frontpage/components/stroke-header/StrokeHeader';
 import { RouterProps } from '@reach/router';
 import Frontpage from '../components/pages/frontpage/Frontpage';
 import Box from '../components/layout/box/Box';
@@ -18,18 +17,33 @@ interface Props {
     data: any;
 }
 
-// const PosterIllustration = require('../assets/familie.svg');
-const Veiviser = require('../assets/veiviser.svg');
+// const Veiviser = require('../assets/veiviser.svg');
 
 const extractFrontpageData = (data: FrontpageSanityContentSchema, locale: string): FrontpageSanityData => {
-    const { _rawIllustration, _rawIngress, _rawTitle } = data;
+    const { _rawIllustration, _rawIngress, _rawTitle, _rawFrontpageStories } = data;
     return {
         title: getSanityContentWithLocale(_rawTitle, locale),
         ingress: getSanityContentWithLocale(_rawIngress, locale),
         illustration: {
             title: _rawIllustration.name,
             svg: _rawIllustration.svg
-        }
+        },
+        stories: _rawFrontpageStories.map((story) => {
+            return {
+                title: getSanityContentWithLocale(
+                    story._type === 'frontpageLink' ? story.title : story.page.title,
+                    locale
+                ),
+                description: getSanityContentWithLocale(story.content, locale),
+                illustration: story.illustration,
+                url:
+                    story._type === 'frontpageLink'
+                        ? story.url
+                        : story.page.slug
+                        ? `/${story.page.slug.current}`
+                        : undefined
+            };
+        })
     };
 };
 
@@ -37,6 +51,14 @@ export interface FrontpageSanityData {
     title: string;
     ingress: string;
     illustration: SanityIllustrationSchema;
+    stories?: FrontpageStory[];
+}
+
+interface FrontpageStory {
+    title: string;
+    description: string;
+    illustration: SanityIllustrationSchema;
+    url?: string;
 }
 
 const Hovedside: React.FunctionComponent<Props> = ({
@@ -44,7 +66,10 @@ const Hovedside: React.FunctionComponent<Props> = ({
     intl,
     location
 }: Props & InjectedIntlProps & RouterProps) => {
-    const { title, ingress, illustration } = extractFrontpageData(data.allSanityFrontpage.nodes[0], intl.locale);
+    const { title, ingress, illustration, stories: linkPanels } = extractFrontpageData(
+        data.allSanityFrontpage.nodes[0],
+        intl.locale
+    );
     return (
         <Frontpage
             header={
@@ -54,47 +79,25 @@ const Hovedside: React.FunctionComponent<Props> = ({
                     <SanityBlockContent content={ingress} />
                 </FrontpagePoster>
             }>
-            <Box padHorizontal="l">
+            <Box>
                 <FrontpagePanelWrapper>
-                    <LinkPanel title={'Sykt barn?'} url={`/pleiepenger-sykt-barn/`} image={<Veiviser />}>
-                        Optio sequi facilis cum expedita nostrum unde iste laborum. Ea, illum
-                    </LinkPanel>
-                    <LinkPanel title={'Pleiepenger nærstående'} url={`/pleiepenger-sykt-barn/`} image={<Veiviser />}>
-                        Harum asperiores ullam inventore reiciendis sit aperiam eum fugit qui aliquam?
-                    </LinkPanel>
-                    <LinkPanel title={'Inventore reiciendis'} url={`/pleiepenger-sykt-barn/`} image={<Veiviser />}>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing.
-                    </LinkPanel>
+                    {linkPanels &&
+                        linkPanels.map((story, index) => (
+                            <LinkPanel
+                                key={index}
+                                title={story.title}
+                                url={story.url || ''}
+                                image={
+                                    story.illustration ? (
+                                        <SanityIllustration illustration={story.illustration} />
+                                    ) : (
+                                        undefined
+                                    )
+                                }>
+                                <SanityBlockContent content={story.description} />
+                            </LinkPanel>
+                        ))}
                 </FrontpagePanelWrapper>
-                <Box margin="xl">
-                    <StrokeHeader>Utfyllende informasjon</StrokeHeader>
-                    <FrontpagePanelWrapper>
-                        <LinkPanel title={'Sykt barn?'} url={`/pleiepenger-sykt-barn/`} layout="plain">
-                            Optio sequi facilis cum expedita nostrum unde iste laborum. Ea, illum
-                        </LinkPanel>
-                        <LinkPanel title={'Sykt barn?'} url={`/pleiepenger-sykt-barn/`} layout="plain">
-                            Optio sequi facilis cum expedita nostrum unde iste laborum. Ea, illum
-                        </LinkPanel>
-                        <LinkPanel title={'Sykt barn?'} url={`/pleiepenger-sykt-barn/`} layout="plain">
-                            Optio sequi facilis cum expedita nostrum unde iste laborum. Ea, illum
-                        </LinkPanel>
-                    </FrontpagePanelWrapper>
-                </Box>
-                <Box margin="xl">
-                    <StrokeHeader>Relatert informasjon</StrokeHeader>
-                    <FrontpagePanelWrapper>
-                        <Box textAlignCenter={true}>
-                            <Link to="/pleiepenger-sykt-barn" className="lenke" rel="noopener noreferrer">
-                                Pleiepenger
-                            </Link>
-                        </Box>
-                        <Box textAlignCenter={true}>
-                            <Link to="/pleiepenger-sykt-barn" className="lenke" rel="noopener noreferrer">
-                                Pleiepenger
-                            </Link>
-                        </Box>
-                    </FrontpagePanelWrapper>
-                </Box>
             </Box>
         </Frontpage>
     );
