@@ -1,13 +1,18 @@
-interface LocaleType {
+interface LocaleString {
     nb: string;
     nn: string;
+}
+interface LocaleBlock {
+    nb: BlockContent;
+    nn: BlockContent;
 }
 
 type BlockContent = string | string[];
 
-export type SanityLocaleStringSchema = LocaleType;
-export type SanityLocaleTextSchema = LocaleType;
-export type SanityLocaleBlockSchema = LocaleType;
+export type SanityLocaleStringSchema = LocaleString;
+export type SanityLocaleTextSchema = LocaleString;
+export type SanityLocaleBlockSchema = LocaleBlock;
+export type SanityLocaleRichText = LocaleBlock;
 
 export interface SanityTitleAndContentBlockSchema {
     title: SanityLocaleStringSchema;
@@ -18,7 +23,7 @@ export type SanityInternalCommonSchema = SanityTitleAndContentBlockSchema;
 
 export interface SanityIllustrationSchema {
     title: string;
-    description: string;
+    description?: string;
     svg?: string;
 }
 
@@ -36,4 +41,17 @@ export interface SanityExpandableContentSchema {
     name: string;
     title: SanityLocaleStringSchema;
     content: SanityLocaleBlockSchema;
+}
+
+export interface FrontpageSanityContentSchema {
+    _rawIllustration: {
+        category: {
+            id: string;
+            name: string;
+        };
+        name: string;
+        svg: string;
+    };
+    _rawTitle: SanityLocaleStringSchema;
+    _rawIngress: SanityLocaleRichText;
 }

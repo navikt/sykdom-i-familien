@@ -22,14 +22,11 @@ const ContentWrapper = styled.div`
     align-items: baseline;
     flex-direction: column;
     svg {
-        max-height: 10rem;
+        max-height: 15rem;
         width: auto;
     }
     @media (min-width: ${styles.breakpoints.medium}) {
         flex-direction: row;
-        svg {
-            max-height: initial;
-        }
     }
 `;
 
@@ -51,10 +48,18 @@ const Illustration = styled.div`
     justify-self: bottom;
     margin: 0 auto;
     line-height: 0;
+    min-width: 20rem;
     @media (min-width: 576px) {
         position: absolute;
         bottom: 0;
         right: 1rem;
+        min-width: 20rem;
+    }
+    @media (min-width: 800px) {
+        position: absolute;
+        bottom: 0;
+        right: 1rem;
+        min-width: 25rem;
     }
 `;
 

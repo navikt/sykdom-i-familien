@@ -8,19 +8,50 @@ import { RouterProps } from '@reach/router';
 import Frontpage from '../components/pages/frontpage/Frontpage';
 import Box from '../components/layout/box/Box';
 import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
+import { graphql } from 'gatsby';
+import { FrontpageSanityContentSchema, SanityIllustrationSchema } from '../sanity/schema-types';
+import { getSanityContentWithLocale } from '../utils/sanity/getSanityContentWithLocale';
+import SanityBlockContent from '../sanity/components/sanity-block-content/SanityBlockContent';
+import SanityIllustration from '../sanity/components/sanity-illustration/SanityIllustrationContent';
 
-interface Props {}
+interface Props {
+    data: any;
+}
 
-const PosterIllustration = require('../assets/familie.svg');
+// const PosterIllustration = require('../assets/familie.svg');
 const Veiviser = require('../assets/veiviser.svg');
 
-const Hovedside: React.FunctionComponent<Props> = ({ intl, location }: Props & InjectedIntlProps & RouterProps) => {
+const extractFrontpageData = (data: FrontpageSanityContentSchema, locale: string): FrontpageSanityData => {
+    const { _rawIllustration, _rawIngress, _rawTitle } = data;
+    return {
+        title: getSanityContentWithLocale(_rawTitle, locale),
+        ingress: getSanityContentWithLocale(_rawIngress, locale),
+        illustration: {
+            title: _rawIllustration.name,
+            svg: _rawIllustration.svg
+        }
+    };
+};
+
+export interface FrontpageSanityData {
+    title: string;
+    ingress: string;
+    illustration: SanityIllustrationSchema;
+}
+
+const Hovedside: React.FunctionComponent<Props> = ({
+    data,
+    intl,
+    location
+}: Props & InjectedIntlProps & RouterProps) => {
+    const { title, ingress, illustration } = extractFrontpageData(data.allSanityFrontpage.nodes[0], intl.locale);
     return (
         <Frontpage
             header={
-                <FrontpagePoster title={intl.formatMessage({ id: 'title' })} illustration={<PosterIllustration />}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas architecto, ipsum a laudantium
-                    quibusdam ipsam delectus magnam voluptatem!
+                <FrontpagePoster
+                    title={title}
+                    illustration={<SanityIllustration illustration={illustration} maintainAspectRatio={true} />}>
+                    <SanityBlockContent content={ingress} />
                 </FrontpagePoster>
             }>
             <Box padHorizontal="l">
@@ -68,5 +99,20 @@ const Hovedside: React.FunctionComponent<Props> = ({ intl, location }: Props & I
         </Frontpage>
     );
 };
+
+export const pageQuery = graphql`
+    {
+        allSanityFrontpage(filter: { _id: { eq: "frontpage-config" } }) {
+            nodes {
+                _id
+                _rawTitle
+                _rawIngress
+                _rawIllustration(resolveReferences: { maxDepth: 4 })
+                _rawFrontpageStories(resolveReferences: { maxDepth: 4 })
+                _rawRelated(resolveReferences: { maxDepth: 4 })
+            }
+        }
+    }
+`;
 
 export default injectIntl(Hovedside);
