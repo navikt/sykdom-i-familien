@@ -29,7 +29,7 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
 
     return (
         <Normaltekst tag="div">
-            <Helmet encodeSpecialCharacters={false}>
+            <Helmet encodeSpecialCharacters={false} htmlAttributes={{ lang: `${intl.locale}-NO` }}>
                 <meta charSet="utf-8" />
                 <title>{pageTitle || data.site.siteMetadata.title}</title>
             </Helmet>

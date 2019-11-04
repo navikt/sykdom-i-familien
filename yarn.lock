@@ -2960,7 +2960,7 @@ chokidar@3.2.3:
   optionalDependencies:
     fsevents "~2.1.1"
 
-chokidar@^2.0.2, chokidar@^2.0.3, chokidar@^2.0.4, chokidar@^2.1.8:
+chokidar@^2.0.2, chokidar@^2.0.3, chokidar@^2.0.4, chokidar@^2.1.2, chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.8.tgz#804b3a7b6a99358c3c5c61e71d8728f041cff917"
   integrity sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg==
@@ -5586,6 +5586,14 @@ gatsby-plugin-react-svg@^2.1.2:
   integrity sha512-y2vqiI/+bW8UPNL8628NwoX6kHtM4WJz6CiHPc9fhvSUa2Y8wriFJnGl1K249/9RXomOUQhl7r7JOuVhweSl1w==
   dependencies:
     svg-react-loader "^0.4.4"
+
+gatsby-plugin-routes@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-routes/-/gatsby-plugin-routes-1.0.0.tgz#10a01ae6fc331cd545eee8eb6508b0478b45f82e"
+  integrity sha512-KVaDkqiENKLzDM5PaZiVkyXDhuWgqd9XmMv5aeVyMNFdrFYSVpngxI7egJWUeHyWxIucKHAqlb3SJw6TyxXWhg==
+  dependencies:
+    chokidar "^2.1.2"
+    core-js "^2.6.5"
 
 gatsby-plugin-tslint@0.0.2:
   version "0.0.2"
