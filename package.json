@@ -10,7 +10,7 @@
         "develop": "npm run fetch && gatsby develop",
         "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
         "start": "npm run develop",
-        "serve": "gatsby serve -p $PORT",
+        "serve": "gatsby serve -p $PORT -H 0.0.0.0",
         "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \"",
         "debug": "gatsby clean && node --nolazy --inspect-brk node_modules/.bin/gatsby develop"
     },
