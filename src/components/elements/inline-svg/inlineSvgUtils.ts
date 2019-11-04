@@ -43,6 +43,7 @@ const parseInBrowser = ({ illustration, width, height, viewBox, title }: InlineS
     }
     setProp(svgElement, 'width', width || height ? width : '100%');
     setProp(svgElement, 'height', height);
+    setProp(svgElement, 'focusable', 'false');
     if (viewBox) {
         setProp(svgElement, 'viewBox', viewBox);
     }
@@ -54,6 +55,7 @@ const parseOnNode = ({ illustration, width, height, viewBox, title }: InlineSVGP
     const element = parse(illustration).children[0] as any;
     setPropOnElement(element, 'width', width || height ? width : '100%');
     setPropOnElement(element, 'height', height);
+    setPropOnElement(element, 'focusable', 'false');
     if (viewBox) {
         setPropOnElement(element, 'viewBox', viewBox);
     }
