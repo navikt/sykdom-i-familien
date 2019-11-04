@@ -25,7 +25,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install, build, and test
         run: |
-          npm ci
+          npm clean-install
           yarn run test
 
   build-code-and-push-docker:
