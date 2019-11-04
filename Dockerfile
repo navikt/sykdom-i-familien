@@ -8,4 +8,4 @@ RUN ls -la
 
 CMD npm run serve
 
-EXPOSE 9000
+EXPOSE $PORT
