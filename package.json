@@ -5,7 +5,7 @@
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
-        "fetch": "node ./plugins/nav-decorator/index.js",
+        "fetch-decorator": "node ./plugins/nav-decorator/index.js",
         "build": "npm run fetch  && gatsby build",
         "develop": "npm run fetch && gatsby develop",
         "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
