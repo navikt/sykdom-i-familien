@@ -75,7 +75,7 @@ const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl
 
     return (
         <PageWithMenu
-            title={title}
+            pageTitle={title}
             location={location}
             sectionMenuItems={[inShortSection, ...sections].map((section) => ({
                 label: section.title,

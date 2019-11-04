@@ -17,7 +17,7 @@ export interface SectionMenuItem {
 }
 
 interface Props {
-    title: string;
+    pageTitle: string;
     sectionMenuItems: SectionMenuItem[];
     menuFooter?: React.ReactNode;
     children: React.ReactNode;
@@ -26,14 +26,14 @@ interface Props {
 const bem = bemUtils('pageWithMenu');
 
 const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
-    title: pageTitle,
+    pageTitle,
     sectionMenuItems,
     menuFooter,
     children
 }) => {
     const sectionIds = sectionMenuItems.map((section) => section.slug);
-
     const [activSectionSlug, setActiceSectionSlug] = useState<string | undefined>(undefined);
+
     useActiveSections(
         sectionIds,
         (slug) => {
@@ -43,7 +43,7 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
     );
 
     return (
-        <PageWrapper title={pageTitle}>
+        <PageWrapper pageTitle={pageTitle}>
             <div className={bem.block}>
                 <MediaQuery minWidth={1072}>
                     <div className={bem.element('sidebar')}>
@@ -64,7 +64,7 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
                 <div>
                     {isBrowser && (
                         <div className={bem.element('breadcrumbs')}>
-                            <Breadcrumbs path={location.pathname} />
+                            <Breadcrumbs path={location.pathname} currentPageTitle={pageTitle} />
                         </div>
                     )}
                     <article className={bem.element('article')}>{children}</article>

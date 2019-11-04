@@ -7,31 +7,33 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RouterProps } from '@reach/router';
 import LanguageToggle from './components/language-toggle/LanguageToggle';
 import './pageWrapper.less';
+import { getSiteTitle } from '../../../utils/site';
 
 interface Props {
-    title?: string;
+    pageTitle?: string;
 }
 
 const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({
-    title: pageTitle,
+    pageTitle,
     children,
     intl
 }) => {
-    const data = useStaticQuery(graphql`
+    const siteMetadata = useStaticQuery(graphql`
         query {
             site {
                 siteMetadata {
-                    title
+                    title_nb
+                    title_nn
                 }
             }
         }
     `);
-
+    const siteTitle = getSiteTitle(siteMetadata, intl.locale);
     return (
         <Normaltekst tag="div">
             <Helmet encodeSpecialCharacters={false} htmlAttributes={{ lang: `${intl.locale}-NO` }}>
                 <meta charSet="utf-8" />
-                <title>{pageTitle || data.site.siteMetadata.title}</title>
+                <title>{pageTitle || siteTitle}</title>
             </Helmet>
             <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
             {children}

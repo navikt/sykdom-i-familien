@@ -3,8 +3,10 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 import TypografiBase from 'nav-frontend-typografi';
 import bemUtils from '../../../../../utils/bemUtils';
 import useWindowSize from '../../../../../hooks/useWindowSize';
-import { Link, FormattedMessage } from 'gatsby-plugin-intl';
+import { Link, FormattedMessage, InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import classNames from 'classnames';
+import { useStaticQuery, graphql } from 'gatsby';
+import { getSiteTitle } from '../../../../../utils/site';
 
 import './breadcrumbs.less';
 
@@ -33,14 +35,25 @@ const parsePath = (path: string) => {
 
 interface OwnProps {
     path: string;
+    currentPageTitle: string;
 }
 
 type Props = OwnProps;
 
-const Breadcrumbs = (props: Props) => {
+const Breadcrumbs = (props: Props & InjectedIntlProps) => {
     const { width } = useWindowSize();
-    const { path } = props;
-
+    const { path, currentPageTitle, intl } = props;
+    const siteMetadata = useStaticQuery(graphql`
+        query {
+            site {
+                siteMetadata {
+                    title_nb
+                    title_nn
+                }
+            }
+        }
+    `);
+    const siteTitle = getSiteTitle(siteMetadata, intl.locale);
     const breadcrumbChain: ReactNodeArray = [];
     const parsedPath = parsePath(path);
 
@@ -85,11 +98,9 @@ const Breadcrumbs = (props: Props) => {
                         [cls.element('current')]: current
                     })}>
                     {current ? (
-                        <FormattedMessage id={part.label} />
+                        currentPageTitle
                     ) : (
-                        <Link to={part.url}>
-                            <FormattedMessage id={part.label} />
-                        </Link>
+                        <Link to={part.url}>{index === 0 ? siteTitle : <FormattedMessage id={part.label} />}</Link>
                     )}
                 </TypografiBase>
             );
@@ -103,4 +114,4 @@ const Breadcrumbs = (props: Props) => {
     );
 };
 
-export default Breadcrumbs;
+export default injectIntl(Breadcrumbs);

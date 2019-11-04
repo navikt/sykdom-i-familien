@@ -2,7 +2,9 @@ require('dotenv').config();
 
 module.exports = {
     siteMetadata: {
-        title: `Sykdom i familien`
+        title: `Sykdom i familien`,
+        title_nb: `Sykdom i familien`,
+        title_nn: `Sjukdom i familien`
     },
     plugins: [
         {
