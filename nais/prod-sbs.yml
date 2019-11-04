@@ -9,14 +9,14 @@ spec:
   image: '{{ image }}:{{ tag }}'
   port: 8080
   liveness:
-    path: isAlive
-    initialDelay: 20
+    path: /nb/isAlive/
+    initialDelay: 3
     timeout: 1
     periodSeconds: 5
     failureThreshold: 10
   readiness:
-    path: isReady
-    initialDelay: 20
+    path: /nb/isReady/
+    initialDelay: 3
     timeout: 1
   resources:
     limits:

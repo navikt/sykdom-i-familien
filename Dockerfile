@@ -1,4 +1,4 @@
-FROM navikt/node-express:1.0.0
+FROM node:12
 
 ENV APPLICATION_NAME=sykdom-i-familien
 ENV PORT=8080
@@ -8,4 +8,4 @@ RUN ls -la
 
 CMD npm run serve
 
-EXPOSE $PORT
+EXPOSE ${PORT}
