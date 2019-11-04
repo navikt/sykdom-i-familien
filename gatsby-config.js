@@ -6,6 +6,13 @@ module.exports = {
     },
     plugins: [
         {
+            resolve: `gatsby-plugin-routes`,
+            options: {
+              // this is the path to your routes configuration file
+              path: `${__dirname}/src/routes.js`,
+            },
+          },
+        {
             resolve: 'gatsby-source-sanity',
             options: {
                 projectId: '8ux9tyb9',

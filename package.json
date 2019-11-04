@@ -31,6 +31,7 @@
         "gatsby-plugin-offline": "^3.0.7",
         "gatsby-plugin-react-helmet": "^3.1.7",
         "gatsby-plugin-react-svg": "^2.1.2",
+        "gatsby-plugin-routes": "^1.0.0",
         "gatsby-plugin-tslint": "0.0.2",
         "gatsby-plugin-typescript": "^2.1.8",
         "gatsby-remark-embed-markdown": "0.0.4",
