@@ -49,9 +49,10 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                     },
                     expandableContent: (props: { node: SanityExpandableContentSchema }) => {
                         const title = getSanityContentWithLocale(props.node.title, intl.locale);
+                        const blockContent = getSanityContentWithLocale(props.node.content, intl.locale);
                         return (
                             <Ekspanderbartpanel tittel={title} border={true}>
-                                <BlockContent blocks={props.node.content} />
+                                <BlockContent blocks={blockContent} />
                             </Ekspanderbartpanel>
                         );
                     },
