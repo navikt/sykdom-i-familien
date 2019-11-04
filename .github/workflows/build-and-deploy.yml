@@ -15,7 +15,7 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
         matrix:
-          node-version: [8.x, 12.x]
+          node-version: [8.x]
 
       steps:
       - uses: actions/checkout@v1
@@ -26,7 +26,7 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm ci
-          yarn run test
+          npm run test
 
   build-code-and-push-docker:
     name: Build code and push docker image
