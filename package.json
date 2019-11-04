@@ -6,8 +6,8 @@
     "license": "MIT",
     "scripts": {
         "fetch-decorator": "node ./plugins/nav-decorator/index.js",
-        "build": "npm run fetch  && gatsby build",
-        "develop": "npm run fetch && gatsby develop",
+        "build": "npm run fetch-decorator  && gatsby build",
+        "develop": "npm run fetch-decorator && gatsby develop",
         "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
         "start": "npm run develop",
         "serve": "gatsby serve -p $PORT -H 0.0.0.0",
