@@ -3,6 +3,8 @@
 .frontpagePanelWrapper {
     display: block;
     flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
 
     @media (min-width: @tablet-breakpoint) {
         display: flex;
@@ -12,11 +14,11 @@
     &__item {
         margin-bottom: 1rem;
         @media (min-width: @tablet-breakpoint) {
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             flex: 1 1 100%/3;
             min-width: 100%/3;
             max-width: 100%/3;
-            padding: 0 0.5rem;
+            padding: 0 1rem;
             > * {
                 height: 100%;
             }

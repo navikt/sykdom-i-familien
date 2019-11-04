@@ -24,7 +24,7 @@ const LinkPanel: React.FunctionComponent<Props> = ({ title, url, image, layout =
             <Link tabIndex={0} to={url}>
                 {image && <div className={bem.element('image')}>{image}</div>}
                 <div className={bem.element('content')}>
-                    <Undertittel className="title">{title}</Undertittel>
+                    <Undertittel className={bem.element('title')}>{title}</Undertittel>
                     <div>{children}</div>
                 </div>
                 {includeChevron && (

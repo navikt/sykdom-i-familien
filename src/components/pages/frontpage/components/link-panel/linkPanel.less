@@ -1,9 +1,27 @@
 @import '../../../../../styles/assets.less';
 
 .linkPanel {
+    @borderRadius: 0.25rem;
+
     display: block;
     background-color: white;
+    border-radius: @borderRadius;
 
+    &:hover,
+    &:focus {
+        box-shadow: @navGra40 0 2px 1px 0;
+        a,
+        .linkPanel__content {
+            color: @c-link !important;
+            text-decoration: underline;
+        }
+    }
+    &__title {
+        margin-bottom: 0.5rem;
+    }
+    p {
+        margin: 0;
+    }
     &__content {
         padding: 1rem;
         color: @c-text;
@@ -11,6 +29,8 @@
     &__image {
         display: block;
         background-color: @c-theme;
+        border-top-left-radius: @borderRadius;
+        border-top-right-radius: @borderRadius;
         border-bottom: 0.25rem solid @c-theme-dark;
         line-height: 0;
         padding: 1rem 0 0 0;
