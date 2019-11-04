@@ -40,7 +40,7 @@ export interface SanityGroupedContentSchema {
 export interface SanityExpandableContentSchema {
     name: string;
     title: SanityLocaleStringSchema;
-    content: SanityLocaleBlockSchema;
+    content: BlockContent;
 }
 
 export interface FrontpageSanityContentSchema {
