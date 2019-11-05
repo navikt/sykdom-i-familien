@@ -3,6 +3,9 @@
     "private": true,
     "description": "Informasjon vedrørende området sykdom i familien på nav.no",
     "version": "0.1.0",
+    "engines": {
+        "node": "10.x"
+      },
     "license": "MIT",
     "scripts": {
         "fetch-decorator": "node ./plugins/nav-decorator/index.js",
