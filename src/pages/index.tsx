@@ -105,7 +105,7 @@ const Hovedside: React.FunctionComponent<Props> = ({
 
 export const pageQuery = graphql`
     {
-        allSanityFrontpage(filter: { _id: { eq: "frontpage-config" } }) {
+        allSanityFrontpage {
             nodes {
                 _id
                 _rawTitle
