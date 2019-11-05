@@ -7,4 +7,5 @@ const intlHelper = (intl: InjectedIntl, id: string, value?: { [key: string]: Mes
 /** Get locale content */
 export const getLocale = (intl: InjectedIntl): Locale => (intl ? (intl.locale as Locale) : defaultLocale);
 
+// Another comment
 export default intlHelper;
