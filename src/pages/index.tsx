@@ -93,7 +93,6 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
                                 <SanityBlockContent content={story.description} />
                             </LinkPanel>
                         ))}
-                    <hr style={{ display: 'none' }} />
                 </FrontpagePanelWrapper>
             </Box>
         </Frontpage>
