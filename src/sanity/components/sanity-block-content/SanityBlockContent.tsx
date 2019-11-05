@@ -35,6 +35,9 @@ const BlockRenderer = (props: any) => {
 };
 
 const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({ content, intl }) => {
+    if (!content) {
+        return null;
+    }
     return (
         <BlockContent
             blocks={content}
