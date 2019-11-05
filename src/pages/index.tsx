@@ -61,11 +61,7 @@ interface FrontpageStory {
     url?: string;
 }
 
-const Hovedside: React.FunctionComponent<Props> = ({
-    data,
-    intl,
-    location
-}: Props & InjectedIntlProps & RouterProps) => {
+const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & InjectedIntlProps & RouterProps) => {
     const { title, ingress, illustration, stories: linkPanels } = extractFrontpageData(
         data.allSanityFrontpage.nodes[0],
         intl.locale
