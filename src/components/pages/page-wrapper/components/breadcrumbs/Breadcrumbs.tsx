@@ -68,12 +68,8 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
         );
 
         breadcrumbChain.push(
-            <TypografiBase
-                aria-label="Gå til forrige side"
-                key="tilbake"
-                type="normaltekst"
-                className={cls.element('item')}>
-                <Link to={lastUrl}>
+            <TypografiBase key="tilbake" type="normaltekst" className={cls.element('item')}>
+                <Link to={lastUrl} title="Gå til forrige side">
                     <FormattedMessage id="breadcrumbs.tilbake" />
                 </Link>
             </TypografiBase>
@@ -91,7 +87,6 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
             const current = index === parsedPath.length - 1;
             breadcrumbChain.push(
                 <TypografiBase
-                    aria-label={current ? 'Denne siden' : 'Tidligere side'}
                     key={`crumb${index}`}
                     type="normaltekst"
                     className={classNames(cls.element('item'), {
@@ -100,7 +95,9 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
                     {current ? (
                         currentPageTitle
                     ) : (
-                        <Link to={part.url}>{index === 0 ? siteTitle : <FormattedMessage id={part.label} />}</Link>
+                        <Link to={part.url} title={current ? 'Denne siden' : 'Tidligere side'}>
+                            {index === 0 ? siteTitle : <FormattedMessage id={part.label} />}
+                        </Link>
                     )}
                 </TypografiBase>
             );
