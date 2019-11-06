@@ -9,11 +9,11 @@
     "license": "MIT",
     "scripts": {
         "fetch-decorator": "node ./plugins/nav-decorator/index.js",
-        "build": "npm run fetch-decorator  && gatsby build",
+        "build": "npm run fetch-decorator  && gatsby build --prefix-paths",
         "develop": "npm run fetch-decorator && gatsby develop",
         "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
         "start": "npm run develop",
-        "serve": "gatsby serve -p $PORT -H 0.0.0.0",
+        "serve": "gatsby serve -p $PORT -H 0.0.0.0 --prefix-paths",
         "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \"",
         "debug": "gatsby clean && node --nolazy --inspect-brk node_modules/.bin/gatsby develop"
     },
