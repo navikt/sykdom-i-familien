@@ -2,15 +2,10 @@ import React from 'react';
 import { RouterProps } from '@reach/router';
 import { graphql } from 'gatsby';
 import SanityYtelsePage from '../../sanity/components/sanity-ytelse-page/SanityYtelsePage';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 export default (props: RouterProps & any) => {
     const { data, location } = props;
-    return (
-        <Normaltekst tag="div">
-            <SanityYtelsePage data={data.allSanityYtelsePage.edges[0].node} location={location} />;
-        </Normaltekst>
-    );
+    return <SanityYtelsePage data={data.allSanityYtelsePage.edges[0].node} location={location} />;
 };
 
 export const pageQuery = graphql`

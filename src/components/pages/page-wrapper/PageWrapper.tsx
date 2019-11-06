@@ -6,8 +6,10 @@ import { Locale } from '../../../i18n/locale';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { RouterProps } from '@reach/router';
 import LanguageToggle from './components/language-toggle/LanguageToggle';
-import './pageWrapper.less';
 import { getSiteTitle } from '../../../utils/site';
+import ScreenOnly from '../../elements/screen-only/ScreenOnly';
+
+import '../../../styles/main.less';
 
 interface Props {
     pageTitle?: string;
@@ -35,7 +37,9 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
                 <meta charSet="utf-8" />
                 <title>{pageTitle || siteTitle}</title>
             </Helmet>
-            <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
+            <ScreenOnly>
+                <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
+            </ScreenOnly>
             {children}
         </Normaltekst>
     );

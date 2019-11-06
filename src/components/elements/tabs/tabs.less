@@ -4,18 +4,12 @@
     width: 100%;
     max-width: 100%;
     margin-top: 1.5rem;
-
-    // &__tabs {
-    //     margin-bottom: 1.5rem;
-    //     position: relative;
-    //     z-index: 3;
-    // }
+    position: relative;
 
     &__tabTitle {
         margin-bottom: 1rem;
     }
 
-    // @media (min-width: @tablet-breakpoint) {
     &__tabs {
         display: flex;
         flex-direction: row;
@@ -23,6 +17,26 @@
         padding: 0 2rem;
         max-width: 100%;
         margin-bottom: 0.5rem;
+        @media print {
+            display: none;
+        }
     }
-    // }
+    &__panelTitle {
+        display: none;
+        @media print {
+            padding-top: 1rem;
+            display: block;
+        }
+    }
+    &__panel {
+        padding: 0;
+        @media screen {
+            &--selected {
+                display: block;
+            }
+            &--hidden {
+                display: none;
+            }
+        }
+    }
 }

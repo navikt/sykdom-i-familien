@@ -1,8 +1,13 @@
+@import './print.less';
+
 html {
     scroll-behavior: smooth;
 }
 body {
     background-color: #f2f2f2;
+    @media print {
+        background-color: white;
+    }
 }
 
 article .typo-undertittel {

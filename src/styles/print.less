@@ -1,0 +1,14 @@
+@import './assets.less';
+
+@media print {
+    .hodefot {
+        display: none;
+    }
+
+    a::after {
+        content: ' (' attr(href) ')';
+        font-size: smaller;
+        color: @c-text;
+        margin: 0 0.25rem;
+    }
+}

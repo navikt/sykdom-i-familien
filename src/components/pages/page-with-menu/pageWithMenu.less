@@ -8,6 +8,17 @@
     margin: 0;
     padding-top: 5rem;
 
+    @media print {
+        padding-top: 0;
+        &__article {
+            max-width: 100% !important;
+        }
+        &__breadcrumbs,
+        &__sidebar {
+            display: none !important;
+        }
+    }
+
     &__breadcrumbs {
         position: absolute;
         margin-top: -3rem;
