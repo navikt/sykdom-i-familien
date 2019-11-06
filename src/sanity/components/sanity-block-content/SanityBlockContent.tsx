@@ -14,6 +14,7 @@ import {
 } from '../../schema-types';
 import Veileder from '../../../components/veileder/Veileder';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
+import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
 
 interface Props {
     content: string;
@@ -53,7 +54,12 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                     expandableContent: (props: { node: SanityExpandableContentSchema }) => {
                         const title = getSanityContentWithLocale(props.node.title, intl.locale);
                         const blockContent = getSanityContentWithLocale(props.node.content, intl.locale);
-                        return (
+
+                        return 1 + 1 === 2 ? (
+                            <CollapsableTextBlock title={title}>
+                                <BlockContent blocks={blockContent} />
+                            </CollapsableTextBlock>
+                        ) : (
                             <Ekspanderbartpanel tittel={title} border={true}>
                                 <BlockContent blocks={blockContent} />
                             </Ekspanderbartpanel>
@@ -73,9 +79,9 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                         if (node.layout && node.layout === 'expandablePanel' && title !== undefined) {
                             const blockContent = getSanityContentWithLocale(node.content, intl.locale);
                             return (
-                                <Ekspanderbartpanel tittel={title} border={true}>
+                                <CollapsableTextBlock title={title}>
                                     <BlockContent blocks={blockContent} />
-                                </Ekspanderbartpanel>
+                                </CollapsableTextBlock>
                             );
                         }
                         return <SanityTitleAndText node={node} />;

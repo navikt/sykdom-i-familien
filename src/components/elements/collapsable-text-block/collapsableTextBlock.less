@@ -1,0 +1,22 @@
+.collapsableTextBlock {
+    /* Justere på grunn av animasjon */
+    p {
+        margin: 0;
+        padding-bottom: 1rem;
+    }
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    &__content,
+    &__toggler {
+        width: 100%;
+    }
+    &__toggler {
+        margin: 1rem 0 0.5rem 0;
+        .collapsableTextBlock__title {
+            margin: 0;
+            display: inline-block;
+            font-weight: normal;
+        }
+    }
+}

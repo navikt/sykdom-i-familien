@@ -5,7 +5,7 @@
     "version": "0.1.0",
     "engines": {
         "node": "10.x"
-      },
+    },
     "license": "MIT",
     "scripts": {
         "fetch-decorator": "node ./plugins/nav-decorator/index.js",
@@ -81,6 +81,7 @@
         "@types/node": "^12.7.7",
         "@types/react": "^16.9.2",
         "@types/react-aria-menubutton": "^6.2.2",
+        "@types/react-collapse": "^4.0.2",
         "@types/react-dom": "^16.9.0",
         "@types/react-helmet": "^5.0.10",
         "@types/react-intl": "^2.3.18",
