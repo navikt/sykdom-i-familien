@@ -4,7 +4,10 @@ import BlockContent from '@sanity/block-content-to-react';
 import { Locale, defaultLocale } from '../../../i18n/locale';
 import Box from '../../../components/layout/box/Box';
 import PanelWithTitleAndIllustration from '../../../components/panel-with-title-and-illustration/PanelWithTitleAndIllustration';
-import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
+import {
+    getSanityContentWithLocale,
+    getSanityStringWithLocale
+} from '../../../utils/sanity/getSanityContentWithLocale';
 import CircleIllustration from '../../../components/elements/circle-illustration/CircleIllustration';
 import styles from '../../../styles';
 import { Ingress } from 'nav-frontend-typografi';
@@ -14,6 +17,9 @@ import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import { SanityIllustrationSchema } from '../../schema-types';
 import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
 import LinkButton from '../../../components/elements/link-button/LinkButton';
+import traverse from 'traverse';
+import PrintOnly from '../../../components/elements/print-only/PrintOnly';
+import Lenke from 'nav-frontend-lenker';
 
 export interface YtelsePageData {
     title: string;
@@ -41,7 +47,7 @@ export const extractSectionData = (data: any[]): SectionContent[] => {
         return [];
     }
     return data.map((section) => {
-        const title = getSanityContentWithLocale(section.title, defaultLocale);
+        const title = getSanityStringWithLocale(section.title, defaultLocale);
         return {
             _key: section._key,
             slug: slugify(title || ''),
@@ -53,17 +59,61 @@ export const extractSectionData = (data: any[]): SectionContent[] => {
     });
 };
 
+const LinkRenderer = (props: any) => {
+    return (
+        <Lenke href={props.mark.href} data-link-number={props.mark.linkNumber}>
+            {props.children}
+        </Lenke>
+    );
+};
+
 export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
     return {
-        title: getSanityContentWithLocale(data._rawTitle, locale),
-        inShort: getSanityContentWithLocale(data._rawInShort, locale),
+        title: getSanityStringWithLocale(data._rawTitle, locale) as string,
+        inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent),
         illustration: data._rawIllustration
     };
 };
 
-const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl }: Props & InjectedIntlProps) => {
+const getAndApplyLinksInContent = (data: any) => {
+    const links: any[] = [];
+    const blocksWithMarks: any[] = [];
+    let linkCounter = 0;
+
+    const dataWithLinkNumbers = traverse(data).map((node) => {
+        if (node && typeof node === 'object') {
+            if (node._type === 'link') {
+                links.push({ ...node, linkNumber: linkCounter++ });
+                return { ...node, linkNumber: linkCounter };
+            } else if (node.marks) {
+                blocksWithMarks.push(node);
+            }
+        }
+        return node;
+    });
+    return {
+        data: dataWithLinkNumbers,
+        links: links.map((link) => {
+            const node = blocksWithMarks.find((block) => block.marks.find((m: any) => m === link._key));
+            return !node
+                ? undefined
+                : {
+                      url: link.href,
+                      _key: link._key,
+                      text: node.text,
+                      linkNumber: link.linkNumber
+                  };
+        })
+    };
+};
+
+export const extractLinksFromContent = {};
+
+const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
+    const { location, intl } = props;
+    const { data, links: linksInContent } = getAndApplyLinksInContent(props.data);
     const { title, inShort, sections, illustration, formUrl } = extractDataFromSanityYtelsePage(data, intl.locale);
     const inShortSection: SectionContent = {
         _key: 'inShortSection',
@@ -97,7 +147,14 @@ const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl
                 }>
                 {inShort && (
                     <Ingress className="inShortList" tag="div">
-                        <BlockContent blocks={inShort} />
+                        <BlockContent
+                            blocks={inShort}
+                            serializers={{
+                                marks: {
+                                    link: LinkRenderer
+                                }
+                            }}
+                        />
                     </Ingress>
                 )}
             </PanelWithTitleAndIllustration>
@@ -121,6 +178,17 @@ const SanityYtelsePage: React.FunctionComponent<Props> = ({ data, location, intl
                     {section.content && <SanityBlockContent content={section.content} />}
                 </PanelWithTitleAndIllustration>
             ))}
+            <PrintOnly>
+                <PanelWithTitleAndIllustration title="Lenker i dokumentet">
+                    <ol start={1}>
+                        {linksInContent.map((link) => (
+                            <li key={link!._key}>
+                                <p style={{ fontSize: 'small', wordBreak: 'break-all' }}>{link!.url}</p>
+                            </li>
+                        ))}
+                    </ol>
+                </PanelWithTitleAndIllustration>
+            </PrintOnly>
         </PageWithMenu>
     );
 };

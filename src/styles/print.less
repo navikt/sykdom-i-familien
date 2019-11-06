@@ -5,10 +5,13 @@
         display: none;
     }
 
-    a::after {
-        content: ' (' attr(href) ')';
-        font-size: smaller;
+    article a::after {
+        content: ' (' attr(data-link-number) ')';
+        font-size: small;
         color: @c-text;
+        position: relative;
+        display: inline-block;
         margin: 0 0.25rem;
+        transform: translateY(-0.5rem);
     }
 }

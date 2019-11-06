@@ -1,9 +1,16 @@
 import { Locale, defaultLocale } from '../../i18n/locale';
 
-export const getSanityContentWithLocale = (data: any, locale: Locale | string) => {
+export const getSanityContentWithLocale = (data: any, locale: Locale | string): string | string[] => {
     if (!data) {
-        return undefined;
+        return [];
     }
+    if (data && data[locale]) {
+        return data[locale];
+    }
+    return data[defaultLocale];
+};
+
+export const getSanityStringWithLocale = (data: any, locale: Locale | string): string => {
     if (data && data[locale]) {
         return data[locale];
     }

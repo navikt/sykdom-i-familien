@@ -2,7 +2,10 @@ import React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
 import { Undertittel } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { getSanityContentWithLocale } from '../../../utils/sanity/getSanityContentWithLocale';
+import {
+    getSanityContentWithLocale,
+    getSanityStringWithLocale
+} from '../../../utils/sanity/getSanityContentWithLocale';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import Box from '../../../components/layout/box/Box';
 import SanityTabs from '../sanity-grouped-content/SanityGroupedContent';
@@ -19,21 +22,6 @@ import CollapsableTextBlock from '../../../components/elements/collapsable-text-
 interface Props {
     content: string;
 }
-
-const BlockRenderer = (props: any) => {
-    const style = props.node.style || 'normal';
-
-    if (/^h\d/.test(style)) {
-        const level = style.replace(/[^\d]/g, '');
-        return <Undertittel tag={`h${level}`}>{props.children}</Undertittel>;
-    }
-
-    return style === 'blockquote' ? (
-        <blockquote className="my-block-quote">{props.children}</blockquote>
-    ) : (
-        <p>{props.children}</p>
-    );
-};
 
 const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({ content, intl }) => {
     if (!content) {
@@ -52,7 +40,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                         );
                     },
                     expandableContent: (props: { node: SanityExpandableContentSchema }) => {
-                        const title = getSanityContentWithLocale(props.node.title, intl.locale);
+                        const title = getSanityStringWithLocale(props.node.title, intl.locale);
                         const blockContent = getSanityContentWithLocale(props.node.content, intl.locale);
 
                         return 1 + 1 === 2 ? (
@@ -75,7 +63,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                     },
                     groupedContent: ({ node }: { node: SanityGroupedContentSchema }) => <SanityTabs node={node} />,
                     titleAndText: ({ node }: any) => {
-                        const title = getSanityContentWithLocale(node.title, intl.locale);
+                        const title = node.title ? getSanityStringWithLocale(node.title, intl.locale) : undefined;
                         if (node.layout && node.layout === 'expandablePanel' && title !== undefined) {
                             const blockContent = getSanityContentWithLocale(node.content, intl.locale);
                             return (
@@ -85,8 +73,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             );
                         }
                         return <SanityTitleAndText node={node} />;
-                    },
-                    block: BlockRenderer
+                    }
                 }
             }}
         />
