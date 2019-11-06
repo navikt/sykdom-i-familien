@@ -9,13 +9,13 @@ spec:
   image: '{{ image }}:{{ tag }}'
   port: 8080
   liveness:
-    path: /familie/isalive.txt
+    path: /isalive.txt
     initialDelay: 3
     timeout: 1
     periodSeconds: 5
     failureThreshold: 10
   readiness:
-    path: /familie/isready.txt
+    path: /isready.txt
     initialDelay: 3
     timeout: 1
   resources:
@@ -27,7 +27,7 @@ spec:
       memory: 768Mi
   ingresses:
         - https://sykdom-i-familien.nav.no
-        - https://sykdom-i-familien.nais.oera.no
+        - https://sykdom-i-familien.nais.oera.no/familie
   replicas:
     min: 1
     max: 1
