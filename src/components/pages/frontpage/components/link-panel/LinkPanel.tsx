@@ -11,7 +11,10 @@ type LinkPanelLayout = 'frontpageImageAbove' | 'wideWithImage' | 'plain';
 interface Props {
     image?: React.ReactNode;
     title: string;
-    url: string;
+    url: {
+        url: string;
+        isPageSlug: boolean;
+    };
     layout?: LinkPanelLayout;
 }
 
@@ -19,20 +22,31 @@ const bem = bemUtils('linkPanel');
 
 const LinkPanel: React.FunctionComponent<Props> = ({ title, url, image, layout = 'frontpageImageAbove', children }) => {
     const includeChevron = layout === 'plain' || layout === 'wideWithImage';
+    const content = (
+        <>
+            {image && <div className={bem.element('image')}>{image}</div>}
+            <div className={bem.element('content')}>
+                <Undertittel className={bem.element('title')}>{title}</Undertittel>
+                <div>{children}</div>
+            </div>
+            {includeChevron && (
+                <div className={bem.element('chevron')}>
+                    <HoyreChevron />
+                </div>
+            )}
+        </>
+    );
     return (
         <div className={bem.block}>
-            <Link tabIndex={0} to={url}>
-                {image && <div className={bem.element('image')}>{image}</div>}
-                <div className={bem.element('content')}>
-                    <Undertittel className={bem.element('title')}>{title}</Undertittel>
-                    <div>{children}</div>
-                </div>
-                {includeChevron && (
-                    <div className={bem.element('chevron')}>
-                        <HoyreChevron />
-                    </div>
-                )}
-            </Link>
+            {url.isPageSlug ? (
+                <Link tabIndex={0} to={url.url}>
+                    {content}
+                </Link>
+            ) : (
+                <a href={url.url} rel="noopener">
+                    {content}
+                </a>
+            )}
         </div>
     );
 };

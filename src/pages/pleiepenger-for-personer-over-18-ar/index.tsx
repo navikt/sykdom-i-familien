@@ -15,13 +15,16 @@ export default (props: RouterProps & any) => {
 
 export const pageQuery = graphql`
     {
-        allSanityYtelsePage(filter: { ytelse: { key: { eq: "pp-sykt-barn" } } }) {
+        allSanityYtelsePage(filter: { slug: { current: { eq: "pleiepenger-for-personer-over-18-ar" } } }) {
             edges {
                 node {
                     ytelse {
                         id
                         name
                         formUrl
+                    }
+                    slug {
+                        current
                     }
                     _rawTitle
                     _rawIllustration(resolveReferences: { maxDepth: 4 })

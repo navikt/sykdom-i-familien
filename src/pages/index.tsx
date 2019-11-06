@@ -21,6 +21,7 @@ interface Props {
 
 const extractFrontpageData = (data: FrontpageSanityContentSchema, locale: string): FrontpageSanityData => {
     const { _rawIllustration, _rawIngress, _rawTitle, _rawFrontpageStories } = data;
+
     return {
         title: getSanityContentWithLocale(_rawTitle, locale),
         ingress: getSanityContentWithLocale(_rawIngress, locale),
@@ -36,12 +37,8 @@ const extractFrontpageData = (data: FrontpageSanityContentSchema, locale: string
                 ),
                 description: getSanityContentWithLocale(story.content, locale),
                 illustration: story.illustration,
-                url:
-                    story._type === 'frontpageLink'
-                        ? story.url
-                        : story.page.slug
-                        ? `/${story.page.slug.current}`
-                        : undefined
+                isPageSlug: story._type === 'frontpagePageLink',
+                url: story._type === 'frontpageLink' ? story.url : story.page.slug ? `/${story.page.slug.current}` : ''
             };
         })
     };
@@ -58,7 +55,8 @@ interface FrontpageStory {
     title: string;
     description: string;
     illustration: SanityIllustrationSchema;
-    url?: string;
+    url: string;
+    isPageSlug: boolean;
 }
 
 const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & InjectedIntlProps & RouterProps) => {
@@ -82,7 +80,7 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
                             <LinkPanel
                                 key={index}
                                 title={story.title}
-                                url={story.url || ''}
+                                url={{ url: story.url, isPageSlug: story.isPageSlug }}
                                 image={
                                     story.illustration ? (
                                         <SanityIllustration illustration={story.illustration} />

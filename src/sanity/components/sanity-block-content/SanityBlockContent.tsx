@@ -69,6 +69,15 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                     },
                     groupedContent: ({ node }: { node: SanityGroupedContentSchema }) => <SanityTabs node={node} />,
                     titleAndText: ({ node }: any) => {
+                        const title = getSanityContentWithLocale(node.title, intl.locale);
+                        if (node.layout && node.layout === 'expandablePanel' && title !== undefined) {
+                            const blockContent = getSanityContentWithLocale(node.content, intl.locale);
+                            return (
+                                <Ekspanderbartpanel tittel={title} border={true}>
+                                    <BlockContent blocks={blockContent} />
+                                </Ekspanderbartpanel>
+                            );
+                        }
                         return <SanityTitleAndText node={node} />;
                     },
                     block: BlockRenderer
