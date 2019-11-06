@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
+    pathPrefix: `/familie/sykdom-i-familien`,
     siteMetadata: {
         title: `Sykdom i familien`,
         title_nb: `Sykdom i familien`,
