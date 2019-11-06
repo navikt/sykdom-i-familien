@@ -3,11 +3,11 @@ interface LocaleString {
     nn: string;
 }
 interface LocaleBlock {
-    nb: BlockContent;
-    nn: BlockContent;
+    nb: BlockContentType;
+    nn: BlockContentType;
 }
 
-type BlockContent = string | string[];
+export type BlockContentType = string | string[];
 
 export type SanityLocaleStringSchema = LocaleString;
 export type SanityLocaleTextSchema = LocaleString;
@@ -16,7 +16,7 @@ export type SanityLocaleRichText = LocaleBlock;
 
 export interface SanityTitleAndContentBlockSchema {
     title: SanityLocaleStringSchema;
-    content: BlockContent;
+    content: BlockContentType;
 }
 
 export type SanityInternalCommonSchema = SanityTitleAndContentBlockSchema;
@@ -40,7 +40,7 @@ export interface SanityGroupedContentSchema {
 export interface SanityExpandableContentSchema {
     name: string;
     title: SanityLocaleStringSchema;
-    content: BlockContent;
+    content: BlockContentType;
 }
 
 export interface FrontpageSanityContentSchema {

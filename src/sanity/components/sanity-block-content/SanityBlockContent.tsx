@@ -1,6 +1,5 @@
 import React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
-import { Undertittel } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import {
     getSanityContentWithLocale,
@@ -18,6 +17,7 @@ import {
 import Veileder from '../../../components/veileder/Veileder';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
+import SanityBlock from '../sanity-block/SanityBlock';
 
 interface Props {
     content: string;
@@ -45,11 +45,11 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
 
                         return 1 + 1 === 2 ? (
                             <CollapsableTextBlock title={title}>
-                                <BlockContent blocks={blockContent} />
+                                <SanityBlock content={blockContent} />
                             </CollapsableTextBlock>
                         ) : (
                             <Ekspanderbartpanel tittel={title} border={true}>
-                                <BlockContent blocks={blockContent} />
+                                <SanityBlock content={blockContent} />
                             </Ekspanderbartpanel>
                         );
                     },
@@ -57,7 +57,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                         const contentBlocks = getSanityContentWithLocale(node.content, intl.locale);
                         return (
                             <Veileder ansikt={node.face || 'glad'} fargetema={node.color || 'normal'}>
-                                <BlockContent blocks={contentBlocks} />
+                                <SanityBlock content={contentBlocks} />
                             </Veileder>
                         );
                     },
@@ -68,7 +68,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             const blockContent = getSanityContentWithLocale(node.content, intl.locale);
                             return (
                                 <CollapsableTextBlock title={title}>
-                                    <BlockContent blocks={blockContent} />
+                                    <SanityBlock content={blockContent} />
                                 </CollapsableTextBlock>
                             );
                         }

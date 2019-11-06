@@ -1,6 +1,5 @@
 import React from 'react';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import BlockContent from '@sanity/block-content-to-react';
 import { Locale, defaultLocale } from '../../../i18n/locale';
 import Box from '../../../components/layout/box/Box';
 import PanelWithTitleAndIllustration from '../../../components/panel-with-title-and-illustration/PanelWithTitleAndIllustration';
@@ -19,7 +18,7 @@ import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu'
 import LinkButton from '../../../components/elements/link-button/LinkButton';
 import traverse from 'traverse';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
-import Lenke from 'nav-frontend-lenker';
+import SanityBlock from '../sanity-block/SanityBlock';
 
 export interface YtelsePageData {
     title: string;
@@ -32,7 +31,7 @@ export interface YtelsePageData {
 interface SectionContent {
     _key: string;
     slug: string;
-    title: string;
+    title?: string;
     illustration: SanityIllustrationSchema;
     content?: string;
 }
@@ -59,14 +58,6 @@ export const extractSectionData = (data: any[]): SectionContent[] => {
     });
 };
 
-const LinkRenderer = (props: any) => {
-    return (
-        <Lenke href={props.mark.href} data-link-number={props.mark.linkNumber}>
-            {props.children}
-        </Lenke>
-    );
-};
-
 export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
     return {
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
@@ -80,13 +71,14 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
 const getAndApplyLinksInContent = (data: any) => {
     const links: any[] = [];
     const blocksWithMarks: any[] = [];
-    let linkCounter = 0;
+    let linkCounter = 1;
 
     const dataWithLinkNumbers = traverse(data).map((node) => {
         if (node && typeof node === 'object') {
             if (node._type === 'link') {
+                const modifiedNode = { ...node, linkNumber: linkCounter };
                 links.push({ ...node, linkNumber: linkCounter++ });
-                return { ...node, linkNumber: linkCounter };
+                return modifiedNode;
             } else if (node.marks) {
                 blocksWithMarks.push(node);
             }
@@ -128,7 +120,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
             pageTitle={title}
             location={location}
             sectionMenuItems={[inShortSection, ...sections].map((section) => ({
-                label: section.title,
+                label: section.title || '',
                 slug: section.slug
             }))}
             menuFooter={<LinkButton href={formUrl}>Søk nå</LinkButton>}>
@@ -147,14 +139,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                 }>
                 {inShort && (
                     <Ingress className="inShortList" tag="div">
-                        <BlockContent
-                            blocks={inShort}
-                            serializers={{
-                                marks: {
-                                    link: LinkRenderer
-                                }
-                            }}
-                        />
+                        <SanityBlock content={inShort} />
                     </Ingress>
                 )}
             </PanelWithTitleAndIllustration>
@@ -183,7 +168,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     <ol start={1}>
                         {linksInContent.map((link) => (
                             <li key={link!._key}>
-                                <p style={{ fontSize: 'small', wordBreak: 'break-all' }}>{link!.url}</p>
+                                <p style={{ wordBreak: 'break-all' }}>{link!.url}</p>
                             </li>
                         ))}
                     </ol>

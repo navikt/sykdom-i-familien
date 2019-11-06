@@ -13,7 +13,7 @@ const PanelWithTitleAndIllustration = ({
     children,
     titleTag = 'h2'
 }: {
-    title: string;
+    title?: string;
     illustration?: React.ReactNode;
     children: ReactNode;
     id?: string;
@@ -29,9 +29,11 @@ const PanelWithTitleAndIllustration = ({
             )}>
             <PanelBase>
                 {illustration && <div className={bem.element('illustration')}>{illustration}</div>}
-                <div className={bem.element('title')}>
-                    <Systemtittel tag={titleTag}>{title}</Systemtittel>
-                </div>
+                {title && (
+                    <div className={bem.element('title')}>
+                        <Systemtittel tag={titleTag}>{title}</Systemtittel>
+                    </div>
+                )}
                 {children}
             </PanelBase>
         </section>

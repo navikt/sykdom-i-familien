@@ -9,9 +9,9 @@ import Box from '../components/layout/box/Box';
 import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
 import { graphql } from 'gatsby';
 import { FrontpageSanityContentSchema, SanityIllustrationSchema } from '../sanity/schema-types';
-import { getSanityContentWithLocale } from '../utils/sanity/getSanityContentWithLocale';
-import SanityBlockContent from '../sanity/components/sanity-block-content/SanityBlockContent';
+import { getSanityStringWithLocale } from '../utils/sanity/getSanityContentWithLocale';
 import SanityIllustration from '../sanity/components/sanity-illustration/SanityIllustrationContent';
+import SanityBlock from '../sanity/components/sanity-block/SanityBlock';
 
 interface Props {
     data: any;
@@ -23,19 +23,19 @@ const extractFrontpageData = (data: FrontpageSanityContentSchema, locale: string
     const { _rawIllustration, _rawIngress, _rawTitle, _rawFrontpageStories } = data;
 
     return {
-        title: getSanityContentWithLocale(_rawTitle, locale),
-        ingress: getSanityContentWithLocale(_rawIngress, locale),
+        title: getSanityStringWithLocale(_rawTitle, locale),
+        ingress: getSanityStringWithLocale(_rawIngress, locale),
         illustration: {
             title: _rawIllustration.name,
             svg: _rawIllustration.svg
         },
         stories: _rawFrontpageStories.map((story) => {
             return {
-                title: getSanityContentWithLocale(
+                title: getSanityStringWithLocale(
                     story._type === 'frontpageLink' ? story.title : story.page.title,
                     locale
                 ),
-                description: getSanityContentWithLocale(story.content, locale),
+                description: getSanityStringWithLocale(story.content, locale),
                 illustration: story.illustration,
                 isPageSlug: story._type === 'frontpagePageLink',
                 url: story._type === 'frontpageLink' ? story.url : story.page.slug ? `/${story.page.slug.current}` : ''
@@ -45,15 +45,15 @@ const extractFrontpageData = (data: FrontpageSanityContentSchema, locale: string
 };
 
 export interface FrontpageSanityData {
-    title: string;
-    ingress: string;
+    title?: string;
+    ingress?: string;
     illustration: SanityIllustrationSchema;
     stories?: FrontpageStory[];
 }
 
 interface FrontpageStory {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
     illustration: SanityIllustrationSchema;
     url: string;
     isPageSlug: boolean;
@@ -67,11 +67,15 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
     return (
         <Frontpage
             header={
-                <FrontpagePoster
-                    title={title}
-                    illustration={<SanityIllustration illustration={illustration} maintainAspectRatio={true} />}>
-                    <SanityBlockContent content={ingress} />
-                </FrontpagePoster>
+                title && ingress ? (
+                    <FrontpagePoster
+                        title={title}
+                        illustration={<SanityIllustration illustration={illustration} maintainAspectRatio={true} />}>
+                        <SanityBlock content={ingress} />
+                    </FrontpagePoster>
+                ) : (
+                    undefined
+                )
             }>
             <Box>
                 <FrontpagePanelWrapper>
@@ -79,7 +83,7 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
                         linkPanels.map((story, index) => (
                             <LinkPanel
                                 key={index}
-                                title={story.title}
+                                title={story.title || ''}
                                 url={{ url: story.url, isPageSlug: story.isPageSlug }}
                                 image={
                                     story.illustration ? (
@@ -88,7 +92,7 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
                                         undefined
                                     )
                                 }>
-                                <SanityBlockContent content={story.description} />
+                                {story.description && <SanityBlock content={story.description} />}
                             </LinkPanel>
                         ))}
                 </FrontpagePanelWrapper>
