@@ -26,7 +26,7 @@ spec:
       cpu: 200m
       memory: 768Mi
   ingresses:
-        - https://sykdom-i-familien-q.nav.no
+        - https://www-q0.nav.no/familie/sykdom-i-familien
         - https://sykdom-i-familien.nais.oera-q.local
   replicas:
     min: 1
