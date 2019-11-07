@@ -18,6 +18,8 @@ import Veileder from '../../../components/veileder/Veileder';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
 import SanityBlock from '../sanity-block/SanityBlock';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import VeilederSvg from '../../../components/veileder/VeilederSvg';
 
 interface Props {
     content: string;
@@ -56,7 +58,11 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                     veilederpanel: ({ node }: any) => {
                         const contentBlocks = getSanityContentWithLocale(node.content, intl.locale);
                         return (
-                            <Veileder ansikt={node.face || 'glad'} fargetema={node.color || 'normal'}>
+                            <Veileder
+                                ansikt={node.face || 'glad'}
+                                fargetema={node.color || 'normal'}
+                                type={node.type}
+                                kompakt={node.kompakt === 'kompakt'}>
                                 <SanityBlock content={contentBlocks} />
                             </Veileder>
                         );
