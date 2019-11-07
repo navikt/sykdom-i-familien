@@ -1,15 +1,34 @@
 @import '../../../../../styles/assets.less';
 
-.frontpagePoster {
+.pageBanner {
     display: block;
-    border-bottom: 0.25rem solid @c-theme-dark;
     background-color: @c-theme;
     padding-top: 2rem;
+    &__borderBox {
+        border-bottom: 0.25rem solid @c-theme-dark;
+        min-height: 180px;
+    }
+    &--wide {
+        padding-top: 1rem;
+        .pageBanner__borderBox {
+            min-height: 5rem;
+        }
+        .pageBanner__contentWrapper {
+            max-width: @app-wide-max-width;
+        }
+    }
+    &__footer {
+        background-color: #3385d1;
+        .pageBanner__contentWrapper {
+            padding: 0.5rem 0 0.5rem 1rem;
+        }
+        margin: 0 auto;
+        color: white;
+    }
     &__contentWrapper {
         display: flex;
         position: relative;
         max-width: @app-max-width;
-        min-height: 180px;
         margin: 0 auto;
         align-items: baseline;
         flex-direction: column;
@@ -24,13 +43,18 @@
     &__text {
         display: flex;
         flex-direction: column;
-        padding: 1rem 1rem 1.4rem;
+        padding: 1rem 1rem 2rem 1rem;
         line-height: 1.45rem;
         z-index: 1;
         width: 100%;
         min-height: 5rem;
         @media (min-width: @mobile-breakpoint) {
             max-width: 55%;
+        }
+        @media (min-width: @tablet-breakpoint) {
+            .pageBanner--wide & {
+                max-width: 45%;
+            }
         }
     }
     &__illustration {
@@ -50,6 +74,9 @@
             bottom: 0;
             right: 1rem;
             min-width: 25rem;
+            .pageBanner--wide & {
+                min-width: 31rem;
+            }
         }
     }
     &__title {

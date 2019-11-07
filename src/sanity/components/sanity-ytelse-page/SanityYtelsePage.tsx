@@ -19,6 +19,8 @@ import LinkButton from '../../../components/elements/link-button/LinkButton';
 import traverse from 'traverse';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import SanityBlock from '../sanity-block/SanityBlock';
+import PagePoster from '../../../components/pages/frontpage/components/page-banner/PageBanner';
+import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 
 export interface YtelsePageData {
     title: string;
@@ -26,6 +28,7 @@ export interface YtelsePageData {
     formUrl: string;
     sections: SectionContent[];
     illustration: SanityIllustrationSchema;
+    banner?: SanityIllustrationSchema;
 }
 
 interface SectionContent {
@@ -61,6 +64,7 @@ export const extractSectionData = (data: any[]): SectionContent[] => {
 export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
     return {
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
+        banner: data._rawBanner,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent),
@@ -106,7 +110,10 @@ export const extractLinksFromContent = {};
 const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
     const { location, intl } = props;
     const { data, links: linksInContent } = getAndApplyLinksInContent(props.data);
-    const { title, inShort, sections, illustration, formUrl } = extractDataFromSanityYtelsePage(data, intl.locale);
+    const { title, inShort, sections, banner, illustration, formUrl } = extractDataFromSanityYtelsePage(
+        data,
+        intl.locale
+    );
     const inShortSection: SectionContent = {
         _key: 'inShortSection',
         title,
@@ -123,6 +130,20 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                 label: section.title || '',
                 slug: section.slug
             }))}
+            header={
+                banner ? (
+                    <PagePoster
+                        wide={true}
+                        title={title}
+                        footer={'Tema: Sykdom i familien'}
+                        illustration={<SanityIllustration illustration={banner} maintainAspectRatio={true} />}>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia iure quidem, deserunt laborum,
+                        odit enim porro
+                    </PagePoster>
+                ) : (
+                    undefined
+                )
+            }
             menuFooter={<LinkButton href={formUrl}>Søk nå</LinkButton>}>
             <PanelWithTitleAndIllustration
                 titleTag="h1"

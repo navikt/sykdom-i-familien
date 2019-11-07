@@ -1,6 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'gatsby-plugin-intl';
-import FrontpagePoster from '../components/pages/frontpage/components/frontpage-poster/FrontpagePoster';
+import PageBanner from '../components/pages/frontpage/components/page-banner/PageBanner';
 import { InjectedIntlProps } from 'react-intl';
 import FrontpagePanelWrapper from '../components/pages/frontpage/components/frontpage-panel-wrapper/FrontpagePanelWrapper';
 import { RouterProps } from '@reach/router';
@@ -68,11 +68,11 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
         <Frontpage
             header={
                 title && ingress ? (
-                    <FrontpagePoster
+                    <PageBanner
                         title={title}
                         illustration={<SanityIllustration illustration={illustration} maintainAspectRatio={true} />}>
                         <SanityBlock content={ingress} />
-                    </FrontpagePoster>
+                    </PageBanner>
                 ) : (
                     undefined
                 )

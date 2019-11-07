@@ -21,6 +21,7 @@ interface Props {
     sectionMenuItems: SectionMenuItem[];
     menuFooter?: React.ReactNode;
     children: React.ReactNode;
+    header?: React.ReactNode;
 }
 
 const bem = bemUtils('pageWithMenu');
@@ -29,6 +30,7 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
     pageTitle,
     sectionMenuItems,
     menuFooter,
+    header,
     children
 }) => {
     const sectionIds = sectionMenuItems.map((section) => section.slug);
@@ -44,6 +46,7 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
 
     return (
         <PageWrapper pageTitle={pageTitle}>
+            {header && <div className={bem.element('header')}>{header}</div>}
             <div className={bem.block}>
                 <MediaQuery minWidth={1072}>
                     <div className={bem.element('sidebar')}>
