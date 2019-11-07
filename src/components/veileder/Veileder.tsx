@@ -8,12 +8,13 @@ interface VeilederProps {
     fargetema?: 'normal' | 'suksess' | 'advarsel' | 'feilmelding';
     ansikt?: 'glad' | 'undrende' | 'skeptisk';
     kompakt?: boolean;
+    type: 'normal' | 'plakat';
     children: any;
     className?: any;
 }
 
 const Veileder = (props: VeilederProps) => {
-    const { fargetema = 'normal', ansikt = 'glad', kompakt = true, children, className } = props;
+    const { fargetema = 'normal', ansikt = 'glad', kompakt = true, type = 'normal', children, className } = props;
 
     const svgProps = {
         className: classnames('veileder', `veileder--${ansikt}`)
@@ -27,6 +28,7 @@ const Veileder = (props: VeilederProps) => {
             }}
             svg={<VeilederSvg svgProps={svgProps} />}
             fargetema={fargetema}
+            type={type}
             kompakt={kompakt}>
             {children}
         </Veilederpanel>

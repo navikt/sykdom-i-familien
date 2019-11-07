@@ -1,3 +1,5 @@
+@import '../../styles/assets.less';
+
 @blinkDuration: 6s;
 @hairstrandNBaseTransform: rotate(-24deg) translateX(30px) translateY(23px);
 @blowHairDuration: 60s;
@@ -9,6 +11,9 @@
     transform: translateZ(0);
 }
 
+.nav-veileder__frame {
+    background-color: @c-theme;
+}
 .veileder {
     .chromeSvgRenderFix();
     -webkit-backface-visibility: hidden;
