@@ -7,7 +7,7 @@ import {
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import Box from '../../../components/layout/box/Box';
-import SanityTabs from '../sanity-grouped-content/SanityGroupedContent';
+import SanityGroupedContent from '../sanity-grouped-content/SanityGroupedContent';
 import SanityTitleAndText from '../sanity-title-and-text/SanityTitleAndText';
 import {
     SanityGroupedContentSchema,
@@ -61,7 +61,9 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             </Veileder>
                         );
                     },
-                    groupedContent: ({ node }: { node: SanityGroupedContentSchema }) => <SanityTabs node={node} />,
+                    groupedContent: ({ node }: { node: SanityGroupedContentSchema }) => (
+                        <SanityGroupedContent node={node} />
+                    ),
                     titleAndText: ({ node }: any) => {
                         const title = node.title ? getSanityStringWithLocale(node.title, intl.locale) : undefined;
                         if (node.layout && node.layout === 'expandablePanel' && title !== undefined) {

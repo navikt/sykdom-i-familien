@@ -11,7 +11,7 @@
     &--wide {
         padding-top: 1rem;
         .pageBanner__borderBox {
-            min-height: 5rem;
+            min-height: 8rem;
         }
         .pageBanner__contentWrapper {
             max-width: @app-wide-max-width;
@@ -63,6 +63,9 @@
         margin: 0 auto;
         line-height: 0;
         min-width: 20rem;
+        .pageBanner--wide & {
+            padding: 1rem 0;
+        }
         @media (min-width: @mobile-breakpoint) {
             position: absolute;
             bottom: 0;

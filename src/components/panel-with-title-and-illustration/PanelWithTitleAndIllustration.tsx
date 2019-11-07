@@ -27,7 +27,7 @@ const PanelWithTitleAndIllustration = ({
                 bem.block,
                 bem.modifierConditional('withIllustration', illustration !== undefined)
             )}>
-            <PanelBase>
+            <PanelBase className={bem.element('panel')}>
                 {illustration && <div className={bem.element('illustration')}>{illustration}</div>}
                 {title && (
                     <div className={bem.element('title')}>
