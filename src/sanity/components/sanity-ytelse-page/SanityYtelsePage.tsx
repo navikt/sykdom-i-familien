@@ -62,7 +62,6 @@ export const extractSectionData = (data: any[]): SectionContent[] => {
 };
 
 export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
-    console.log(data);
     return {
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
         banner: data._rawBanner,
