@@ -40,18 +40,20 @@ const Tabs: React.FunctionComponent<TabsProps> = ({ tabs, presentation, title }:
                     ))}
                 </div>
             ) : (
-                <div className={bem.modifier('tabsSelect')}>
+                <>
                     {title && (
                         <Undertittel tag="h3" className={bem.element('title')}>
                             {title}
                         </Undertittel>
                     )}
-                    <Select
-                        choices={tabs}
-                        onChoiceSelect={(index) => selectTab({ index })}
-                        selected={tabs[selectedTab.index]}
-                    />
-                </div>
+                    <div className={bem.element('select')}>
+                        <Select
+                            choices={tabs}
+                            onChoiceSelect={(index) => selectTab({ index })}
+                            selected={tabs[selectedTab.index]}
+                        />
+                    </div>
+                </>
             )}
             {tabs.map((tab) => (
                 <TabPanel key={tab.index} tab={tab} selected={tab.index === selectedTab.index} />

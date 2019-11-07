@@ -21,10 +21,16 @@
             display: none;
         }
     }
+    &__select {
+        @media print {
+            display: none;
+        }
+    }
     &__panelTitle {
         display: none;
         @media print {
             padding-top: 1rem;
+            margin: 0 !important;
             display: block;
         }
     }
@@ -37,6 +43,9 @@
             &--hidden {
                 display: none;
             }
+        }
+        @media print {
+            margin: 0 !important;
         }
     }
 }

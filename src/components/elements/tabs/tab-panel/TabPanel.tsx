@@ -13,7 +13,9 @@ const bem = bemUtils('tabs');
 
 const TabPanel: React.FunctionComponent<Props> = ({ tab, selected }) => (
     <div role="tabpanel" key={tab.label} className={bem.element('panel', selected ? 'selected' : 'hidden')}>
-        <Systemtittel className={bem.element('panelTitle')}>{tab.label}</Systemtittel>
+        <Systemtittel tag="h3" className={bem.element('panelTitle')}>
+            {tab.label}
+        </Systemtittel>
         <SanityBlockContent content={tab.content as string} />
     </div>
 );
