@@ -46,6 +46,7 @@ jobs:
         env: 
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
         run: |
+          sh scripts/resolve-dataset-environment.sh
           npm i
           npm run build
       - name: debug 1
