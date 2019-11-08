@@ -46,7 +46,8 @@ jobs:
         env: 
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
         run: |
-          sh scripts/resolve-dataset-environment.sh # Export a DATADSET_ENV envrionment variable with either staging or production.
+          source scripts/resolve-dataset-environment.sh # Export a DATADSET_ENV envrionment variable with either staging or production.
+          echo "Exported DATASET_ENV=$DATASET_ENV"
           npm i
           npm run build
       - name: debug 1
