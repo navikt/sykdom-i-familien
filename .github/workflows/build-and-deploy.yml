@@ -1,4 +1,4 @@
-# This workflow trigger on push to any branch.
+# This workflow trigger on push to any branch
 name: CI / CD
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
 
   build-code-and-push-docker:
     name: Build code and push docker image
-    if: github.ref == 'refs/heads/dev-*' || github.ref == 'refs/heads/master' # Build and push docker if branch is either master or dev-*
+    if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -46,6 +46,8 @@ jobs:
         env: 
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
         run: |
+          source scripts/resolve-dataset-environment.sh # Export a DATADSET_ENV envrionment variable with either staging or production.
+          echo "Exported DATASET_ENV=$DATASET_ENV"
           npm i
           npm run build
       - name: debug 1
@@ -80,7 +82,7 @@ jobs:
 
   deploy-dev-sbs:
     name: Deploy to dev-sbs
-    if: github.ref == 'refs/heads/dev-*' || github.ref == 'refs/heads/master' # Deploy if branch is either master or dev-*
+    if: startsWith(github.ref, 'refs/heads/dev-') # Deploy if branch is dev-*
     needs: build-code-and-push-docker # Depends on build-code-and-push-docker job
     runs-on: ubuntu-latest
     steps:
@@ -112,7 +114,7 @@ jobs:
 
   deploy-prod-sbs:
     name: Deploy to prod-sbs
-    if: github.ref == 'refs/heads/master'  # If the branch is master
+    if: startsWith(github.ref, 'refs/heads/master')  # If the branch is master
     needs: build-code-and-push-docker # Depends on build-code-and-push-docker job
     runs-on: ubuntu-latest
     steps:
