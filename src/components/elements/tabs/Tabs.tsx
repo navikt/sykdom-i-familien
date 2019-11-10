@@ -6,12 +6,13 @@ import TabPanel from './tab-panel/TabPanel';
 import './tabs.less';
 import Select from './select/Select';
 import { Undertittel } from 'nav-frontend-typografi';
+import { BlockContentObjectTypes } from '../../../sanity/types/objects';
 
 export interface Tab {
     index: number;
     label: string;
     illustration?: React.ReactNode;
-    content: string | string[];
+    content: BlockContentObjectTypes[];
 }
 
 export interface TabsProps {

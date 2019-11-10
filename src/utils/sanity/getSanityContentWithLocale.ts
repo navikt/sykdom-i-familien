@@ -10,10 +10,7 @@ export const getSanityContentWithLocale = (data: any, locale: Locale | string): 
     return data[defaultLocale];
 };
 
-export const getSanityStringWithLocale = (data: any, locale: Locale | string): string | undefined => {
-    if (!data) {
-        return undefined;
-    }
+export const getSanityStringWithLocale = (data: object, locale: Locale | string): string => {
     if (data && data[locale]) {
         return data[locale];
     }

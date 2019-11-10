@@ -1,25 +1,20 @@
 import React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import {
     getSanityContentWithLocale,
     getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import Box from '../../../components/layout/box/Box';
-import SanityGroupedContent from '../sanity-grouped-content/SanityGroupedContent';
-import SanityTitleAndText from '../sanity-title-and-text/SanityTitleAndText';
-import {
-    SanityGroupedContentSchema,
-    SanityExpandableContentSchema,
-    SanityIllustrationSchema
-} from '../../schema-types';
+import SanityTabs from '../sanity-tabs/SanityTabs';
+import SanityTextblock from '../sanity-textblock/SanityTextblock';
 import Veileder from '../../../components/veileder/Veileder';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
 import SanityBlock from '../sanity-block/SanityBlock';
-import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederSvg from '../../../components/veileder/VeilederSvg';
+import { TextblockObject, VeilederpanelObject, ExpandableContentObject, TabsObject } from '../../types/objects';
+import { getOptionalLocaleString, getLocaleBlockContent } from '../../utils';
+import { IllustrationDocument } from '../../types/documents';
 
 interface Props {
     content: string;
@@ -34,53 +29,46 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
             blocks={content}
             serializers={{
                 types: {
-                    illustration: (props: { node: SanityIllustrationSchema }) => {
+                    illustration: ({ node: illustration }: { node: IllustrationDocument }) => {
                         return (
                             <Box padBottom="l">
-                                <SanityIllustration illustration={props.node} inline={false} />
+                                <SanityIllustration illustration={illustration} inline={false} />
                             </Box>
                         );
                     },
-                    expandableContent: (props: { node: SanityExpandableContentSchema }) => {
-                        const title = getSanityStringWithLocale(props.node.title, intl.locale);
-                        const blockContent = getSanityContentWithLocale(props.node.content, intl.locale);
-
-                        return 1 + 1 === 2 ? (
+                    expandableContent: ({ node: expandableContent }: { node: ExpandableContentObject }) => {
+                        const title = getSanityStringWithLocale(expandableContent.title, intl.locale);
+                        const blockContent = getSanityContentWithLocale(expandableContent.content, intl.locale);
+                        return (
                             <CollapsableTextBlock title={title}>
                                 <SanityBlock content={blockContent} />
                             </CollapsableTextBlock>
-                        ) : (
-                            <Ekspanderbartpanel tittel={title} border={true}>
-                                <SanityBlock content={blockContent} />
-                            </Ekspanderbartpanel>
                         );
                     },
-                    veilederpanel: ({ node }: any) => {
-                        const contentBlocks = getSanityContentWithLocale(node.content, intl.locale);
+                    veilederpanel: ({ node: veilederpanel }: { node: VeilederpanelObject }) => {
+                        const contentBlocks = getSanityContentWithLocale(veilederpanel.content, intl.locale);
                         return (
                             <Veileder
-                                ansikt={node.face || 'glad'}
-                                fargetema={node.color || 'normal'}
-                                type={node.type}
-                                kompakt={node.kompakt === 'kompakt'}>
+                                ansikt={veilederpanel.face || 'glad'}
+                                fargetema={veilederpanel.color || 'normal'}
+                                type={veilederpanel.type}
+                                kompakt={veilederpanel.kompakt === 'kompakt'}>
                                 <SanityBlock content={contentBlocks} />
                             </Veileder>
                         );
                     },
-                    groupedContent: ({ node }: { node: SanityGroupedContentSchema }) => (
-                        <SanityGroupedContent node={node} />
-                    ),
-                    titleAndText: ({ node }: any) => {
-                        const title = node.title ? getSanityStringWithLocale(node.title, intl.locale) : undefined;
-                        if (node.layout && node.layout === 'expandablePanel' && title !== undefined) {
-                            const blockContent = getSanityContentWithLocale(node.content, intl.locale);
+                    tabs: ({ node: tabs }: { node: TabsObject }) => <SanityTabs tabs={tabs} />,
+                    textblock: ({ node: textblock }: { node: TextblockObject }) => {
+                        const title = getOptionalLocaleString(textblock.title);
+                        if (textblock.layout && textblock.layout === 'expandablePanel' && title !== undefined) {
+                            const blockContent = getLocaleBlockContent(textblock.content, intl.locale);
                             return (
                                 <CollapsableTextBlock title={title}>
                                     <SanityBlock content={blockContent} />
                                 </CollapsableTextBlock>
                             );
                         }
-                        return <SanityTitleAndText node={node} />;
+                        return <SanityTextblock textblock={textblock} />;
                     }
                 }
             }}

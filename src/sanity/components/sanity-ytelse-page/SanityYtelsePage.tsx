@@ -13,7 +13,6 @@ import { Ingress } from 'nav-frontend-typografi';
 import { WindowLocation } from '@reach/router';
 import slugify from 'slugify';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
-import { SanityIllustrationSchema } from '../../schema-types';
 import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
 import LinkButton from '../../../components/elements/link-button/LinkButton';
 import traverse from 'traverse';
@@ -21,21 +20,22 @@ import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import SanityBlock from '../sanity-block/SanityBlock';
 import PagePoster from '../../../components/pages/frontpage/components/page-banner/PageBanner';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
+import { IllustrationDocument } from '../../types/documents';
 
 export interface YtelsePageData {
     title: string;
     inShort: string;
     formUrl: string;
     sections: SectionContent[];
-    illustration: SanityIllustrationSchema;
-    banner?: SanityIllustrationSchema;
+    illustration: IllustrationDocument;
+    banner?: IllustrationDocument;
 }
 
 interface SectionContent {
     _key: string;
     slug: string;
     title?: string;
-    illustration: SanityIllustrationSchema;
+    illustration: IllustrationDocument;
     content?: string;
 }
 
