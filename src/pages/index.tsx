@@ -8,10 +8,10 @@ import Frontpage from '../components/pages/frontpage/Frontpage';
 import Box from '../components/layout/box/Box';
 import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
 import { graphql } from 'gatsby';
-import { FrontpageSanityContentSchema, SanityIllustrationSchema } from '../sanity/schema-types';
 import { getSanityStringWithLocale } from '../utils/sanity/getSanityContentWithLocale';
 import SanityIllustration from '../sanity/components/sanity-illustration/SanityIllustrationContent';
 import SanityBlock from '../sanity/components/sanity-block/SanityBlock';
+import { IllustrationDocument } from '../sanity/types/documents';
 
 interface Props {
     data: any;
@@ -19,17 +19,14 @@ interface Props {
 
 // const Veiviser = require('../assets/veiviser.svg');
 
-const extractFrontpageData = (data: FrontpageSanityContentSchema, locale: string): FrontpageSanityData => {
+const extractFrontpageData = (data: any, locale: string): FrontpageSanityData => {
     const { _rawIllustration, _rawIngress, _rawTitle, _rawFrontpageStories } = data;
 
     return {
         title: getSanityStringWithLocale(_rawTitle, locale),
         ingress: getSanityStringWithLocale(_rawIngress, locale),
-        illustration: {
-            title: _rawIllustration.name,
-            svg: _rawIllustration.svg
-        },
-        stories: _rawFrontpageStories.map((story) => {
+        illustration: _rawIllustration,
+        stories: _rawFrontpageStories.map((story: any) => {
             return {
                 title: getSanityStringWithLocale(
                     story._type === 'frontpageLink' ? story.title : story.page.title,
@@ -47,14 +44,14 @@ const extractFrontpageData = (data: FrontpageSanityContentSchema, locale: string
 export interface FrontpageSanityData {
     title?: string;
     ingress?: string;
-    illustration: SanityIllustrationSchema;
+    illustration: IllustrationDocument;
     stories?: FrontpageStory[];
 }
 
 interface FrontpageStory {
     title?: string;
     description?: string;
-    illustration: SanityIllustrationSchema;
+    illustration: IllustrationDocument;
     url: string;
     isPageSlug: boolean;
 }

@@ -12,7 +12,7 @@ module.exports = {
             resolve: 'gatsby-source-sanity',
             options: {
                 projectId: '8ux9tyb9',
-                dataset: 'staging',
+                dataset: 'fh-test',
                 token: `${process.env.SANITY_TOKEN}`,
                 watchMode: true,
                 overlayDrafts: true

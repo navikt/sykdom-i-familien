@@ -1,10 +1,10 @@
 import React from 'react';
 import CircleMask from '../circle-mask/CircleMask';
-import { SanityIllustrationSchema } from '../../../sanity/schema-types';
 import SanityIllustration from '../../../sanity/components/sanity-illustration/SanityIllustrationContent';
+import { IllustrationDocument } from '../../../sanity/types/documents';
 
 interface Props {
-    illustration: SanityIllustrationSchema;
+    illustration: IllustrationDocument;
     backgroundColor?: string;
     size?: string;
 }

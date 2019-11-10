@@ -1,77 +1,67 @@
-import { LocaleStringType, LocaleRichTextType } from '../locale-objects/index';
-import { IllustrationType, YtelsePageType } from '../documents/index';
+import { LocaleStringObject, LocaleRichTextObject } from '../locale-objects/index';
+import { IllustrationDocument, YtelsePageDocument } from '../documents/index';
 
-export type GroupedContentPresentation = 'tabs' | 'dropdown';
-export type TitleAndTextLayout = 'normal' | 'expandablePanel';
+export type BlockContentObjectTypes =
+    | ExpandableContentObject
+    | IllustrationDocument
+    | TabsObject
+    | TextblockObject
+    | VeilederpanelObject;
 
-export type BlockContentChildrenTypes =
-    | TitleAndTextType
-    | ExpandableContentType
-    | IllustrationType
-    | GroupedContentType
-    | VeilederpanelType;
-
-export interface BlockContentType {
-    title: LocaleStringType;
-    content: BlockContentChildrenTypes[];
+export interface ExpandableContentObject {
+    title: LocaleStringObject;
+    content: LocaleRichTextObject;
 }
-
-export interface ExpandableContentType {
-    title: LocaleStringType;
-    content: LocaleRichTextType;
-}
-
-export interface FrontpageLinkType {
-    title: LocaleStringType;
-    content: LocaleRichTextType;
-    illustration: IllustrationType;
+export interface FrontpageLinkObject {
+    title: LocaleStringObject;
+    content: LocaleRichTextObject;
+    illustration: IllustrationDocument;
     url: string;
 }
 
-export interface FrontpagePageLinkType {
-    page: YtelsePageType;
-    content: LocaleRichTextType;
-    illustration: IllustrationType;
+export interface FrontpagePageLinkObject {
+    page: YtelsePageDocument;
+    content: LocaleRichTextObject;
+    illustration: IllustrationDocument;
     url: string;
 }
 
-export interface GroupedContentType {
-    title: LocaleStringType;
-    presentation: GroupedContentPresentation;
-    content: TitleAndBlockContentType;
+export type TabsObjectPresentation = 'tabs' | 'dropdown';
+
+export interface TabsObject {
+    title?: LocaleStringObject;
+    presentation: TabsObjectPresentation;
+    content: TabObject[];
 }
 
-export interface LinkType {
-    text: LocaleStringType;
-    url: string;
+export interface TabObject {
+    title: LocaleStringObject;
+    tabIllustration: IllustrationDocument;
+    content: BlockContentObjectTypes[];
+}
+export interface SectionObject {
+    title: LocaleStringObject;
+    illustration: IllustrationDocument;
+    content: BlockContentObjectTypes[];
 }
 
-export interface SectionType {
-    title: LocaleStringType;
-    illustration: IllustrationType;
-    content: BlockContentChildrenTypes[];
-}
+export type TextblockObjectLayout = 'normal' | 'expandablePanel';
 
-export interface TitleAndBlockContentType {
-    illustration: IllustrationType;
-    content: BlockContentChildrenTypes[];
-}
-
-export interface TitleAndTextType {
-    layout: TitleAndTextLayout;
-    title: LocaleStringType;
-    content: LocaleRichTextType;
+export interface TextblockObject {
+    title: LocaleStringObject;
+    content: LocaleRichTextObject;
+    layout: TextblockObjectLayout;
 }
 
 export type VeilederpanelFaceValg = 'glad' | 'undrende' | 'skeptisk';
 export type VeilederpanelColorValg = 'normal' | 'suksess' | 'advarsel' | 'feilmelding';
-export type VeilederpanelVisningValg = 'vanlig' | 'plakat';
-export type VeilederpanelKompaktValg = 'vanlig' | 'plakat';
+export type VeilederpanelVisningValg = 'normal' | 'plakat';
+export type VeilederpanelKompaktValg = 'normal' | 'kompakt';
 
-export interface VeilederpanelType {
+export interface VeilederpanelObject {
     face: VeilederpanelFaceValg;
     color: VeilederpanelColorValg;
     type: VeilederpanelVisningValg;
     kompakt: VeilederpanelKompaktValg;
-    content: LocaleRichTextType;
+    content: LocaleRichTextObject;
 }

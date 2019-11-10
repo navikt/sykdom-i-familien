@@ -1,9 +1,9 @@
 import React from 'react';
 import InlineSVG from '../../../components/elements/inline-svg/InlineSVG';
-import { SanityIllustrationSchema } from '../../schema-types';
+import { IllustrationDocument } from '../../types/documents';
 
 interface Props {
-    illustration: SanityIllustrationSchema;
+    illustration: IllustrationDocument;
     title?: string;
     width?: string;
     height?: string;

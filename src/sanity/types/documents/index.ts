@@ -1,31 +1,38 @@
-import { LocaleStringType, LocaleRichTextType } from '../locale-objects';
-import { FrontpageLinkType, FrontpagePageLinkType, SectionType, LinkType } from '../objects';
+import { LocaleStringObject, LocaleRichTextObject } from '../locale-objects';
+import { FrontpageLinkObject, FrontpagePageLinkObject, SectionObject } from '../objects';
 
-export interface FrontpageType {
-    title: LocaleStringType;
-    ingress: LocaleRichTextType;
-    illustration: IllustrationType;
-    frontpageStories: Array<FrontpageLinkType | FrontpagePageLinkType>;
-    related: LinkType[];
+export interface FrontpageDocument {
+    title: LocaleStringObject;
+    ingress: LocaleRichTextObject;
+    illustration: IllustrationDocument;
+    frontpageStories: Array<FrontpageLinkObject | FrontpagePageLinkObject>;
+    related: LinkDocument[];
 }
 
-export interface IllustrationType {
+// export interface FrontpageGraphqlData {}
+
+export interface IllustrationDocument {
     name: string;
     svg: string;
 }
 
-export interface YtelseType {
+export interface YtelseDocument {
     name: string;
     key: string;
     formUrl: string;
 }
 
-export interface YtelsePageType {
-    ytelse: YtelseType;
+export interface YtelsePageDocument {
+    ytelse: YtelseDocument;
     slug: string;
-    banner: IllustrationType;
-    title: LocaleStringType;
-    illustration: IllustrationType;
-    inShort: LocaleRichTextType;
-    content: SectionType[];
+    banner: IllustrationDocument;
+    title: LocaleStringObject;
+    illustration: IllustrationDocument;
+    inShort: LocaleRichTextObject;
+    content: SectionObject[];
+}
+
+export interface LinkDocument {
+    text: LocaleStringObject;
+    url: string;
 }
