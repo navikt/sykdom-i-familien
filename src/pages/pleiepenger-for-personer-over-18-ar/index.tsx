@@ -10,7 +10,7 @@ export default (props: RouterProps & any) => {
 
 export const pageQuery = graphql`
     {
-        allSanityYtelsePage(filter: { slug: { current: { eq: "pleiepenger-for-personer-over-18-ar" } } }) {
+        allSanityYtelsePage(filter: { slug: { current: { eq: "pleiepenger-for-sykt-barn" } } }) {
             edges {
                 node {
                     ytelse {
@@ -22,6 +22,9 @@ export const pageQuery = graphql`
                         current
                     }
                     _rawTitle
+                    _rawIntro
+                    _rawInShortTitle
+                    _rawBanner(resolveReferences: { maxDepth: 4 })
                     _rawIllustration(resolveReferences: { maxDepth: 4 })
                     _rawInShort
                     _rawContent(resolveReferences: { maxDepth: 10 })
