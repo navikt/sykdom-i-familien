@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { Panel } from 'nav-frontend-paneler';
 import TypografiBase from 'nav-frontend-typografi';
 import Chevron from 'nav-frontend-chevron';
@@ -17,7 +16,7 @@ interface OwnProps {
     choices: Tab[];
 }
 
-type SelectProps = OwnProps & InjectedIntlProps;
+type SelectProps = OwnProps;
 
 interface SelectState {
     open: boolean;
@@ -25,7 +24,7 @@ interface SelectState {
 
 class Select extends React.Component<SelectProps, SelectState> {
     mounted: boolean;
-    selectRef: any;
+    selectRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: SelectProps) {
         super(props);
@@ -37,7 +36,7 @@ class Select extends React.Component<SelectProps, SelectState> {
 
     componentDidMount = () => {
         this.mounted = true;
-        this.selectRef = React.createRef();
+        this.selectRef = React.createRef<HTMLDivElement>();
 
         document.addEventListener('keydown', this.handleKeyPressEvent, false);
         document.addEventListener('click', this.handleDocumentClick, false);
@@ -51,7 +50,7 @@ class Select extends React.Component<SelectProps, SelectState> {
     };
 
     focusOnSelf = () => {
-        const node = this.selectRef.current;
+        const node = this.selectRef && this.selectRef.current ? this.selectRef.current : undefined;
         if (node) {
             node.focus();
         }
@@ -63,16 +62,16 @@ class Select extends React.Component<SelectProps, SelectState> {
         });
     };
 
-    handleKeyPressEvent = (e: any) => {
+    handleKeyPressEvent = (e: KeyboardEvent) => {
         if (e.keyCode === 27) {
             this.closePopup();
         }
     };
 
-    handleDocumentClick = (e: any) => {
+    handleDocumentClick = (e: MouseEvent) => {
         if (this.mounted) {
             const node = ReactDOM.findDOMNode(this);
-            if (node && !node.contains(e.target)) {
+            if (node && !node.contains(e.target as HTMLElement)) {
                 this.closePopup();
             }
         }
@@ -140,4 +139,4 @@ class Select extends React.Component<SelectProps, SelectState> {
     );
 }
 
-export default injectIntl(Select);
+export default Select;

@@ -4,7 +4,7 @@ import {
     getSanityContentWithLocale,
     getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import Box from '../../../components/layout/box/Box';
 import SanityTabs from '../sanity-tabs/SanityTabs';
 import SanityTextblock from '../sanity-textblock/SanityTextblock';

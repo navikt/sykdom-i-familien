@@ -7,7 +7,13 @@ interface Props {
     content: BlockContentType;
 }
 
-const LinkRenderer = (props: any) => {
+const LinkRenderer = (props: {
+    children: React.ReactNode;
+    mark: {
+        linkNumber: number;
+        href: string;
+    };
+}) => {
     return (
         <Lenke href={props.mark.href} data-link-number={props.mark.linkNumber}>
             {props.children}

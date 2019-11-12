@@ -20,11 +20,12 @@ import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import SanityBlock from '../sanity-block/SanityBlock';
 import PagePoster from '../../../components/pages/frontpage/components/page-banner/PageBanner';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
-import { IllustrationDocument } from '../../types/documents';
+import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
 
 export interface YtelsePageData {
     title: string;
     inShort: string;
+    inShortTitle: string;
     formUrl: string;
     sections: SectionContent[];
     illustration: IllustrationDocument;
@@ -40,7 +41,7 @@ interface SectionContent {
 }
 
 interface Props {
-    data: any;
+    data: YtelsePageDocument;
     location: WindowLocation;
 }
 
@@ -66,6 +67,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
         banner: data._rawBanner,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
+        inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent),
         illustration: data._rawIllustration
@@ -110,13 +112,14 @@ export const extractLinksFromContent = {};
 const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
     const { location, intl } = props;
     const { data, links: linksInContent } = getAndApplyLinksInContent(props.data);
-    const { title, inShort, sections, banner, illustration, formUrl } = extractDataFromSanityYtelsePage(
+    const { title, inShort, inShortTitle, sections, banner, illustration, formUrl } = extractDataFromSanityYtelsePage(
         data,
         intl.locale
     );
+
     const inShortSection: SectionContent = {
         _key: 'inShortSection',
-        title,
+        title: inShortTitle,
         content: inShort,
         illustration,
         slug: slugify(title || '')
@@ -135,7 +138,6 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     <PagePoster
                         wide={true}
                         title={title}
-                        footer={'Tema: Sykdom i familien'}
                         illustration={<SanityIllustration illustration={banner} maintainAspectRatio={true} />}>
                         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia iure quidem, deserunt laborum,
                         odit enim porro
@@ -145,25 +147,28 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                 )
             }
             menuFooter={<LinkButton href={formUrl}>Søk nå</LinkButton>}>
-            <PanelWithTitleAndIllustration
-                titleTag="h1"
-                id={inShortSection.slug}
-                title={title}
-                illustration={
-                    illustration ? (
-                        <Box textAlignCenter={true} margin="none">
-                            <CircleIllustration illustration={illustration} backgroundColor={styles.colors.theme} />
-                        </Box>
-                    ) : (
-                        undefined
-                    )
-                }>
-                {inShort && (
-                    <Ingress className="inShortList" tag="div">
-                        <SanityBlock content={inShort} />
-                    </Ingress>
-                )}
-            </PanelWithTitleAndIllustration>
+            <div style={{ marginTop: '-4rem' }}>
+                <PanelWithTitleAndIllustration
+                    titleTag="h1"
+                    id={inShortSection.slug}
+                    title={inShortSection.title}
+                    illustration={
+                        illustration ? (
+                            <Box textAlignCenter={true} margin="none">
+                                <CircleIllustration illustration={illustration} backgroundColor={styles.colors.theme} />
+                            </Box>
+                        ) : (
+                            undefined
+                        )
+                    }
+                    illustrationPlacement="outside">
+                    {inShort && (
+                        <Ingress className="inShortList" tag="div">
+                            <SanityBlock content={inShort} />
+                        </Ingress>
+                    )}
+                </PanelWithTitleAndIllustration>
+            </div>
             {sections.map((section) => (
                 <PanelWithTitleAndIllustration
                     key={section._key}

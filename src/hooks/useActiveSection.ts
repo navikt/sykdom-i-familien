@@ -31,13 +31,18 @@ const getActiveSection = (scrollPos: number, positions: SectionPosition[] | unde
     return undefined;
 };
 
-const useActiveSections = (sectionIds: string[], callback: (id: string | undefined) => void, offset: number) => {
+const useActiveSections = (
+    sectionIds: string[],
+    callback: (id: string | undefined) => void,
+    offset: number,
+    deps?: any
+) => {
     const handleScrollChange = (evt: ScrollPositionChangeEvent) => {
         const positions = getSectionPositions(sectionIds);
         const activeSection = getActiveSection(evt.currPos.y, positions, offset);
         callback(activeSection);
     };
-    useScrollPosition(handleScrollChange, [], false, undefined, 200);
+    useScrollPosition(handleScrollChange, deps, false, undefined, 200);
 };
 
 export default useActiveSections;

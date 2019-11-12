@@ -1,7 +1,11 @@
 import * as React from 'react';
 
 export interface Props {
-    svgProps?: any;
+    svgProps?: {
+        className?: string;
+        width?: number;
+        height?: number;
+    };
 }
 
 export const detErJul = () => {

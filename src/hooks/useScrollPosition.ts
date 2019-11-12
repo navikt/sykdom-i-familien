@@ -17,7 +17,7 @@ export interface ScrollPositionChangeEvent {
 
 const useScrollPosition = (
     effect: (props: ScrollPositionChangeEvent) => void,
-    deps: any,
+    deps?: any,
     useWindow?: boolean,
     element?: RefObject<HTMLElement>,
     wait?: number
@@ -36,7 +36,7 @@ const useScrollPosition = (
         const handleScroll = () => {
             if (wait) {
                 if (throttleTimeout === undefined) {
-                    throttleTimeout = setTimeout(callBack, wait);
+                    throttleTimeout = window.setTimeout(callBack, wait);
                 }
             } else {
                 callBack();
