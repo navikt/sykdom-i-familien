@@ -53,6 +53,7 @@ export interface TextblockObject {
     layout: TextblockObjectLayout;
 }
 
+export type VeilederpanelVeiledertype = 'normal' | 'rasmus';
 export type VeilederpanelFaceValg = 'glad' | 'undrende' | 'skeptisk';
 export type VeilederpanelColorValg = 'normal' | 'suksess' | 'advarsel' | 'feilmelding';
 export type VeilederpanelVisningValg = 'normal' | 'plakat';
@@ -64,4 +65,5 @@ export interface VeilederpanelObject {
     type: VeilederpanelVisningValg;
     kompakt: VeilederpanelKompaktValg;
     content: LocaleRichTextObject;
+    veiledertype: VeilederpanelVeiledertype;
 }

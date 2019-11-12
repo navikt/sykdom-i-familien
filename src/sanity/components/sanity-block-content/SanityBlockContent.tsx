@@ -49,6 +49,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                         const contentBlocks = getSanityContentWithLocale(veilederpanel.content, intl.locale);
                         return (
                             <Veileder
+                                veiledertype={veilederpanel.veiledertype}
                                 ansikt={veilederpanel.face || 'glad'}
                                 fargetema={veilederpanel.color || 'normal'}
                                 type={veilederpanel.type}

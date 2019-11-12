@@ -1,6 +1,6 @@
 import React from 'react';
 import bemUtils from '../../../../utils/bemUtils';
-import RocketSVG from '../../../../assets/rocketSVG';
+import RocketSVG from '../assets/rocketSVG';
 import styles from '../../../../styles';
 import CircleMask from '../../../elements/circle-mask/CircleMask';
 import './sidebarMenu.less';

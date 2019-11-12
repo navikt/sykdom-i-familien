@@ -1,7 +1,7 @@
 import React from 'react';
 import bemUtils from '../../../../utils/bemUtils';
 import CircleMask from '../../../elements/circle-mask/CircleMask';
-import RocketSVG from '../../../../assets/rocketSVG';
+import RocketSVG from '../assets/rocketSVG';
 import styles from '../../../../styles';
 import { Element } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
