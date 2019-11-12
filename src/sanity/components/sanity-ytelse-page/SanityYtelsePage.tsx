@@ -24,6 +24,7 @@ import { IllustrationDocument, YtelsePageDocument } from '../../types/documents'
 
 export interface YtelsePageData {
     title: string;
+    intro: string;
     inShort: string;
     inShortTitle: string;
     formUrl: string;
@@ -65,6 +66,7 @@ export const extractSectionData = (data: any[]): SectionContent[] => {
 export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
     return {
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
+        intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
         banner: data._rawBanner,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
@@ -112,10 +114,16 @@ export const extractLinksFromContent = {};
 const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
     const { location, intl } = props;
     const { data, links: linksInContent } = getAndApplyLinksInContent(props.data);
-    const { title, inShort, inShortTitle, sections, banner, illustration, formUrl } = extractDataFromSanityYtelsePage(
-        data,
-        intl.locale
-    );
+    const {
+        title,
+        inShort,
+        intro,
+        inShortTitle,
+        sections,
+        banner,
+        illustration,
+        formUrl
+    } = extractDataFromSanityYtelsePage(data, intl.locale);
 
     const inShortSection: SectionContent = {
         _key: 'inShortSection',
@@ -139,8 +147,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                         wide={true}
                         title={title}
                         illustration={<SanityIllustration illustration={banner} maintainAspectRatio={true} />}>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia iure quidem, deserunt laborum,
-                        odit enim porro
+                        <SanityBlock content={intro} />
                     </PagePoster>
                 ) : (
                     undefined
