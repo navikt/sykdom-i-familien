@@ -6,13 +6,9 @@
     padding-top: 2rem;
     &__borderBox {
         border-bottom: 0.25rem solid @c-theme-dark;
-        min-height: 180px;
     }
     &--wide {
         padding-top: 1rem;
-        .pageBanner__borderBox {
-            min-height: 8rem;
-        }
         .pageBanner__contentWrapper {
             max-width: @app-wide-max-width;
         }
@@ -30,11 +26,11 @@
         position: relative;
         max-width: @app-max-width + 48px;
         margin: 0 auto;
-        align-items: baseline;
+        align-items: center;
         flex-direction: column;
         svg {
-            max-height: 15rem;
-            max-width: 20rem;
+            max-height: 12rem;
+            max-width: 25rem;
             width: auto;
             justify-self: flex-end;
         }
@@ -58,7 +54,7 @@
         }
         @media (min-width: @tablet-breakpoint) {
             .pageBanner--wide & {
-                max-width: 45%;
+                max-width: 55%;
             }
         }
     }
@@ -73,18 +69,18 @@
             padding: 1rem 0;
         }
         @media (min-width: @mobile-breakpoint) {
-            position: absolute;
-            bottom: 0;
-            right: 1rem;
+            // position: absolute;
+            // bottom: 0;
+            // right: 1rem;
             min-width: 20rem;
         }
         @media (min-width: @tablet-breakpoint) {
-            position: absolute;
+            // position: absolute;
             bottom: 0;
             right: 1rem;
             min-width: 25rem;
             .pageBanner--wide & {
-                min-width: 31rem;
+                min-width: 25rem;
             }
         }
     }
