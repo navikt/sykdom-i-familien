@@ -1,7 +1,6 @@
 import React from 'react';
-import { injectIntl } from 'gatsby-plugin-intl';
 import PageBanner from '../components/pages/frontpage/components/page-banner/PageBanner';
-import { InjectedIntlProps } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import FrontpagePanelWrapper from '../components/pages/frontpage/components/frontpage-panel-wrapper/FrontpagePanelWrapper';
 import { RouterProps } from '@reach/router';
 import Frontpage from '../components/pages/frontpage/Frontpage';
@@ -16,8 +15,6 @@ import { IllustrationDocument } from '../sanity/types/documents';
 interface Props {
     data: any;
 }
-
-// const Veiviser = require('../assets/veiviser.svg');
 
 const extractFrontpageData = (data: any, locale: string): FrontpageSanityData => {
     const { _rawIllustration, _rawIngress, _rawTitle, _rawFrontpageStories } = data;

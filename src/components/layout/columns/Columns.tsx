@@ -5,9 +5,9 @@ import chunk from 'lodash.chunk';
 import './columns.less';
 
 interface Props {
-    items: any[];
+    items: object[];
     columns: number;
-    itemRenderer: (item: any) => React.ReactNode;
+    itemRenderer: (item: object) => React.ReactNode;
 }
 
 const bem = bemUtils('columns');

@@ -9,8 +9,6 @@ export interface FrontpageDocument {
     related: LinkDocument[];
 }
 
-// export interface FrontpageGraphqlData {}
-
 export interface IllustrationDocument {
     name: string;
     svg: string;
@@ -29,6 +27,7 @@ export interface YtelsePageDocument {
     title: LocaleStringObject;
     illustration: IllustrationDocument;
     inShort: LocaleRichTextObject;
+    inShortTitle: LocaleStringObject;
     content: SectionObject[];
 }
 

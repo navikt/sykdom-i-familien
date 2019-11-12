@@ -20,7 +20,8 @@ const useWindowSize = (callback?: (size: WindowSize) => void) => {
 
     const onResize = (event: any) => {
         if (event.target) {
-            const size = { height: event.target.innerHeight, width: event.target.innerWidth };
+            const { innerWidth, innerHeight } = event.target as Window;
+            const size = { height: innerHeight, width: innerWidth };
             setWindowSize(size);
             if (callback) {
                 callback(size);

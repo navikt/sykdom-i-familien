@@ -45,6 +45,26 @@
         width: 100%;
     }
 
+    &--withIllustration {
+        .panelWithTitleAndIllustration {
+            &__panel {
+                padding-top: 2rem;
+            }
+        }
+    }
+    &--illustrationOutside {
+        padding-top: 4rem;
+        .panelWithTitleAndIllustration {
+            &__panel {
+                padding-top: 0;
+            }
+            &__illustration {
+                margin-bottom: -2rem;
+                transform: translateY(calc(-50%));
+            }
+        }
+    }
+
     @media (min-width: @mobile-breakpoint) {
         &__title {
             justify-content: flex-start;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import bemUtils from '../../../../utils/bemUtils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './tabButton.less';

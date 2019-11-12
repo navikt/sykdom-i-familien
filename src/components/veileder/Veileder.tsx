@@ -9,8 +9,8 @@ interface VeilederProps {
     ansikt?: 'glad' | 'undrende' | 'skeptisk';
     kompakt?: boolean;
     type: 'normal' | 'plakat';
-    children: any;
-    className?: any;
+    children: React.ReactNode;
+    className?: string;
 }
 
 const Veileder = (props: VeilederProps) => {
