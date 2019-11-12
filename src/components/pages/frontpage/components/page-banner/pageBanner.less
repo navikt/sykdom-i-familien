@@ -28,13 +28,15 @@
     &__contentWrapper {
         display: flex;
         position: relative;
-        max-width: @app-max-width;
+        max-width: @app-max-width + 48px;
         margin: 0 auto;
         align-items: baseline;
         flex-direction: column;
         svg {
             max-height: 15rem;
+            max-width: 20rem;
             width: auto;
+            justify-self: flex-end;
         }
         @media (min-width: @tablet-breakpoint) {
             flex-direction: row;
@@ -66,6 +68,7 @@
         margin: 0 auto;
         line-height: 0;
         min-width: 20rem;
+        text-align: right;
         .pageBanner--wide & {
             padding: 1rem 0;
         }
