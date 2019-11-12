@@ -22,6 +22,7 @@ export const pageQuery = graphql`
                         current
                     }
                     _rawTitle
+                    _rawIntro
                     _rawInShortTitle
                     _rawBanner(resolveReferences: { maxDepth: 4 })
                     _rawIllustration(resolveReferences: { maxDepth: 4 })

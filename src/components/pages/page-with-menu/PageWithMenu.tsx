@@ -9,8 +9,8 @@ import PageWrapper from '../page-wrapper/PageWrapper';
 import { isBrowser } from '../../../utils/build';
 import useActiveSections from '../../../hooks/useActiveSection';
 import useScrollPosition, { ScrollPositionChangeEvent } from '../../../hooks/useScrollPosition';
+
 import './pageWithMenu.less';
-import useWindowSize from '../../../hooks/useWindowSize';
 
 export interface SectionMenuItem {
     label: string;
@@ -86,6 +86,11 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
     return (
         <PageWrapper pageTitle={pageTitle}>
             {header && <div className={bem.element('header')}>{header}</div>}
+            {isBrowser && (
+                <div className={bem.element('breadcrumbs')}>
+                    <Breadcrumbs path={location.pathname} currentPageTitle={pageTitle} />
+                </div>
+            )}
             <div className={bem.block}>
                 <MediaQuery minWidth={1072}>
                     <div className={bem.element('sidebar')} ref={sidebarContainer}>
@@ -106,14 +111,7 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
                         <MobileMenu items={sectionMenuItems} activeSectionSlug={activSectionSlug} footer={menuFooter} />
                     </aside>
                 </MediaQuery>
-                <div>
-                    {isBrowser && (
-                        <div className={bem.element('breadcrumbs')}>
-                            <Breadcrumbs path={location.pathname} currentPageTitle={pageTitle} />
-                        </div>
-                    )}
-                    <article className={bem.element('article')}>{children}</article>
-                </div>
+                <article className={bem.element('article')}>{children}</article>
             </div>
         </PageWrapper>
     );
