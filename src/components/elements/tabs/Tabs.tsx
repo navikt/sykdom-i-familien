@@ -29,17 +29,25 @@ const Tabs: React.FunctionComponent<TabsProps> = ({ tabs, presentation, title }:
     return (
         <div className={bem.block}>
             {presentation === 'tabs' ? (
-                <div role="tablist" className={bem.element('tabs')}>
-                    {tabs.map((tab) => (
-                        <TabButton
-                            key={tab.index}
-                            label={tab.label}
-                            icon={tab.illustration}
-                            onSelect={() => selectTab({ index: tab.index })}
-                            isSelected={selectedTab.index === tab.index}
-                        />
-                    ))}
-                </div>
+                <>
+                    {title && (
+                        <Undertittel tag="h3" className={bem.element('title')}>
+                            {title}
+                        </Undertittel>
+                    )}
+
+                    <div role="tablist" className={bem.element('tabs')}>
+                        {tabs.map((tab) => (
+                            <TabButton
+                                key={tab.index}
+                                label={tab.label}
+                                icon={tab.illustration}
+                                onSelect={() => selectTab({ index: tab.index })}
+                                isSelected={selectedTab.index === tab.index}
+                            />
+                        ))}
+                    </div>
+                </>
             ) : (
                 <>
                     {title && (
