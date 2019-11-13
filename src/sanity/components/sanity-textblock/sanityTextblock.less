@@ -1,0 +1,33 @@
+.textblock {
+    &--step {
+        padding-left: 2.5rem;
+        position: relative;
+    }
+    &__stepBullet {
+        line-height: 0;
+        position: absolute;
+        left: 0;
+        > svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+    .typo-undertittel {
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        margin: 0 0 1rem 0;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    ul {
+        &:last-child {
+            margin-bottom: 0;
+        }
+        li:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

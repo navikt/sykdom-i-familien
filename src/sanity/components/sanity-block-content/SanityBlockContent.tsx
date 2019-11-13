@@ -48,14 +48,16 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                     veilederpanel: ({ node: veilederpanel }: { node: VeilederpanelObject }) => {
                         const contentBlocks = getSanityContentWithLocale(veilederpanel.content, intl.locale);
                         return (
-                            <Veileder
-                                veiledertype={veilederpanel.veiledertype}
-                                ansikt={veilederpanel.face || 'glad'}
-                                fargetema={veilederpanel.color || 'normal'}
-                                type={veilederpanel.type}
-                                kompakt={veilederpanel.kompakt === 'kompakt'}>
-                                <SanityBlock content={contentBlocks} />
-                            </Veileder>
+                            <Box padBottom="xl">
+                                <Veileder
+                                    veiledertype={veilederpanel.veiledertype}
+                                    ansikt={veilederpanel.face || 'glad'}
+                                    fargetema={veilederpanel.color || 'normal'}
+                                    type={veilederpanel.type}
+                                    kompakt={veilederpanel.kompakt === 'kompakt'}>
+                                    <SanityBlock content={contentBlocks} />
+                                </Veileder>
+                            </Box>
                         );
                     },
                     tabs: ({ node: tabs }: { node: TabsObject }) => <SanityTabs tabs={tabs} />,
@@ -69,7 +71,11 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 </CollapsableTextBlock>
                             );
                         }
-                        return <SanityTextblock textblock={textblock} />;
+                        return (
+                            <Box padBottom="xl">
+                                <SanityTextblock textblock={textblock} />
+                            </Box>
+                        );
                     }
                 }
             }}
