@@ -30,7 +30,7 @@ const BlockRenderer = (props: any) => {
     if (props.node.style === 'title') {
         return <Undertittel>{props.children}</Undertittel>;
     }
-    return <div>{props.children}</div>;
+    return <p>{props.children}</p>;
 };
 
 const SanityBlock: React.FunctionComponent<Props> = ({ content }) => (
