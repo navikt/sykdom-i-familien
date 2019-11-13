@@ -4,10 +4,17 @@
     .nav-veilederpanel  {
         background-color: @c-tabs;
         border: none;
+        @media (max-width: @tablet-breakpoint) {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
         &__content {
             font-size: 1.125rem;
             padding-right: 4rem;
             padding-left: 1rem;
+            @media (max-width: @tablet-breakpoint) {
+                padding-right: 1rem;
+            }
             p {
                 margin: 0;
             }
