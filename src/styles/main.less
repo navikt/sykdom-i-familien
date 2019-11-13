@@ -17,4 +17,18 @@ article {
     ul li {
         margin-bottom: 0.5rem;
     }
+
+    ul li.checklist {
+        // list-style: none;
+        // padding-bottom: 0rem;
+        list-style: none;
+        margin-bottom: 1rem;
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+        &:before {
+            content: '✓';
+            position: absolute;
+            margin-left: -2rem;
+        }
+    }
 }

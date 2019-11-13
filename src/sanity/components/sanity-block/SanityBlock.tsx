@@ -7,6 +7,10 @@ interface Props {
     content: BlockContentType;
 }
 
+const ListItemRenderer = (props: { children: React.ReactNode; node: { style: string } }) => {
+    return <li className={props.node.style}>{props.children}</li>;
+};
+
 const LinkRenderer = (props: {
     children: React.ReactNode;
     mark: {
@@ -25,6 +29,7 @@ const SanityBlock: React.FunctionComponent<Props> = ({ content }) => (
     <BlockContent
         blocks={content}
         serializers={{
+            listItem: ListItemRenderer,
             marks: {
                 link: LinkRenderer
             }
