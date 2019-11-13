@@ -48,7 +48,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                     veilederpanel: ({ node: veilederpanel }: { node: VeilederpanelObject }) => {
                         const contentBlocks = getSanityContentWithLocale(veilederpanel.content, intl.locale);
                         return (
-                            <Box padBottom="xl">
+                            <Box padBottom="xxl">
                                 <Veileder
                                     veiledertype={veilederpanel.veiledertype}
                                     ansikt={veilederpanel.face || 'glad'}
@@ -72,7 +72,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             );
                         }
                         return (
-                            <Box padBottom="xl">
+                            <Box padBottom="l">
                                 <SanityTextblock textblock={textblock} />
                             </Box>
                         );

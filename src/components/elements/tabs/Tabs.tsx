@@ -8,6 +8,7 @@ import Select from './select/Select';
 import { Undertittel } from 'nav-frontend-typografi';
 import { BlockContentObjectTypes } from '../../../sanity/types/objects';
 import MediaQuery from 'react-responsive';
+import styles from '../../../styles';
 
 export interface Tab {
     index: number;
@@ -25,7 +26,12 @@ export interface TabsProps {
 
 const bem = bemUtils('tabs');
 
-const Tabs: React.FunctionComponent<TabsProps> = ({ tabs, presentation, title, bgcolor }: TabsProps) => {
+const Tabs: React.FunctionComponent<TabsProps> = ({
+    tabs,
+    presentation,
+    title,
+    bgcolor = styles.colors.theme
+}: TabsProps) => {
     const [selectedTab, selectTab] = useState({ index: 0 });
 
     const renderTabs = () => (
