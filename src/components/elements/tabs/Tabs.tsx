@@ -76,8 +76,8 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
 
     return (
         <div className={bem.block}>
-            <MediaQuery maxWidth={800}>{renderSelect()}</MediaQuery>
-            <MediaQuery minWidth={801}>{presentation === 'tabs' ? renderTabs() : renderSelect()}</MediaQuery>
+            <MediaQuery maxWidth={640}>{renderSelect()}</MediaQuery>
+            <MediaQuery minWidth={641}>{presentation === 'tabs' ? renderTabs() : renderSelect()}</MediaQuery>
             {tabs.map((tab) => (
                 <TabPanel key={tab.index} tab={tab} selected={tab.index === selectedTab.index} bgcolor={bgcolor} />
             ))}
