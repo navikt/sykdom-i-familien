@@ -17,7 +17,7 @@ import { getOptionalLocaleString, getLocaleBlockContent } from '../../utils';
 import { IllustrationDocument } from '../../types/documents';
 
 interface Props {
-    content: string;
+    content: string | any;
 }
 
 const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({ content, intl }) => {

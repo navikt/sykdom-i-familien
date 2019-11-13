@@ -31,6 +31,7 @@ export type TabsObjectPresentation = 'tabs' | 'dropdown';
 export interface TabsObject {
     title?: LocaleStringObject;
     presentation: TabsObjectPresentation;
+    bgcolor?: string;
     content: TabObject[];
 }
 

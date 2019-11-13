@@ -19,12 +19,13 @@ export interface Tab {
 export interface TabsProps {
     title?: string;
     tabs: Tab[];
+    bgcolor?: string;
     presentation: 'tabs' | 'dropdown';
 }
 
 const bem = bemUtils('tabs');
 
-const Tabs: React.FunctionComponent<TabsProps> = ({ tabs, presentation, title }: TabsProps) => {
+const Tabs: React.FunctionComponent<TabsProps> = ({ tabs, presentation, title, bgcolor }: TabsProps) => {
     const [selectedTab, selectTab] = useState({ index: 0 });
 
     const renderTabs = () => (
@@ -43,6 +44,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({ tabs, presentation, title }:
                         icon={tab.illustration}
                         onSelect={() => selectTab({ index: tab.index })}
                         isSelected={selectedTab.index === tab.index}
+                        panelBkg={bgcolor}
                     />
                 ))}
             </div>
@@ -71,7 +73,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({ tabs, presentation, title }:
             <MediaQuery maxWidth={800}>{renderSelect()}</MediaQuery>
             <MediaQuery minWidth={801}>{presentation === 'tabs' ? renderTabs() : renderSelect()}</MediaQuery>
             {tabs.map((tab) => (
-                <TabPanel key={tab.index} tab={tab} selected={tab.index === selectedTab.index} />
+                <TabPanel key={tab.index} tab={tab} selected={tab.index === selectedTab.index} bgcolor={bgcolor} />
             ))}
         </div>
     );

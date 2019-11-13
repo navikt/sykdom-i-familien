@@ -16,6 +16,7 @@ export const extractTabsData = (tabs: TabsObject, locale: Locale): TabsProps => 
     const tabsData: TabsProps = {
         presentation,
         title: getOptionalLocaleString(title),
+        bgcolor: tabs.bgcolor,
         tabs: tabs.content.map((tab, index: number) => ({
             index,
             label: getLocaleString(tab.title, locale),

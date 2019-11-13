@@ -12,6 +12,7 @@ interface Props {
     isSelected: boolean;
     onSelect: () => void;
     compact?: boolean;
+    panelBkg?: string;
 }
 
 const TabButton: React.StatelessComponent<Props & InjectedIntlProps> = ({
@@ -19,6 +20,7 @@ const TabButton: React.StatelessComponent<Props & InjectedIntlProps> = ({
     icon,
     isSelected,
     onSelect,
+    panelBkg = 'inherit',
     compact = true
 }) => {
     return (
@@ -37,6 +39,7 @@ const TabButton: React.StatelessComponent<Props & InjectedIntlProps> = ({
                 <Normaltekst className={bem.element('label')}>{label}</Normaltekst>
             </div>
             <div className={bem.element('selector')} />
+            <div className={bem.element('arrowSelector')} style={{ backgroundColor: panelBkg }} />
         </button>
     );
 };

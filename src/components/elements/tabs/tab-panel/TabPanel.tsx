@@ -6,17 +6,22 @@ import { Systemtittel } from 'nav-frontend-typografi';
 
 interface Props {
     tab: Tab;
+    bgcolor?: string;
     selected: boolean;
 }
 
 const bem = bemUtils('tabs');
 
-const TabPanel: React.FunctionComponent<Props> = ({ tab, selected }) => (
-    <div role="tabpanel" key={tab.label} className={bem.element('panel', selected ? 'selected' : 'hidden')}>
+const TabPanel: React.FunctionComponent<Props> = ({ tab, selected, bgcolor }) => (
+    <div
+        role="tabpanel"
+        key={tab.label}
+        className={bem.element('panel', selected ? 'selected' : 'hidden')}
+        style={bgcolor ? { backgroundColor: bgcolor } : undefined}>
         <Systemtittel tag="h3" className={bem.element('panelTitle')}>
             {tab.label}
         </Systemtittel>
-        <SanityBlockContent content={tab.content as string} />
+        <SanityBlockContent content={tab.content} />
     </div>
 );
 
