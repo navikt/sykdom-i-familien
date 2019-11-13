@@ -184,10 +184,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     illustration={
                         section.illustration ? (
                             <Box textAlignCenter={true} margin="none">
-                                <CircleIllustration
-                                    illustration={section.illustration}
-                                    backgroundColor={styles.colors.theme}
-                                />
+                                <CircleIllustration illustration={section.illustration} />
                             </Box>
                         ) : (
                             undefined
