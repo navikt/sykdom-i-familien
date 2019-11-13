@@ -15,13 +15,17 @@ interface Props {
 
 const bem = bemUtils('textblock');
 
-const SanityTextblock: React.FunctionComponent<Props & InjectedIntlProps> = ({ textblock: node, intl }) => {
-    const title = getOptionalLocaleString(node.title, intl.locale);
-    const content = getLocaleBlockContent(node.content, intl.locale);
+const SanityTextblock: React.FunctionComponent<Props & InjectedIntlProps> = ({ textblock, intl }) => {
+    const title = getOptionalLocaleString(textblock.title, intl.locale);
+    const content = getLocaleBlockContent(textblock.content, intl.locale);
 
     return (
-        <div className={bem.classNames(bem.block, bem.modifierConditional(node.layout, node.layout !== undefined))}>
-            {node.layout === 'step' && (
+        <div
+            className={bem.classNames(
+                bem.block,
+                bem.modifierConditional(textblock.layout, textblock.layout !== undefined)
+            )}>
+            {textblock.layout === 'step' && (
                 <span className={bem.element('stepBullet')}>
                     <CheckBullet />
                 </span>

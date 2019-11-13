@@ -2,6 +2,7 @@ import React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
 import Lenke from 'nav-frontend-lenker';
 import { BlockContentType } from '../../types/parts';
+import { Undertittel } from 'nav-frontend-typografi';
 
 interface Props {
     content: BlockContentType;
@@ -25,10 +26,18 @@ const LinkRenderer = (props: {
     );
 };
 
+const BlockRenderer = (props: any) => {
+    if (props.node.style === 'title') {
+        return <Undertittel>{props.children}</Undertittel>;
+    }
+    return <div>{props.children}</div>;
+};
+
 const SanityBlock: React.FunctionComponent<Props> = ({ content }) => (
     <BlockContent
         blocks={content}
         serializers={{
+            block: BlockRenderer,
             listItem: ListItemRenderer,
             marks: {
                 link: LinkRenderer
