@@ -26,6 +26,7 @@ export const extractTabsData = (tabs: TabsObject, locale: Locale): TabsProps => 
                 ) : (
                     undefined
                 ),
+            contentTitle: tab.contentTitle ? getLocaleString(tab.contentTitle, locale) : undefined,
             content: tab.content
         }))
     };

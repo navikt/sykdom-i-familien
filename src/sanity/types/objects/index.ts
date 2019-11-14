@@ -36,8 +36,9 @@ export interface TabsObject {
 }
 
 export interface TabObject {
-    title: LocaleStringObject;
+    title: LocaleStringObject; // Tab-label
     tabIllustration: IllustrationDocument;
+    contentTitle?: LocaleStringObject;
     content: BlockContentObjectTypes[];
 }
 export interface SectionObject {

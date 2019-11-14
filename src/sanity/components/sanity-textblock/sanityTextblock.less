@@ -1,10 +1,19 @@
+@import '../../../styles/assets.less';
+
 .textblock {
     @remUnit: 16;
     &--step {
-        padding-left: 2.5rem;
         position: relative;
         .typo-undertittel {
+            padding-left: 2rem;
             font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: @mobile-breakpoint) {
+            padding-left: 2.5rem;
+            .typo-undertittel {
+                padding-left: 0;
+            }
         }
     }
     &__stepBullet {

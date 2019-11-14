@@ -14,6 +14,7 @@ export interface Tab {
     index: number;
     label: string;
     illustration?: React.ReactNode;
+    contentTitle?: string;
     content: BlockContentObjectTypes[];
 }
 
