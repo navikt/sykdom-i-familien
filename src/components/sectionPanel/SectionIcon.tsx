@@ -12,7 +12,7 @@ const SectionIcon: React.FunctionComponent<Props> = ({ illustration }) => (
         <MediaQuery maxWidth={600}>
             <CircleIllustration illustration={illustration} size="5rem" />
         </MediaQuery>
-        <MediaQuery maxWidth={800} minWidth={601}>
+        <MediaQuery minWidth={601}>
             <CircleIllustration illustration={illustration} />
         </MediaQuery>
     </>
