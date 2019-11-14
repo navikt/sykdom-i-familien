@@ -1,6 +1,6 @@
 # This workflow trigger on push to any branch
 name: CI / CD
-on:
+on: 
   push:
     paths-ignore:
       - '**.md'
@@ -8,6 +8,7 @@ on:
       - 'LICENCE'
       - 'CODEOWNERS'
     branches:
+  repository_dispatch:
 
 jobs:
   test:
