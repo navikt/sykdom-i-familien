@@ -4,6 +4,19 @@
     }
 }
 
+.responsiveContentHorisontalPadding() {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    @media (min-width: @tablet-breakpoint) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    @media (min-width: @desktop-breakpoint) {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+}
+
 .buttonFocus() {
     outline: none;
     box-shadow: 0 0 0 3px @orangeFocus;
