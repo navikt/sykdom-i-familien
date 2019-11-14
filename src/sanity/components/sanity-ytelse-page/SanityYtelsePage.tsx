@@ -7,7 +7,6 @@ import {
     getSanityContentWithLocale,
     getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
-import CircleIllustration from '../../../components/elements/circle-illustration/CircleIllustration';
 import { Ingress } from 'nav-frontend-typografi';
 import { WindowLocation } from '@reach/router';
 import slugify from 'slugify';
@@ -20,6 +19,7 @@ import SanityBlock from '../sanity-block/SanityBlock';
 import PagePoster from '../../../components/pages/frontpage/components/page-banner/PageBanner';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
+import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 
 import './ytelsePage.less';
 
@@ -163,7 +163,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     illustration={
                         illustration ? (
                             <Box textAlignCenter={true} margin="none">
-                                <CircleIllustration illustration={illustration} />
+                                <SectionIcon illustration={illustration} />
                             </Box>
                         ) : (
                             undefined
@@ -185,7 +185,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     illustration={
                         section.illustration ? (
                             <Box textAlignCenter={true} margin="none">
-                                <CircleIllustration illustration={section.illustration} />
+                                <SectionIcon illustration={section.illustration} />
                             </Box>
                         ) : (
                             undefined
