@@ -8,8 +8,10 @@ interface Props {
 
 /**
  * blue: 0067C5
+ * reverse bullet: 3E3832
+ * dark blue: 32414F
  */
-const CheckBullet = ({ stroke = '#3E3832', fill = '#ffffff', size = '2rem' }: Props) => (
+const CheckBullet = ({ stroke = '#fff', fill = '#32414F', size = '2rem' }: Props) => (
     <svg width={size} height={size} viewBox="0 0 32 32">
         <g fill="none" fillRule="evenodd">
             <circle cx={16} cy={16} r={16} fill={fill} />
