@@ -61,7 +61,11 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 </Box>
                             );
                         },
-                        tabs: ({ node: tabs }: { node: TabsObject }) => <SanityTabs tabs={tabs} />,
+                        tabs: ({ node: tabs }: { node: TabsObject }) => (
+                            <Box padBottom="xl">
+                                <SanityTabs tabs={tabs} />
+                            </Box>
+                        ),
                         textblock: ({ node: textblock }: { node: TextblockObject }) => {
                             const title = getOptionalLocaleString(textblock.title);
                             if (textblock.layout && textblock.layout === 'expandablePanel' && title !== undefined) {

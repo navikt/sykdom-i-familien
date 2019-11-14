@@ -1,4 +1,4 @@
-@import '../../styles/variables.less';
+@import '../../styles/assets.less';
 
 .sectionPanel {
     margin-bottom: 2rem;
@@ -19,13 +19,7 @@
 
     &__panel {
         width: 100%;
-        padding: 1.5rem 1rem;
-        @media (min-width: @mobile-breakpoint) {
-            padding: 3rem;
-        }
-        @media (min-width: @tablet-breakpoint) {
-            padding: 4rem;
-        }
+        .sectionPanelPadding();
     }
 
     &--illustrationOutside {
