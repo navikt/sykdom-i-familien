@@ -31,7 +31,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
     tabs,
     presentation,
     title,
-    bgcolor = styles.colors.theme
+    bgcolor = styles.colors.themeLight
 }: TabsProps) => {
     const [selectedTab, selectTab] = useState({ index: 0 });
 
