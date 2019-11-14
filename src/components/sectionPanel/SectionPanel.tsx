@@ -8,10 +8,10 @@ import './sectionPanel.less';
 const bem = bemUtils('sectionPanel');
 
 interface Props {
+    id?: string;
     title?: string;
     illustration?: React.ReactNode;
     children: ReactNode;
-    id: string;
     titleTag?: string;
     illustrationPlacement?: 'inside' | 'outside';
 }
