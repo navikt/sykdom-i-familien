@@ -1,0 +1,17 @@
+@import '../../../styles/assets.less';
+
+.titleWithLine {
+    text-align: center;
+    position: relative;
+    padding-bottom: 1.5rem; // Position of line
+    &:after {
+        content: '';
+        position: absolute;
+        width: 4rem;
+        height: 2px;
+        background-color: @navMorkGra;
+        bottom: 0;
+        left: 50%;
+        margin-left: -2rem;
+    }
+}

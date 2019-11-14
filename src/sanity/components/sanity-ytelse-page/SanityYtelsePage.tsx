@@ -2,13 +2,12 @@ import React from 'react';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import { Locale, defaultLocale } from '../../../i18n/locale';
 import Box from '../../../components/layout/box/Box';
-import PanelWithTitleAndIllustration from '../../../components/panel-with-title-and-illustration/PanelWithTitleAndIllustration';
+import SectionPanel from '../../../components/sectionPanel/SectionPanel';
 import {
     getSanityContentWithLocale,
     getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import CircleIllustration from '../../../components/elements/circle-illustration/CircleIllustration';
-import styles from '../../../styles';
 import { Ingress } from 'nav-frontend-typografi';
 import { WindowLocation } from '@reach/router';
 import slugify from 'slugify';
@@ -21,6 +20,8 @@ import SanityBlock from '../sanity-block/SanityBlock';
 import PagePoster from '../../../components/pages/frontpage/components/page-banner/PageBanner';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
+
+import './ytelsePage.less';
 
 export interface YtelsePageData {
     title: string;
@@ -155,7 +156,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
             }
             menuFooter={<LinkButton href={formUrl}>Søk nå</LinkButton>}>
             <div style={{ marginTop: '-4rem' }}>
-                <PanelWithTitleAndIllustration
+                <SectionPanel
                     titleTag="h2"
                     id={inShortSection.slug}
                     title={inShortSection.title}
@@ -174,10 +175,10 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             <SanityBlock content={inShort} />
                         </Ingress>
                     )}
-                </PanelWithTitleAndIllustration>
+                </SectionPanel>
             </div>
             {sections.map((section) => (
-                <PanelWithTitleAndIllustration
+                <SectionPanel
                     key={section._key}
                     id={section.slug}
                     title={section.title}
@@ -191,10 +192,10 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                         )
                     }>
                     {section.content && <SanityBlockContent content={section.content} />}
-                </PanelWithTitleAndIllustration>
+                </SectionPanel>
             ))}
             <PrintOnly>
-                <PanelWithTitleAndIllustration title="Lenker i dokumentet">
+                <SectionPanel title="Lenker i dokumentet">
                     <ol start={1}>
                         {linksInContent.map((link) => (
                             <li key={link!._key}>
@@ -202,7 +203,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             </li>
                         ))}
                     </ol>
-                </PanelWithTitleAndIllustration>
+                </SectionPanel>
             </PrintOnly>
         </PageWithMenu>
     );

@@ -1,6 +1,46 @@
+.sectionPanelPadding() {
+    padding: 1.5rem 1rem;
+    @media (min-width: @mobile-breakpoint) {
+        padding: 3rem;
+    }
+    @media (min-width: @tablet-breakpoint) {
+        padding: 4rem;
+    }
+}
+.overrideSectionPanelPadding() {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding: 1.5rem;
+
+    @media (min-width: @mobile-breakpoint) {
+        margin-left: -1.5rem;
+        margin-right: -1.5rem;
+        padding: 1.5rem;
+    }
+
+    @media (min-width: @tablet-breakpoint) {
+        margin-left: -2rem;
+        margin-right: -2rem;
+        padding: 2rem;
+    }
+}
+
 .noPrint() {
     @media print {
         display: none;
+    }
+}
+
+.responsiveContentHorisontalPadding() {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    @media (min-width: @tablet-breakpoint) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    @media (min-width: @desktop-breakpoint) {
+        padding-left: 4rem;
+        padding-right: 4rem;
     }
 }
 

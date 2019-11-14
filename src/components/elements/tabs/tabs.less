@@ -1,9 +1,8 @@
-@import '../../../styles/variables.less';
+@import '../../../styles/assets.less';
 
 .tabs {
     width: 100%;
     max-width: 100%;
-    margin-top: 1.5rem;
     position: relative;
 
     &__title {
@@ -38,14 +37,11 @@
         }
     }
     &__panel {
-        padding: 3rem 2rem 2rem 2rem;
-        margin: 0 -2rem 2rem -2rem;
+        .overrideSectionPanelPadding();
         background-color: @c-tabs;
         border-radius: 0.5rem;
         @media (max-width: @mobile-breakpoint) {
-            margin: 0 -0.5rem;
-            padding: 2rem 1rem;
-            // border-radius: 0;
+            border-radius: 0;
         }
         @media screen {
             &--selected {
