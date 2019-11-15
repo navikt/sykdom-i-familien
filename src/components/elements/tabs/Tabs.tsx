@@ -67,6 +67,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
             )}
             <div className={bem.element('select')}>
                 <Select
+                    panelBkg={bgcolor}
                     choices={tabs}
                     onChoiceSelect={(index) => selectTab({ index })}
                     selected={tabs[selectedTab.index]}

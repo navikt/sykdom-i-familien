@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Panel } from 'nav-frontend-paneler';
-import TypografiBase from 'nav-frontend-typografi';
 import Chevron from 'nav-frontend-chevron';
 import classnames from 'classnames';
 import bemUtils from '../../../../utils/bemUtils';
 import { Tab } from '../Tabs';
 import './select.less';
 
-const cls = bemUtils('select');
+const bem = bemUtils('select');
 
 interface OwnProps {
     selected: Tab;
     onChoiceSelect: (choice: number) => void;
     choices: Tab[];
+    panelBkg: string;
 }
 
 type SelectProps = OwnProps;
@@ -99,21 +99,22 @@ class Select extends React.Component<SelectProps, SelectState> {
                 ref={this.selectRef}
                 onClick={this.onClick}
                 onKeyPress={this.onClick}
-                className={classnames(cls.block, {
-                    [cls.modifier('open')]: this.state.open
+                className={classnames(bem.block, {
+                    [bem.modifier('open')]: this.state.open
                 })}>
-                <div className={cls.element('selected')}>
+                <div className={bem.element('selected')}>
                     {this.props.selected.illustration && (
-                        <div className={cls.element('selectedIcon')}>{this.props.selected.illustration}</div>
+                        <div className={bem.element('selectedIcon')}>{this.props.selected.illustration}</div>
                     )}
 
-                    <TypografiBase type="normaltekst">{this.props.selected.label}</TypografiBase>
+                    {this.props.selected.label}
                 </div>
                 <Chevron type={this.state.open ? 'opp' : 'ned'} />
             </div>
-            <div className={this.state.open ? cls.element('popUp', 'open') : cls.element('popUp')}>
+            <div className={bem.element('arrowSelector')} style={{ backgroundColor: this.props.panelBkg }} />
+            <div className={this.state.open ? bem.element('popUp', 'open') : bem.element('popUp')}>
                 {this.state.open && (
-                    <div className={cls.element('shadow')}>
+                    <div className={bem.element('shadow')}>
                         {this.props.choices.map((choice, index) => (
                             <Panel
                                 role="menuitem"
@@ -125,11 +126,11 @@ class Select extends React.Component<SelectProps, SelectState> {
                                 onKeyPress={() => {
                                     this.onChoiceClick(index);
                                 }}
-                                className={classnames(cls.element('choice'), {
-                                    [cls.element('choice', 'selected')]: this.props.selected.label === choice.label
+                                className={classnames(bem.element('choice'), {
+                                    [bem.element('choice', 'selected')]: this.props.selected.label === choice.label
                                 })}
                                 tabIndex={0}>
-                                <TypografiBase type="normaltekst">{choice.label}</TypografiBase>
+                                {choice.label}
                             </Panel>
                         ))}
                     </div>
