@@ -1,1 +1,1 @@
-web: npm run build && npm run serve
+web: gatsby develop -p $PORT -H 0.0.0.0
