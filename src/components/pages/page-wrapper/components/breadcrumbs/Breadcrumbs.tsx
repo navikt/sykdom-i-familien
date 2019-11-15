@@ -13,7 +13,8 @@ import './breadcrumbs.less';
 const cls = bemUtils('breadcrumbs');
 
 const parsePath = (path: string) => {
-    const parts = path.split('/');
+    const basePath = 'familie/sykdom-i-familien/';
+    const parts = path.replace(basePath, '').split('/');
 
     // Remove any trailing slash ("/")
     if (parts.length > 1 && parts[parts.length - 1] === '') {
