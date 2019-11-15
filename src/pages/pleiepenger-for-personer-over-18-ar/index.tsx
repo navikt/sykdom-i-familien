@@ -10,7 +10,7 @@ export default (props: RouterProps & any) => {
 
 export const pageQuery = graphql`
     {
-        allSanityYtelsePage(filter: { slug: { current: { eq: "pleiepenger-for-sykt-barn" } } }) {
+        allSanityYtelsePage(filter: { slug: { current: { eq: "pleiepenger-for-personer-over-18-ar" } } }) {
             edges {
                 node {
                     ytelse {
