@@ -4,6 +4,10 @@ import { decoratorFragments } from './fetched/_fragments';
 export const onRenderBody = ({ setHeadComponents, setPreBodyComponents, setPostBodyComponents }) => {
   setHeadComponents([
     <head
+      key="style"
+      dangerouslySetInnerHTML={{ __html: `<style type="text/css">.topnav.container {display: none}; </style>` }}
+    />,
+    <head
       key="nav-head-1"
       dangerouslySetInnerHTML={{
         __html: `<link href="https://appres.nav.no/_public/shared/bilder/favicon.ico?_ts=151292348c8" rel="icon" type="image/x-icon">`
@@ -40,7 +44,7 @@ export const onRenderBody = ({ setHeadComponents, setPreBodyComponents, setPostB
       }}
     />,
     <head
-      key="nav-head-1"
+      key="nav-head-6"
       dangerouslySetInnerHTML={{
         __html: `<link href="/css/bundle.css?f039847b05dae7b1f1cb-142f20381f5bfb9fee72-bundle&f039847b05dae7b1f1cb" rel="stylesheet">`
       }}
