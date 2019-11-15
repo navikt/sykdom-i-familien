@@ -9,6 +9,10 @@
         font-size: 1.25rem !important;
         padding-top: 1rem;
         margin-bottom: 0.75rem;
+        @media print {
+            display: none;
+            font-size: 1.25rem;
+        }
     }
 
     &__tabs {
@@ -33,7 +37,7 @@
         margin-bottom: 1.5rem;
         @media print {
             padding-top: 1rem;
-            margin: 0 !important;
+            // margin: 0 !important;
             display: block;
         }
     }
@@ -54,6 +58,8 @@
         }
         @media print {
             margin: 0 !important;
+            background-color: white !important;
+            padding: 0 !important;
         }
     }
 }

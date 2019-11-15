@@ -22,6 +22,18 @@
             padding-bottom: 3rem;
             padding-left: 4rem;
         }
+        @media print {
+            background: none !important;
+            padding: 0 !important;
+            display: block;
+            .nav-veileder {
+                left: auto;
+                position: relative;
+                padding: 0;
+                margin: 0 auto 2rem 0;
+            }
+        }
+
         &__content {
             font-size: 1.125rem;
             p {

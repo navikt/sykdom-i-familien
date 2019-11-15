@@ -100,19 +100,15 @@
             order: 2;
             max-width: 100% !important;
             font-size: 1.25rem;
-            padding-bottom: 2.5rem;
+            padding-bottom: 4.5rem;
             text-align: center;
             &:after {
-                @strokeWidth: 12rem;
-                content: '';
-                position: absolute;
-                width: @strokeWidth;
-                height: 0.25rem;
-                background-color: @c-theme-dark;
+                display: none;
+            }
+            .pageBanner__content {
+                max-width: 40rem;
                 margin: 0 auto;
-                bottom: 0;
-                left: 50%;
-                margin-left: -1 * @strokeWidth / 2;
+                text-align: left;
             }
         }
         &__title {
