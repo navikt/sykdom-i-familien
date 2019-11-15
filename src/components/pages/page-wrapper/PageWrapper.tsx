@@ -31,15 +31,18 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
         }
     `);
     const siteTitle = getSiteTitle(siteMetadata, intl.locale);
+    const toggleLanguageAvailable = false;
     return (
         <Normaltekst tag="div">
             <Helmet encodeSpecialCharacters={false} htmlAttributes={{ lang: `${intl.locale}-NO` }}>
                 <meta charSet="utf-8" />
                 <title>{pageTitle || siteTitle}</title>
             </Helmet>
-            <ScreenOnly>
-                <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
-            </ScreenOnly>
+            {toggleLanguageAvailable && (
+                <ScreenOnly>
+                    <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
+                </ScreenOnly>
+            )}
             {children}
         </Normaltekst>
     );
