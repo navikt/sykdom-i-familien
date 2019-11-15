@@ -10,6 +10,7 @@ import { getSiteTitle } from '../../../utils/site';
 import ScreenOnly from '../../elements/screen-only/ScreenOnly';
 
 import '../../../styles/main.less';
+import TestInfo from '../../test-info/TestInfo';
 
 interface Props {
     pageTitle?: string;
@@ -43,6 +44,7 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
                     <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
                 </ScreenOnly>
             )}
+            <TestInfo />
             {children}
         </Normaltekst>
     );
