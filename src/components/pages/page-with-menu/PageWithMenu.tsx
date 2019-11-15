@@ -88,7 +88,6 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
             {header && <div className={bem.element('header')}>{header}</div>}
             <div className={bem.element('breadcrumbs')}>
                 {isBrowser && <Breadcrumbs path={location.pathname} currentPageTitle={pageTitle} />}
-                {!isBrowser && <Breadcrumbs path={'/'} currentPageTitle={pageTitle} />}
             </div>
             <div className={bem.block}>
                 <MediaQuery minWidth={1072}>
