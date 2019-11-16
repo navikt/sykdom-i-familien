@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
-    pathPrefix: `${process.env.PATH_PREFIX || '/'} `,
+    pathPrefix: `/`,
     siteMetadata: {
         title: `Sykdom i familien`,
         title_nb: `Sykdom i familien`,
