@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
-    pathPrefix: `/familie/sykdom-i-familien`,
+    pathPrefix: `${process.env.PATH_PREFIX || '/familie/sykdom-i-familien'}`,
     siteMetadata: {
         title: `Sykdom i familien`,
         title_nb: `Sykdom i familien`,
@@ -30,13 +30,6 @@ module.exports = {
         //         icon: `src/images/icon.png` // This path is relative to the root of the site.
         //     }
         // },
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: `src`,
-                path: `${__dirname}/src/`
-            }
-        },
         {
             resolve: `nav-decorator`
         },

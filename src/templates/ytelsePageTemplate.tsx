@@ -1,16 +1,15 @@
 import React from 'react';
-import { RouterProps } from '@reach/router';
 import { graphql } from 'gatsby';
-import SanityYtelsePage from '../../sanity/components/sanity-ytelse-page/SanityYtelsePage';
+import SanityYtelsePage from '../sanity/components/sanity-ytelse-page/SanityYtelsePage';
 
-export default (props: RouterProps & any) => {
-    const { data, location } = props;
-    return <SanityYtelsePage data={data.allSanityYtelsePage.edges[0].node} location={location} />;
+export default (props: any) => {
+    const { data } = props;
+    return <SanityYtelsePage data={data.allSanityYtelsePage.edges[0].node} />;
 };
 
-export const pageQuery = graphql`
-    {
-        allSanityYtelsePage(filter: { slug: { current: { eq: "pleiepenger-for-personer-over-18-ar" } } }) {
+export const query = graphql`
+    query($slug: String!) {
+        allSanityYtelsePage(filter: { slug: { current: { eq: $slug } } }) {
             edges {
                 node {
                     ytelse {
