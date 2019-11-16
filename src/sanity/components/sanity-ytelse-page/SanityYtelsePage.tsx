@@ -8,7 +8,6 @@ import {
     getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { Ingress } from 'nav-frontend-typografi';
-import { WindowLocation } from '@reach/router';
 import slugify from 'slugify';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
@@ -25,6 +24,7 @@ import './ytelsePage.less';
 
 export interface YtelsePageData {
     title: string;
+    slug: { current: string };
     intro: string;
     inShort: string;
     inShortTitle: string;
@@ -44,7 +44,6 @@ interface SectionContent {
 
 interface Props {
     data: YtelsePageDocument;
-    location: WindowLocation;
 }
 
 export const extractSectionData = (data: any[]): SectionContent[] => {
@@ -68,6 +67,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
     return {
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
         intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
+        slug: data.slug,
         banner: data._rawBanner,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
@@ -113,10 +113,11 @@ const getAndApplyLinksInContent = (data: any) => {
 export const extractLinksFromContent = {};
 
 const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
-    const { location, intl } = props;
+    const { intl } = props;
     const { data, links: linksInContent } = getAndApplyLinksInContent(props.data);
     const {
         title,
+        slug,
         inShort,
         intro,
         inShortTitle,
@@ -137,7 +138,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
     return (
         <PageWithMenu
             pageTitle={title}
-            location={location}
+            path={`${slug.current}`}
             sectionMenuItems={[inShortSection, ...sections].map((section) => ({
                 label: section.title || '',
                 slug: section.slug

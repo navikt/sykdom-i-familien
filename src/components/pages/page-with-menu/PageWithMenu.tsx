@@ -3,7 +3,6 @@ import MediaQuery from 'react-responsive';
 import bemUtils from '../../../utils/bemUtils';
 import MobileMenu from './mobile-menu/MobileMenu';
 import SidebarMenu from './sidebar-menu/SidebarMenu';
-import { RouterProps } from '@reach/router';
 import Breadcrumbs from '../page-wrapper/components/breadcrumbs/Breadcrumbs';
 import PageWrapper from '../page-wrapper/PageWrapper';
 import { isBrowser } from '../../../utils/build';
@@ -23,6 +22,7 @@ interface Props {
     menuFooter?: React.ReactNode;
     children: React.ReactNode;
     header?: React.ReactNode;
+    path: string;
 }
 
 enum Direction {
@@ -32,11 +32,12 @@ enum Direction {
 
 const bem = bemUtils('pageWithMenu');
 
-const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
+const PageWithMenu: React.FunctionComponent<Props> = ({
     pageTitle,
     sectionMenuItems,
     menuFooter,
     header,
+    path,
     children
 }) => {
     const sectionIds = sectionMenuItems.map((section) => section.slug);
@@ -71,14 +72,10 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
         }
     }, []);
 
-    // useWindowSize((size) => {
-    //     console.log(size);
-    // });
-
     useActiveSections(
         sectionIds,
-        (slug: any) => {
-            setActiceSectionSlug(slug);
+        (s: any) => {
+            setActiceSectionSlug(s);
         },
         -64
     );
@@ -87,7 +84,7 @@ const PageWithMenu: React.FunctionComponent<Props & RouterProps> = ({
         <PageWrapper pageTitle={pageTitle}>
             {header && <div className={bem.element('header')}>{header}</div>}
             <div className={bem.element('breadcrumbs')}>
-                {isBrowser && <Breadcrumbs path={location.pathname} currentPageTitle={pageTitle} />}
+                {isBrowser && <Breadcrumbs slug={path} title={pageTitle} />}
             </div>
             <div className={bem.block}>
                 <MediaQuery minWidth={1072}>
