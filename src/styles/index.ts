@@ -6,9 +6,9 @@ const breakpoints = {
 
 const styles = {
     colors: {
-        theme: '#C2EAF7', //'#cce1f3',
-        themeLight: '#E0F5FB', //'#cce1f3',
-        themeDark: '#85D5F0', // '#0C5472',
+        theme: '#C1B5D0', //'#C2EAF7', //'#cce1f3',
+        themeLight: '#efecf3', // '#E0F5FB', //'#cce1f3',
+        themeDark: '#826ba1', //'#85D5F0', // '#0C5472',
         text: '#3e3832',
         link: '#0067c5'
     },
