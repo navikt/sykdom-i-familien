@@ -30,8 +30,8 @@ jobs:
           npm run test
 
   build-code-and-push-docker-dev:
-    name: Build code and push docker image
-    if: startsWith(github.ref, 'refs/heads/dev-') || github.event.action =='trigger_gatsby_build_staging' # Build and push docker if branch is either master or dev-*
+    name: Staging build and docker push
+    if: startsWith(github.ref, 'refs/heads/dev-') || github.event.action == 'trigger_gatsby_build_staging' # Build and push docker if branch is either master or dev-*
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -80,7 +80,7 @@ jobs:
           path: .docker_tag
 
   build-code-and-push-docker-prod:
-    name: Build code and push docker image
+    name: Prod build and docker push
     if: startsWith(github.ref, 'refs/heads/master') || github.event.action == 'trigger_gatsby_build_prod' # Build and push docker if branch is either master or dev-*
     needs: test
     runs-on: ubuntu-latest
