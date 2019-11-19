@@ -232,7 +232,7 @@ jobs:
 
   deploy-dev-sbs:
     name: Deploy to dev-sbs
-    if: startsWith(github.ref, 'refs/heads/dev-')
+    if: startsWith(github.ref, 'refs/heads/dev-') && github.event.action != 'trigger_gatsby_build_staging'
     needs: build-code-and-push-docker-dev # Depends on build-code-and-push-docker job
     runs-on: ubuntu-latest
     steps:
@@ -293,7 +293,7 @@ jobs:
 
   deploy-prod-sbs:
     name: Deploy to prod-sbs
-    if: startsWith(github.ref, 'refs/heads/master')
+    if: startsWith(github.ref, 'refs/heads/master') && github.event.action != 'trigger_gatsby_build_prod'
     needs: build-code-and-push-docker-prod # Depends on build-code-and-push-docker job
     runs-on: ubuntu-latest
     steps:
