@@ -9,6 +9,12 @@ module.exports = {
     },
     plugins: [
         {
+            resolve: `gatsby-plugin-compile-es6-packages`,
+            options: {
+                modules: [`query-string`]
+            }
+        },
+        {
             resolve: 'gatsby-source-sanity',
             options: {
                 projectId: '8ux9tyb9',
@@ -23,12 +29,6 @@ module.exports = {
         },
         {
             resolve: 'gatsby-plugin-react-svg'
-        },
-        {
-            resolve: `gatsby-plugin-compile-es6-packages`,
-            options: {
-                modules: [`query-string`]
-            }
         },
         `gatsby-plugin-react-helmet`,
         `gatsby-plugin-typescript`,
