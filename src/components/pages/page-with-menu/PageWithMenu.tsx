@@ -22,7 +22,7 @@ interface Props {
     menuFooter?: React.ReactNode;
     children: React.ReactNode;
     header?: React.ReactNode;
-    path: string;
+    slug: string;
 }
 
 enum Direction {
@@ -37,7 +37,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     sectionMenuItems,
     menuFooter,
     header,
-    path,
+    slug,
     children
 }) => {
     const sectionIds = sectionMenuItems.map((section) => section.slug);
@@ -84,7 +84,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
         <PageWrapper pageTitle={pageTitle}>
             {header && <div className={bem.element('header')}>{header}</div>}
             <div className={bem.element('breadcrumbs')}>
-                {isBrowser && <Breadcrumbs slug={path} title={pageTitle} />}
+                {isBrowser && <Breadcrumbs slug={slug} title={pageTitle} />}
             </div>
             <div className={bem.block}>
                 <MediaQuery minWidth={1072}>
