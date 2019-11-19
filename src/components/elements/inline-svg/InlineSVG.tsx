@@ -18,7 +18,7 @@ const InlineSVG: React.FunctionComponent<InlineSVGProps> = (props) => {
     }
     return (
         <div
-            style={{ lineHeight: 0, display: props.inline ? 'inline-block' : 'block' }}
+            style={{ lineHeight: 0, display: props.inline ? 'inline-block' : 'block', width: '100%', height: '100%' }}
             dangerouslySetInnerHTML={{ __html: svgHtml }}
         />
     );

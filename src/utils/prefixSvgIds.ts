@@ -1,4 +1,3 @@
-// import replaceString from 'replace-string';
 import { guid } from 'nav-frontend-js-utils';
 import replaceAll from 'replaceall';
 

@@ -37,19 +37,22 @@ const setPropOnElement = (element: any, prop: string, value?: string) => {
 
 const parseInBrowser = ({ illustration, width, height, viewBox, title }: InlineSVGProps): string | undefined => {
     // Remember to also update parseOnNode if changes are made
-    const parser = new DOMParser();
-    const svgElement = parser.parseFromString(illustration, 'image/svg+xml').children[0] as SVGElement;
-    if (!svgElement) {
-        return;
+    if (undefined !== window.DOMParser) {
+        const parser = new DOMParser();
+        const svgElement = parser.parseFromString(illustration, 'image/svg+xml').children[0] as SVGElement;
+        if (!svgElement) {
+            return;
+        }
+        setProp(svgElement, 'width', width || height ? width : '100%');
+        setProp(svgElement, 'height', height);
+        setProp(svgElement, 'focusable', 'false');
+        if (viewBox) {
+            setProp(svgElement, 'viewBox', viewBox);
+        }
+        setOrUpdateTitleNode(svgElement, title);
+        return svgElement.outerHTML;
     }
-    setProp(svgElement, 'width', width || height ? width : '100%');
-    setProp(svgElement, 'height', height);
-    setProp(svgElement, 'focusable', 'false');
-    if (viewBox) {
-        setProp(svgElement, 'viewBox', viewBox);
-    }
-    setOrUpdateTitleNode(svgElement, title);
-    return svgElement.outerHTML;
+    return illustration;
 };
 
 const parseOnNode = ({ illustration, width, height, viewBox, title }: InlineSVGProps): string | undefined => {
