@@ -155,7 +155,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     undefined
                 )
             }
-            menuFooter={<LinkButton href={formUrl}>Søk nå</LinkButton>}>
+            menuFooter={<LinkButton href={formUrl} alignCenter={true}>Søk nå</LinkButton>}>
             <div style={{ marginTop: '-4rem' }}>
                 <SectionPanel
                     titleTag="h2"

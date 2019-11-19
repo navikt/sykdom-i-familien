@@ -9,8 +9,12 @@ const prefixSvgIds = (html: string, prefix?: string): string => {
     const idRegExp = new RegExp(`id="(.+?)?"`, 'gm');
     let item;
     const ids: string[] = [];
-    while ((item = idRegExp.exec(html)) !== null) {
-        ids.push(item[1]);
+    item = idRegExp.exec(html);
+    while (item !== null) {
+        item = idRegExp.exec(html);
+        if (item) {
+            ids.push(item[1]);
+        }
     }
     // Make sure fill props are not replaced with id replaces
     html = replaceString(html, fillPropFrom, fillPropTemp);
