@@ -29,9 +29,9 @@ jobs:
           npm ci
           npm run test
 
-  build-code-and-push-docker:
+  build-code-and-push-docker-dev:
     name: Build code and push docker image
-    if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
+    if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.event.action, 'trigger_gatsby_build_staging') # Build and push docker if branch is either master or dev-*
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -46,13 +46,61 @@ jobs:
       - name: build code
         env: 
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          DATASET_ENV: staging
         run: |
-          source scripts/resolve-dataset-environment.sh # Export a DATADSET_ENV envrionment variable with either staging or production.
           echo "Exported DATASET_ENV=$DATASET_ENV"
           npm i
           npm run build
-      - name: debug 1
-        run: ls -la
+      - name: Create Docker tag
+        env:
+          NAME: sykdom-i-familien
+        run: |
+          echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$NAME" > .docker_image
+          echo "$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)" > .docker_tag
+      - name: Build Docker image
+        run: |
+          docker build -t $(cat .docker_image):$(cat .docker_tag) .
+      - name: Login to Github Package Registry
+        env:
+          DOCKER_USERNAME: x-access-token
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
+      - name: Push Docker image
+        run: "docker push $(cat .docker_image):$(cat .docker_tag)"
+      - name: pass image file to next job.
+        uses: actions/upload-artifact@v1
+        with:
+          name: docker_image
+          path: .docker_image
+      - name: pass tag file to next job.
+        uses: actions/upload-artifact@v1
+        with:
+          name: docker_tag
+          path: .docker_tag
+
+  build-code-and-push-docker-prod:
+    name: Build code and push docker image
+    if: startsWith(github.ref, 'refs/heads/master') || startsWith(github.event.action, 'trigger_gatsby_build_prod') # Build and push docker if branch is either master or dev-*
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: build code
+        env: 
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          DATASET_ENV: production
+        run: |
+          echo "Exported DATASET_ENV=$DATASET_ENV"
+          npm i
+          npm run build
       - name: Create Docker tag
         env:
           NAME: sykdom-i-familien
@@ -83,8 +131,7 @@ jobs:
 
   deploy-dev-sbs:
     name: Deploy to dev-sbs
-    if: startsWith(github.ref, 'refs/heads/dev-') # Deploy if branch is dev-*
-    needs: build-code-and-push-docker # Depends on build-code-and-push-docker job
+    needs: build-code-and-push-docker-dev # Depends on build-code-and-push-docker job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -102,8 +149,6 @@ jobs:
         run: |
           cp docker_image/.docker_image .
           cp docker_tag/.docker_tag .
-      - name: debug
-        run: ls -la
       - name: deploy to dev-sbs
         uses: navikt/deployment-cli/action@0.4.0
         env:
@@ -115,8 +160,7 @@ jobs:
 
   deploy-prod-sbs:
     name: Deploy to prod-sbs
-    if: startsWith(github.ref, 'refs/heads/master')  # If the branch is master
-    needs: build-code-and-push-docker # Depends on build-code-and-push-docker job
+    needs: build-code-and-push-docker-prod # Depends on build-code-and-push-docker job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -134,8 +178,6 @@ jobs:
         run: |
           cp docker_image/.docker_image .
           cp docker_tag/.docker_tag .
-      - name: debug
-        run: ls -la
       - name: deploy to prod-sbs
         uses: navikt/deployment-cli/action@0.4.0
         env:
