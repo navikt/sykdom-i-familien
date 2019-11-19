@@ -2,9 +2,8 @@ import React from 'react';
 
 const RasmusSirkelSVG = ({ width = 64, height = 64 }: { width?: string | number; height?: number | string }) => (
     <svg width={width} height={height} viewBox="0 0 64 64">
-        <title>{'2. rasmus_veileder'}</title>
         <g fill="none" fillRule="evenodd">
-            <circle fill="#3385D1" fillRule="nonzero" cx={32} cy={32} r={32} />
+            <circle fill="#A190B8" fillRule="nonzero" cx={32} cy={32} r={32} />
             <path
                 d="M44 36.494c-.853 24.995-19.923 24.014-21 1.02.095-26.325 20.574-25.372 21-1.02"
                 fill="#E6E6E6"
@@ -49,8 +48,8 @@ const RasmusSirkelSVG = ({ width = 64, height = 64 }: { width?: string | number;
                 fillRule="nonzero"
             />
             <path
-                d="M41.762 30c-1.64-1.081-22.092-2.205-15.434-8l15.434 6.327s.536 1.673 0 1.673z"
-                stroke="#000"
+                d="M43.734 30c-1.832-1.081-24.691-2.205-17.25-8l17.25 6.327s.599 1.673 0 1.673z"
+                stroke="#3B3B3B"
                 strokeWidth={0.25}
             />
             <path
@@ -70,7 +69,7 @@ const RasmusSirkelSVG = ({ width = 64, height = 64 }: { width?: string | number;
             />
             <path
                 d="M23.511 27.922L23 31l17.993-5.422c.375-9.24-15.336 2.336-17.482 2.344z"
-                stroke="#000"
+                stroke="#3B3B3B"
                 strokeWidth={0.25}
                 strokeLinecap="round"
                 strokeLinejoin="round"
