@@ -11,7 +11,7 @@ type Props = OwnProps & LenkeProps;
 
 const LinkButton: React.FunctionComponent<Props> = ({ alignCenter, ...rest }) => (
     <Lenke
-        {...rest}
+        {...restProps}
         className="knapp knapp--hoved linkButton"
         style={alignCenter ? { textAlign: 'center' } : undefined}
     />
