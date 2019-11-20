@@ -33,8 +33,8 @@ const removeProp = (tag: string, prop: string): string => {
     return tag;
 };
 
-const setProp = (tag: string, prop: string, newValue?: string): string => {
-    const currProp = findProp(tag, prop);
+const setProp = (tag: string, name: string, newValue?: string): string => {
+    const currProp = findProp(tag, name);
     if (currProp) {
         return replaceAll(currProp, `${name}="${newValue}"`, tag);
     }
