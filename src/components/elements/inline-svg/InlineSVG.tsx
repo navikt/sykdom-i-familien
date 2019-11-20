@@ -1,5 +1,7 @@
 import React from 'react';
 import { parseAndModifySvg } from './inlineSvgUtils';
+import './inlineSvg.less';
+import bemUtils from '../../../utils/bemUtils';
 
 export interface InlineSVGProps {
     illustration: string;
@@ -8,8 +10,11 @@ export interface InlineSVGProps {
     height?: string;
     inline?: boolean;
     maintainAspectRatio?: boolean;
+    fullSizeSvg?: boolean;
     viewBox?: string;
 }
+
+const bem = bemUtils('inlineSVG');
 
 const InlineSVG: React.FunctionComponent<InlineSVGProps> = (props) => {
     const svgHtml = parseAndModifySvg(props);
@@ -18,7 +23,8 @@ const InlineSVG: React.FunctionComponent<InlineSVGProps> = (props) => {
     }
     return (
         <div
-            style={{ lineHeight: 0, display: props.inline ? 'inline-block' : 'block', width: '100%', height: '100%' }}
+            className={bem.classNames(bem.block, bem.modifierConditional('fullSizeSVG', props.fullSizeSvg))}
+            style={{ display: props.inline ? 'inline-block' : 'block' }}
             dangerouslySetInnerHTML={{ __html: svgHtml }}
         />
     );
