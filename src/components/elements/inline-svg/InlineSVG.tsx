@@ -1,7 +1,8 @@
 import React from 'react';
 import { parseAndModifySvg } from './inlineSvgUtils';
-import './inlineSvg.less';
 import bemUtils from '../../../utils/bemUtils';
+
+import './inlineSVG.less';
 
 export interface InlineSVGProps {
     illustration: string;
