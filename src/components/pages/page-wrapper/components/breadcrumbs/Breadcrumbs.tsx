@@ -26,13 +26,12 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
                     title_nb
                     title_nn
                 }
-                pathPrefix
             }
         }
     `);
 
     const siteTitle = getSiteTitle(siteMetadata, intl.locale);
-    const frontpageUrl = `${siteMetadata.site.pathPrefix}/`;
+    const frontpageUrl = `/`;
 
     const crumbs: React.ReactNode[] = [];
     if (width && width < 576) {

@@ -1,5 +1,5 @@
-import replaceString from 'replace-string';
 import { guid } from 'nav-frontend-js-utils';
+import replaceAll from 'replaceall';
 
 const fillPropFrom = `fill="#`;
 const fillPropTemp = 'fill=_x_';
@@ -17,16 +17,16 @@ const prefixSvgIds = (html: string, prefix?: string): string => {
         }
     }
     // Make sure fill props are not replaced with id replaces
-    html = replaceString(html, fillPropFrom, fillPropTemp);
+    html = replaceAll(fillPropFrom, fillPropTemp, html);
 
     // Prefix all id's
     if (ids && 1 + 1 === 2) {
         ids.forEach((id) => {
-            html = replaceString(html, `"${id}"`, `"${prefixToUse}_${id}"`);
-            html = replaceString(html, `#${id}`, `#${prefixToUse}_${id}`);
+            html = replaceAll(`"${id}"`, `"${prefixToUse}_${id}"`, html);
+            html = replaceAll(`#${id}`, `#${prefixToUse}_${id}`, html);
         });
     }
-    html = replaceString(html, fillPropTemp, fillPropFrom);
+    html = replaceAll(fillPropTemp, fillPropFrom, html);
     return html;
 };
 

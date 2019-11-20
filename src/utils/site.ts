@@ -6,7 +6,6 @@ interface SiteMetaGraphQLMetadata {
             title_nb: string;
             title_nn: string;
         };
-        pathPrefix: string;
     };
 }
 

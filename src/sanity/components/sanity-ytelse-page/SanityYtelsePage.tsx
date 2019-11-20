@@ -138,7 +138,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
     return (
         <PageWithMenu
             pageTitle={title}
-            path={`${slug.current}`}
+            slug={`${slug.current}`}
             sectionMenuItems={[inShortSection, ...sections].map((section) => ({
                 label: section.title || '',
                 slug: section.slug
@@ -155,7 +155,11 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     undefined
                 )
             }
-            menuFooter={<LinkButton href={formUrl} alignCenter={true}>Søk nå</LinkButton>}>
+            menuFooter={
+                <LinkButton href={formUrl} alignCenter={true}>
+                    Søk nå
+                </LinkButton>
+            }>
             <div style={{ marginTop: '-4rem' }}>
                 <SectionPanel
                     titleTag="h2"

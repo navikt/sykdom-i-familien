@@ -9,9 +9,9 @@ interface OwnProps {
 
 type Props = OwnProps & LenkeProps;
 
-const LinkButton: React.FunctionComponent<Props> = ({ alignCenter, ...rest }) => (
+const LinkButton: React.FunctionComponent<Props> = ({ alignCenter, ...restProps }) => (
     <Lenke
-        {...rest}
+        {...restProps}
         className="knapp knapp--hoved linkButton"
         style={alignCenter ? { textAlign: 'center' } : undefined}
     />

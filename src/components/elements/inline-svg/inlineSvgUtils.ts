@@ -36,22 +36,27 @@ const setPropOnElement = (element: any, prop: string, value?: string) => {
 };
 
 const parseInBrowser = ({ illustration, width, height, viewBox, title }: InlineSVGProps): string | undefined => {
-    const parser = new DOMParser();
-    const svgElement = parser.parseFromString(prefixSvgIds(illustration), 'image/svg+xml').children[0] as SVGElement;
-    if (!svgElement) {
-        return;
+    // Remember to also update parseOnNode if changes are made
+    if (undefined !== window.DOMParser) {
+        const parser = new DOMParser();
+        const svgElement = parser.parseFromString(illustration, 'image/svg+xml').children[0] as SVGElement;
+        if (!svgElement) {
+            return;
+        }
+        setProp(svgElement, 'width', width || height ? width : '100%');
+        setProp(svgElement, 'height', height);
+        setProp(svgElement, 'focusable', 'false');
+        if (viewBox) {
+            setProp(svgElement, 'viewBox', viewBox);
+        }
+        setOrUpdateTitleNode(svgElement, title);
+        return svgElement.outerHTML;
     }
-    setProp(svgElement, 'width', width || height ? width : '100%');
-    setProp(svgElement, 'height', height);
-    setProp(svgElement, 'focusable', 'false');
-    if (viewBox) {
-        setProp(svgElement, 'viewBox', viewBox);
-    }
-    setOrUpdateTitleNode(svgElement, title);
-    return svgElement.outerHTML;
+    return illustration;
 };
 
 const parseOnNode = ({ illustration, width, height, viewBox, title }: InlineSVGProps): string | undefined => {
+    // Remember to also update parseInBrowser if changes are made
     const element = parse(illustration).children[0] as any;
     setPropOnElement(element, 'width', width || height ? width : '100%');
     setPropOnElement(element, 'height', height);
@@ -71,8 +76,9 @@ const parseOnNode = ({ illustration, width, height, viewBox, title }: InlineSVGP
 };
 
 export const parseAndModifySvg = (props: InlineSVGProps): string | undefined => {
+    const illustration = prefixSvgIds(props.illustration);
     if (isBrowser) {
-        return parseInBrowser(props);
+        return parseInBrowser({ ...props, illustration });
     }
-    return parseOnNode(props);
+    return parseOnNode({ ...props, illustration });
 };
