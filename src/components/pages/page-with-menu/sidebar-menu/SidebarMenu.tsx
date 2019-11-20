@@ -20,7 +20,7 @@ const SidebarMenu: React.FunctionComponent<Props> = ({ items, footer, activeSect
         <nav className={bem.block}>
             <div className={bem.element('icon')}>
                 <CircleMask color={styles.colors.theme} size="5rem">
-                    <RocketSVG />
+                    <RocketSVG size="3rem" />
                 </CircleMask>
             </div>
             <div className={bem.element('items')}>
