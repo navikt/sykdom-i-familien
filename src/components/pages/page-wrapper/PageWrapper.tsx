@@ -10,11 +10,12 @@ import { getSiteTitle } from '../../../utils/site';
 import ScreenOnly from '../../elements/screen-only/ScreenOnly';
 
 import '../../../styles/main.less';
-import TestInfo from '../../test-info/TestInfo';
 
 interface Props {
     pageTitle?: string;
 }
+
+const toggleLanguageAvailable = false;
 
 const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({
     pageTitle,
@@ -32,7 +33,6 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
         }
     `);
     const siteTitle = getSiteTitle(siteMetadata, intl.locale);
-    const toggleLanguageAvailable = false;
     return (
         <Normaltekst tag="div">
             <Helmet encodeSpecialCharacters={false} htmlAttributes={{ lang: `${intl.locale}-NO` }}>
@@ -44,7 +44,6 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
                     <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
                 </ScreenOnly>
             )}
-            <TestInfo />
             {children}
         </Normaltekst>
     );

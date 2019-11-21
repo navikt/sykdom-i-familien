@@ -5,7 +5,6 @@ import MobileMenu from './mobile-menu/MobileMenu';
 import SidebarMenu from './sidebar-menu/SidebarMenu';
 import Breadcrumbs from '../page-wrapper/components/breadcrumbs/Breadcrumbs';
 import PageWrapper from '../page-wrapper/PageWrapper';
-import { isBrowser } from '../../../utils/build';
 import useActiveSections from '../../../hooks/useActiveSection';
 import useScrollPosition, { ScrollPositionChangeEvent } from '../../../hooks/useScrollPosition';
 
@@ -84,7 +83,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
         <PageWrapper pageTitle={pageTitle}>
             {header && <div className={bem.element('header')}>{header}</div>}
             <div className={bem.element('breadcrumbs')}>
-                {isBrowser && <Breadcrumbs slug={slug} title={pageTitle} />}
+                <Breadcrumbs slug={slug} title={pageTitle} />
             </div>
             <div className={bem.block}>
                 <MediaQuery minWidth={1072}>
