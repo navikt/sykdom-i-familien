@@ -31,7 +31,7 @@ jobs:
 
   build-code-and-push-docker-dev:
     name: staging-build-push-docker
-    if: startsWith(github.ref, 'refs/heads/dev-') || (github.event.deployment.environment == 'staging' && github.event.deployment.ref == 'staging') # Build and push docker if branch is either master or dev-*
+    if: startsWith(github.ref, 'refs/heads/dev-') || (github.event.deployment.environment == 'dev-sbs' && github.event.deployment.ref == 'staging') # Build and push docker if branch is either master or dev-*
     needs: test
     runs-on: ubuntu-latest
     steps:
