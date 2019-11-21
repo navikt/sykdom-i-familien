@@ -16,6 +16,10 @@
         .circleMask--valign-top & {
             align-items: flex-start;
         }
+        > div {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     &--inactive {
@@ -23,8 +27,10 @@
         overflow: visible;
         background: none !important;
     }
-    svg {
-        width: 100%;
-        height: 100%;
+    &--scaleSvg {
+        svg {
+            width: inherit;
+            height: inherit;
+        }
     }
 }

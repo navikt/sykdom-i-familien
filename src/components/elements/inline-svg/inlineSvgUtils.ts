@@ -1,84 +1,87 @@
 import { InlineSVGProps } from './InlineSVG';
 import prefixSvgIds from '../../../utils/prefixSvgIds';
-import { isBrowser } from '../../../utils/build';
-import { parse } from 'svg-parser';
-const toHtml = require('hast-util-to-html');
+import replaceAll from 'replaceall';
 
-const setOrUpdateTitleNode = (svgElement: Element, title?: string): Element => {
-    if (!title) {
-        return svgElement;
+export const parseAndModifySvg = (props: InlineSVGProps): string | undefined => prefixSvgIds(stringParseSVG(props));
+
+/** Rude string prop replacements */
+const findProp = (str: string, name: string): string | undefined => {
+    const propPattern = `${name}=\"(.*?)\"`;
+    const regExp = new RegExp(propPattern, 'i');
+    const result = regExp.exec(str);
+    if (result) {
+        return result[0];
     }
-    const titleNode = svgElement.querySelector('title');
-    const newTitleNode = document.createElement('title');
-    newTitleNode.appendChild(document.createTextNode(title));
-    if (titleNode) {
-        svgElement.replaceChild(newTitleNode, titleNode);
-    } else {
-        svgElement.appendChild(newTitleNode);
-    }
-    return svgElement;
+    return undefined;
 };
 
-const setProp = (svgElement: Element, prop: string, value?: string) => {
-    if (value) {
-        svgElement.setAttribute(prop, value);
-    } else {
-        svgElement.removeAttribute(prop);
+const findNode = (str: string, name: string): string | undefined => {
+    const propPattern = `<${name}?>(.*?)<\/${name}>`;
+    const regExp = new RegExp(propPattern, 'i');
+    const result = regExp.exec(str);
+    if (result) {
+        return result[0];
     }
+    return undefined;
 };
 
-const setPropOnElement = (element: any, prop: string, value?: string) => {
-    if (value) {
-        element.properties[prop] = value;
-    } else {
-        delete element.properties[prop];
+const removeProp = (tag: string, prop: string): string => {
+    const currProp = findProp(tag, prop);
+    if (currProp) {
+        return replaceAll(currProp, ``, tag);
     }
+    return tag;
 };
 
-const parseInBrowser = ({ illustration, width, height, viewBox, title }: InlineSVGProps): string | undefined => {
-    // Remember to also update parseOnNode if changes are made
-    if (undefined !== window.DOMParser) {
-        const parser = new DOMParser();
-        const svgElement = parser.parseFromString(illustration, 'image/svg+xml').children[0] as SVGElement;
-        if (!svgElement) {
-            return;
+const setProp = (tag: string, name: string, newValue?: string): string => {
+    const currProp = findProp(tag, name);
+    if (currProp) {
+        return replaceAll(currProp, `${name}="${newValue}"`, tag);
+    }
+    return tag;
+};
+
+const updateSvgProps = (svgTag: string, props: InlineSVGProps): string => {
+    let tag = svgTag;
+    if (props.height) {
+        tag = setProp(tag, 'height', props.height);
+    }
+    if (props.width) {
+        tag = setProp(tag, 'width', props.width);
+    }
+
+    tag = removeProp(tag, 'xmlns:xlink');
+    tag = removeProp(tag, 'xmlns');
+    tag = removeProp(tag, 'version');
+
+    return tag;
+};
+
+const updateSvgNodes = (str: string, props: InlineSVGProps) => {
+    if (props.title) {
+        const newTitleNode = `<title>${props.title}</title>`;
+        const titleNode = findNode(str, 'title');
+        if (titleNode) {
+            str = str.replace(titleNode, newTitleNode);
+        } else {
+            str = `${titleNode}${str}`;
         }
-        setProp(svgElement, 'width', width || height ? width : '100%');
-        setProp(svgElement, 'height', height);
-        setProp(svgElement, 'focusable', 'false');
-        if (viewBox) {
-            setProp(svgElement, 'viewBox', viewBox);
-        }
-        setOrUpdateTitleNode(svgElement, title);
-        return svgElement.outerHTML;
     }
-    return illustration;
+    return str;
 };
 
-const parseOnNode = ({ illustration, width, height, viewBox, title }: InlineSVGProps): string | undefined => {
-    // Remember to also update parseInBrowser if changes are made
-    const element = parse(illustration).children[0] as any;
-    setPropOnElement(element, 'width', width || height ? width : '100%');
-    setPropOnElement(element, 'height', height);
-    setPropOnElement(element, 'focusable', 'false');
-    if (viewBox) {
-        setPropOnElement(element, 'viewBox', viewBox);
+export const stringParseSVG = (props: InlineSVGProps): string => {
+    const str = props.illustration.replace(/<\?xml(.*?)\?>/, '');
+    const svgNodeStr = /<svg (.*?)>/.exec(str);
+    if (svgNodeStr) {
+        let svgNode = svgNodeStr[0];
+        let contentNode = str.replace(svgNode, '').replace('</svg>', '');
+        svgNode = updateSvgProps(svgNode, props);
+        contentNode = updateSvgNodes(contentNode, props);
+        return `
+            ${svgNode}
+            ${contentNode}
+        </svg>`;
     }
-    if (title) {
-        element.children = element.children.map((child: any) => {
-            if (child.tagName === 'title') {
-                child.children[0].value = 'whoa';
-            }
-            return child;
-        });
-    }
-    return toHtml(element);
-};
-
-export const parseAndModifySvg = (props: InlineSVGProps): string | undefined => {
-    const illustration = prefixSvgIds(props.illustration);
-    if (isBrowser) {
-        return parseInBrowser({ ...props, illustration });
-    }
-    return parseOnNode({ ...props, illustration });
+    return str;
 };

@@ -7,12 +7,20 @@ interface Props {
     active?: boolean;
     color?: string;
     size?: string;
+    scaleSvg?: boolean;
     valign?: 'top' | 'bottom';
 }
 
 const bem = bemUtils('circleMask');
 
-const CircleMask: React.StatelessComponent<Props> = ({ color, size, active = true, valign, children }) => {
+const CircleMask: React.StatelessComponent<Props> = ({
+    color,
+    size,
+    active = true,
+    scaleSvg = true,
+    valign,
+    children
+}) => {
     const style: Partial<CSSProperties> = {
         backgroundColor: color
     };
@@ -25,7 +33,8 @@ const CircleMask: React.StatelessComponent<Props> = ({ color, size, active = tru
             className={bem.classNames(
                 bem.block,
                 bem.modifierConditional('inactive', active === false),
-                bem.modifierConditional(`valign-${valign}`, valign !== undefined)
+                bem.modifierConditional(`valign-${valign}`, valign !== undefined),
+                bem.modifierConditional(`scaleSvg`, scaleSvg === true)
             )}
             style={style}>
             <div className={bem.element('content')}>{children}</div>

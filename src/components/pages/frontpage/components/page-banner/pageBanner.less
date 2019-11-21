@@ -28,12 +28,6 @@
         margin: 0 auto;
         align-items: center;
         flex-direction: column;
-        svg {
-            max-height: 12rem;
-            max-width: 25rem;
-            width: auto;
-            justify-self: flex-end;
-        }
         @media (min-width: @tablet-breakpoint) {
             flex-direction: row;
         }
@@ -60,19 +54,25 @@
     }
     &__illustration {
         align-self: flex-end;
-        justify-self: bottom;
+        justify-self: flex-end;
         margin: 0 auto;
         line-height: 0;
         min-width: 20rem;
         text-align: right;
+        svg {
+            width: 100%;
+            min-height: 6rem;
+            max-height: 12rem;
+            max-width: 25rem;
+        }
         .pageBanner--wide & {
             padding: 1rem 0;
         }
         @media (min-width: @mobile-breakpoint) {
-            // position: absolute;
-            // bottom: 0;
-            // right: 1rem;
             min-width: 20rem;
+            svg {
+                min-height: 8rem;
+            }
         }
         @media (min-width: @tablet-breakpoint) {
             // position: absolute;
@@ -81,6 +81,9 @@
             min-width: 25rem;
             .pageBanner--wide & {
                 min-width: 25rem;
+            }
+            svg {
+                min-height: 9rem;
             }
         }
     }
