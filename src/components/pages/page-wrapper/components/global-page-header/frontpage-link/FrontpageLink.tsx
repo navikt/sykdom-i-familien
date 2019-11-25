@@ -1,9 +1,9 @@
 import React from 'react';
-import bemUtils from '../../../../../utils/bemUtils';
-import useWindowSize from '../../../../../hooks/useWindowSize';
+import bemUtils from '../../../../../../utils/bemUtils';
+import useWindowSize from '../../../../../../hooks/useWindowSize';
 import { InjectedIntlProps, injectIntl, FormattedMessage, Link } from 'gatsby-plugin-intl';
 import { useStaticQuery, graphql } from 'gatsby';
-import { getSiteTitle } from '../../../../../utils/site';
+import { getSiteTitle } from '../../../../../../utils/site';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import './breadcrumbs.less';
 

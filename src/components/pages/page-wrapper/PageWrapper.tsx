@@ -1,25 +1,22 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
-import { changeLocale, injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import { Locale } from '../../../i18n/locale';
+import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { RouterProps } from '@reach/router';
-import LanguageToggle from './components/language-toggle/LanguageToggle';
 import { getSiteTitle } from '../../../utils/site';
-import ScreenOnly from '../../elements/screen-only/ScreenOnly';
-
+import GlobalPageHeader from './components/global-page-header/GlobalPageHeader';
 import '../../../styles/main.less';
 
 interface Props {
     pageTitle?: string;
+    showFrontpageLink?: boolean;
 }
-
-const toggleLanguageAvailable = false;
 
 const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({
     pageTitle,
     children,
+    showFrontpageLink,
     intl
 }) => {
     const siteMetadata = useStaticQuery(graphql`
@@ -32,6 +29,7 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
             }
         }
     `);
+
     const siteTitle = getSiteTitle(siteMetadata, intl.locale);
     return (
         <Normaltekst tag="div">
@@ -39,11 +37,7 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
                 <meta charSet="utf-8" />
                 <title>{pageTitle || siteTitle}</title>
             </Helmet>
-            {toggleLanguageAvailable && (
-                <ScreenOnly>
-                    <LanguageToggle locale={intl.locale as Locale} toggle={(locale) => changeLocale(locale)} />
-                </ScreenOnly>
-            )}
+            <GlobalPageHeader showFrontpageLink={showFrontpageLink} />
             {children}
         </Normaltekst>
     );
