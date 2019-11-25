@@ -13,7 +13,7 @@ const styles = {
         link: '#0067c5'
     },
     size: {
-        maxWidth: '900px'
+        maxWidth: '1100px'
     },
     breakpoints: {
         ...breakpoints

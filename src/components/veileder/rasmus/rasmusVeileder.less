@@ -7,13 +7,27 @@
         border: none;
         border-radius: 0;
         .overrideSectionPanelPadding();
-        padding-top: 3rem;
+        padding-top: 4rem;
         padding-bottom: 3rem;
+        .nav-veileder {
+            margin-left: -2.5rem;
+            .nav-veileder__frame--m {
+                width: 5rem;
+                height: 5rem;
+            }
+        }
 
         @media (min-width: @mobile-breakpoint) {
-            padding-top: 3.5rem;
+            padding-top: 4rem;
             padding-bottom: 3rem;
             border-radius: 0.5rem;
+            .nav-veileder {
+                margin-left: -3rem;
+                .nav-veileder__frame--m {
+                    width: 6rem;
+                    height: 6rem;
+                }
+            }
         }
         @media (min-width: @tablet-breakpoint) {
             margin-left: 0;
@@ -21,6 +35,9 @@
             padding-top: 2rem;
             padding-bottom: 3rem;
             padding-left: 4rem;
+            .nav-veileder {
+                margin-left: 0;
+            }
         }
         @media print {
             background: none !important;
