@@ -9,6 +9,7 @@ import useActiveSections from '../../../hooks/useActiveSection';
 import useScrollPosition, { ScrollPositionChangeEvent } from '../../../hooks/useScrollPosition';
 
 import './pageWithMenu.less';
+import { isBrowser } from '../../../utils/build';
 
 export interface SectionMenuItem {
     label: string;
@@ -79,6 +80,17 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
         -64
     );
 
+    const renderSidebar = () => (
+        <div className={bem.element('sidebar')} ref={sidebarContainer}>
+            <div
+                className={bem.element('sidebarSticky')}
+                ref={sidebarMenu}
+                style={scrollInfo ? { top: scrollInfo.y * -1, position: 'sticky' } : undefined}>
+                <SidebarMenu items={sectionMenuItems} activeSectionSlug={activSectionSlug} footer={menuFooter} />
+            </div>
+        </div>
+    );
+
     return (
         <PageWrapper pageTitle={pageTitle}>
             {header && <div className={bem.element('header')}>{header}</div>}
@@ -86,25 +98,21 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
                 <Breadcrumbs slug={slug} title={pageTitle} />
             </div>
             <div className={bem.block}>
-                <MediaQuery minWidth={1072}>
-                    <div className={bem.element('sidebar')} ref={sidebarContainer}>
-                        <div
-                            className={bem.element('sidebarSticky')}
-                            ref={sidebarMenu}
-                            style={scrollInfo ? { top: scrollInfo.y * -1, position: 'sticky' } : undefined}>
-                            <SidebarMenu
-                                items={sectionMenuItems}
-                                activeSectionSlug={activSectionSlug}
-                                footer={menuFooter}
-                            />
-                        </div>
-                    </div>
-                </MediaQuery>
-                <MediaQuery maxWidth={1071}>
-                    <aside className={bem.element('mobilMenu')}>
-                        <MobileMenu items={sectionMenuItems} activeSectionSlug={activSectionSlug} footer={menuFooter} />
-                    </aside>
-                </MediaQuery>
+                {!isBrowser && renderSidebar()}
+                {isBrowser && (
+                    <>
+                        <MediaQuery minWidth={1072}>{renderSidebar()}</MediaQuery>
+                        <MediaQuery maxWidth={1071}>
+                            <aside className={bem.element('mobilMenu')}>
+                                <MobileMenu
+                                    items={sectionMenuItems}
+                                    activeSectionSlug={activSectionSlug}
+                                    footer={menuFooter}
+                                />
+                            </aside>
+                        </MediaQuery>
+                    </>
+                )}
                 <article className={bem.element('article')}>{children}</article>
             </div>
         </PageWrapper>
