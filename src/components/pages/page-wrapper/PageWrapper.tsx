@@ -15,7 +15,7 @@ interface Props {
     pageTitle?: string;
 }
 
-const toggleLanguageAvailable = false;
+const toggleLanguageAvailable = true;
 
 const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({
     pageTitle,
