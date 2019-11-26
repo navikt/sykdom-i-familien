@@ -18,7 +18,7 @@ const MobileMenuHeader: React.FunctionComponent<Props> = ({ title, isOpen, onCli
     return (
         <div className={bem.classNames(bem.block, isOpen ? 'expanded' : undefined)} onClick={onClick}>
             <div className={bem.element('icon')}>
-                <CircleMask color={styles.colors.theme} size="3rem">
+                <CircleMask color={styles.colors.theme} size="3rem" scaleSvg={false}>
                     <RocketSVG size="70%" />
                 </CircleMask>
             </div>

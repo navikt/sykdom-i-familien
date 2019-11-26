@@ -4,6 +4,16 @@
     width: 100%;
     max-width: 100%;
     position: relative;
+    &--tabs {
+        .tabs__selectWrapper {
+            display: none;
+        }
+    }
+    &--select {
+        .tabs__tablistWrapper {
+            display: none;
+        }
+    }
 
     &__title {
         font-size: 1.25rem !important;
@@ -37,7 +47,6 @@
         margin-bottom: 1.5rem;
         @media print {
             padding-top: 1rem;
-            // margin: 0 !important;
             display: block;
         }
     }

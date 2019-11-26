@@ -5,7 +5,7 @@ import NorwayFlagSVG from './NorwayFlagSVG';
 import { FormattedMessage } from 'gatsby-plugin-intl';
 import 'nav-frontend-lenker-style';
 import './languageToggle.less';
-import { Locale } from '../../../../../i18n/locale';
+import { Locale } from '../../../../../../i18n/locale';
 
 interface Props {
     toggle: (locale: Locale) => void;
