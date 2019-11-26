@@ -41,9 +41,11 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             const title = getSanityStringWithLocale(expandableContent.title, intl.locale);
                             const blockContent = getSanityContentWithLocale(expandableContent.content, intl.locale);
                             return (
-                                <CollapsableTextBlock title={title}>
-                                    <SanityBlock content={blockContent} />
-                                </CollapsableTextBlock>
+                                <Box padBottom="xl">
+                                    <CollapsableTextBlock title={title}>
+                                        <SanityBlock content={blockContent} />
+                                    </CollapsableTextBlock>
+                                </Box>
                             );
                         },
                         veilederpanel: ({ node: veilederpanel }: { node: VeilederpanelObject }) => {
@@ -71,9 +73,11 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             if (textblock.layout && textblock.layout === 'expandablePanel' && title !== undefined) {
                                 const blockContent = getLocaleBlockContent(textblock.content, intl.locale);
                                 return (
-                                    <CollapsableTextBlock title={title}>
-                                        <SanityBlock content={blockContent} />
-                                    </CollapsableTextBlock>
+                                    <Box padBottom="xl">
+                                        <CollapsableTextBlock title={title}>
+                                            <SanityBlock content={blockContent} />
+                                        </CollapsableTextBlock>
+                                    </Box>
                                 );
                             }
                             return (

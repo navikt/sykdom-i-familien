@@ -1,22 +1,29 @@
 .collapsableTextBlock {
     /* Justere på grunn av animasjon */
     p {
-        margin: 0;
+        margin: 0 !important;
         padding-bottom: 1rem;
     }
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    &--open {
+        .collapsableTextBlock__content {
+            padding-top: 1rem;
+        }
+    }
     &__toggler {
         .collapsableTextBlock__title {
             margin: 0;
             display: inline-block;
             font-weight: normal;
         }
-        margin-bottom: 1rem;
     }
     &__content {
-        padding-top: 1rem;
+        > div > p:last-child {
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
     }
     @media print {
         margin-bottom: 2rem;

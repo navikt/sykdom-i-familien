@@ -27,16 +27,18 @@ const CollapsableTextBlock: React.FunctionComponent<Props> = ({ children, initia
     );
 
     return (
-        <div className={bem.block}>
+        <div className={bem.classNames(bem.block, bem.modifierConditional('open', isOpen))}>
             <ScreenOnly>
                 <div className={bem.element('toggler')}>
                     <CollapseToggler onToggle={() => setIsOpen(!isOpen)} isOpen={isOpen} contentId={contentId}>
                         {titleBlock}
                     </CollapseToggler>
                 </div>
-                <div className={bem.element('content')} id={contentId}>
-                    <CollapseContainer isOpen={isOpen}>{children}</CollapseContainer>
-                </div>
+                <CollapseContainer isOpen={isOpen}>
+                    <div className={bem.element('content')} id={contentId}>
+                        {children}
+                    </div>
+                </CollapseContainer>
             </ScreenOnly>
             <PrintOnly>
                 {titleBlock}
