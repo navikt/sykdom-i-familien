@@ -111,7 +111,7 @@ jobs:
           NAME: sykdom-i-familien
         run: |
           echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$NAME" > .docker_image
-          echo "$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)" > .docker_tag
+          echo "$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" > .docker_tag
       - name: Build Docker image
         run: |
           docker build -t $(cat .docker_image):$(cat .docker_tag) .
