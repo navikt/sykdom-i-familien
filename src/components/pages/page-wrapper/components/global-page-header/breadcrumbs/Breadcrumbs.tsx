@@ -1,7 +1,7 @@
 import React from 'react';
 import bemUtils from '../../../../../../utils/bemUtils';
 import useWindowSize from '../../../../../../hooks/useWindowSize';
-import { InjectedIntlProps, injectIntl, FormattedMessage, Link } from 'gatsby-plugin-intl';
+import { InjectedIntlProps, injectIntl, Link } from 'gatsby-plugin-intl';
 import { useStaticQuery, graphql } from 'gatsby';
 import { getSiteTitle } from '../../../../../../utils/site';
 import NavFrontendChevron from 'nav-frontend-chevron';
@@ -43,7 +43,7 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
         crumbs.push(
             <div key="tilbake" className={cls.element('item')}>
                 <Link to={frontpageUrl} title="Gå til forrige side">
-                    <FormattedMessage id="breadcrumbs.tilbake" />
+                    {siteTitle}
                 </Link>
             </div>
         );
