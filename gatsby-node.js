@@ -14,7 +14,7 @@ require('ts-node').register({
 exports.createPages = async ({ graphql, actions }) => {
     const pages = await graphql(`
         query {
-            allSanityYtelsePage {
+            allSanityYtelsePage(filter: { isPublic: { eq: true } }) {
                 edges {
                     node {
                         ytelse {
