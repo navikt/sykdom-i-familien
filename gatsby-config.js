@@ -21,7 +21,7 @@ module.exports = {
                 dataset: `${process.env.DATASET_ENV}`,
                 token: `${process.env.SANITY_TOKEN}`,
                 watchMode: process.env.DATASET_ENV === 'staging' ? true : false,
-                overlayDrafts: false
+                overlayDrafts: process.env.DATASET_ENV === 'staging' ? true : false
             }
         },
         {
