@@ -1,40 +1,40 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
 metadata:
-  name: sykdom-i-familien
-  namespace: default
-  labels:
-    team: '{{team}}'
+    name: sykdom-i-familien
+    namespace: default
+    labels:
+        team: '{{team}}'
 spec:
-  image: '{{ image }}:{{ tag }}'
-  port: 8080
-  liveness:
-    path: /familie/sykdom-i-familien/isalive.txt
-    initialDelay: 3
-    timeout: 1
-    periodSeconds: 5
-    failureThreshold: 10
-  readiness:
-    path: /familie/sykdom-i-familien/isready.txt
-    initialDelay: 3
-    timeout: 1
-  resources:
-    limits:
-      cpu: '2'
-      memory: 1024Mi
-    requests:
-      cpu: 200m
-      memory: 768Mi
-  ingresses:
-        - https://sykdom-i-familien.nav.no
+    image: '{{ image }}:{{ tag }}'
+    port: 8080
+    liveness:
+        path: /familie/sykdom-i-familien/isalive.txt
+        initialDelay: 3
+        timeout: 1
+        periodSeconds: 5
+        failureThreshold: 10
+    readiness:
+        path: /familie/sykdom-i-familien/isready.txt
+        initialDelay: 3
+        timeout: 1
+    resources:
+        limits:
+            cpu: '2'
+            memory: 1024Mi
+        requests:
+            cpu: 200m
+            memory: 768Mi
+    ingresses:
+        - https://nav.no/familie/sykdom-i-familien
         - https://sykdom-i-familien.nais.oera.no
-  replicas:
-    min: 1
-    max: 1
-    cpuThresholdPercentage: 90
-  webproxy: true
-  prometheus:
-    enabled: true
-    path: /metrics
-  vault:
-    enabled: true
+    replicas:
+        min: 1
+        max: 1
+        cpuThresholdPercentage: 90
+    webproxy: true
+    prometheus:
+        enabled: true
+        path: /metrics
+    vault:
+        enabled: true
