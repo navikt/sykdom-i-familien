@@ -48,7 +48,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
         if (w <= 640 && mode !== 'select') {
             setMode('select');
         } else if (w > 640 && mode !== presentation) {
-            setMode(presentation);
+            setMode(presentation || 'tabs');
         }
     };
     const { width } = useWindowSize((size) => {
