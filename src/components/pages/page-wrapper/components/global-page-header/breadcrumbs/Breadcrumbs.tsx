@@ -1,10 +1,9 @@
 import React from 'react';
 import bemUtils from '../../../../../../utils/bemUtils';
 import useWindowSize from '../../../../../../hooks/useWindowSize';
-import { InjectedIntlProps, injectIntl, Link } from 'gatsby-plugin-intl';
-import { useStaticQuery, graphql } from 'gatsby';
-import { getSiteTitle } from '../../../../../../utils/site';
+import { Link } from 'gatsby-plugin-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
+import SiteTitle from '../site-title/SiteTitle';
 import './breadcrumbs.less';
 
 const cls = bemUtils('breadcrumbs');
@@ -16,21 +15,9 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const Breadcrumbs = (props: Props & InjectedIntlProps) => {
+const Breadcrumbs = (props: Props) => {
     const { width } = useWindowSize();
-    const { title, intl } = props;
-    const siteMetadata = useStaticQuery(graphql`
-        query {
-            site {
-                siteMetadata {
-                    title_nb
-                    title_nn
-                }
-            }
-        }
-    `);
-
-    const siteTitle = getSiteTitle(siteMetadata, intl.locale);
+    const { title } = props;
     const frontpageUrl = `/`;
 
     const crumbs: React.ReactNode[] = [];
@@ -43,7 +30,7 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
         crumbs.push(
             <div key="tilbake" className={cls.element('item')}>
                 <Link to={frontpageUrl} title="Gå til forrige side">
-                    {siteTitle}
+                    <SiteTitle />
                 </Link>
             </div>
         );
@@ -51,7 +38,7 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
         crumbs.push(
             <div key="tilbake" className={cls.element('item')}>
                 <Link to={frontpageUrl} title="Gå til forrige side">
-                    {siteTitle}
+                    <SiteTitle />
                 </Link>
             </div>
         );
@@ -69,4 +56,4 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
     );
 };
 
-export default injectIntl(Breadcrumbs);
+export default Breadcrumbs;

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { SectionMenuItem } from '../PageWithMenu';
 import bemUtils from '../../../../utils/bemUtils';
-import Lenke from 'nav-frontend-lenker';
 import MobileMenuHeader from './MobileMenuHeader';
-
-import './mobileMenu.less';
 import SectionLinks from '../section-links/SectionLinks';
 
+import './mobileMenu.less';
+
 interface Props {
+    pageTitle: string;
     items: SectionMenuItem[];
     activeSectionSlug?: string;
     footer?: React.ReactNode;
@@ -15,7 +15,7 @@ interface Props {
 
 const bem = bemUtils('mobileMenu');
 
-const MobileMenu: React.FunctionComponent<Props> = ({ items, activeSectionSlug, footer }) => {
+const MobileMenu: React.FunctionComponent<Props> = ({ items, pageTitle, activeSectionSlug, footer }) => {
     const [isOpen, toggleMenu] = useState<boolean>(false);
 
     const closeInItemClicked = (evt: React.SyntheticEvent<HTMLElement>) => {
@@ -34,7 +34,12 @@ const MobileMenu: React.FunctionComponent<Props> = ({ items, activeSectionSlug, 
 
     return (
         <nav className={bem.classNames(bem.block, bem.modifierConditional('hidden', activeSectionSlug === undefined))}>
-            <MobileMenuHeader isOpen={isOpen} title={title || 'Meny'} onClick={() => toggleMenu(!isOpen)} />
+            <MobileMenuHeader
+                isOpen={isOpen}
+                pageTitle={pageTitle}
+                title={title || 'Velg seksjon'}
+                onClick={() => toggleMenu(!isOpen)}
+            />
             {isOpen && (
                 <>
                     <div className={bem.element('items')} onClick={closeInItemClicked}>

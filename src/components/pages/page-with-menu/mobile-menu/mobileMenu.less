@@ -1,3 +1,5 @@
+@import '../../../../styles/assets.less';
+
 .mobileMenu {
     @media print {
         display: none;
@@ -36,10 +38,26 @@
         &__chevron {
             flex: 0 0;
             line-height: 0;
+            min-width: 2.5rem;
+            text-align: right;
         }
         &__title {
             text-align: center;
             flex: 1 1 100%;
+            padding: 0 1rem;
+        }
+        &__pageTitle {
+            background-color: @c-theme;
+            padding: 0.25rem 0;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            .chevronboks {
+                margin-top: -2px;
+            }
+            .breadcrumbs a {
+                color: @c-text;
+                border: none !important;
+            }
         }
     }
     &__items {

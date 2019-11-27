@@ -59,6 +59,10 @@
         line-height: 0;
         min-width: 20rem;
         text-align: right;
+        > * {
+            max-width: 90%;
+            margin: 0 auto;
+        }
         svg {
             width: 100%;
             min-height: 6rem;
@@ -70,6 +74,7 @@
         }
         @media (min-width: @mobile-breakpoint) {
             min-width: 20rem;
+            max-width: 100%;
             svg {
                 min-height: 8rem;
             }
