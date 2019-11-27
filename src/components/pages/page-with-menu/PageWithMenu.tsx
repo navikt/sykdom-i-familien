@@ -109,6 +109,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
                         <MediaQuery maxWidth={1071}>
                             <aside className={bem.element('mobilMenu')}>
                                 <MobileMenu
+                                    pageTitle={pageTitle}
                                     items={sectionMenuItems}
                                     activeSectionSlug={activSectionSlug}
                                     footer={menuFooter}
