@@ -17,11 +17,12 @@ interface Props {
 }
 
 const extractFrontpageData = (data: any, locale: string): FrontpageSanityData => {
-    const { _rawIllustration, _rawIngress, _rawTitle, _rawFrontpageStories } = data;
+    const { _rawIllustration, _rawIngress, _rawTitle, _rawFrontpageStories, _rawMetadescription } = data;
 
     return {
         title: getSanityStringWithLocale(_rawTitle, locale),
         ingress: getSanityStringWithLocale(_rawIngress, locale),
+        metadescription: getSanityStringWithLocale(_rawMetadescription, locale),
         illustration: _rawIllustration,
         stories: _rawFrontpageStories.map((story: any) => {
             return {
@@ -39,7 +40,8 @@ const extractFrontpageData = (data: any, locale: string): FrontpageSanityData =>
 };
 
 export interface FrontpageSanityData {
-    title?: string;
+    title: string;
+    metadescription: string;
     ingress?: string;
     illustration: IllustrationDocument;
     stories?: FrontpageStory[];
@@ -54,12 +56,14 @@ interface FrontpageStory {
 }
 
 const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & InjectedIntlProps & RouterProps) => {
-    const { title, ingress, illustration, stories: linkPanels } = extractFrontpageData(
+    const { title, metadescription, ingress, illustration, stories: linkPanels } = extractFrontpageData(
         data.allSanityFrontpage.nodes[0],
         intl.locale
     );
     return (
         <Frontpage
+            pageTitle={title}
+            pageMetaDescription={metadescription}
             header={
                 title && ingress ? (
                     <PageBanner
@@ -100,6 +104,7 @@ export const pageQuery = graphql`
         allSanityFrontpage {
             nodes {
                 _id
+                _rawMetadescription
                 _rawTitle
                 _rawIngress
                 _rawIllustration(resolveReferences: { maxDepth: 4 })

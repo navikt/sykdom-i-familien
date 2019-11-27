@@ -38,15 +38,15 @@ class Select extends React.Component<SelectProps, SelectState> {
         this.mounted = true;
         this.selectRef = React.createRef<HTMLDivElement>();
 
-        document.addEventListener('keydown', this.handleKeyPressEvent, false);
-        document.addEventListener('click', this.handleDocumentClick, false);
+        document.addEventListener('keydown', this.handleKeyPressEvent, { passive: true });
+        document.addEventListener('click', this.handleDocumentClick, { passive: true });
     };
 
     componentWillUnmount = () => {
         this.mounted = false;
 
-        document.removeEventListener('keydown', this.handleKeyPressEvent, false);
-        document.removeEventListener('click', this.handleDocumentClick, false);
+        document.removeEventListener('keydown', this.handleKeyPressEvent);
+        document.removeEventListener('click', this.handleDocumentClick);
     };
 
     focusOnSelf = () => {

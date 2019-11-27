@@ -49,6 +49,7 @@ const updateSvgProps = (svgTag: string, props: InlineSVGProps): string => {
     if (props.width) {
         tag = setProp(tag, 'width', props.width);
     }
+    tag = setProp(tag, 'focusable', 'false');
 
     tag = removeProp(tag, 'xmlns:xlink');
     tag = removeProp(tag, 'xmlns');

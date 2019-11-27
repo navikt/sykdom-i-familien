@@ -21,7 +21,7 @@ const PageBanner: React.FunctionComponent<Props> = ({ title, illustration, foote
                         <Sidetittel className={bem.element('title')}>{title}</Sidetittel>
                         <div className={bem.element('content')}>{children}</div>
                     </div>
-                    <div className={bem.element('illustration')} role="presentation">
+                    <div className={bem.element('illustration')} role="presentation" aria-hidden={true}>
                         {illustration}
                     </div>
                 </div>

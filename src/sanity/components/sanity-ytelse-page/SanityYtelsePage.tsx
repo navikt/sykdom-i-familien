@@ -15,8 +15,6 @@ import LinkButton from '../../../components/elements/link-button/LinkButton';
 import traverse from 'traverse';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import SanityBlock from '../sanity-block/SanityBlock';
-import PagePoster from '../../../components/pages/frontpage/components/page-banner/PageBanner';
-import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
 import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 
@@ -28,6 +26,7 @@ export interface YtelsePageData {
     slug: { current: string };
     intro: string;
     inShort: string;
+    metadescription: string;
     inShortTitle: string;
     formUrl: string;
     sections: SectionContent[];
@@ -70,6 +69,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
         slug: data.slug,
         banner: data._rawBanner,
+        metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
@@ -118,9 +118,9 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
     const { data, links: linksInContent } = getAndApplyLinksInContent(props.data);
     const {
         title,
+        metadescription,
         slug,
         inShort,
-        intro,
         inShortTitle,
         sections,
         banner,
@@ -139,6 +139,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
     return (
         <PageWithMenu
             pageTitle={title}
+            pageMetadescription={metadescription}
             slug={`${slug.current}`}
             sectionMenuItems={[inShortSection, ...sections].map((section) => ({
                 label: section.title || '',

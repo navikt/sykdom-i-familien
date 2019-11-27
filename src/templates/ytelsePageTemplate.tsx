@@ -3,8 +3,7 @@ import { graphql } from 'gatsby';
 import SanityYtelsePage from '../sanity/components/sanity-ytelse-page/SanityYtelsePage';
 
 export default (props: any) => {
-    const { data } = props;
-    return <SanityYtelsePage data={data.allSanityYtelsePage.edges[0].node} />;
+    return <SanityYtelsePage data={props.data.allSanityYtelsePage.edges[0].node} />;
 };
 
 export const query = graphql`
@@ -20,6 +19,7 @@ export const query = graphql`
                     slug {
                         current
                     }
+                    _rawMetadescription
                     _rawTitle
                     _rawIntro
                     _rawInShortTitle

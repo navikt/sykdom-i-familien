@@ -18,6 +18,7 @@ export interface SectionMenuItem {
 
 interface Props {
     pageTitle: string;
+    pageMetadescription: string;
     sectionMenuItems: SectionMenuItem[];
     menuFooter?: React.ReactNode;
     children: React.ReactNode;
@@ -35,6 +36,7 @@ const bem = bemUtils('pageWithMenu');
 
 const PageWithMenu: React.FunctionComponent<Props> = ({
     pageTitle,
+    pageMetadescription,
     sectionMenuItems,
     menuFooter,
     header,
@@ -94,7 +96,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     );
 
     return (
-        <PageWrapper pageTitle={pageTitle} showFrontpageLink={false}>
+        <PageWrapper pageTitle={pageTitle} pageMetaDescription={pageMetadescription} showFrontpageLink={false}>
             {header && <div className={bem.element('header')}>{header}</div>}
             {showBreadcrumbs && (
                 <div className={bem.element('breadcrumbs')}>
