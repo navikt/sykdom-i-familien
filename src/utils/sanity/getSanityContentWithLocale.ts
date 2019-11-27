@@ -7,12 +7,13 @@ export const getSanityContentWithLocale = (data: any, locale: Locale | string): 
     if (data && data[locale]) {
         return data[locale];
     }
-    return data[defaultLocale];
+
+    return data ? data[defaultLocale] : '';
 };
 
 export const getSanityStringWithLocale = (data: object, locale: Locale | string): string => {
     if (data && data[locale]) {
         return data[locale];
     }
-    return data[defaultLocale];
+    return data ? data[defaultLocale] : '';
 };
