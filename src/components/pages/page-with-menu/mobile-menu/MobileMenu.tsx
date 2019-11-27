@@ -37,6 +37,8 @@ const MobileMenu: React.FunctionComponent<Props> = ({ items, pageTitle, activeSe
             <MobileMenuHeader
                 isOpen={isOpen}
                 pageTitle={pageTitle}
+                items={items}
+                activeSectionSlug={activeSectionSlug}
                 title={title || 'Velg seksjon'}
                 onClick={() => toggleMenu(!isOpen)}
             />

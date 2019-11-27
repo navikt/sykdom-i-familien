@@ -1,0 +1,17 @@
+@import '../../../../styles/assets.less';
+
+.menuItemsIndicator {
+    text-align: center;
+    line-height: 0.5rem;
+    &__item {
+        display: inline-block;
+        width: 0.25rem;
+        height: 0.25rem;
+        border-radius: 50%;
+        background-color: @navGra20;
+        margin: 0.125rem;
+        &--active {
+            background-color: @navGra60;
+        }
+    }
+}
