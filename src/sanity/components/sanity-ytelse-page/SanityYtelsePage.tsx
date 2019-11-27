@@ -21,6 +21,7 @@ import { IllustrationDocument, YtelsePageDocument } from '../../types/documents'
 import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 
 import './ytelsePage.less';
+import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
 
 export interface YtelsePageData {
     title: string;
@@ -143,18 +144,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                 label: section.title || '',
                 slug: section.slug
             }))}
-            header={
-                banner ? (
-                    <PagePoster
-                        wide={true}
-                        title={title}
-                        illustration={<SanityIllustration illustration={banner} maintainAspectRatio={true} />}>
-                        <SanityBlock content={intro} />
-                    </PagePoster>
-                ) : (
-                    undefined
-                )
-            }
+            header={banner ? <PageBannerCompact title={title} /> : undefined}
             menuFooter={
                 <LinkButton href={formUrl} alignCenter={true}>
                     Søk nå
