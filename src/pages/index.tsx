@@ -109,7 +109,6 @@ export const pageQuery = graphql`
                 _rawIngress
                 _rawIllustration(resolveReferences: { maxDepth: 4 })
                 _rawFrontpageStories(resolveReferences: { maxDepth: 4 })
-                _rawRelated(resolveReferences: { maxDepth: 4 })
             }
         }
     }

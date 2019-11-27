@@ -6,7 +6,6 @@ export interface FrontpageDocument {
     ingress: LocaleRichTextObject;
     illustration: IllustrationDocument;
     frontpageStories: Array<FrontpageLinkObject | FrontpagePageLinkObject>;
-    related: LinkDocument[];
 }
 
 export interface IllustrationDocument {
