@@ -6,7 +6,7 @@
 case $GITHUB_REF in
 
     refs/heads/dev-*)
-        export DATASET_ENV=staging
+        export DATASET_ENV=production
         ;;
 
     refs/heads/master)
