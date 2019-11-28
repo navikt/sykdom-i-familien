@@ -31,7 +31,6 @@ export interface YtelsePageData {
     formUrl: string;
     sections: SectionContent[];
     illustration: IllustrationDocument;
-    banner?: IllustrationDocument;
 }
 
 interface SectionContent {
@@ -68,7 +67,6 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
         intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
         slug: data.slug,
-        banner: data._rawBanner,
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
@@ -123,7 +121,6 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         inShort,
         inShortTitle,
         sections,
-        banner,
         illustration,
         formUrl
     } = extractDataFromSanityYtelsePage(data, intl.locale);
@@ -145,7 +142,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                 label: section.title || '',
                 slug: section.slug
             }))}
-            header={banner ? <PageBannerCompact title={title} /> : undefined}
+            header={<PageBannerCompact title={title} />}
             menuFooter={
                 <LinkButton href={formUrl} alignCenter={true}>
                     Søk nå
