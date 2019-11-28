@@ -20,8 +20,8 @@ module.exports = {
                 projectId: '8ux9tyb9',
                 dataset: `production`,
                 token: `${process.env.SANITY_TOKEN}`,
-                watchMode: false, // process.env.DATASET_ENV === 'staging' ? true : false,
-                overlayDrafts: process.env.DATASET_ENV === 'staging' ? true : false
+                watchMode: process.env.WATCH_MODE,
+                overlayDrafts: process.env.OVERLAY_DRAFTS
             }
         },
         {

@@ -49,9 +49,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: build code
-        env: 
+        env:
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-          DATASET_ENV: staging
+          DATASET_ENV: production
+          OVERLAY_DRAFTS: true
+          WATCH_MODE: false
         run: |
           echo "Exported DATASET_ENV=$DATASET_ENV"
           npm i
@@ -99,9 +101,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: build code
-        env: 
+        env:
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
           DATASET_ENV: production
+          OVERLAY_DRAFTS: false
+          WATCH_MODE: false
         run: |
           echo "Exported DATASET_ENV=$DATASET_ENV"
           npm i
