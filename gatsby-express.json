@@ -1,0 +1,59 @@
+{
+  "redirects": [],
+  "pages": [
+    {
+      "path": "/opplaringspenger"
+    },
+    {
+      "path": "/nb/opplaringspenger"
+    },
+    {
+      "path": "/nn/opplaringspenger"
+    },
+    {
+      "path": "/pleiepenger-i-livets-sluttfase"
+    },
+    {
+      "path": "/nb/pleiepenger-i-livets-sluttfase"
+    },
+    {
+      "path": "/nn/pleiepenger-i-livets-sluttfase"
+    },
+    {
+      "path": "/pleiepenger-for-sykt-barn"
+    },
+    {
+      "path": "/nb/pleiepenger-for-sykt-barn"
+    },
+    {
+      "path": "/nn/pleiepenger-for-sykt-barn"
+    },
+    {
+      "path": "/dager-med-sykt-barn"
+    },
+    {
+      "path": "/nb/dager-med-sykt-barn"
+    },
+    {
+      "path": "/nn/dager-med-sykt-barn"
+    },
+    {
+      "path": "/pleiepenger-for-personer-over-18-ar"
+    },
+    {
+      "path": "/nb/pleiepenger-for-personer-over-18-ar"
+    },
+    {
+      "path": "/nn/pleiepenger-for-personer-over-18-ar"
+    },
+    {
+      "path": "/"
+    },
+    {
+      "path": "/nb"
+    },
+    {
+      "path": "/nn"
+    }
+  ]
+}

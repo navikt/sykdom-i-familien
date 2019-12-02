@@ -6,6 +6,6 @@ COPY . .
 
 RUN ls -la
 
-CMD npm run serve
+CMD npm run start-express
 
 EXPOSE ${PORT}

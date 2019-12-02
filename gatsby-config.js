@@ -9,6 +9,13 @@ module.exports = {
     },
     plugins: [
         {
+            resolve: 'gatsby-plugin-express',
+            options: {
+                output: 'gatsby-express.json'
+            }
+        },
+        `gatsby-plugin-remove-trailing-slashes`,
+        {
             resolve: `gatsby-plugin-compile-es6-packages`,
             options: {
                 modules: [`query-string`]
