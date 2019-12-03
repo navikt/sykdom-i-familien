@@ -11,6 +11,12 @@ export interface FrontpageDocument {
 export interface IllustrationDocument {
     name: string;
     svg: string;
+    children: string[];
+}
+
+export interface OptimizedSvgNode {
+    id: string;
+    svg: string;
 }
 
 export interface YtelseDocument {
