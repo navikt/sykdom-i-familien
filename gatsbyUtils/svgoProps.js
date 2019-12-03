@@ -1,6 +1,3 @@
-// const utils = require('nav-frontend-js-utils');
-// const guid = utils.guid;
-
 const svgoProps = {
     plugins: [
         {
@@ -103,7 +100,7 @@ const svgoProps = {
             removeDimensions: false
         },
         {
-            prefixIds: { prefix: 'aaa' }
+            prefixIds: false
         }
     ]
 };
