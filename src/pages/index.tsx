@@ -17,7 +17,13 @@ interface Props {
 }
 
 const extractFrontpageData = (data: any, locale: string): FrontpageSanityData => {
-    const { _rawIllustration, _rawIngress, _rawTitle, _rawFrontpageStories, _rawMetadescription } = data;
+    const {
+        _rawIllustration,
+        _rawIngress,
+        _rawTitle,
+        _rawFrontpageStories,
+        _rawMetadescription
+    } = data.allSanityFrontpage.nodes[0];
 
     return {
         title: getSanityStringWithLocale(_rawTitle, locale),
@@ -57,9 +63,10 @@ interface FrontpageStory {
 
 const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & InjectedIntlProps & RouterProps) => {
     const { title, metadescription, ingress, illustration, stories: linkPanels } = extractFrontpageData(
-        data.allSanityFrontpage.nodes[0],
+        data,
         intl.locale
     );
+
     return (
         <Frontpage
             pageTitle={title}

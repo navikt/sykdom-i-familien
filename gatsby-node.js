@@ -1,8 +1,11 @@
 'use strict';
 
 const path = require('path');
-
 require('source-map-support').install();
+const svgoProps = require('./gatsbyUtils/svgoProps');
+const SVGO = require('svgo');
+
+const svgo = new SVGO(svgoProps);
 
 require('ts-node').register({
     compilerOptions: {
@@ -57,3 +60,28 @@ exports.onCreateWebpackConfig = ({ stage, rules, loaders, plugins, actions }) =>
         }
     });
 };
+
+async function onCreateNode({ node, actions, createNodeId, createContentDigest }) {
+    if (node.internal.type !== 'SanityIllustration') {
+        return;
+    }
+
+    if (node.svg) {
+        const optimizedSvg = await svgo.optimize(node.svg);
+        const svgNode = {
+            id: createNodeId(`svgo-${node.id}`),
+            svg: optimizedSvg.data,
+            children: [],
+            parent: node.id,
+            internal: {
+                contentDigest: createContentDigest({}),
+                type: 'optimizedSvg'
+            }
+        };
+        const { createNode, createParentChildLink } = actions;
+        createNode(svgNode);
+        createParentChildLink({ parent: node, child: svgNode });
+    }
+}
+
+exports.onCreateNode = onCreateNode;
