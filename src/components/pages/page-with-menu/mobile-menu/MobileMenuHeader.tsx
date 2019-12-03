@@ -1,8 +1,5 @@
 import React from 'react';
 import bemUtils from '../../../../utils/bemUtils';
-import CircleMask from '../../../elements/circle-mask/CircleMask';
-import RocketSVG from '../assets/rocketSVG';
-import styles from '../../../../styles';
 import { Element } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import SiteTitle from '../../page-wrapper/components/global-page-header/site-title/SiteTitle';
@@ -42,11 +39,6 @@ const MobileMenuHeader: React.FunctionComponent<Props> = ({
                 </div>
             </div>
             <div className={bem.classNames(bem.block, bem.modifierConditional('expanded', isOpen))} onClick={onClick}>
-                <div className={bem.element('icon')}>
-                    <CircleMask color={styles.colors.theme} size="2.5rem" scaleSvg={false}>
-                        <RocketSVG size="70%" />
-                    </CircleMask>
-                </div>
                 <div className={bem.element('title')}>
                     <Element>{pageTitle}</Element>
                     <div className={bem.element('indicator')}>
