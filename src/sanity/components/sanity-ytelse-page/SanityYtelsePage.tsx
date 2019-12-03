@@ -148,7 +148,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     Søk nå
                 </LinkButton>
             }>
-            <div style={{ marginTop: '-4rem' }}>
+            <div className="inShortSection">
                 <SectionPanel
                     titleTag="h2"
                     id={inShortSection.slug}
