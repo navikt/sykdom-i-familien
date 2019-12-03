@@ -1,6 +1,8 @@
 @import '../../../../styles/assets.less';
 
 .menuItemsIndicator {
+    @c-default: @navGra20;
+    @c-active: white;
     text-align: center;
     line-height: 0.5rem;
     &__item {
@@ -8,10 +10,11 @@
         width: 0.25rem;
         height: 0.25rem;
         border-radius: 50%;
-        background-color: @navGra20;
         margin: 0.125rem;
+        background-color: @c-active;
+        opacity: 0.5;
         &--active {
-            background-color: @navGra60;
+            opacity: 1;
         }
     }
 }
