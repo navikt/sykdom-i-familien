@@ -3,8 +3,10 @@ import { SectionMenuItem } from '../PageWithMenu';
 import bemUtils from '../../../../utils/bemUtils';
 import MobileMenuHeader from './MobileMenuHeader';
 import SectionLinks from '../section-links/SectionLinks';
+import SiteLink from '../site-link/SiteLink';
 
 import './mobileMenu.less';
+import { Undertittel } from 'nav-frontend-typografi';
 
 interface Props {
     pageTitle: string;
@@ -25,13 +27,6 @@ const MobileMenu: React.FunctionComponent<Props> = ({ items, pageTitle, activeSe
         }
     };
 
-    const getTitle = (): string | undefined => {
-        const item = items.find((i) => i.slug === activeSectionSlug);
-        return item ? item.label : undefined;
-    };
-
-    const title = getTitle();
-
     return (
         <nav className={bem.classNames(bem.block, bem.modifierConditional('hidden', activeSectionSlug === undefined))}>
             <MobileMenuHeader
@@ -39,11 +34,14 @@ const MobileMenu: React.FunctionComponent<Props> = ({ items, pageTitle, activeSe
                 pageTitle={pageTitle}
                 items={items}
                 activeSectionSlug={activeSectionSlug}
-                title={title || 'Velg seksjon'}
                 onClick={() => toggleMenu(!isOpen)}
             />
             {isOpen && (
                 <>
+                    <div className={bem.element('pageTitle')}>
+                        <SiteLink />
+                    </div>
+                    <Undertittel className={bem.element('itemsHeader')}>Velg seksjon</Undertittel>
                     <div className={bem.element('items')} onClick={closeInItemClicked}>
                         <SectionLinks items={items} activeSectionSlug={activeSectionSlug} columns={2} />
                     </div>

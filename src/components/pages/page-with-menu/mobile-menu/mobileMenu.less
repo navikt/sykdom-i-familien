@@ -20,8 +20,8 @@
     transform: none;
     transition: transform 200ms, visibility 200ms;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
-    background-color: white;
     visibility: visible;
+    background-color: white;
 
     &--hidden {
         visibility: hidden;
@@ -29,15 +29,18 @@
     }
 
     &__header {
+        background-color: @c-theme;
+        border-bottom: 4px solid @c-theme-dark;
         display: flex;
         justify-content: stretch;
         align-items: center;
-        padding: 0.5rem;
+        padding: 0.75rem 0.5rem 0.5rem 0.5rem;
         cursor: pointer;
+        .mobileMenu__header__indicator {
+            margin-top: 0.25rem;
+        }
         &--expanded {
-            .mobileMenu__header__indicator {
-                display: none;
-            }
+            border-bottom: 2px solid transparent;
         }
         &__icon,
         &__chevron {
@@ -50,26 +53,35 @@
             text-align: center;
             flex: 1 1 100%;
             padding: 0 1rem;
+            padding-left: 3.5rem;
         }
-        &__pageTitle {
-            background-color: @c-theme;
-            padding: 0.25rem 0;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            .chevronboks {
-                margin-top: -2px;
-            }
-            .breadcrumbs a {
-                color: @c-text;
-                border: none !important;
-            }
+        &__titleText {
+            font-size: 1.25rem;
         }
     }
     &__items {
-        padding: 1rem 1rem 2rem 1rem;
+        padding: 1.5rem 1rem 1.5rem 1rem;
     }
+    &__itemsHeader {
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+    &__pageTitle {
+        margin-top: 0.5rem;
+        padding: 0.25rem 0;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        .chevronboks {
+            margin-top: -2px;
+        }
+        .breadcrumbs a {
+            color: @c-text;
+            border: none !important;
+        }
+    }
+
     &__footer {
-        margin: 1rem auto;
+        margin: 1.5rem auto;
         max-width: 10rem;
     }
 }
