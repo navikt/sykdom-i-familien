@@ -37,10 +37,14 @@
     }
 
     &__popUp {
+        display: none;
         position: absolute;
         border-radius: 0 0 4px 4px;
         width: 100%;
         z-index: 1;
+        &--open {
+            display: block;
+        }
     }
 
     &__selected {

@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import bemUtils from '../../../../utils/bemUtils';
 import { Tab } from '../Tabs';
 import './select.less';
+import { guid } from 'nav-frontend-js-utils';
 
 const bem = bemUtils('select');
 
@@ -23,11 +24,15 @@ interface SelectState {
 }
 
 class Select extends React.Component<SelectProps, SelectState> {
+    buttonId: string;
+    menuId: string;
     mounted: boolean;
     selectRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: SelectProps) {
         super(props);
+        this.buttonId = guid();
+        this.menuId = `${this.buttonId}_menu`;
 
         this.state = {
             open: false
@@ -93,8 +98,10 @@ class Select extends React.Component<SelectProps, SelectState> {
         <div className={'tabs__select'} key="select">
             <div style={{ position: 'relative' }}>
                 <div
-                    role="menu"
+                    id={this.buttonId}
+                    role="button"
                     aria-haspopup={true}
+                    aria-controls={this.menuId}
                     aria-expanded={this.state.open}
                     tabIndex={0}
                     ref={this.selectRef}
@@ -113,29 +120,31 @@ class Select extends React.Component<SelectProps, SelectState> {
                     <Chevron type={this.state.open ? 'opp' : 'ned'} />
                 </div>
                 <div className={bem.element('arrowSelector')} style={{ backgroundColor: this.props.panelBkg }} />
-                <div className={this.state.open ? bem.element('popUp', 'open') : bem.element('popUp')}>
-                    {this.state.open && (
-                        <div className={bem.element('shadow')}>
-                            {this.props.choices.map((choice, index) => (
-                                <Panel
-                                    role="menuitem"
-                                    key={choice.label}
-                                    border={true}
-                                    onClick={() => {
-                                        this.onChoiceClick(index);
-                                    }}
-                                    onKeyPress={() => {
-                                        this.onChoiceClick(index);
-                                    }}
-                                    className={classnames(bem.element('choice'), {
-                                        [bem.element('choice', 'selected')]: this.props.selected.label === choice.label
-                                    })}
-                                    tabIndex={0}>
-                                    {choice.label}
-                                </Panel>
-                            ))}
-                        </div>
-                    )}
+                <div
+                    role="menu"
+                    id={this.menuId}
+                    className={this.state.open ? bem.element('popUp', 'open') : bem.element('popUp')}
+                    aria-labelledby={this.buttonId}>
+                    <div className={bem.element('shadow')}>
+                        {this.props.choices.map((choice, index) => (
+                            <Panel
+                                role="menuitem"
+                                key={choice.label}
+                                border={true}
+                                onClick={() => {
+                                    this.onChoiceClick(index);
+                                }}
+                                onKeyPress={() => {
+                                    this.onChoiceClick(index);
+                                }}
+                                className={classnames(bem.element('choice'), {
+                                    [bem.element('choice', 'selected')]: this.props.selected.label === choice.label
+                                })}
+                                tabIndex={0}>
+                                {choice.label}
+                            </Panel>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
