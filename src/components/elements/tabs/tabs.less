@@ -66,9 +66,12 @@
             }
         }
         @media print {
-            margin: 0 !important;
+            margin: 0 0 1rem 0 !important;
             background-color: white !important;
             padding: 0 !important;
+            &:last-child {
+                margin-bottom: 0 !important;
+            }
         }
     }
 }
