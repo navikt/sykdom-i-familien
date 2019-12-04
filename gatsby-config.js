@@ -42,7 +42,6 @@ module.exports = {
                 }
             }
         },
-        'gatsby-transformer-typescript-css-modules',
         {
             resolve: `gatsby-plugin-intl`,
             options: {
