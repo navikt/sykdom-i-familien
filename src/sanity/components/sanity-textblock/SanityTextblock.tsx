@@ -6,9 +6,9 @@ import { getOptionalLocaleString, getLocaleBlockContent, getHeadingTag } from '.
 import { TextblockObject } from '../../types/objects';
 import bemUtils from '../../../utils/bemUtils';
 import CheckBullet from './assets/CheckBullet';
+import { SanityContentHeadingLevel } from '../../types';
 
 import './sanityTextblock.less';
-import { SanityContentHeadingLevel } from '../../types';
 
 interface Props {
     textblock: TextblockObject;

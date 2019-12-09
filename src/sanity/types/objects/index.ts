@@ -47,7 +47,7 @@ export interface SectionObject {
     content: BlockContentObjectTypes[];
 }
 
-export type TextblockObjectLayout = 'normal' | 'expandablePanel' | 'ingress' | 'step';
+export type TextblockObjectLayout = 'normal' | 'expandablePanel' | 'ingress' | 'step' | 'button';
 
 export interface TextblockObject {
     title: LocaleStringObject;
