@@ -31,7 +31,7 @@ jobs:
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
-        if: startsWith(github.ref, 'refs/heads/master') || (github.event.deployment.environment == 'dev-sbs' && github.event.deployment.ref == 'staging') # Build and push docker if branch is either master or dev-*
+        if: github.event.deployment.environment == 'dev-sbs' && github.event.deployment.ref == 'staging' # Build and push docker if publish staging event from sanity studio
         needs: test
         runs-on: ubuntu-latest
         steps:
@@ -53,7 +53,7 @@ jobs:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
                   DATASET_ENV: production
                   OVERLAY_DRAFTS: true
-                  WATCH_MODE: false
+                  WATCH_MODE: true
               run: |
                   echo "Exported DATASET_ENV=$DATASET_ENV"
                   npm i
@@ -66,7 +66,7 @@ jobs:
                   echo "$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" > .docker_tag
             - name: Build Docker image
               run: |
-                  docker build -t $(cat .docker_image):$(cat .docker_tag) .
+                  docker build -t $(cat .docker_image):$(cat .docker_tag) --file Dockerfile-staging
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
@@ -88,7 +88,7 @@ jobs:
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
-        if: github.event.deployment.environment == 'prod-sbs' && github.event.deployment.ref == 'master' # Build and push docker if branch is either master or dev-*
+        if: github.event.deployment.environment == 'prod-sbs' && github.event.deployment.ref == 'master' # Build and push docker if publish production event from sanity studio
         needs: test
         runs-on: ubuntu-latest
         steps:
