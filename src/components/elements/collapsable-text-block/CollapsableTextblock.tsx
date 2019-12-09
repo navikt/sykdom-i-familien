@@ -7,21 +7,24 @@ import CollapseContainer from '../collapsable-container/CollapsableContainer';
 import { guid } from 'nav-frontend-js-utils';
 import PrintOnly from '../print-only/PrintOnly';
 import ScreenOnly from '../screen-only/ScreenOnly';
+import { SanityContentHeadingLevel } from '../../../sanity/types';
+import { getHeadingTag } from '../../../sanity/utils';
 
 interface Props {
     children: React.ReactNode;
     initialOpen?: boolean;
     title?: string;
+    headingLevel: SanityContentHeadingLevel;
 }
 
 const bem = bemUtils('collapsableTextBlock');
 
-const CollapsableTextBlock: React.FunctionComponent<Props> = ({ children, initialOpen, title }) => {
+const CollapsableTextBlock: React.FunctionComponent<Props> = ({ children, headingLevel, initialOpen, title }) => {
     const [isOpen, setIsOpen] = useState(initialOpen);
     const [contentId] = useState(guid());
 
     const titleBlock = (
-        <Element tag="h3" className={bem.element('title')}>
+        <Element tag={getHeadingTag(headingLevel)} className={bem.element('title')}>
             {title}
         </Element>
     );

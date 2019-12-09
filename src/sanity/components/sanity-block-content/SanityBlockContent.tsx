@@ -13,14 +13,16 @@ import SanityIllustration from '../sanity-illustration/SanityIllustrationContent
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
 import SanityBlock from '../sanity-block/SanityBlock';
 import { TextblockObject, VeilederpanelObject, ExpandableContentObject, TabsObject } from '../../types/objects';
-import { getOptionalLocaleString, getLocaleBlockContent } from '../../utils';
+import { getOptionalLocaleString, getLocaleBlockContent, getHeadingLevelForChild } from '../../utils';
 import { IllustrationDocument } from '../../types/documents';
+import { SanityContentHeadingLevel } from '../../types';
 
 interface Props {
     content: string | any;
+    headingLevel: SanityContentHeadingLevel;
 }
 
-const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({ content, intl }) => {
+const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({ content, headingLevel, intl }) => {
     if (!content) {
         return null;
     }
@@ -42,7 +44,9 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             const blockContent = getSanityContentWithLocale(expandableContent.content, intl.locale);
                             return (
                                 <Box padBottom="xl">
-                                    <CollapsableTextBlock title={title}>
+                                    <CollapsableTextBlock
+                                        title={title}
+                                        headingLevel={getHeadingLevelForChild(headingLevel)}>
                                         <SanityBlock content={blockContent} />
                                     </CollapsableTextBlock>
                                 </Box>
@@ -65,7 +69,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                         },
                         tabs: ({ node: tabs }: { node: TabsObject }) => (
                             <Box padBottom="xl">
-                                <SanityTabs tabs={tabs} />
+                                <SanityTabs tabs={tabs} headingLevel={getHeadingLevelForChild(headingLevel)} />
                             </Box>
                         ),
                         textblock: ({ node: textblock }: { node: TextblockObject }) => {
@@ -74,7 +78,9 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 const blockContent = getLocaleBlockContent(textblock.content, intl.locale);
                                 return (
                                     <Box padBottom="xl">
-                                        <CollapsableTextBlock title={title}>
+                                        <CollapsableTextBlock
+                                            title={title}
+                                            headingLevel={getHeadingLevelForChild(headingLevel)}>
                                             <SanityBlock content={blockContent} />
                                         </CollapsableTextBlock>
                                     </Box>
@@ -82,7 +88,10 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             }
                             return (
                                 <Box padBottom="xl">
-                                    <SanityTextblock textblock={textblock} />
+                                    <SanityTextblock
+                                        textblock={textblock}
+                                        headingLevel={getHeadingLevelForChild(headingLevel)}
+                                    />
                                 </Box>
                             );
                         }

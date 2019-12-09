@@ -184,7 +184,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             undefined
                         )
                     }>
-                    {section.content && <SanityBlockContent content={section.content} />}
+                    {section.content && <SanityBlockContent content={section.content} headingLevel={2} />}
                 </SectionPanel>
             ))}
             <PrintOnly>
