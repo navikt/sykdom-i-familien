@@ -53,7 +53,7 @@ jobs:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
                   DATASET_ENV: production
                   OVERLAY_DRAFTS: true
-                  WATCH_MODE: false
+                  WATCH_MODE: true
               run: |
                   echo "Exported DATASET_ENV=$DATASET_ENV"
                   npm i
@@ -66,7 +66,7 @@ jobs:
                   echo "$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" > .docker_tag
             - name: Build Docker image
               run: |
-                  docker build -t $(cat .docker_image):$(cat .docker_tag) .
+                  docker build -t $(cat .docker_image):$(cat .docker_tag) --file Dockerfile-staging
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
