@@ -1,29 +1,29 @@
 import React from 'react';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import RasmusSirkelSVG from './RasmusSirkelSVG';
-
-import './rasmusVeileder.less';
 import MediaQuery from 'react-responsive';
 
+import './temaveileder.less';
+
 interface Props {
+    svg: React.ReactNode;
     kompakt?: boolean;
     type: 'normal' | 'plakat';
     children: React.ReactNode;
 }
 
-const RasmusVeileder: React.FunctionComponent<Props> = ({ type, children, kompakt }) => (
-    <div className={'veilederpanel--rasmus'}>
+const Temaveileder: React.FunctionComponent<Props> = ({ svg, type, children, kompakt }) => (
+    <div className={'veilederpanel--tema'}>
         <MediaQuery maxWidth={800}>
-            <Veilederpanel svg={<RasmusSirkelSVG />} type={'plakat'} kompakt={kompakt}>
+            <Veilederpanel svg={svg} type={'plakat'} kompakt={kompakt}>
                 {children}
             </Veilederpanel>
         </MediaQuery>
         <MediaQuery minWidth={801}>
-            <Veilederpanel svg={<RasmusSirkelSVG />} type={type} kompakt={kompakt}>
+            <Veilederpanel svg={svg} type={type} kompakt={kompakt}>
                 {children}
             </Veilederpanel>
         </MediaQuery>
     </div>
 );
 
-export default RasmusVeileder;
+export default Temaveileder;

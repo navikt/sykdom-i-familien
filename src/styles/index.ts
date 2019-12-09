@@ -9,6 +9,7 @@ const styles = {
         theme: '#C1B5D0',
         themeLight: '#efecf3',
         themeDark: '#826ba1',
+        themeCircleIconBkg: '#a190b8',
         text: '#3e3832',
         link: '#0067c5'
     },

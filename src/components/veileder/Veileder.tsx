@@ -4,7 +4,8 @@ import classnames from 'classnames';
 import VeilederSvg from './VeilederSvg';
 import { VeilederpanelVeiledertype } from '../../sanity/types/objects';
 import './veileder.less';
-import RasmusVeileder from './rasmus/RasmusVeileder';
+import Temaveileder from './temaveileder/Temaveileder';
+import RasmusSirkelSVG from './temaveileder/RasmusSirkelSVG';
 
 interface VeilederProps {
     veiledertype?: VeilederpanelVeiledertype;
@@ -31,10 +32,13 @@ const Veileder = (props: VeilederProps) => {
         className: classnames('veileder', `veileder--${ansikt}`)
     };
 
-    return veiledertype === 'rasmus' ? (
-        <RasmusVeileder type={type} kompakt={kompakt}>
+    return veiledertype === 'rasmus' || veiledertype === 'temafarge' ? (
+        <Temaveileder
+            type={type}
+            kompakt={kompakt}
+            svg={veiledertype === 'rasmus' ? <RasmusSirkelSVG /> : <VeilederSvg svgProps={svgProps} />}>
             {children}
-        </RasmusVeileder>
+        </Temaveileder>
     ) : (
         <Veilederpanel
             veilederProps={{
