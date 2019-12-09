@@ -2,7 +2,7 @@ import React from 'react';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import SanityBlock from '../sanity-block/SanityBlock';
-import { getOptionalLocaleString, getLocaleBlockContent, getHeadingTag as getHeadingTagForLevel } from '../../utils';
+import { getOptionalLocaleString, getLocaleBlockContent, getHeadingTag } from '../../utils';
 import { TextblockObject } from '../../types/objects';
 import bemUtils from '../../../utils/bemUtils';
 import CheckBullet from './assets/CheckBullet';
@@ -32,7 +32,7 @@ const SanityTextblock: React.FunctionComponent<Props & InjectedIntlProps> = ({ t
                     <CheckBullet />
                 </span>
             )}
-            {title && <Undertittel tag={getHeadingTagForLevel(headingLevel)}>{title}</Undertittel>}
+            {title && <Undertittel tag={getHeadingTag(headingLevel)}>{title}</Undertittel>}
             <SanityBlock content={content} />
         </div>
     );
