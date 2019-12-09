@@ -9,9 +9,13 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { BlockContentObjectTypes } from '../../../sanity/types/objects';
 import useWindowSize from '../../../hooks/useWindowSize';
 import styles from '../../../styles';
-import { isBrowser } from '../../../utils/build';
+import { SanityContentHeadingLevel } from '../../../sanity/types';
+import { getHeadingTag, getHeadingLevelForChild } from '../../../sanity/utils';
 
-type PresentationMode = 'tabs' | 'select';
+export enum PresentationMode {
+    tabs = 'tabs',
+    dropdown = 'dropdown'
+}
 
 export interface Tab {
     index: number;
@@ -26,6 +30,7 @@ export interface TabsProps {
     tabs: Tab[];
     bgcolor?: string;
     presentation: PresentationMode;
+    headingLevel: SanityContentHeadingLevel;
 }
 
 const bem = bemUtils('tabs');
@@ -34,10 +39,11 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
     tabs,
     presentation,
     title,
+    headingLevel,
     bgcolor = styles.colors.themeLight
 }: TabsProps) => {
     const [selectedTab, selectTab] = useState({ index: 0 });
-    const [mode, setMode] = useState<PresentationMode>('select');
+    const [mode, setMode] = useState<PresentationMode>(PresentationMode.dropdown);
 
     //
     // React hydration fix:
@@ -45,10 +51,10 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
     // limbo mode med server-rendret htmlkode for select, mens content er tabs
     //
     const checkAndSetMode = (w: number) => {
-        if (w <= 640 && mode !== 'select') {
-            setMode('select');
+        if (w <= 640 && mode !== PresentationMode.dropdown) {
+            setMode(PresentationMode.dropdown);
         } else if (w > 640 && mode !== presentation) {
-            setMode(presentation || 'tabs');
+            setMode(presentation || PresentationMode.tabs);
         }
     };
     const { width } = useWindowSize((size) => {
@@ -87,18 +93,24 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
 
     const renderContentPanels = () =>
         tabs.map((tab) => (
-            <TabPanel key={tab.index} tab={tab} selected={tab.index === (selectedTab.index || 0)} bgcolor={bgcolor} />
+            <TabPanel
+                key={tab.index}
+                tab={tab}
+                selected={tab.index === (selectedTab.index || 0)}
+                bgcolor={bgcolor}
+                headingLevel={getHeadingLevelForChild(headingLevel)}
+            />
         ));
 
     return (
         <div className={bem.modifier(mode)}>
             {title && (
-                <Undertittel tag="h3" className={bem.element('title')}>
+                <Undertittel tag={getHeadingTag(headingLevel)} className={bem.element('title')}>
                     {title}
                 </Undertittel>
             )}
-            {mode === 'select' && renderSelect()}
-            {mode === 'tabs' && renderTabs()}
+            {mode === PresentationMode.dropdown && renderSelect()}
+            {mode === PresentationMode.tabs && renderTabs()}
             {renderContentPanels()}
         </div>
     );
