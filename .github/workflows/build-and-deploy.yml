@@ -37,7 +37,7 @@ jobs:
         steps:
             - name: debug deployment webhook
               run: |
-                  echo "ref - ${{ github.event.deployment.ref }}"
+                  echo "ref - master"
                   echo "task - ${{ github.event.deployment.task }}"
                   echo "environment - ${{ github.event.deployment.environment }}"
             - name: Checkout code
