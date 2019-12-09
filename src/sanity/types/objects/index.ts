@@ -55,7 +55,7 @@ export interface TextblockObject {
     layout: TextblockObjectLayout;
 }
 
-export type VeilederpanelVeiledertype = 'normal' | 'rasmus';
+export type VeilederpanelVeiledertype = 'normal' | 'rasmus' | 'temafarge';
 export type VeilederpanelFaceValg = 'glad' | 'undrende' | 'skeptisk';
 export type VeilederpanelColorValg = 'normal' | 'suksess' | 'advarsel' | 'feilmelding';
 export type VeilederpanelVisningValg = 'normal' | 'plakat';

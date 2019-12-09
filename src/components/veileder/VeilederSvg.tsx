@@ -9,8 +9,7 @@ export interface Props {
 }
 
 export const detErJul = () => {
-    const now = new Date();
-    return now.getMonth() === 11 && now.getDate() < 27;
+    return false;
 };
 
 const VeilederSvg: React.StatelessComponent<Props> = ({ svgProps }) => (

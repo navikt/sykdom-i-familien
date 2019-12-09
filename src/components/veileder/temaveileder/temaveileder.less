@@ -1,12 +1,13 @@
 @import '../../../styles/assets.less';
 
-.veilederpanel--rasmus  {
+.veilederpanel--tema {
     @background: @c-theme-light;
+
     .nav-veilederpanel  {
+        .overrideSectionPanelPadding();
         background-color: @background;
         border: none;
         border-radius: 0;
-        .overrideSectionPanelPadding();
         padding-top: 4rem;
         padding-bottom: 3rem;
         .nav-veileder {
@@ -14,6 +15,9 @@
             .nav-veileder__frame--m {
                 width: 5rem;
                 height: 5rem;
+            }
+            .nav-veileder__frame {
+                background-color: @c-theme-circleIconBkg;
             }
         }
 
@@ -66,6 +70,10 @@
         }
     }
     .nav-veileder__frame svg {
+        width: 90%;
+        height: 90%;
+    }
+    .nav-veileder__frame svg.rasmus-veileder-svg {
         width: 100%;
         height: 100%;
     }
