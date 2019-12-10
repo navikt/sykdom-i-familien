@@ -5,7 +5,7 @@ interface Props {
 }
 
 const RocketSVG = ({ size = '48' }: Props) => (
-    <svg width={size} height={size} viewBox="0 0 48 48">
+    <svg width={size} height={size} viewBox="0 0 48 48" focusable="false">
         <g fill="none" fillRule="evenodd">
             <path
                 d="M15.354 21.884a28.552 28.552 0 019.087-9.152c7.218-4.548 15.673-5.446 23.24-3.188-1.304 7.848-5.81 15.117-13.029 19.665a28.277 28.277 0 01-12.142 4.223l-7.156-11.548z"

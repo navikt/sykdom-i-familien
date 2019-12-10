@@ -26,6 +26,7 @@ const SectionPanel = ({
 }: Props) => {
     return (
         <section
+            tabIndex={-1}
             id={id}
             aria-label={title}
             className={bem.classNames(

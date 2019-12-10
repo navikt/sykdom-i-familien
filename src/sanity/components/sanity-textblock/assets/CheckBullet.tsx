@@ -12,7 +12,7 @@ interface Props {
  * dark blue: 32414F
  */
 const CheckBullet = ({ stroke = '#fff', fill = '#32414F', size = '2rem' }: Props) => (
-    <svg width={size} height={size} viewBox="0 0 32 32">
+    <svg width={size} height={size} viewBox="0 0 32 32" focusable="false">
         <g fill="none" fillRule="evenodd">
             <circle cx={16} cy={16} r={16} fill={fill} />
             <g stroke={stroke} strokeLinecap="round" strokeWidth={3}>
