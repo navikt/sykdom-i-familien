@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RasmusSirkelSVG = ({ width = 64, height = 64 }: { width?: string | number; height?: number | string }) => (
-    <svg width={width} height={height} viewBox="0 0 64 64" className="rasmus-svg">
+    <svg width={width} height={height} viewBox="0 0 64 64" className="rasmus-svg" focusable="false">
         <g fill="none" fillRule="evenodd">
             <circle fill="#A190B8" fillRule="nonzero" cx={32} cy={32} r={32} />
             <path

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RasmusSVG = () => (
-    <svg width={42} height={51}>
+    <svg width={42} height={51} focusable="false">
         <g fill="none" fillRule="evenodd">
             <circle fill="#A190B8" fillRule="nonzero" cx={32} cy={32} r={32} />
             <path

@@ -35,8 +35,11 @@ const removeProp = (tag: string, prop: string): string => {
 
 const setProp = (tag: string, name: string, newValue?: string): string => {
     const currProp = findProp(tag, name);
+    const newProp = `${name}="${newValue}"`;
     if (currProp) {
-        return replaceAll(currProp, `${name}="${newValue}"`, tag);
+        return replaceAll(currProp, newProp, tag);
+    } else if (newValue) {
+        return `${tag.replace('>', '')} ${newProp}>`;
     }
     return tag;
 };
@@ -50,7 +53,6 @@ const updateSvgProps = (svgTag: string, props: InlineSVGProps): string => {
         tag = setProp(tag, 'width', props.width);
     }
     tag = setProp(tag, 'focusable', 'false');
-
     tag = removeProp(tag, 'xmlns:xlink');
     tag = removeProp(tag, 'xmlns');
     tag = removeProp(tag, 'version');
