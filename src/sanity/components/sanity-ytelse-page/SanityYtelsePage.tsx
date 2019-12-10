@@ -84,8 +84,10 @@ const getAndApplyLinksInContent = (data: any) => {
     const dataWithLinkNumbers = traverse(data).map((node) => {
         if (node && typeof node === 'object') {
             if (node._type === 'link') {
-                const modifiedNode = { ...node, linkNumber: linkCounter };
-                links.push({ ...node, linkNumber: linkCounter++ });
+                const isExternal = isUrlExternal(node.href);
+                const modifiedNode = { ...node, linkNumber: linkCounter, isExternal };
+                links.push(modifiedNode);
+                linkCounter++;
                 return modifiedNode;
             } else if (node.marks) {
                 blocksWithMarks.push(node);
@@ -93,6 +95,7 @@ const getAndApplyLinksInContent = (data: any) => {
         }
         return node;
     });
+
     return {
         data: dataWithLinkNumbers,
         links: links.map((link) => {
@@ -103,10 +106,15 @@ const getAndApplyLinksInContent = (data: any) => {
                       url: link.href,
                       _key: link._key,
                       text: node.text,
+                      isExternal: isUrlExternal(link.href),
                       linkNumber: link.linkNumber
                   };
         })
     };
+};
+
+const isUrlExternal = (url: string): boolean => {
+    return url.indexOf('nav.no') === -1;
 };
 
 export const extractLinksFromContent = {};

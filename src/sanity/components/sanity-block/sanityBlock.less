@@ -1,20 +1,32 @@
 @import '../../../styles/assets.less';
 
-.sanityLinkButtonWrapper {
-    display: inline-block;
-    margin: 0.5rem 0 1.5rem 0;
-    .lenke {
-        .knappbase-mixin(@font-family);
-        .knappramme-mixin(@navBla, @navDypBla, @white);
-        .knappfylt-mixin(@navBla, @white, @navDypBla, lighten(@navBla, 5%)) !important;
-        .knappdisabled-mixin();
-        .knappspinner-mixin();
-        .knappmedikon-mixin();
-        &:focus {
-            .buttonFocus() !important;
-        }
+@media screen {
+    .sanityLinkButtonWrapper {
         display: inline-block;
-        color: white !important;
-        text-decoration: none !important;
+        margin: 0.5rem 0 1.5rem 0;
+        .lenke {
+            .knappbase-mixin(@font-family);
+            .knappramme-mixin(@navBla, @navDypBla, @white);
+            .knappfylt-mixin(@navBla, @white, @navDypBla, lighten(@navBla, 5%)) !important;
+            .knappdisabled-mixin();
+            .knappspinner-mixin();
+            .knappmedikon-mixin();
+            &:focus {
+                .buttonFocus() !important;
+            }
+            display: inline-block;
+            color: white !important;
+            text-decoration: none !important;
+        }
+    }
+}
+.lenke--external {
+    .lenke__externalIcon {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+        svg {
+            width: 0.75em;
+            height: 0.75em;
+        }
     }
 }

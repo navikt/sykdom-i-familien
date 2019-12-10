@@ -4,6 +4,7 @@ import Lenke from 'nav-frontend-lenker';
 import { BlockContentType } from '../../types/parts';
 
 import './sanityBlock.less';
+import ExternalLinkIcon from '../../../components/elements/external-link-icon/ExternalLinkIcon';
 
 interface Props {
     content: BlockContentType;
@@ -24,11 +25,20 @@ const LinkRenderer = (props: {
     mark: {
         linkNumber: number;
         href: string;
+        isExternal: boolean;
     };
 }) => {
     return (
-        <Lenke href={props.mark.href} data-link-number={props.mark.linkNumber}>
+        <Lenke
+            href={props.mark.href}
+            data-link-number={props.mark.linkNumber}
+            className={props.mark.isExternal ? 'lenke--external' : undefined}>
             {props.children}
+            {props.mark.isExternal && (
+                <span className="lenke__externalIcon">
+                    <ExternalLinkIcon />
+                </span>
+            )}
         </Lenke>
     );
 };
