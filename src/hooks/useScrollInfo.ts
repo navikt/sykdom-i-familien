@@ -1,7 +1,13 @@
 import { RefObject, useRef, useLayoutEffect } from 'react';
 import { isBrowser } from '../utils/build';
 
-function getScrollPosition({ element, useWindow }: { element?: RefObject<HTMLElement>; useWindow?: boolean }) {
+function getScrollPosition({
+    element,
+    useWindow
+}: {
+    element?: RefObject<HTMLElement>;
+    useWindow?: boolean;
+}): ScrollPosition {
     if (!isBrowser) {
         return { x: 0, y: 0 };
     }
@@ -10,12 +16,28 @@ function getScrollPosition({ element, useWindow }: { element?: RefObject<HTMLEle
     return useWindow ? { x: window.scrollX, y: window.scrollY } : { x: position.left, y: position.top };
 }
 
-export interface ScrollPositionChangeEvent {
-    prevPos: { x: number; y: number };
-    currPos: { x: number; y: number };
+export enum ScrollDirection {
+    'up' = 'up',
+    'down' = 'down',
+    'right' = 'right',
+    'left' = 'left'
 }
 
-const useScrollPosition = (
+export interface ScrollPosition {
+    x: number;
+    y: number;
+}
+export interface ScrollPositionChangeEvent {
+    prevPos: ScrollPosition;
+    currPos: ScrollPosition;
+    direction: ScrollDirection;
+    directionChanged: boolean;
+}
+
+const getScrollDirection = (prev: ScrollPosition, curr: ScrollPosition): ScrollDirection =>
+    prev.y > curr.y ? ScrollDirection.down : ScrollDirection.up;
+
+const useScrollInfo = (
     effect: (props: ScrollPositionChangeEvent) => void,
     deps?: any,
     useWindow?: boolean,
@@ -23,11 +45,21 @@ const useScrollPosition = (
     wait?: number
 ) => {
     const position = useRef(getScrollPosition({ element, useWindow }));
+    const scrollDirection = useRef<ScrollDirection | undefined>(undefined);
     let throttleTimeout: number | undefined;
 
     const callBack = () => {
         const currPos = getScrollPosition({ element, useWindow });
-        effect({ prevPos: position.current, currPos });
+        const currDirection = getScrollDirection(position.current, currPos);
+
+        const evt: ScrollPositionChangeEvent = {
+            prevPos: position.current,
+            currPos,
+            direction: currDirection,
+            directionChanged: currDirection !== scrollDirection.current
+        };
+        effect(evt);
+        scrollDirection.current = currDirection;
         position.current = currPos;
         throttleTimeout = undefined;
     };
@@ -47,4 +79,4 @@ const useScrollPosition = (
     }, deps);
 };
 
-export default useScrollPosition;
+export default useScrollInfo;

@@ -1,4 +1,4 @@
-import useScrollPosition, { ScrollPositionChangeEvent } from './useScrollPosition';
+import useScrollInfo, { ScrollPositionChangeEvent } from './useScrollInfo';
 import { isBrowser } from '../utils/build';
 
 interface SectionPosition {
@@ -42,7 +42,7 @@ const useActiveSections = (
         const activeSection = getActiveSection(evt.currPos.y, positions, offset);
         callback(activeSection);
     };
-    useScrollPosition(handleScrollChange, deps, false, undefined, 200);
+    useScrollInfo(handleScrollChange, deps, false, undefined, 200);
 };
 
 export default useActiveSections;
