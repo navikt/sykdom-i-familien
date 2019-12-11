@@ -16,8 +16,6 @@ const getInfo = (el: RefObject<HTMLDivElement>) => {
             const overflow = contentHeight - windowHeight;
             const isSticky = containerTop * -1 > overflow;
             const info: StickyInfo = {
-                contentHeight,
-                windowHeight,
                 isSticky,
                 stickTopPos: overflow * -1,
                 scrollY: window.scrollY
@@ -29,8 +27,6 @@ const getInfo = (el: RefObject<HTMLDivElement>) => {
 };
 
 interface StickyInfo {
-    contentHeight: number;
-    windowHeight: number;
     isSticky: boolean;
     stickTopPos: number;
     scrollY: number;
@@ -38,7 +34,7 @@ interface StickyInfo {
 
 const FlexSticky: React.FunctionComponent<Props> = ({ children }) => {
     const elementRef = useRef<HTMLDivElement | null>(null);
-    const containerStyle: CSSProperties = { position: 'relative', height: '100%', backgroundColor: '#df00df' };
+    const containerStyle: CSSProperties = { position: 'relative', height: '100%' };
     const [stickyTop, setStickyTop] = useState<number>(0);
     const stickyInfo = useRef<StickyInfo | undefined>(undefined);
     const [directionChangePos, setDirectionChangePos] = useState<number>(0);
