@@ -36,13 +36,11 @@ const FlexSticky: React.FunctionComponent<Props> = ({ children }) => {
     const elementRef = useRef<HTMLDivElement | null>(null);
     const containerStyle: CSSProperties = { position: 'relative', height: '100%' };
     const [stickyTop, setStickyTop] = useState<number>(0);
-    const stickyInfo = useRef<StickyInfo | undefined>(undefined);
     const [directionChangePos, setDirectionChangePos] = useState<number>(0);
 
     useScrollInfo((scrollInfo) => {
         const info = getInfo(elementRef);
         if (info) {
-            stickyInfo.current = info;
             const { direction, directionChanged } = scrollInfo;
             const dirChangePos = directionChanged ? info.scrollY : directionChangePos;
             if (directionChanged) {
