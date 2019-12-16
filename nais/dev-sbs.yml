@@ -40,4 +40,4 @@ spec:
     enabled: true
   env:
     - name: GATSBY_LANGUAGE_TOGGLE
-      value: true
+      value: "true"
