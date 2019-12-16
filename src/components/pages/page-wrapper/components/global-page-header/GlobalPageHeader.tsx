@@ -16,7 +16,7 @@ interface Props {
 
 const bem = bemUtils('globalPageHeader');
 
-const showLanguageToggle = false;
+const showLanguageToggle = process.env.GATSBY_LANGUAGE_TOGGLE === 'true';
 
 const GlobalPageHeader: React.FunctionComponent<Props & InjectedIntlProps> = ({ intl, showFrontpageLink }) => {
     const siteMetadata = useStaticQuery(graphql`
