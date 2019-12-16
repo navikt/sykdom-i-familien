@@ -38,3 +38,6 @@ spec:
     path: /metrics
   vault:
     enabled: true
+  env:
+    - name: GATSBY_LANGUAGE_TOGGLE
+      value: true
