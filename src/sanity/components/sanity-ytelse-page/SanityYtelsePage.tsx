@@ -46,12 +46,12 @@ interface Props {
     data: YtelsePageDocument;
 }
 
-export const extractSectionData = (data: any[]): SectionContent[] => {
+export const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
     if (!data) {
         return [];
     }
     return data.map((section) => {
-        const title = getSanityStringWithLocale(section.title, defaultLocale);
+        const title = getSanityStringWithLocale(section.title, locale);
         return {
             _key: section._key,
             slug: slugify(title || ''),
@@ -73,7 +73,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
-        sections: extractSectionData(data._rawContent),
+        sections: extractSectionData(data._rawContent, locale),
         illustration: data._rawIllustration
     };
 };
