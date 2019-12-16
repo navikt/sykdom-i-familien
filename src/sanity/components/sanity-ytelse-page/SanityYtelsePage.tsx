@@ -22,6 +22,7 @@ import './ytelsePage.less';
 import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
 
 export interface YtelsePageData {
+    showLanguageToggle: boolean;
     title: string;
     slug: { current: string };
     intro: string;
@@ -64,6 +65,7 @@ export const extractSectionData = (data: any[]): SectionContent[] => {
 
 export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
     return {
+        showLanguageToggle: data.showLanguageToggle === true,
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
         intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
         slug: data.slug,
@@ -125,6 +127,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
     const {
         title,
         metadescription,
+        showLanguageToggle,
         slug,
         inShort,
         inShortTitle,
@@ -144,6 +147,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
     return (
         <PageWithMenu
             pageTitle={title}
+            showLanguageToggle={showLanguageToggle}
             pageMetadescription={metadescription}
             slug={`${slug.current}`}
             sectionMenuItems={[inShortSection, ...sections].map((section) => ({

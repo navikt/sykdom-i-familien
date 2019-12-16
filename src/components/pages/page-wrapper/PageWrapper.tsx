@@ -1,20 +1,20 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-// import { useStaticQuery, graphql } from 'gatsby';
 import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { RouterProps } from '@reach/router';
-// import { getSiteTitle } from '../../../utils/site';
 import GlobalPageHeader from './components/global-page-header/GlobalPageHeader';
 import '../../../styles/main.less';
 
 interface Props {
+    showLanguageToggle: boolean;
     pageTitle: string;
     pageMetaDescription: string;
     showFrontpageLink?: boolean;
 }
 
 const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({
+    showLanguageToggle,
     pageTitle,
     pageMetaDescription,
     children,
@@ -28,7 +28,7 @@ const PageWrapper: React.FunctionComponent<Props & InjectedIntlProps & RouterPro
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageMetaDescription} />
             </Helmet>
-            <GlobalPageHeader showFrontpageLink={showFrontpageLink} />
+            <GlobalPageHeader showFrontpageLink={showFrontpageLink} showLanguageToggle={showLanguageToggle} />
             {children}
         </Normaltekst>
     );

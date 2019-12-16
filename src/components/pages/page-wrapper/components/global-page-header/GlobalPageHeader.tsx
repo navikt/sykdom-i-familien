@@ -12,13 +12,16 @@ import './globalPageHeader.less';
 
 interface Props {
     showFrontpageLink?: boolean;
+    showLanguageToggle?: boolean;
 }
 
 const bem = bemUtils('globalPageHeader');
 
-const showLanguageToggle = process.env.GATSBY_LANGUAGE_TOGGLE === 'on';
-
-const GlobalPageHeader: React.FunctionComponent<Props & InjectedIntlProps> = ({ intl, showFrontpageLink }) => {
+const GlobalPageHeader: React.FunctionComponent<Props & InjectedIntlProps> = ({
+    intl,
+    showFrontpageLink,
+    showLanguageToggle = false
+}) => {
     const siteMetadata = useStaticQuery(graphql`
         query {
             site {
@@ -32,9 +35,6 @@ const GlobalPageHeader: React.FunctionComponent<Props & InjectedIntlProps> = ({ 
 
     const siteTitle = getSiteTitle(siteMetadata, intl.locale);
     const frontpageUrl = `/`;
-
-    console.log('1', process.env);
-    console.log('2', process.env.GATSBY_LANGUAGE_TOGGLE);
 
     if (!showLanguageToggle && !showFrontpageLink) {
         return null;

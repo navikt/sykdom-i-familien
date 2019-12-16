@@ -7,9 +7,9 @@ import PageWrapper from '../page-wrapper/PageWrapper';
 import useActiveSections from '../../../hooks/useActiveSection';
 import { isBrowser } from '../../../utils/build';
 import Breadcrumbs from '../page-wrapper/components/global-page-header/breadcrumbs/Breadcrumbs';
+import FlexSticky from '../../layout/flex-sticky/FlexSticky';
 
 import './pageWithMenu.less';
-import FlexSticky from '../../layout/flex-sticky/FlexSticky';
 
 export interface SectionMenuItem {
     label: string;
@@ -17,6 +17,7 @@ export interface SectionMenuItem {
 }
 
 interface Props {
+    showLanguageToggle: boolean;
     pageTitle: string;
     pageMetadescription: string;
     sectionMenuItems: SectionMenuItem[];
@@ -32,6 +33,7 @@ const bem = bemUtils('pageWithMenu');
 const PageWithMenu: React.FunctionComponent<Props> = ({
     pageTitle,
     pageMetadescription,
+    showLanguageToggle,
     sectionMenuItems,
     menuFooter,
     header,
@@ -59,7 +61,11 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     );
 
     return (
-        <PageWrapper pageTitle={pageTitle} pageMetaDescription={pageMetadescription} showFrontpageLink={false}>
+        <PageWrapper
+            pageTitle={pageTitle}
+            pageMetaDescription={pageMetadescription}
+            showFrontpageLink={false}
+            showLanguageToggle={showLanguageToggle}>
             {header && <div className={bem.element('header')}>{header}</div>}
             {showBreadcrumbs && (
                 <div className={bem.element('breadcrumbs')}>
