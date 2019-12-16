@@ -18,6 +18,7 @@ interface Props {
 
 const extractFrontpageData = (data: any, locale: string): FrontpageSanityData => {
     const {
+        showLanguageToggle,
         _rawIllustration,
         _rawIngress,
         _rawTitle,
@@ -26,6 +27,7 @@ const extractFrontpageData = (data: any, locale: string): FrontpageSanityData =>
     } = data.allSanityFrontpage.nodes[0];
 
     return {
+        showLanguageToggle: showLanguageToggle === true,
         title: getSanityStringWithLocale(_rawTitle, locale),
         ingress: getSanityStringWithLocale(_rawIngress, locale),
         metadescription: getSanityStringWithLocale(_rawMetadescription, locale),
@@ -46,6 +48,7 @@ const extractFrontpageData = (data: any, locale: string): FrontpageSanityData =>
 };
 
 export interface FrontpageSanityData {
+    showLanguageToggle: boolean;
     title: string;
     metadescription: string;
     ingress?: string;
@@ -62,13 +65,18 @@ interface FrontpageStory {
 }
 
 const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & InjectedIntlProps & RouterProps) => {
-    const { title, metadescription, ingress, illustration, stories: linkPanels } = extractFrontpageData(
-        data,
-        intl.locale
-    );
+    const {
+        showLanguageToggle,
+        title,
+        metadescription,
+        ingress,
+        illustration,
+        stories: linkPanels
+    } = extractFrontpageData(data, intl.locale);
 
     return (
         <Frontpage
+            showLanguageToggle={showLanguageToggle}
             pageTitle={title}
             pageMetaDescription={metadescription}
             header={
@@ -110,6 +118,7 @@ export const pageQuery = graphql`
     {
         allSanityFrontpage {
             nodes {
+                showLanguageToggle
                 _id
                 _rawMetadescription
                 _rawTitle

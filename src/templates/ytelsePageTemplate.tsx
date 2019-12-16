@@ -11,6 +11,7 @@ export const query = graphql`
         allSanityYtelsePage(filter: { slug: { current: { eq: $slug } } }) {
             edges {
                 node {
+                    showLanguageToggle
                     ytelse {
                         id
                         name

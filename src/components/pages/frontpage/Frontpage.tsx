@@ -7,6 +7,7 @@ import bemUtils from '../../../utils/bemUtils';
 import './frontpage.less';
 
 interface Props {
+    showLanguageToggle: boolean;
     pageTitle: string;
     pageMetaDescription: string;
     header?: React.ReactNode;
@@ -17,12 +18,16 @@ const bem = bemUtils('frontpage');
 
 const Frontpage: React.FunctionComponent<Props & InjectedIntlProps & RouterProps> = ({
     children,
+    showLanguageToggle,
     pageTitle,
     pageMetaDescription,
     header
 }) => {
     return (
-        <PageWrapper pageTitle={pageTitle} pageMetaDescription={pageMetaDescription}>
+        <PageWrapper
+            pageTitle={pageTitle}
+            pageMetaDescription={pageMetaDescription}
+            showLanguageToggle={showLanguageToggle}>
             <div className={bem.block}>
                 {header && <>{header}</>}
                 <div className={bem.element('content')}>
