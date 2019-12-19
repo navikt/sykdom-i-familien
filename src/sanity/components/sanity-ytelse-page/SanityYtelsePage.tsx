@@ -46,12 +46,12 @@ interface Props {
     data: YtelsePageDocument;
 }
 
-export const extractSectionData = (data: any[]): SectionContent[] => {
+export const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
     if (!data) {
         return [];
     }
     return data.map((section) => {
-        const title = getSanityStringWithLocale(section.title, defaultLocale);
+        const title = getSanityStringWithLocale(section.title, locale);
         return {
             _key: section._key,
             slug: slugify(title || ''),
@@ -73,7 +73,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
-        sections: extractSectionData(data._rawContent),
+        sections: extractSectionData(data._rawContent, locale),
         illustration: data._rawIllustration
     };
 };
@@ -85,7 +85,7 @@ const getAndApplyLinksInContent = (data: any) => {
 
     const dataWithLinkNumbers = traverse(data).map((node) => {
         if (node && typeof node === 'object') {
-            if (node._type === 'link') {
+            if (node._type === 'link' && node.href !== undefined) {
                 const isExternal = isUrlExternal(node.href);
                 const modifiedNode = { ...node, linkNumber: linkCounter, isExternal };
                 links.push(modifiedNode);
@@ -102,7 +102,7 @@ const getAndApplyLinksInContent = (data: any) => {
         data: dataWithLinkNumbers,
         links: links.map((link) => {
             const node = blocksWithMarks.find((block) => block.marks.find((m: any) => m === link._key));
-            return !node
+            return !node || !link.href
                 ? undefined
                 : {
                       url: link.href,
@@ -116,7 +116,7 @@ const getAndApplyLinksInContent = (data: any) => {
 };
 
 const isUrlExternal = (url: string): boolean => {
-    return url.indexOf('nav.no') === -1;
+    return !url ? false : url.indexOf('nav.no') === -1;
 };
 
 export const extractLinksFromContent = {};
