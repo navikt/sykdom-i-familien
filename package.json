@@ -35,7 +35,7 @@
         "gatsby-plugin-react-svg": "^2.1.2",
         "gatsby-plugin-routes": "^1.0.0",
         "gatsby-plugin-tslint": "0.0.2",
-        "gatsby-plugin-typescript": "^2.1.23",
+        "gatsby-plugin-typescript": "^2.1.26",
         "gatsby-source-sanity": "^5.0.5",
         "gray-matter": "^4.0.2",
         "less": "^3.10.3",
