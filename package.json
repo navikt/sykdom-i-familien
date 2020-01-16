@@ -10,7 +10,7 @@
     "scripts": {
         "fetch-decorator": "node ./plugins/nav-decorator/index.js",
         "build": "npm run fetch-decorator && gatsby build --prefix-paths",
-        "develop": "npm run fetch-decorator && gatsby develop",
+        "develop": "npm run fetch-decorator && gatsby develop -p 8080",
         "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
         "start": "npm run develop",
         "staging": "gatsby develop",

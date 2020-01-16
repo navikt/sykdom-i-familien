@@ -50,6 +50,7 @@ jobs:
               env:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
                   DATASET_ENV: production
+                  ENV: dev
                   OVERLAY_DRAFTS: true
                   WATCH_MODE: true
               run: |
@@ -64,7 +65,7 @@ jobs:
                   echo "$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" > .docker_tag
             - name: Build Docker image
               run: |
-                  docker build -t $(cat .docker_image):$(cat .docker_tag) . 
+                  docker build -t $(cat .docker_image):$(cat .docker_tag) . -f Dockerfile-dev
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
@@ -102,6 +103,7 @@ jobs:
               env:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
                   DATASET_ENV: production
+                  ENV: prod
                   OVERLAY_DRAFTS: false
                   WATCH_MODE: false
               run: |

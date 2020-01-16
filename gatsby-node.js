@@ -1,7 +1,8 @@
 'use strict';
 
-const path = require('path');
+require('dotenv').config();
 require('source-map-support').install();
+const path = require('path');
 const svgoProps = require('./gatsbyUtils/svgoProps');
 const SVGO = require('svgo');
 
@@ -15,9 +16,11 @@ require('ts-node').register({
 });
 
 exports.createPages = async ({ graphql, actions }) => {
+    const includeNonPublicPagesOnlyInDevFilter = process.env.ENV !== 'dev' ? ` (filter: {isPublic: {eq: true}})` : '';
+    console.log(includeNonPublicPagesOnlyInDevFilter, process.env.ENV);
     const pages = await graphql(`
         query {
-            allSanityYtelsePage {
+            allSanityYtelsePage${includeNonPublicPagesOnlyInDevFilter} {
                 edges {
                     node {
                         ytelse {
