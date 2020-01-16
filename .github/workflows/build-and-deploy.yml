@@ -50,6 +50,7 @@ jobs:
               env:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
                   DATASET_ENV: production
+                  ENV: dev
                   OVERLAY_DRAFTS: true
                   WATCH_MODE: true
               run: |
@@ -102,6 +103,7 @@ jobs:
               env:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
                   DATASET_ENV: production
+                  ENV: prod
                   OVERLAY_DRAFTS: false
                   WATCH_MODE: false
               run: |
