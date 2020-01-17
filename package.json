@@ -73,7 +73,7 @@
     "devDependencies": {
         "@types/classnames": "^2.2.9",
         "@types/lodash.chunk": "^4.2.6",
-        "@types/node": "^12.12.24",
+        "@types/node": "^13.1.7",
         "@types/react": "^16.9.17",
         "@types/react-aria-menubutton": "^6.2.4",
         "@types/react-collapse": "^4.0.2",
