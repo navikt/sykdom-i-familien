@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-console.log(`Using dataset [${process.env.DATASET}]`);
+console.log(`Using dataset [${process.env.DATASET_ENV}]`);
 
 module.exports = {
     pathPrefix: `/familie/sykdom-i-familien`,
@@ -20,7 +20,7 @@ module.exports = {
             resolve: 'gatsby-source-sanity',
             options: {
                 projectId: '8ux9tyb9',
-                dataset: `${process.env.DATASET}`,
+                dataset: `${process.env.DATASET_ENV}`,
                 token: `${process.env.SANITY_TOKEN}`,
                 watchMode: process.env.WATCH_MODE,
                 overlayDrafts: process.env.OVERLAY_DRAFTS
