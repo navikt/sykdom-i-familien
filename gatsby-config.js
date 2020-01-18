@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+console.log(`Using dataset [${process.env.DATASET_ENV}]`);
+
 module.exports = {
     pathPrefix: `/familie/sykdom-i-familien`,
     siteMetadata: {
