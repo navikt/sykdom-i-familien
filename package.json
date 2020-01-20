@@ -90,7 +90,7 @@
         "graphql-typescript-definitions": "^0.18.1",
         "hast-util-to-html": "^6.1.0",
         "install": "^0.13.0",
-        "jsdom": "^15.2.1",
+        "jsdom": "^16.0.0",
         "nav-frontend-alertstriper-style": "^2.0.6",
         "nav-frontend-chevron-style": "^0.3.5",
         "nav-frontend-ekspanderbartpanel-style": "^0.3.23",
