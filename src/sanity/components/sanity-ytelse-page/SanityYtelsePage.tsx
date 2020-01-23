@@ -73,7 +73,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
-        sections: extractSectionData(data._rawContent, locale),
+        sections: extractSectionData(data._rawContent, locale as Locale),
         illustration: data._rawIllustration
     };
 };
@@ -176,7 +176,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     }
                     illustrationPlacement="outside">
                     {inShort && (
-                        <Ingress className="inShortList" tag="div">
+                        <Ingress className="inShortList formattedRichContent" tag="div">
                             <SanityBlock content={inShort} />
                         </Ingress>
                     )}
