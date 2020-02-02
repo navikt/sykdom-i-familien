@@ -49,13 +49,12 @@ jobs:
             - name: build code
               env:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-                  DATASET_ENV: production
                   DATASET: production
                   ENV: dev
                   OVERLAY_DRAFTS: true
                   WATCH_MODE: true
               run: |
-                  echo "Exported DATASET_ENV=$DATASET_ENV"
+                  echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
             - name: Create Docker tag
@@ -103,13 +102,12 @@ jobs:
             - name: build code
               env:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-                  DATASET_ENV: production
                   DATASET: production
                   ENV: prod
                   OVERLAY_DRAFTS: false
                   WATCH_MODE: false
               run: |
-                  echo "Exported DATASET_ENV=$DATASET_ENV"
+                  echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
             - name: Create Docker tag
