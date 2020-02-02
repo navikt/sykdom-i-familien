@@ -55,7 +55,7 @@ jobs:
                   OVERLAY_DRAFTS: true
                   WATCH_MODE: true
               run: |
-                  echo "Exported DATASET_ENV=${{ DATASET_ENV }}"
+                  echo "Exported DATASET_ENV=$DATASET_ENV"
                   npm i
                   npm run build
             - name: Create Docker tag
