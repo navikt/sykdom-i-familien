@@ -14,7 +14,7 @@ export interface InfopanelMedKnapper {
     _type: string;
     content: LocaleRichTextObject;
     title: LocaleStringObject;
-    linkKnapper: LinkKnapp[];
+    lenkeknapper: LinkKnapp[];
 }
 
 
@@ -36,7 +36,7 @@ const InfopanelMedKnapperView: React.FC<Props> = ({ infopanelMedKnapper, heading
                 }
                 <SanityBlock content={blockContent}/>
                 <>
-                    {infopanelMedKnapper && infopanelMedKnapper.linkKnapper.map((linkButton: LinkKnapp, linkButtonIndex: number) => (
+                    {infopanelMedKnapper && infopanelMedKnapper.lenkeknapper.map((linkButton: LinkKnapp, linkButtonIndex: number) => (
                         <span key={linkButtonIndex}>
                             <Lenke className={'knapp knapp--hoved infopanelKnapper'}
                                    href={linkButton.url}>{linkButton.text.nb}
