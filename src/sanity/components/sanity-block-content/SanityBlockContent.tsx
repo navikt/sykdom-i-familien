@@ -12,10 +12,18 @@ import Veileder from '../../../components/veileder/Veileder';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
 import SanityBlock from '../sanity-block/SanityBlock';
-import { TextblockObject, VeilederpanelObject, ExpandableContentObject, TabsObject } from '../../types/objects';
+import {
+    TextblockObject,
+    VeilederpanelObject,
+    ExpandableContentObject,
+    TabsObject,
+    InfopanelMedKnapper
+} from '../../types/objects';
 import { getOptionalLocaleString, getLocaleBlockContent, getHeadingLevelForChild } from '../../utils';
 import { IllustrationDocument } from '../../types/documents';
 import { SanityContentHeadingLevel } from '../../types';
+import Lenke from 'nav-frontend-lenker';
+import { Panel } from 'nav-frontend-paneler';
 
 interface Props {
     content: string | any;
@@ -35,7 +43,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                         illustration: ({ node: illustration }: { node: IllustrationDocument }) => {
                             return (
                                 <Box padBottom="l">
-                                    <SanityIllustration illustration={illustration} inline={false} />
+                                    <SanityIllustration illustration={illustration} inline={false}/>
                                 </Box>
                             );
                         },
@@ -47,7 +55,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                     <CollapsableTextBlock
                                         title={title}
                                         headingLevel={getHeadingLevelForChild(headingLevel)}>
-                                        <SanityBlock content={blockContent} />
+                                        <SanityBlock content={blockContent}/>
                                     </CollapsableTextBlock>
                                 </Box>
                             );
@@ -62,14 +70,14 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                         fargetema={veilederpanel.color || 'normal'}
                                         type={veilederpanel.type}
                                         kompakt={veilederpanel.kompakt === 'kompakt'}>
-                                        <SanityBlock content={contentBlocks} />
+                                        <SanityBlock content={contentBlocks}/>
                                     </Veileder>
                                 </Box>
                             );
                         },
                         tabs: ({ node: tabs }: { node: TabsObject }) => (
                             <Box padBottom="xl">
-                                <SanityTabs tabs={tabs} headingLevel={getHeadingLevelForChild(headingLevel)} />
+                                <SanityTabs tabs={tabs} headingLevel={getHeadingLevelForChild(headingLevel)}/>
                             </Box>
                         ),
                         textblock: ({ node: textblock }: { node: TextblockObject }) => {
@@ -81,7 +89,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                         <CollapsableTextBlock
                                             title={title}
                                             headingLevel={getHeadingLevelForChild(headingLevel)}>
-                                            <SanityBlock content={blockContent} />
+                                            <SanityBlock content={blockContent}/>
                                         </CollapsableTextBlock>
                                     </Box>
                                 );
@@ -93,6 +101,24 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                         headingLevel={getHeadingLevelForChild(headingLevel)}
                                     />
                                 </Box>
+                            );
+                        },
+                        infopanelMedKnapper: ({ node: infopanelMedKnapper }: { node: InfopanelMedKnapper }) => {
+                            return (
+                                <div>
+                                    <Panel border={true}>
+                                        <SanityBlockContent content={infopanelMedKnapper.textblock} headingLevel={4} intl={intl}/>
+                                        <>
+                                            {infopanelMedKnapper.linkKnapper.map((linkButton, linkButtonIndex) => (
+                                                <span key={linkButtonIndex}>
+                                                    <Lenke className={'knapp knapp--hoved air'}
+                                                           href={linkButton.url}>{linkButton.text.nb}
+                                                    </Lenke>
+                                                </span>
+                                            ))}
+                                        </>
+                                    </Panel>
+                                </div>
                             );
                         }
                     }

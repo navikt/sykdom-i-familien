@@ -1,4 +1,4 @@
-import { LocaleStringObject, LocaleRichTextObject } from '../locale-objects/index';
+import { LocaleStringObject, LocaleRichTextObject, LocaleSimpleTextObject } from '../locale-objects/index';
 import { IllustrationDocument, YtelsePageDocument } from '../documents/index';
 
 export type BlockContentObjectTypes =
@@ -53,6 +53,17 @@ export interface TextblockObject {
     title: LocaleStringObject;
     content: LocaleRichTextObject;
     layout: TextblockObjectLayout;
+}
+
+export interface LinkKnapp {
+    text: LocaleSimpleTextObject;
+    url: string;
+}
+
+export interface InfopanelMedKnapper {
+    _type: string;
+    textblock: TextblockObject;
+    linkKnapper: LinkKnapp[];
 }
 
 export type VeilederpanelVeiledertype = 'normal' | 'rasmus' | 'temafarge';

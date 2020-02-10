@@ -20,7 +20,6 @@ import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 
 import './ytelsePage.less';
 import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
-import { InfopanelMedKnapper, EkstraKomponent } from '../../../components/ekstra-komponent/EkstraKomponent';
 
 export interface YtelsePageData {
     showLanguageToggle: boolean;
@@ -28,7 +27,7 @@ export interface YtelsePageData {
     slug: { current: string };
     intro: string;
     inShort: string;
-    inShortEkstraKomponenter: InfopanelMedKnapper[];
+    inShortEkstraKomponenter: string[];
     metadescription: string;
     inShortTitle: string;
     formUrl: string;
@@ -73,7 +72,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         slug: data.slug,
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
-        inShortEkstraKomponenter: data._rawInShortEkstraKomponenter as InfopanelMedKnapper[],
+        inShortEkstraKomponenter: data._rawInShortEkstraKomponenter as string[],
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent, locale as Locale),
@@ -108,12 +107,12 @@ const getAndApplyLinksInContent = (data: any) => {
             return !node || !link.href
                 ? undefined
                 : {
-                      url: link.href,
-                      _key: link._key,
-                      text: node.text,
-                      isExternal: isUrlExternal(link.href),
-                      linkNumber: link.linkNumber
-                  };
+                    url: link.href,
+                    _key: link._key,
+                    text: node.text,
+                    isExternal: isUrlExternal(link.href),
+                    linkNumber: link.linkNumber
+                };
         })
     };
 };
@@ -158,7 +157,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                 label: section.title || '',
                 slug: section.slug
             }))}
-            header={<PageBannerCompact title={title} />}
+            header={<PageBannerCompact title={title}/>}
             menuFooter={
                 <LinkButton href={formUrl} alignCenter={true}>
                     Søk nå
@@ -184,7 +183,11 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             <SanityBlock content={inShort} />
                         </Ingress>
                     )}
-                    <EkstraKomponent ekstrakomponenter={inShortEkstraKomponenter}/>
+                    {
+                        inShortEkstraKomponenter.map((infopanel: string, infopanelIndex) => {
+                            return <SanityBlockContent content={infopanel} headingLevel={3} key={infopanelIndex}/>;
+                        })
+                    }
                 </SectionPanel>
             </div>
             {sections.map((section) => (
@@ -201,7 +204,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             undefined
                         )
                     }>
-                    {section.content && <SanityBlockContent content={section.content} headingLevel={2} />}
+                    {section.content && <SanityBlockContent content={section.content} headingLevel={2}/>}
                 </SectionPanel>
             ))}
             <PrintOnly>
