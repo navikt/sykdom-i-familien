@@ -16,21 +16,16 @@ import {
     TextblockObject,
     VeilederpanelObject,
     ExpandableContentObject,
-    TabsObject,
-    InfopanelMedKnapper
+    TabsObject
 } from '../../types/objects';
 import {
     getOptionalLocaleString,
     getLocaleBlockContent,
-    getHeadingLevelForChild,
-    getHeadingTag
+    getHeadingLevelForChild
 } from '../../utils';
 import { IllustrationDocument } from '../../types/documents';
 import { SanityContentHeadingLevel } from '../../types';
-import Lenke from 'nav-frontend-lenker';
-import { Panel } from 'nav-frontend-paneler';
-import { Undertittel } from 'nav-frontend-typografi';
-import './sanityBlockContent.less';
+import InfopanelMedKnapperView, { InfopanelMedKnapper } from '../../../components/infopanelMedKnapper/InfopanelMedKnapper';
 
 interface Props {
     content: string | any;
@@ -110,27 +105,8 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 </Box>
                             );
                         },
-                        infopanelMedKnapper: ({ node: infopanelMedKnapper }: { node: InfopanelMedKnapper }) => {
-                            const blockContent = getLocaleBlockContent(infopanelMedKnapper.content, intl.locale);
-                            const blockTittel = getOptionalLocaleString(infopanelMedKnapper.title, intl.locale);
-                            return (
-                                <Panel className={'infopanelMedKnapper'} border={true}>
-                                    {blockTittel &&
-                                        <Undertittel tag={getHeadingTag(headingLevel)}>{blockTittel}</Undertittel>
-                                    }
-                                    <SanityBlock content={blockContent}/>
-                                    <>
-                                        {infopanelMedKnapper && infopanelMedKnapper.linkKnapper.map((linkButton, linkButtonIndex) => (
-                                            <span key={linkButtonIndex}>
-                                                    <Lenke className={'knapp knapp--hoved air'}
-                                                           href={linkButton.url}>{linkButton.text.nb}
-                                                    </Lenke>
-                                                </span>
-                                        ))}
-                                    </>
-                                </Panel>
-                            );
-                        }
+                        infopanelMedKnapper: ({ node: infopanelMedKnapper }: { node: InfopanelMedKnapper }) =>
+                            ( <InfopanelMedKnapperView infopanelMedKnapper={infopanelMedKnapper} intl={intl} headingLevel={headingLevel}/> )
                     }
                 }}
             />

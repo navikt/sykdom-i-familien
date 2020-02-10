@@ -60,13 +60,6 @@ export interface LinkKnapp {
     url: string;
 }
 
-export interface InfopanelMedKnapper {
-    _type: string;
-    content: LocaleRichTextObject;
-    title: LocaleStringObject;
-    linkKnapper: LinkKnapp[];
-}
-
 export type VeilederpanelVeiledertype = 'normal' | 'rasmus' | 'temafarge';
 export type VeilederpanelFaceValg = 'glad' | 'undrende' | 'skeptisk';
 export type VeilederpanelColorValg = 'normal' | 'suksess' | 'advarsel' | 'feilmelding';
