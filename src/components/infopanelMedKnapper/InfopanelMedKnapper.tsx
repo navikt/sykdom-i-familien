@@ -38,7 +38,7 @@ const InfopanelMedKnapperView: React.FC<Props> = ({ infopanelMedKnapper, heading
                 <>
                     {infopanelMedKnapper && infopanelMedKnapper.linkKnapper.map((linkButton: LinkKnapp, linkButtonIndex: number) => (
                         <span key={linkButtonIndex}>
-                            <Lenke className={'knapp knapp--hoved air'}
+                            <Lenke className={'knapp knapp--hoved avstand'}
                                    href={linkButton.url}>{linkButton.text.nb}
                             </Lenke>
                         </span>
