@@ -1,6 +1,6 @@
 import React from 'react';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import { Locale, defaultLocale } from '../../../i18n/locale';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
+import { Locale } from '../../../i18n/locale';
 import Box from '../../../components/layout/box/Box';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
 import {
@@ -20,6 +20,7 @@ import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 
 import './ytelsePage.less';
 import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
+import { InfopanelMedKnapper, EkstraKomponent } from '../../../components/ekstra-komponent/EkstraKomponent';
 
 export interface YtelsePageData {
     showLanguageToggle: boolean;
@@ -27,6 +28,7 @@ export interface YtelsePageData {
     slug: { current: string };
     intro: string;
     inShort: string;
+    inShortEkstraKomponenter: InfopanelMedKnapper[];
     metadescription: string;
     inShortTitle: string;
     formUrl: string;
@@ -71,6 +73,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         slug: data.slug,
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
+        inShortEkstraKomponenter: data._rawInShortEkstraKomponenter as InfopanelMedKnapper[],
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent, locale as Locale),
@@ -131,6 +134,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         slug,
         inShort,
         inShortTitle,
+        inShortEkstraKomponenter,
         sections,
         illustration,
         formUrl
@@ -180,6 +184,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             <SanityBlock content={inShort} />
                         </Ingress>
                     )}
+                    <EkstraKomponent ekstrakomponenter={inShortEkstraKomponenter}/>
                 </SectionPanel>
             </div>
             {sections.map((section) => (
