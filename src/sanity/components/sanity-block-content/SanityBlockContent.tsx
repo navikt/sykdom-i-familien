@@ -45,7 +45,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                         illustration: ({ node: illustration }: { node: IllustrationDocument }) => {
                             return (
                                 <Box padBottom="l">
-                                    <SanityIllustration illustration={illustration} inline={false}/>
+                                    <SanityIllustration illustration={illustration} inline={false} />
                                 </Box>
                             );
                         },
@@ -57,7 +57,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                     <CollapsableTextBlock
                                         title={title}
                                         headingLevel={getHeadingLevelForChild(headingLevel)}>
-                                        <SanityBlock content={blockContent}/>
+                                        <SanityBlock content={blockContent} />
                                     </CollapsableTextBlock>
                                 </Box>
                             );
@@ -72,14 +72,14 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                         fargetema={veilederpanel.color || 'normal'}
                                         type={veilederpanel.type}
                                         kompakt={veilederpanel.kompakt === 'kompakt'}>
-                                        <SanityBlock content={contentBlocks}/>
+                                        <SanityBlock content={contentBlocks} />
                                     </Veileder>
                                 </Box>
                             );
                         },
                         tabs: ({ node: tabs }: { node: TabsObject }) => (
                             <Box padBottom="xl">
-                                <SanityTabs tabs={tabs} headingLevel={getHeadingLevelForChild(headingLevel)}/>
+                                <SanityTabs tabs={tabs} headingLevel={getHeadingLevelForChild(headingLevel)} />
                             </Box>
                         ),
                         textblock: ({ node: textblock }: { node: TextblockObject }) => {
@@ -91,7 +91,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                         <CollapsableTextBlock
                                             title={title}
                                             headingLevel={getHeadingLevelForChild(headingLevel)}>
-                                            <SanityBlock content={blockContent}/>
+                                            <SanityBlock content={blockContent} />
                                         </CollapsableTextBlock>
                                     </Box>
                                 );
