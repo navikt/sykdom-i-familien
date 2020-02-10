@@ -62,7 +62,8 @@ export interface LinkKnapp {
 
 export interface InfopanelMedKnapper {
     _type: string;
-    textblock: TextblockObject;
+    content: LocaleRichTextObject;
+    title: LocaleStringObject;
     linkKnapper: LinkKnapp[];
 }
 
