@@ -55,7 +55,7 @@ export interface TextblockObject {
     layout: TextblockObjectLayout;
 }
 
-export interface LinkKnapp {
+export interface Lenkeknapp {
     text: LocaleSimpleTextObject;
     url: string;
 }

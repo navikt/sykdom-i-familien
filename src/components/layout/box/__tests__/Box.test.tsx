@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 import Box from '../Box';
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
-
 
 describe('<Box />', () => {
     it('renders a <div> with correct classname specified from props', () => {
