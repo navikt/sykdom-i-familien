@@ -25,11 +25,26 @@ interface OwnProps {
 
 type Props = OwnProps & InjectedIntlProps;
 
+const typeCheckOf = <T extends any>(t: T): boolean => {
+    return true;
+};
+
+
 const InfopanelMedKnapperView: React.FC<Props> = ({ infopanelMedKnapper, headingLevel, intl }) => {
+
+    // typeCheckOf(infopanelMedKnapper, interFace);
+    const b = typeCheckOf("En string");
+
     const blockContent = getLocaleBlockContent(infopanelMedKnapper.content, intl.locale);
     const blockTittel = getOptionalLocaleString(infopanelMedKnapper.title, intl.locale);
     return (
         <div>
+            <div>
+                Output:
+                <div>
+                    {JSON.stringify(b, null, 4)}
+                </div>
+            </div>
             <Panel className={'infopanelMedKnapper'} border={true}>
                 {blockTittel &&
                 <Undertittel tag={getHeadingTag(headingLevel)}>{blockTittel}</Undertittel>
