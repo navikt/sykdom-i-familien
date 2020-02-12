@@ -12,10 +12,20 @@ import Veileder from '../../../components/veileder/Veileder';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
 import SanityBlock from '../sanity-block/SanityBlock';
-import { TextblockObject, VeilederpanelObject, ExpandableContentObject, TabsObject } from '../../types/objects';
-import { getOptionalLocaleString, getLocaleBlockContent, getHeadingLevelForChild } from '../../utils';
+import {
+    TextblockObject,
+    VeilederpanelObject,
+    ExpandableContentObject,
+    TabsObject
+} from '../../types/objects';
+import {
+    getOptionalLocaleString,
+    getLocaleBlockContent,
+    getHeadingLevelForChild
+} from '../../utils';
 import { IllustrationDocument } from '../../types/documents';
 import { SanityContentHeadingLevel } from '../../types';
+import InfopanelMedKnapperView, { InfopanelMedKnapper } from '../../../components/infopanelMedKnapper/InfopanelMedKnapper';
 
 interface Props {
     content: string | any;
@@ -94,7 +104,9 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                     />
                                 </Box>
                             );
-                        }
+                        },
+                        infopanelMedKnapper: ({ node: infopanelMedKnapper }: { node: InfopanelMedKnapper }) =>
+                            ( <InfopanelMedKnapperView infopanelMedKnapper={infopanelMedKnapper} intl={intl} headingLevel={headingLevel}/> )
                     }
                 }}
             />

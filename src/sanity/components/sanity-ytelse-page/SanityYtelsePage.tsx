@@ -1,25 +1,23 @@
 import React from 'react';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import { Locale, defaultLocale } from '../../../i18n/locale';
-import Box from '../../../components/layout/box/Box';
-import SectionPanel from '../../../components/sectionPanel/SectionPanel';
-import {
-    getSanityContentWithLocale,
-    getSanityStringWithLocale
-} from '../../../utils/sanity/getSanityContentWithLocale';
-import { Ingress } from 'nav-frontend-typografi';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import slugify from 'slugify';
-import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
-import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
-import LinkButton from '../../../components/elements/link-button/LinkButton';
 import traverse from 'traverse';
+import { Ingress } from 'nav-frontend-typografi';
+import LinkButton from '../../../components/elements/link-button/LinkButton';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
-import SanityBlock from '../sanity-block/SanityBlock';
-import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
-import SectionIcon from '../../../components/sectionPanel/SectionIcon';
-
-import './ytelsePage.less';
+import Box from '../../../components/layout/box/Box';
 import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
+import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
+import SectionIcon from '../../../components/sectionPanel/SectionIcon';
+import SectionPanel from '../../../components/sectionPanel/SectionPanel';
+import { Locale } from '../../../i18n/locale';
+import {
+    getSanityContentWithLocale, getSanityStringWithLocale
+} from '../../../utils/sanity/getSanityContentWithLocale';
+import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
+import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
+import SanityBlock from '../sanity-block/SanityBlock';
+import './ytelsePage.less';
 
 export interface YtelsePageData {
     showLanguageToggle: boolean;
@@ -27,6 +25,7 @@ export interface YtelsePageData {
     slug: { current: string };
     intro: string;
     inShort: string;
+    inShortEkstraKomponenter: string[];
     metadescription: string;
     inShortTitle: string;
     formUrl: string;
@@ -71,6 +70,7 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         slug: data.slug,
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
+        inShortEkstraKomponenter: data._rawInShortEkstraKomponenter as string[],
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent, locale as Locale),
@@ -131,6 +131,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         slug,
         inShort,
         inShortTitle,
+        inShortEkstraKomponenter,
         sections,
         illustration,
         formUrl
@@ -180,6 +181,9 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             <SanityBlock content={inShort} />
                         </Ingress>
                     )}
+                    {(inShortEkstraKomponenter || []).map((infopanel: string, infopanelIndex) => {
+                        return <SanityBlockContent content={infopanel} headingLevel={3} key={infopanelIndex} />;
+                    })}
                 </SectionPanel>
             </div>
             {sections.map((section) => (

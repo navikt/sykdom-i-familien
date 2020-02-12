@@ -23,6 +23,7 @@ export interface YtelseDocument {
     name: string;
     key: string;
     formUrl: string;
+    pdfFormUrl?: string;
 }
 
 export interface YtelsePageDocument {
