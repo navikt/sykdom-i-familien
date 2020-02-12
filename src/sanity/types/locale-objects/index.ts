@@ -3,17 +3,17 @@ import { defaultLocale } from '../../../i18n/locale';
 
 export interface LocaleStringObject {
     nb: string;
-    nn: string;
+    nn?: string;
 }
 
 export interface LocaleSimpleTextObject {
     nb: string;
-    nn: string;
+    nn?: string;
 }
 
 export interface LocaleRichTextObject {
     nb: StringBlockValue;
-    nn: StringBlockValue;
+    nn?: StringBlockValue;
 }
 
 export type LocaleObject = LocaleStringObject | LocaleRichTextObject | LocaleSimpleTextObject;

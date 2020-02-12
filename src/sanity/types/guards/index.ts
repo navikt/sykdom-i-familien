@@ -17,15 +17,13 @@ export const isLocaleRichTextObject = (
     return !!(
         toBeDetermined &&
         toBeDetermined.nb &&
-        isStringBlockValue(toBeDetermined.nb) &&
-        toBeDetermined.nn &&
-        isStringBlockValue(toBeDetermined.nn)
+        isStringBlockValue(toBeDetermined.nb)
     );
 };
 export const isLocaleStringObject = (
     toBeDetermined: LocaleStringObject | any
 ): toBeDetermined is LocaleStringObject => {
-    return !!(toBeDetermined && toBeDetermined.nb && toBeDetermined.nn);
+    return !!(toBeDetermined && toBeDetermined.nb);
 };
 export const isLocaleSimpleTextObject = (
     toBeDetermined: LocaleSimpleTextObject | any
@@ -51,10 +49,10 @@ export const isInfopanelMedKnapper = (
         toBeDetermined &&
         toBeDetermined._type &&
         typeof toBeDetermined._type === 'string' &&
-        toBeDetermined.content &&
-        isLocaleRichTextObject(toBeDetermined.content) &&
         toBeDetermined.title &&
         isLocaleStringObject(toBeDetermined.title) &&
+        toBeDetermined.content &&
+        isLocaleRichTextObject(toBeDetermined.content) &&
         toBeDetermined.lenkeknapper &&
         isListOfLenkeknapper(toBeDetermined.lenkeknapper)
     );
