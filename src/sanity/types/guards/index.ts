@@ -1,4 +1,4 @@
-import { LocaleRichTextObject, LocaleSimpleTextObject, LocaleStringObject } from '../locale-objects';
+import { LocaleRichTextObject, LocaleStringObject } from '../locale-objects';
 import { StringBlockValue } from '../parts';
 import { Lenkeknapp } from '../objects';
 import { InfopanelMedKnapper } from '../../../components/infopanelMedKnapper/InfopanelMedKnapper';
@@ -20,21 +20,17 @@ export const isLocaleRichTextObject = (
         isStringBlockValue(toBeDetermined.nb)
     );
 };
+
 export const isLocaleStringObject = (
     toBeDetermined: LocaleStringObject | any
 ): toBeDetermined is LocaleStringObject => {
     return !!(toBeDetermined && toBeDetermined.nb);
 };
-export const isLocaleSimpleTextObject = (
-    toBeDetermined: LocaleSimpleTextObject | any
-): toBeDetermined is LocaleSimpleTextObject => {
-    return !!(toBeDetermined && toBeDetermined.nb && toBeDetermined.nn);
-};
 export const isLenkeknapp = (toBeDetermined: Lenkeknapp | any): toBeDetermined is Lenkeknapp => {
     return !!(
         toBeDetermined &&
         toBeDetermined.text &&
-        isLocaleSimpleTextObject(toBeDetermined.text) &&
+        isLocaleStringObject(toBeDetermined.text) &&
         toBeDetermined.url &&
         typeof toBeDetermined.url === 'string'
     );
