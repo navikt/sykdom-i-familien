@@ -5,44 +5,54 @@ import { getHeadingTag, getLocaleBlockContent, getOptionalLocaleString } from '.
 import SanityBlock from '../../sanity/components/sanity-block/SanityBlock';
 import Lenke from 'nav-frontend-lenker';
 import { LocaleRichTextObject, LocaleStringObject } from '../../sanity/types/locale-objects';
-import { LinkKnapp } from '../../sanity/types/objects';
-import { SanityContentHeadingLevel } from '../../sanity/types';
+import { Lenkeknapp } from '../../sanity/types/objects';
+import { isSanityContentHeadingLevel, SanityContentHeadingLevel } from '../../sanity/types';
 import { InjectedIntlProps } from 'gatsby-plugin-intl';
 import './infopanelMedKnapper.less';
+import { isInfopanelMedKnapper } from '../../sanity/types/guards';
+
+export const invalidInput = (
+    infopanelMedKnapper: InfopanelMedKnapper | any,
+    headingLevel: SanityContentHeadingLevel | any
+) => {
+    return !(isInfopanelMedKnapper(infopanelMedKnapper) && isSanityContentHeadingLevel(headingLevel));
+};
 
 export interface InfopanelMedKnapper {
     _type: string;
     content: LocaleRichTextObject;
     title: LocaleStringObject;
-    lenkeknapper: LinkKnapp[];
+    lenkeknapper: Lenkeknapp[];
 }
 
-
 interface OwnProps {
-    infopanelMedKnapper: InfopanelMedKnapper;
-    headingLevel: SanityContentHeadingLevel;
+    infopanelMedKnapper: InfopanelMedKnapper | any;
+    headingLevel: SanityContentHeadingLevel | any;
 }
 
 type Props = OwnProps & InjectedIntlProps;
 
 const InfopanelMedKnapperView: React.FC<Props> = ({ infopanelMedKnapper, headingLevel, intl }) => {
+    if (invalidInput(infopanelMedKnapper, headingLevel)) {
+        return null;
+    }
+
     const blockContent = getLocaleBlockContent(infopanelMedKnapper.content, intl.locale);
     const blockTittel = getOptionalLocaleString(infopanelMedKnapper.title, intl.locale);
     return (
         <div>
             <Panel className={'infopanelMedKnapper'} border={true}>
-                {blockTittel &&
-                <Undertittel tag={getHeadingTag(headingLevel)}>{blockTittel}</Undertittel>
-                }
-                <SanityBlock content={blockContent}/>
+                {blockTittel && <Undertittel tag={getHeadingTag(headingLevel)}>{blockTittel}</Undertittel>}
+                <SanityBlock content={blockContent} />
                 <>
-                    {infopanelMedKnapper && infopanelMedKnapper.lenkeknapper.map((linkButton: LinkKnapp, linkButtonIndex: number) => (
-                        <span key={linkButtonIndex}>
-                            <Lenke className={'knapp knapp--hoved infopanelKnapper'}
-                                   href={linkButton.url}>{linkButton.text.nb}
-                            </Lenke>
-                        </span>
-                    ))}
+                    {infopanelMedKnapper &&
+                        infopanelMedKnapper.lenkeknapper.map((linkButton: Lenkeknapp, linkButtonIndex: number) => (
+                            <span key={linkButtonIndex}>
+                                <Lenke className={'knapp knapp--hoved infopanelKnapper'} href={linkButton.url}>
+                                    {linkButton.text.nb}
+                                </Lenke>
+                            </span>
+                        ))}
                 </>
             </Panel>
         </div>
