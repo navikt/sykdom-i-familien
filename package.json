@@ -97,7 +97,7 @@
         "eslint-plugin-react-hooks": "^2.3.0",
         "gatsby-cli": "^2.8.29",
         "graphql-typescript-definitions": "^0.18.1",
-        "hast-util-to-html": "^6.1.0",
+        "hast-util-to-html": "^7.0.0",
         "identity-obj-proxy": "^3.0.0",
         "install": "^0.13.0",
         "jest": "^25.1.0",
