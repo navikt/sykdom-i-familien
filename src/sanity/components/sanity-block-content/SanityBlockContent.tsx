@@ -1,31 +1,28 @@
-import React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
-import {
-    getSanityContentWithLocale,
-    getSanityStringWithLocale
-} from '../../../utils/sanity/getSanityContentWithLocale';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import Box from '../../../components/layout/box/Box';
-import SanityTabs from '../sanity-tabs/SanityTabs';
-import SanityTextblock from '../sanity-textblock/SanityTextblock';
-import Veileder from '../../../components/veileder/Veileder';
-import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
+import React from 'react';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
-import SanityBlock from '../sanity-block/SanityBlock';
+import InfopanelMedKnapperView, {
+    InfopanelMedKnapper
+} from '../../../components/infopanelMedKnapper/InfopanelMedKnapper';
+import Box from '../../../components/layout/box/Box';
+import Veileder from '../../../components/veileder/Veileder';
 import {
-    TextblockObject,
-    VeilederpanelObject,
-    ExpandableContentObject,
-    TabsObject
+    getSanityContentWithLocale, getSanityStringWithLocale
+} from '../../../utils/sanity/getSanityContentWithLocale';
+import { SanityContentHeadingLevel } from '../../types';
+import { IllustrationDocument } from '../../types/documents';
+import {
+    ExpandableContentObject, RasmusVeilederpanelObject, TabsObject, TextblockObject,
+    VeilederpanelObject
 } from '../../types/objects';
 import {
-    getOptionalLocaleString,
-    getLocaleBlockContent,
-    getHeadingLevelForChild
+    getHeadingLevelForChild, getLocaleBlockContent, getOptionalLocaleString
 } from '../../utils';
-import { IllustrationDocument } from '../../types/documents';
-import { SanityContentHeadingLevel } from '../../types';
-import InfopanelMedKnapperView, { InfopanelMedKnapper } from '../../../components/infopanelMedKnapper/InfopanelMedKnapper';
+import SanityBlock from '../sanity-block/SanityBlock';
+import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
+import SanityTabs from '../sanity-tabs/SanityTabs';
+import SanityTextblock from '../sanity-textblock/SanityTextblock';
 
 interface Props {
     content: string | any;
@@ -77,6 +74,20 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 </Box>
                             );
                         },
+                        rasmusVeilederpanel: ({ node: veilederpanel }: { node: RasmusVeilederpanelObject }) => {
+                            const contentBlocks = getSanityContentWithLocale(veilederpanel.content, intl.locale);
+                            const title = getSanityStringWithLocale(veilederpanel.title, intl.locale);
+                            return (
+                                <Box padBottom="xl">
+                                    <Veileder type="normal" veiledertype="rasmus" kompakt={true}>
+                                        <div className="rasmusPanel">
+                                            <h2 className="panelTitle">{title}</h2>
+                                            <SanityBlock content={contentBlocks} />
+                                        </div>
+                                    </Veileder>
+                                </Box>
+                            );
+                        },
                         tabs: ({ node: tabs }: { node: TabsObject }) => (
                             <Box padBottom="xl">
                                 <SanityTabs tabs={tabs} headingLevel={getHeadingLevelForChild(headingLevel)} />
@@ -105,8 +116,13 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 </Box>
                             );
                         },
-                        infopanelMedKnapper: ({ node: infopanelMedKnapper }: { node: InfopanelMedKnapper }) =>
-                            ( <InfopanelMedKnapperView infopanelMedKnapper={infopanelMedKnapper} intl={intl} headingLevel={headingLevel}/> )
+                        infopanelMedKnapper: ({ node: infopanelMedKnapper }: { node: InfopanelMedKnapper }) => (
+                            <InfopanelMedKnapperView
+                                infopanelMedKnapper={infopanelMedKnapper}
+                                intl={intl}
+                                headingLevel={headingLevel}
+                            />
+                        )
                     }
                 }}
             />
