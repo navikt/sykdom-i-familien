@@ -1,5 +1,7 @@
-import { LocaleStringObject, LocaleRichTextObject, LocaleSimpleTextObject } from '../locale-objects/index';
 import { IllustrationDocument, YtelsePageDocument } from '../documents/index';
+import {
+    LocaleRichTextObject, LocaleSimpleTextObject, LocaleStringObject
+} from '../locale-objects/index';
 
 export type BlockContentObjectTypes =
     | ExpandableContentObject
@@ -73,4 +75,8 @@ export interface VeilederpanelObject {
     kompakt: VeilederpanelKompaktValg;
     content: LocaleRichTextObject;
     veiledertype: VeilederpanelVeiledertype;
+}
+export interface RasmusVeilederpanelObject {
+    title: LocaleStringObject;
+    content: LocaleRichTextObject;
 }
