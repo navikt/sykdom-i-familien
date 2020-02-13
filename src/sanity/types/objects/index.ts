@@ -1,7 +1,5 @@
 import { IllustrationDocument, YtelsePageDocument } from '../documents/index';
-import {
-    LocaleRichTextObject, LocaleSimpleTextObject, LocaleStringObject
-} from '../locale-objects/index';
+import { LocaleRichTextObject, LocaleStringObject } from '../locale-objects/index';
 
 export type BlockContentObjectTypes =
     | ExpandableContentObject
@@ -58,7 +56,7 @@ export interface TextblockObject {
 }
 
 export interface Lenkeknapp {
-    text: LocaleSimpleTextObject;
+    text: LocaleStringObject;
     url: string;
 }
 

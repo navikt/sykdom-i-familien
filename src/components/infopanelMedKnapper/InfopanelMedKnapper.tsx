@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
-import { getHeadingTag, getLocaleBlockContent, getOptionalLocaleString } from '../../sanity/utils';
+import { getHeadingTag, getLocaleBlockContent, getLocaleString, getOptionalLocaleString } from '../../sanity/utils';
 import SanityBlock from '../../sanity/components/sanity-block/SanityBlock';
 import Lenke from 'nav-frontend-lenker';
 import { LocaleRichTextObject, LocaleStringObject } from '../../sanity/types/locale-objects';
@@ -49,7 +49,7 @@ const InfopanelMedKnapperView: React.FC<Props> = ({ infopanelMedKnapper, heading
                         infopanelMedKnapper.lenkeknapper.map((linkButton: Lenkeknapp, linkButtonIndex: number) => (
                             <span key={linkButtonIndex}>
                                 <Lenke className={'knapp knapp--hoved infopanelKnapper'} href={linkButton.url}>
-                                    {linkButton.text.nb}
+                                    {getLocaleString(linkButton.text, intl.locale)}
                                 </Lenke>
                             </span>
                         ))}
