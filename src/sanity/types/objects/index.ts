@@ -1,4 +1,4 @@
-import { LocaleStringObject, LocaleRichTextObject, LocaleSimpleTextObject } from '../locale-objects/index';
+import { LocaleStringObject, LocaleRichTextObject, LocaleStringObject } from '../locale-objects/index';
 import { IllustrationDocument, YtelsePageDocument } from '../documents/index';
 
 export type BlockContentObjectTypes =
@@ -56,7 +56,7 @@ export interface TextblockObject {
 }
 
 export interface Lenkeknapp {
-    text: LocaleSimpleTextObject;
+    text: LocaleStringObject;
     url: string;
 }
 

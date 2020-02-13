@@ -1,14 +1,10 @@
 import { InfopanelMedKnapper, invalidInput } from '../InfopanelMedKnapper';
-import { LocaleRichTextObject, LocaleSimpleTextObject, LocaleStringObject } from '../../../sanity/types/locale-objects';
+import { LocaleRichTextObject, LocaleStringObject } from '../../../sanity/types/locale-objects';
 import { StringBlockValue } from '../../../sanity/types/parts';
 import { Lenkeknapp } from '../../../sanity/types/objects';
 import { SanityContentHeadingLevel } from '../../../sanity/types';
 import { isInfopanelMedKnapper } from '../../../sanity/types/guards';
 
-const gyldigLocaleStringObject: LocaleStringObject = {
-    nb: 'Bokmål',
-    nn: 'Nynorsk'
-};
 
 const gyldigStringBlockValue: StringBlockValue = ['En', 'liste', 'av', 'strings'];
 const gyldigStringBlockValueNynorsk: StringBlockValue = 'På nynorsk';
@@ -18,13 +14,13 @@ const gyldigLocaleRichTextObject: LocaleRichTextObject = {
     nn: gyldigStringBlockValueNynorsk
 };
 
-const gyldigLocaleSimpleTextObject: LocaleSimpleTextObject = {
+const gyldigLocaleStringObject: LocaleStringObject = {
     nb: 'Norsk',
     nn: 'Nynorsk'
 };
 
 const gyldigLenkeknapp: Lenkeknapp = {
-    text: gyldigLocaleSimpleTextObject,
+    text: gyldigLocaleStringObject,
     url: 'url string'
 };
 
