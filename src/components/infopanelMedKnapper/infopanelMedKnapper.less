@@ -1,24 +1,31 @@
 @import '../../styles/assets.less';
 
 .infopanelMedKnapper {
-  margin: 2rem -1rem 2rem -1rem ;
-  padding: 2rem;
+    margin: 2rem -1rem 2rem -1rem;
+    padding: 2rem;
+}
+
+// Kontekst-spesifikt -- mvp løsning
+.tabs__panel {
+    .infopanelMedKnapper {
+        margin: 0;
+    }
 }
 
 .infopanelKnapper {
-  margin-right: 1rem;
-  margin-top: 1rem;
+    margin-right: 1rem;
+    margin-top: 1.5rem;
 }
 
 @media (max-width: @mobile-breakpoint) {
-  .infopanelMedKnapper {
-    margin: 2rem -0.5rem 2rem -0.5rem ;
-    padding: 2rem 1.5rem;
-  }
+    .infopanelMedKnapper {
+        margin: 2rem -0.5rem 2rem -0.5rem;
+        padding: 2rem 1.5rem;
+    }
 
-  .infopanelKnapper {
-    margin-right: 1rem;
-    margin-top: 1rem;
-    width: 100%;
-  }
+    .infopanelKnapper {
+        margin-right: 1rem;
+        margin-top: 1rem;
+        width: 100%;
+    }
 }
