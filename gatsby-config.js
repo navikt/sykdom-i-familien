@@ -2,7 +2,7 @@ require('dotenv').config();
 
 console.log(`Using dataset [${process.env.DATASET}]`);
 
-module.exports = {
+const config = {
     pathPrefix: `/familie/sykdom-i-familien`,
     siteMetadata: {
         title: `Sykdom i familien`,
@@ -55,3 +55,5 @@ module.exports = {
         }
     ]
 };
+
+module.exports = config;
