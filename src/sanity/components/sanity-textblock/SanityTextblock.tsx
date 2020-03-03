@@ -1,13 +1,12 @@
 import React from 'react';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import SanityBlock from '../sanity-block/SanityBlock';
-import { getOptionalLocaleString, getLocaleBlockContent, getHeadingTag } from '../../utils';
-import { TextblockObject } from '../../types/objects';
 import bemUtils from '../../../utils/bemUtils';
-import CheckBullet from './assets/CheckBullet';
 import { SanityContentHeadingLevel } from '../../types';
-
+import { TextblockObject } from '../../types/objects';
+import { getHeadingTag, getLocaleBlockContent, getOptionalLocaleString } from '../../utils';
+import SanityBlock from '../sanity-block/SanityBlock';
+import CheckBullet from './assets/CheckBullet';
 import './sanityTextblock.less';
 
 interface Props {
@@ -17,9 +16,13 @@ interface Props {
 
 const bem = bemUtils('textblock');
 
-const SanityTextblock: React.FunctionComponent<Props & InjectedIntlProps> = ({ textblock, headingLevel, intl }) => {
-    const title = getOptionalLocaleString(textblock.title, intl.locale);
-    const content = getLocaleBlockContent(textblock.content, intl.locale);
+const SanityTextblock: React.FunctionComponent<Props & InjectedIntlProps> = ({
+    textblock,
+    headingLevel,
+    intl: { locale }
+}) => {
+    const title = getOptionalLocaleString({ obj: textblock.title, locale });
+    const content = getLocaleBlockContent(textblock.content, locale);
 
     return (
         <div

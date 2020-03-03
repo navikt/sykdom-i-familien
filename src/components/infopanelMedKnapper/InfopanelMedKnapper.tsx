@@ -1,15 +1,17 @@
 import * as React from 'react';
+import { InjectedIntlProps } from 'gatsby-plugin-intl';
+import Lenke from 'nav-frontend-lenker';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
-import { getHeadingTag, getLocaleBlockContent, getLocaleString, getOptionalLocaleString } from '../../sanity/utils';
 import SanityBlock from '../../sanity/components/sanity-block/SanityBlock';
-import Lenke from 'nav-frontend-lenker';
+import { isSanityContentHeadingLevel, SanityContentHeadingLevel } from '../../sanity/types';
+import { isInfopanelMedKnapper } from '../../sanity/types/guards';
 import { LocaleRichTextObject, LocaleStringObject } from '../../sanity/types/locale-objects';
 import { Lenkeknapp } from '../../sanity/types/objects';
-import { isSanityContentHeadingLevel, SanityContentHeadingLevel } from '../../sanity/types';
-import { InjectedIntlProps } from 'gatsby-plugin-intl';
+import {
+    getHeadingTag, getLocaleBlockContent, getLocaleString, getOptionalLocaleString
+} from '../../sanity/utils';
 import './infopanelMedKnapper.less';
-import { isInfopanelMedKnapper } from '../../sanity/types/guards';
 
 export const invalidInput = (
     infopanelMedKnapper: InfopanelMedKnapper | any,
@@ -32,13 +34,13 @@ interface OwnProps {
 
 type Props = OwnProps & InjectedIntlProps;
 
-const InfopanelMedKnapperView: React.FC<Props> = ({ infopanelMedKnapper, headingLevel, intl }) => {
+const InfopanelMedKnapperView: React.FC<Props> = ({ infopanelMedKnapper, headingLevel, intl: { locale } }) => {
     if (invalidInput(infopanelMedKnapper, headingLevel)) {
         return null;
     }
 
-    const blockContent = getLocaleBlockContent(infopanelMedKnapper.content, intl.locale);
-    const blockTittel = getOptionalLocaleString(infopanelMedKnapper.title, intl.locale);
+    const blockContent = getLocaleBlockContent(infopanelMedKnapper.content, locale);
+    const blockTittel = getOptionalLocaleString({ obj: infopanelMedKnapper.title, locale });
     return (
         <div>
             <Panel className={'infopanelMedKnapper'} border={true}>
@@ -49,7 +51,7 @@ const InfopanelMedKnapperView: React.FC<Props> = ({ infopanelMedKnapper, heading
                         infopanelMedKnapper.lenkeknapper.map((linkButton: Lenkeknapp, linkButtonIndex: number) => (
                             <span key={linkButtonIndex}>
                                 <Lenke className={'knapp knapp--hoved infopanelKnapper'} href={linkButton.url}>
-                                    {getLocaleString(linkButton.text, intl.locale)}
+                                    {getLocaleString(linkButton.text, locale)}
                                 </Lenke>
                             </span>
                         ))}

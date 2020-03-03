@@ -94,7 +94,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             </Box>
                         ),
                         textblock: ({ node: textblock }: { node: TextblockObject }) => {
-                            const title = getOptionalLocaleString(textblock.title);
+                            const title = getOptionalLocaleString({ obj: textblock.title, locale: intl.locale });
                             if (textblock.layout && textblock.layout === 'expandablePanel' && title !== undefined) {
                                 const blockContent = getLocaleBlockContent(textblock.content, intl.locale);
                                 return (

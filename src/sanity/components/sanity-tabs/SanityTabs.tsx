@@ -1,12 +1,12 @@
 import React from 'react';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
+import InlineSVG from '../../../components/elements/inline-svg/InlineSVG';
+import Tabs, { PresentationMode, TabsProps } from '../../../components/elements/tabs/Tabs';
 import { Locale } from '../../../i18n/locale';
 import { getLocale } from '../../../utils/inltUtils';
-import InlineSVG from '../../../components/elements/inline-svg/InlineSVG';
-import Tabs, { TabsProps, PresentationMode } from '../../../components/elements/tabs/Tabs';
-import { TabsObject } from '../../types/objects';
-import { getOptionalLocaleString, getLocaleString } from '../../utils';
 import { SanityContentHeadingLevel } from '../../types';
+import { TabsObject } from '../../types/objects';
+import { getLocaleString, getOptionalLocaleString } from '../../utils';
 
 interface Props {
     tabs: TabsObject;
@@ -21,7 +21,7 @@ export const extractTabsData = (
     const { title, presentation } = tabs;
     const tabsData: TabsProps = {
         presentation: presentation === 'dropdown' ? PresentationMode.dropdown : PresentationMode.tabs,
-        title: getOptionalLocaleString(title),
+        title: getOptionalLocaleString({ obj: title, locale }),
         bgcolor: tabs.bgcolor,
         headingLevel,
         tabs: tabs.content.map((tab, index: number) => ({

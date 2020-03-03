@@ -1,12 +1,9 @@
-import {
-    LocaleStringObject,
-    LocaleObject,
-    isValidLocaleObject,
-    isValidLocaleStringObject
-} from '../types/locale-objects';
 import { defaultLocale, Locale } from '../../i18n/locale';
-import { BlockContentType } from '../types/parts';
 import { SanityContentHeadingLevel } from '../types';
+import {
+    isValidLocaleObject, isValidLocaleStringObject, LocaleObject, LocaleStringObject
+} from '../types/locale-objects';
+import { BlockContentType } from '../types/parts';
 
 const hasLocaleValue = (obj?: LocaleObject, locale: Locale | string = defaultLocale): boolean =>
     obj !== undefined &&
@@ -24,8 +21,15 @@ export const getLocaleString = (obj: LocaleStringObject, locale: Locale | string
 export const getOptionalLocaleValue = (obj?: LocaleObject, locale?: Locale | string): object | string | undefined =>
     isValidLocaleObject(obj) ? getLocaleObject(obj, locale) : undefined;
 
-export const getOptionalLocaleString = (obj?: LocaleObject, locale?: Locale | string): string | undefined =>
-    isValidLocaleStringObject(obj) ? getLocaleString(obj, locale) : undefined;
+export const getOptionalLocaleString = ({
+    obj,
+    locale
+}: {
+    obj?: LocaleObject;
+    locale: Locale | string;
+}): string | undefined => {
+    return isValidLocaleStringObject(obj) ? getLocaleString(obj, locale) : undefined;
+};
 
 export const getLocaleBlockContent = (
     obj: LocaleObject | undefined,
