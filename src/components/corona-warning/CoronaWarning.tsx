@@ -14,7 +14,8 @@ const CoronaWarning: React.FunctionComponent<Props> = (props) => (
             </Box>
             <p>
                 <Lenke href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/stengte-skoler-og-barnehager-gir-rett-til-omsorgspenger">
-                    Du kan bruke omsorgsdager når barnehagen eller skolen stenger på grunn av koronaviruset
+                    Yrkesaktive som må være hjemme fra jobb på grunn av stengte skoler og barnehager, kan bruke
+                    omsorgsdager
                 </Lenke>
                 .
             </p>
