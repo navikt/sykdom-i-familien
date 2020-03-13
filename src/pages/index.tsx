@@ -93,7 +93,7 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
                     undefined
                 )
             }>
-            <Box padBottom="xxl" margin="xxl">
+            <Box padBottom="xl" margin="l">
                 <div style={{ margin: '0 auto', maxWidth: '50rem' }}>
                     <AlertStripeInfo>
                         <Box padBottom="m">
