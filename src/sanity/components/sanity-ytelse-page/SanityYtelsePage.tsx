@@ -3,6 +3,7 @@ import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import slugify from 'slugify';
 import traverse from 'traverse';
 import { Ingress } from 'nav-frontend-typografi';
+import CoronaWarning from '../../../components/corona-warning/CoronaWarning';
 import LinkButton from '../../../components/elements/link-button/LinkButton';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import Box from '../../../components/layout/box/Box';
@@ -161,6 +162,11 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     Søk nå
                 </LinkButton>
             }>
+            {slug.current === 'omsorgspenger' && (
+                <div style={{ marginBottom: '4rem' }}>
+                    <CoronaWarning />
+                </div>
+            )}
             <div className="inShortSection">
                 <SectionPanel
                     titleTag="h2"

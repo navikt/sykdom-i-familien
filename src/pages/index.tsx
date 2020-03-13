@@ -5,6 +5,7 @@ import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { Undertittel } from 'nav-frontend-typografi';
+import CoronaWarning from '../components/corona-warning/CoronaWarning';
 import Box from '../components/layout/box/Box';
 import FrontpagePanelWrapper from '../components/pages/frontpage/components/frontpage-panel-wrapper/FrontpagePanelWrapper';
 import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
@@ -94,18 +95,7 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
                 )
             }>
             <Box padBottom="xl" margin="l">
-                <div style={{ margin: '0 auto', maxWidth: '50rem' }}>
-                    <AlertStripeInfo>
-                        <Box padBottom="m">
-                            <Undertittel>Omsorgsdager og koronaviruset</Undertittel>
-                        </Box>
-                        <p>
-                            <Lenke href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/stengte-skoler-og-barnehager-gir-rett-til-omsorgspenger">
-                                Du kan bruke omsorgsdager når barnehagen eller skolen stenger på grunn av koronaviruset
-                            </Lenke>
-                        </p>
-                    </AlertStripeInfo>
-                </div>
+                <CoronaWarning />
             </Box>
             <Box>
                 <FrontpagePanelWrapper>
