@@ -1,16 +1,19 @@
 import React from 'react';
-import PageBanner from '../components/pages/frontpage/components/page-banner/PageBanner';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
-import FrontpagePanelWrapper from '../components/pages/frontpage/components/frontpage-panel-wrapper/FrontpagePanelWrapper';
 import { RouterProps } from '@reach/router';
-import Frontpage from '../components/pages/frontpage/Frontpage';
-import Box from '../components/layout/box/Box';
-import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
 import { graphql } from 'gatsby';
-import { getSanityStringWithLocale } from '../utils/sanity/getSanityContentWithLocale';
-import SanityIllustration from '../sanity/components/sanity-illustration/SanityIllustrationContent';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
+import { Undertittel } from 'nav-frontend-typografi';
+import Box from '../components/layout/box/Box';
+import FrontpagePanelWrapper from '../components/pages/frontpage/components/frontpage-panel-wrapper/FrontpagePanelWrapper';
+import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
+import PageBanner from '../components/pages/frontpage/components/page-banner/PageBanner';
+import Frontpage from '../components/pages/frontpage/Frontpage';
 import SanityBlock from '../sanity/components/sanity-block/SanityBlock';
+import SanityIllustration from '../sanity/components/sanity-illustration/SanityIllustrationContent';
 import { IllustrationDocument } from '../sanity/types/documents';
+import { getSanityStringWithLocale } from '../utils/sanity/getSanityContentWithLocale';
 
 interface Props {
     data: any;
@@ -90,6 +93,20 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
                     undefined
                 )
             }>
+            <Box padBottom="xxl" margin="xxl">
+                <div style={{ margin: '0 auto', maxWidth: '50rem' }}>
+                    <AlertStripeInfo>
+                        <Box padBottom="m">
+                            <Undertittel>Omsorgsdager og koronaviruset</Undertittel>
+                        </Box>
+                        <p>
+                            <Lenke href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/stengte-skoler-og-barnehager-gir-rett-til-omsorgspenger">
+                                Du kan bruke omsorgsdager når barnehagen eller skolen stenger på grunn av koronaviruset
+                            </Lenke>
+                        </p>
+                    </AlertStripeInfo>
+                </div>
+            </Box>
             <Box>
                 <FrontpagePanelWrapper>
                     {linkPanels &&
