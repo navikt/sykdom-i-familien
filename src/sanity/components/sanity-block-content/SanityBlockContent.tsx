@@ -113,6 +113,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             return (
                                 <Box padBottom="xl">
                                     <CollapsableTextBlock
+                                        isFaq={true}
                                         title={title}
                                         headingLevel={getHeadingLevelForChild(headingLevel)}>
                                         <SanityBlock content={blockContent} />
@@ -122,12 +123,17 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                         },
                         textblock: ({ node: textblock }: { node: TextblockObject }) => {
                             const title = getOptionalLocaleString({ obj: textblock.title, locale: intl.locale });
-                            if (textblock.layout && textblock.layout === 'expandablePanel' && title !== undefined) {
+                            if (
+                                textblock.layout &&
+                                (textblock.layout === 'expandablePanel' || textblock.layout === 'faq') &&
+                                title !== undefined
+                            ) {
                                 const blockContent = getLocaleBlockContent(textblock.content, intl.locale);
                                 return (
                                     <Box padBottom="xl">
                                         <CollapsableTextBlock
                                             title={title}
+                                            isFaq={textblock.layout === 'faq'}
                                             headingLevel={getHeadingLevelForChild(headingLevel)}>
                                             <SanityBlock content={blockContent} />
                                         </CollapsableTextBlock>

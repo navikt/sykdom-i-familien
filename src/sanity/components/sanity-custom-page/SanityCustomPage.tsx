@@ -1,17 +1,17 @@
 import React from 'react';
 import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import { Ingress } from 'nav-frontend-typografi';
-import CoronaWarning from '../../../components/corona-warning/CoronaWarning';
+import Box from '../../../components/layout/box/Box';
 import CustomPage from '../../../components/pages/custom-page/CustomPage';
+import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
 import { Locale } from '../../../i18n/locale';
 import {
     getSanityContentWithLocale, getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
-import { YtelsePageDocument } from '../../types/documents';
+import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import SanityBlock from '../sanity-block/SanityBlock';
-import SanityTextblock from '../sanity-textblock/SanityTextblock';
 
 export interface CustomPageData {
     showLanguageToggle: boolean;
@@ -21,6 +21,7 @@ export interface CustomPageData {
     metadescription: string;
     ingress: any;
     content: string;
+    illustration?: IllustrationDocument;
 }
 
 interface Props {
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export const extractDataFromSanityCustomPage = (data: any, locale: Locale | string): CustomPageData => {
+    console.log(data._rawIllustration);
     return {
         showLanguageToggle: data.showLanguageToggle === true,
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
@@ -35,17 +37,23 @@ export const extractDataFromSanityCustomPage = (data: any, locale: Locale | stri
         slug: data.slug,
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         ingress: getSanityContentWithLocale(data._rawIngress, locale) as string,
-        content: data._rawContent
+        content: data._rawContent,
+        illustration: data._rawIllustration
     };
 };
 
 const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
     const { intl } = props;
     const { data } = props;
-    const { title, metadescription, showLanguageToggle, content, ingress, slug } = extractDataFromSanityCustomPage(
-        data,
-        intl.locale
-    );
+    const {
+        title,
+        metadescription,
+        illustration,
+        showLanguageToggle,
+        content,
+        ingress,
+        slug
+    } = extractDataFromSanityCustomPage(data, intl.locale);
 
     return (
         <CustomPage
@@ -54,7 +62,18 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
             showLanguageToggle={showLanguageToggle}
             pageMetadescription={metadescription}
             slug={`${slug.current}`}>
-            <SectionPanel title={title}>
+            <SectionPanel
+                title={title}
+                illustrationPlacement="outside"
+                illustration={
+                    illustration ? (
+                        <Box textAlignCenter={true} margin="none">
+                            <SectionIcon illustration={illustration} />
+                        </Box>
+                    ) : (
+                        undefined
+                    )
+                }>
                 {ingress && (
                     <Ingress tag="div" style={{ marginBottom: '2rem' }}>
                         <SanityBlock content={ingress} />

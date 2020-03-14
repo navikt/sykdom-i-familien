@@ -66,6 +66,7 @@ exports.createPages = async ({ graphql, actions }) => {
                         }
                         _rawTitle
                         _rawIngress
+                        _rawIllustration
                         _rawMetadescription
                         _rawContent(resolveReferences: { maxDepth: 5 })
                     }

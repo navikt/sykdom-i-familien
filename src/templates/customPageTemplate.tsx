@@ -17,6 +17,7 @@ export const query = graphql`
                     _rawTitle
                     _rawIngress
                     _rawMetadescription
+                    _rawIllustration(resolveReferences: { maxDepth: 5 })
                     _rawContent(resolveReferences: { maxDepth: 5 })
                 }
             }
