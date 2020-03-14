@@ -1,12 +1,12 @@
 @import '../../../styles/assets.less';
 
-.pageWithMenu {
+.customPage {
     margin-bottom: 4rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin: 0;
-    padding-top: 4rem;
+    padding-top: 2rem;
 
     @media print {
         padding-top: 0;
@@ -16,8 +16,7 @@
         &__article {
             max-width: 100% !important;
         }
-        &__breadcrumbs,
-        &__sidebar {
+        &__breadcrumbs {
             display: none !important;
         }
     }
@@ -31,22 +30,9 @@
         margin: 0 auto;
     }
 
-    &__sidebar {
-        flex-shrink: 0;
-        margin-right: 1.5rem;
-        display: none;
-        min-width: 15rem;
-        max-width: 15rem;
-        position: relative;
-    }
-    &__sidebarSticky {
-        position: sticky;
-        top: 3rem;
-    }
-
     &__article {
         width: 100%;
-        max-width: @app-max-width;
+        max-width: 1100px;
         flex-shrink: 1;
     }
 

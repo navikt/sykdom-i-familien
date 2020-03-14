@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import MediaQuery from 'react-responsive';
+import useActiveSections from '../../../hooks/useActiveSection';
 import bemUtils from '../../../utils/bemUtils';
+import { isBrowser } from '../../../utils/build';
+import FlexSticky from '../../layout/flex-sticky/FlexSticky';
+import Breadcrumbs from '../page-wrapper/components/global-page-header/breadcrumbs/Breadcrumbs';
+import PageWrapper from '../page-wrapper/PageWrapper';
 import MobileMenu from './mobile-menu/MobileMenu';
 import SidebarMenu from './sidebar-menu/SidebarMenu';
-import PageWrapper from '../page-wrapper/PageWrapper';
-import useActiveSections from '../../../hooks/useActiveSection';
-import { isBrowser } from '../../../utils/build';
-import Breadcrumbs from '../page-wrapper/components/global-page-header/breadcrumbs/Breadcrumbs';
-import FlexSticky from '../../layout/flex-sticky/FlexSticky';
-
 import './pageWithMenu.less';
 
 export interface SectionMenuItem {
