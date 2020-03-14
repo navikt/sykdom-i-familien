@@ -1,0 +1,44 @@
+@import '../../../styles/assets.less';
+
+.customPage {
+    margin-bottom: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    padding-top: 2rem;
+
+    @media print {
+        padding-top: 0;
+        &__header {
+            margin-bottom: 2rem;
+        }
+        &__article {
+            max-width: 100% !important;
+        }
+        &__breadcrumbs {
+            display: none !important;
+        }
+    }
+
+    &__header {
+        width: 100%;
+    }
+    &__breadcrumbs {
+        max-width: @app-wide-max-width;
+        padding: 2rem 1rem 1rem 1rem;
+        margin: 0 auto;
+    }
+
+    &__article {
+        width: 100%;
+        max-width: 1100px;
+        flex-shrink: 1;
+    }
+
+    @media (min-width: @desktop-breakpoint) {
+        .pageWithMenu__sidebar {
+            display: block;
+        }
+    }
+}

@@ -1,10 +1,9 @@
-import React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
+import React from 'react';
 import Lenke from 'nav-frontend-lenker';
-import { BlockContentType } from '../../types/parts';
-
-import './sanityBlock.less';
 import ExternalLinkIcon from '../../../components/elements/external-link-icon/ExternalLinkIcon';
+import { BlockContentType } from '../../types/parts';
+import './sanityBlock.less';
 
 interface Props {
     content: BlockContentType;

@@ -18,27 +18,14 @@ require('ts-node').register({
 exports.createPages = async ({ graphql, actions }) => {
     const includeNonPublicPagesOnlyInDevFilter = process.env.ENV !== 'dev' ? ` (filter: {isPublic: {eq: true}})` : '';
     console.log(includeNonPublicPagesOnlyInDevFilter, process.env.ENV);
-    const pages = await graphql(`
+    const ytelsePages = await graphql(`
         query {
             allSanityYtelsePage${includeNonPublicPagesOnlyInDevFilter} {
                 edges {
                     node {
-                        ytelse {
-                            id
-                            name
-                            formUrl
-                        }
                         slug {
                             current
                         }
-                        _rawTitle
-                        _rawIntro
-                        _rawInShortTitle
-                        _rawInShortEkstraKomponenter
-                        _rawBanner(resolveReferences: { maxDepth: 4 })
-                        _rawIllustration(resolveReferences: { maxDepth: 4 })
-                        _rawInShort
-                        _rawContent(resolveReferences: { maxDepth: 10 })
                     }
                 }
             }
@@ -46,10 +33,33 @@ exports.createPages = async ({ graphql, actions }) => {
     `);
 
     const { createPage } = actions;
-    pages.data.allSanityYtelsePage.edges.forEach(({ node }) => {
+    ytelsePages.data.allSanityYtelsePage.edges.forEach(({ node }) => {
         createPage({
             path: node.slug.current,
             component: path.resolve(`./src/templates/ytelsePageTemplate.tsx`),
+            context: {
+                slug: node.slug.current
+            }
+        });
+    });
+
+    const customPages = await graphql(`
+        query {
+            allSanityCustomPage {
+                edges {
+                    node {
+                        slug {
+                            current
+                        }
+                    }
+                }
+            }
+        }
+    `);
+    customPages.data.allSanityCustomPage.edges.forEach(({ node }) => {
+        createPage({
+            path: node.slug.current,
+            component: path.resolve(`./src/templates/customPageTemplate.tsx`),
             context: {
                 slug: node.slug.current
             }

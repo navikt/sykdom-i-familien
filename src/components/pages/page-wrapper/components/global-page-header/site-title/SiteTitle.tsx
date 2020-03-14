@@ -1,7 +1,7 @@
 import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import { getSiteTitle } from '../../../../../../utils/site';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 
 const SiteTitle: React.FunctionComponent<InjectedIntlProps> = ({ intl }) => {
     const siteMetadata = useStaticQuery(graphql`

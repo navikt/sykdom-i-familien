@@ -1,6 +1,8 @@
 import BlockContent from '@sanity/block-content-to-react';
 import React from 'react';
 import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Element } from 'nav-frontend-typografi';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
 import InfopanelMedKnapperView, {
     InfopanelMedKnapper
@@ -11,13 +13,13 @@ import {
     getSanityContentWithLocale, getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { SanityContentHeadingLevel } from '../../types';
-import { IllustrationDocument } from '../../types/documents';
+import { AlertStripeObject, IllustrationDocument } from '../../types/documents';
 import {
-    ExpandableContentObject, RasmusVeilederpanelObject, TabsObject, TextblockObject,
+    ExpandableContentObject, FaqObject, RasmusVeilederpanelObject, TabsObject, TextblockObject,
     VeilederpanelObject
 } from '../../types/objects';
 import {
-    getHeadingLevelForChild, getLocaleBlockContent, getOptionalLocaleString
+    getHeadingLevelForChild, getLocaleBlockContent, getLocaleString, getOptionalLocaleString
 } from '../../utils';
 import SanityBlock from '../sanity-block/SanityBlock';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
@@ -39,6 +41,18 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                 blocks={content}
                 serializers={{
                     types: {
+                        alertstripe: ({ node }: { node: AlertStripeObject }) => {
+                            const title = getLocaleString(node.title, intl.locale);
+                            const blockContent = getLocaleBlockContent(node.content, intl.locale);
+                            return (
+                                <Box padBottom="xl">
+                                    <AlertStripe type={node.style}>
+                                        {title && <Element style={{ marginBottom: '.5rem' }}>{title}</Element>}
+                                        <SanityBlock content={blockContent} />
+                                    </AlertStripe>
+                                </Box>
+                            );
+                        },
                         illustration: ({ node: illustration }: { node: IllustrationDocument }) => {
                             return (
                                 <Box padBottom="l">
@@ -93,9 +107,40 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 <SanityTabs tabs={tabs} headingLevel={getHeadingLevelForChild(headingLevel)} />
                             </Box>
                         ),
+                        faq: ({ node }: { node: FaqObject }) => {
+                            const title = getSanityStringWithLocale(node.title, intl.locale);
+                            const blockContent = getLocaleBlockContent(node.content, intl.locale);
+                            return (
+                                <Box padBottom="xl">
+                                    <CollapsableTextBlock
+                                        isFaq={true}
+                                        title={title}
+                                        headingLevel={getHeadingLevelForChild(headingLevel)}>
+                                        <SanityBlock content={blockContent} />
+                                    </CollapsableTextBlock>
+                                </Box>
+                            );
+                        },
                         textblock: ({ node: textblock }: { node: TextblockObject }) => {
                             const title = getOptionalLocaleString({ obj: textblock.title, locale: intl.locale });
-                            if (textblock.layout && textblock.layout === 'expandablePanel' && title !== undefined) {
+                            if (
+                                textblock.layout &&
+                                (textblock.layout === 'expandablePanel' || textblock.layout === 'faq') &&
+                                title !== undefined
+                            ) {
+                                const blockContent = getLocaleBlockContent(textblock.content, intl.locale);
+                                return (
+                                    <Box padBottom="xl">
+                                        <CollapsableTextBlock
+                                            title={title}
+                                            isFaq={textblock.layout === 'faq'}
+                                            headingLevel={getHeadingLevelForChild(headingLevel)}>
+                                            <SanityBlock content={blockContent} />
+                                        </CollapsableTextBlock>
+                                    </Box>
+                                );
+                            }
+                            if (textblock.layout && textblock.layout === 'faq' && title !== undefined) {
                                 const blockContent = getLocaleBlockContent(textblock.content, intl.locale);
                                 return (
                                     <Box padBottom="xl">

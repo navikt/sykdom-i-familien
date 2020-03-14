@@ -1,4 +1,4 @@
-import { LocaleStringObject, LocaleRichTextObject } from '../locale-objects';
+import { LocaleRichTextObject, LocaleStringObject } from '../locale-objects';
 import { FrontpageLinkObject, FrontpagePageLinkObject, SectionObject } from '../objects';
 
 export interface FrontpageDocument {
@@ -12,6 +12,18 @@ export interface IllustrationDocument {
     name: string;
     svg: string;
     children: string[];
+}
+
+export interface AlertStripeObject {
+    style: 'feil' | 'advarsel' | 'info';
+    title: LocaleStringObject;
+    content: LocaleRichTextObject;
+}
+
+export interface MessageDocument {
+    style: 'feil' | 'advarsel' | 'info';
+    title: LocaleStringObject;
+    content: LocaleRichTextObject;
 }
 
 export interface OptimizedSvgNode {
@@ -34,6 +46,11 @@ export interface YtelsePageDocument {
     illustration: IllustrationDocument;
     inShort: LocaleRichTextObject;
     inShortTitle: LocaleStringObject;
+    content: SectionObject[];
+}
+export interface CustomPageDocument {
+    slug: string;
+    title: LocaleStringObject;
     content: SectionObject[];
 }
 

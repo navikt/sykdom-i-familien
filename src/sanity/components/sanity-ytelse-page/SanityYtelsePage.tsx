@@ -2,7 +2,8 @@ import React from 'react';
 import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import slugify from 'slugify';
 import traverse from 'traverse';
-import { Ingress } from 'nav-frontend-typografi';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Element, Ingress } from 'nav-frontend-typografi';
 import CoronaWarning from '../../../components/corona-warning/CoronaWarning';
 import LinkButton from '../../../components/elements/link-button/LinkButton';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
@@ -15,9 +16,10 @@ import { Locale } from '../../../i18n/locale';
 import {
     getSanityContentWithLocale, getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
-import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
+import { IllustrationDocument, MessageDocument, YtelsePageDocument } from '../../types/documents';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import SanityBlock from '../sanity-block/SanityBlock';
+import SanityMessage from '../sanity-message/SanityMessage';
 import './ytelsePage.less';
 
 export interface YtelsePageData {
@@ -32,6 +34,7 @@ export interface YtelsePageData {
     formUrl: string;
     sections: SectionContent[];
     illustration: IllustrationDocument;
+    message?: MessageDocument;
 }
 
 interface SectionContent {
@@ -75,7 +78,8 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
         formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent, locale as Locale),
-        illustration: data._rawIllustration
+        illustration: data._rawIllustration,
+        message: data._rawMessage
     };
 };
 
@@ -135,7 +139,8 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         inShortEkstraKomponenter,
         sections,
         illustration,
-        formUrl
+        formUrl,
+        message
     } = extractDataFromSanityYtelsePage(data, intl.locale);
 
     const inShortSection: SectionContent = {
@@ -162,9 +167,9 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     Søk nå
                 </LinkButton>
             }>
-            {slug.current === 'omsorgspenger' && (
+            {message && (
                 <div style={{ marginBottom: '4rem' }}>
-                    <CoronaWarning />
+                    <SanityMessage message={message} />
                 </div>
             )}
             <div className="inShortSection">

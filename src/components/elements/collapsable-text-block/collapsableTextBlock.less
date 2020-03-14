@@ -7,6 +7,36 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    &--faq {
+        border-radius: 0.5rem;
+        position: relative;
+        margin-left: 3rem;
+        &:before {
+            content: '?';
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 1.2rem;
+            width: 2rem;
+            height: 2rem;
+            position: absolute;
+            background-color: #32414f;
+            border-radius: 50%;
+            background-size: 1.5rem;
+            background-repeat: no-repeat;
+            position: absolute;
+            left: -3rem;
+            top: -0.2rem;
+        }
+        .collapsableTextBlock {
+            &__title {
+                font-size: 1.2rem;
+            }
+        }
+    }
     &--open {
         .collapsableTextBlock__content {
             padding-top: 1rem;

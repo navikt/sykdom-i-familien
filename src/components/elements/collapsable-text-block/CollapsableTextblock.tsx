@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
-import bemUtils from '../../../utils/bemUtils';
-import CollapseToggler from './CollapseToggler';
-import './collapsableTextBlock.less';
-import { Element } from 'nav-frontend-typografi';
-import CollapseContainer from '../collapsable-container/CollapsableContainer';
 import { guid } from 'nav-frontend-js-utils';
-import PrintOnly from '../print-only/PrintOnly';
-import ScreenOnly from '../screen-only/ScreenOnly';
+import { Element } from 'nav-frontend-typografi';
 import { SanityContentHeadingLevel } from '../../../sanity/types';
 import { getHeadingTag } from '../../../sanity/utils';
+import bemUtils from '../../../utils/bemUtils';
+import CollapseContainer from '../collapsable-container/CollapsableContainer';
+import PrintOnly from '../print-only/PrintOnly';
+import ScreenOnly from '../screen-only/ScreenOnly';
+import CollapseToggler from './CollapseToggler';
+import './collapsableTextBlock.less';
 
 interface Props {
     children: React.ReactNode;
     initialOpen?: boolean;
     title?: string;
     headingLevel: SanityContentHeadingLevel;
+    isFaq?: boolean;
 }
 
 const bem = bemUtils('collapsableTextBlock');
 
-const CollapsableTextBlock: React.FunctionComponent<Props> = ({ children, headingLevel, initialOpen, title }) => {
+const CollapsableTextBlock: React.FunctionComponent<Props> = ({
+    children,
+    headingLevel,
+    initialOpen,
+    isFaq,
+    title
+}) => {
     const [isOpen, setIsOpen] = useState(initialOpen);
     const [contentId] = useState(guid());
 
@@ -30,7 +37,12 @@ const CollapsableTextBlock: React.FunctionComponent<Props> = ({ children, headin
     );
 
     return (
-        <div className={bem.classNames(bem.block, bem.modifierConditional('open', isOpen))}>
+        <div
+            className={bem.classNames(
+                bem.block,
+                bem.modifierConditional('open', isOpen),
+                bem.modifierConditional('faq', isFaq)
+            )}>
             <ScreenOnly>
                 <div className={bem.element('toggler')}>
                     <CollapseToggler onToggle={() => setIsOpen(!isOpen)} isOpen={isOpen} contentId={contentId}>
