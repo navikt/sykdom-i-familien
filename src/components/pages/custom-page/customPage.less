@@ -1,0 +1,58 @@
+@import '../../../styles/assets.less';
+
+.pageWithMenu {
+    margin-bottom: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    padding-top: 4rem;
+
+    @media print {
+        padding-top: 0;
+        &__header {
+            margin-bottom: 2rem;
+        }
+        &__article {
+            max-width: 100% !important;
+        }
+        &__breadcrumbs,
+        &__sidebar {
+            display: none !important;
+        }
+    }
+
+    &__header {
+        width: 100%;
+    }
+    &__breadcrumbs {
+        max-width: @app-wide-max-width;
+        padding: 2rem 1rem 1rem 1rem;
+        margin: 0 auto;
+    }
+
+    &__sidebar {
+        flex-shrink: 0;
+        margin-right: 1.5rem;
+        display: none;
+        min-width: 15rem;
+        max-width: 15rem;
+        position: relative;
+    }
+    &__sidebarSticky {
+        position: sticky;
+        top: 3rem;
+    }
+
+    &__article {
+        width: 100%;
+        max-width: @app-max-width;
+        flex-shrink: 1;
+    }
+
+    @media (min-width: @desktop-breakpoint) {
+        .pageWithMenu__sidebar {
+            display: block;
+        }
+    }
+}

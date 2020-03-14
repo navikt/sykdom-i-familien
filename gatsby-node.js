@@ -18,7 +18,7 @@ require('ts-node').register({
 exports.createPages = async ({ graphql, actions }) => {
     const includeNonPublicPagesOnlyInDevFilter = process.env.ENV !== 'dev' ? ` (filter: {isPublic: {eq: true}})` : '';
     console.log(includeNonPublicPagesOnlyInDevFilter, process.env.ENV);
-    const pages = await graphql(`
+    const ytelsePages = await graphql(`
         query {
             allSanityYtelsePage${includeNonPublicPagesOnlyInDevFilter} {
                 edges {
@@ -46,10 +46,37 @@ exports.createPages = async ({ graphql, actions }) => {
     `);
 
     const { createPage } = actions;
-    pages.data.allSanityYtelsePage.edges.forEach(({ node }) => {
+    ytelsePages.data.allSanityYtelsePage.edges.forEach(({ node }) => {
         createPage({
             path: node.slug.current,
             component: path.resolve(`./src/templates/ytelsePageTemplate.tsx`),
+            context: {
+                slug: node.slug.current
+            }
+        });
+    });
+
+    const customPages = await graphql(`
+        query {
+            allSanityCustomPage {
+                edges {
+                    node {
+                        slug {
+                            current
+                        }
+                        _rawTitle
+                        _rawIngress
+                        _rawMetadescription
+                        _rawContent(resolveReferences: { maxDepth: 5 })
+                    }
+                }
+            }
+        }
+    `);
+    customPages.data.allSanityCustomPage.edges.forEach(({ node }) => {
+        createPage({
+            path: node.slug.current,
+            component: path.resolve(`./src/templates/customPageTemplate.tsx`),
             context: {
                 slug: node.slug.current
             }
