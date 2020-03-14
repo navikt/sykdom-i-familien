@@ -29,7 +29,6 @@ interface Props {
 }
 
 export const extractDataFromSanityCustomPage = (data: any, locale: Locale | string): CustomPageData => {
-    console.log(data._rawIllustration);
     return {
         showLanguageToggle: data.showLanguageToggle === true,
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,

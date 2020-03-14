@@ -20,6 +20,12 @@ export interface AlertStripeObject {
     content: LocaleRichTextObject;
 }
 
+export interface MessageDocument {
+    style: 'feil' | 'advarsel' | 'info';
+    title: LocaleStringObject;
+    content: LocaleRichTextObject;
+}
+
 export interface OptimizedSvgNode {
     id: string;
     svg: string;

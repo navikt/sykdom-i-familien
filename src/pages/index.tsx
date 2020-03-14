@@ -2,10 +2,6 @@ import React from 'react';
 import { RouterProps } from '@reach/router';
 import { graphql } from 'gatsby';
 import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import Lenke from 'nav-frontend-lenker';
-import { Undertittel } from 'nav-frontend-typografi';
-import CoronaWarning from '../components/corona-warning/CoronaWarning';
 import Box from '../components/layout/box/Box';
 import FrontpagePanelWrapper from '../components/pages/frontpage/components/frontpage-panel-wrapper/FrontpagePanelWrapper';
 import LinkPanel from '../components/pages/frontpage/components/link-panel/LinkPanel';
@@ -13,7 +9,8 @@ import PageBanner from '../components/pages/frontpage/components/page-banner/Pag
 import Frontpage from '../components/pages/frontpage/Frontpage';
 import SanityBlock from '../sanity/components/sanity-block/SanityBlock';
 import SanityIllustration from '../sanity/components/sanity-illustration/SanityIllustrationContent';
-import { IllustrationDocument } from '../sanity/types/documents';
+import SanityMessage from '../sanity/components/sanity-message/SanityMessage';
+import { IllustrationDocument, MessageDocument } from '../sanity/types/documents';
 import { getSanityStringWithLocale } from '../utils/sanity/getSanityContentWithLocale';
 
 interface Props {
@@ -26,6 +23,7 @@ const extractFrontpageData = (data: any, locale: string): FrontpageSanityData =>
         _rawIllustration,
         _rawIngress,
         _rawTitle,
+        _rawMessage,
         _rawFrontpageStories,
         _rawMetadescription
     } = data.allSanityFrontpage.nodes[0];
@@ -36,6 +34,7 @@ const extractFrontpageData = (data: any, locale: string): FrontpageSanityData =>
         ingress: getSanityStringWithLocale(_rawIngress, locale),
         metadescription: getSanityStringWithLocale(_rawMetadescription, locale),
         illustration: _rawIllustration,
+        message: _rawMessage,
         stories: _rawFrontpageStories.map((story: any) => {
             return {
                 title: getSanityStringWithLocale(
@@ -58,6 +57,7 @@ export interface FrontpageSanityData {
     ingress?: string;
     illustration: IllustrationDocument;
     stories?: FrontpageStory[];
+    message?: MessageDocument;
 }
 
 interface FrontpageStory {
@@ -74,6 +74,7 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
         title,
         metadescription,
         ingress,
+        message,
         illustration,
         stories: linkPanels
     } = extractFrontpageData(data, intl.locale);
@@ -94,9 +95,12 @@ const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & Injec
                     undefined
                 )
             }>
-            <Box padBottom="xl" margin="l">
-                <CoronaWarning />
-            </Box>
+            {message && (
+                <Box padBottom="xl" margin="l">
+                    <SanityMessage message={message} />
+                </Box>
+            )}
+
             <Box>
                 <FrontpagePanelWrapper>
                     {linkPanels &&
@@ -130,6 +134,7 @@ export const pageQuery = graphql`
                 _rawMetadescription
                 _rawTitle
                 _rawIngress
+                _rawMessage(resolveReferences: { maxDepth: 4 })
                 _rawIllustration(resolveReferences: { maxDepth: 4 })
                 _rawFrontpageStories(resolveReferences: { maxDepth: 4 })
             }

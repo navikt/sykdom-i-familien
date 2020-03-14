@@ -23,22 +23,9 @@ exports.createPages = async ({ graphql, actions }) => {
             allSanityYtelsePage${includeNonPublicPagesOnlyInDevFilter} {
                 edges {
                     node {
-                        ytelse {
-                            id
-                            name
-                            formUrl
-                        }
                         slug {
                             current
                         }
-                        _rawTitle
-                        _rawIntro
-                        _rawInShortTitle
-                        _rawInShortEkstraKomponenter
-                        _rawBanner(resolveReferences: { maxDepth: 4 })
-                        _rawIllustration(resolveReferences: { maxDepth: 4 })
-                        _rawInShort
-                        _rawContent(resolveReferences: { maxDepth: 10 })
                     }
                 }
             }
@@ -64,11 +51,6 @@ exports.createPages = async ({ graphql, actions }) => {
                         slug {
                             current
                         }
-                        _rawTitle
-                        _rawIngress
-                        _rawIllustration
-                        _rawMetadescription
-                        _rawContent(resolveReferences: { maxDepth: 5 })
                     }
                 }
             }

@@ -27,6 +27,7 @@ export const query = graphql`
                     _rawInShortEkstraKomponenter
                     _rawBanner(resolveReferences: { maxDepth: 4 })
                     _rawIllustration(resolveReferences: { maxDepth: 4 })
+                    _rawMessage(resolveReferences: { maxDepth: 4 })
                     _rawInShort
                     _rawContent(resolveReferences: { maxDepth: 10 })
                 }
