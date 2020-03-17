@@ -1,4 +1,3 @@
-import { string } from 'prop-types';
 import { IllustrationDocument, YtelsePageDocument } from '../documents/index';
 import { LocaleRichTextObject, LocaleStringObject } from '../locale-objects/index';
 
