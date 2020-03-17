@@ -119,6 +119,25 @@ const getAndApplyLinksInContent = (data: any) => {
         })
     };
 };
+const createAnchorsForTabsWithinSections = (data: any, locale: string) => {
+    let currentSection: any = null;
+
+    const dataWithTabSlugs = traverse(data).map((node) => {
+        if (node && typeof node === 'object') {
+            if (node._type === 'section') {
+                currentSection = node;
+            }
+            if (node._type === 'tabs' && currentSection !== undefined) {
+                const title = getSanityStringWithLocale(currentSection.title, locale);
+                return title ? { ...node, sectionSlug: slugify(title) } : node;
+            }
+            return node;
+        }
+        return node;
+    });
+
+    return dataWithTabSlugs;
+};
 
 const isUrlExternal = (url: string): boolean => {
     return !url ? false : url.indexOf('nav.no') === -1;
@@ -129,6 +148,7 @@ export const extractLinksFromContent = {};
 const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
     const { intl } = props;
     const { data, links: linksInContent } = getAndApplyLinksInContent(props.data);
+    const dataWithTabs = createAnchorsForTabsWithinSections(data, intl.locale);
     const {
         title,
         metadescription,
@@ -141,7 +161,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         illustration,
         formUrl,
         message
-    } = extractDataFromSanityYtelsePage(data, intl.locale);
+    } = extractDataFromSanityYtelsePage(dataWithTabs, intl.locale);
 
     const inShortSection: SectionContent = {
         _key: 'inShortSection',

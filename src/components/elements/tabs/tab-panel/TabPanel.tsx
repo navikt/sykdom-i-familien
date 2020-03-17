@@ -1,12 +1,13 @@
 import React from 'react';
-import { Tab } from '../Tabs';
-import SanityBlockContent from '../../../../sanity/components/sanity-block-content/SanityBlockContent';
-import bemUtils from '../../../../utils/bemUtils';
 import { Undertittel } from 'nav-frontend-typografi';
+import SanityBlockContent from '../../../../sanity/components/sanity-block-content/SanityBlockContent';
 import { SanityContentHeadingLevel } from '../../../../sanity/types';
-import { getHeadingLevelForChild, getHeadingTag } from '../../../../sanity/utils';
+import { getHeadingTag } from '../../../../sanity/utils';
+import bemUtils from '../../../../utils/bemUtils';
+import { Tab } from '../Tabs';
 
 interface Props {
+    id?: string;
     tab: Tab;
     bgcolor?: string;
     selected: boolean;
@@ -15,8 +16,9 @@ interface Props {
 
 const bem = bemUtils('tabs');
 
-const TabPanel: React.FunctionComponent<Props> = ({ tab, selected, bgcolor, headingLevel }) => (
+const TabPanel: React.FunctionComponent<Props> = ({ id, tab, selected, bgcolor, headingLevel }) => (
     <div
+        id={id}
         role="tabpanel"
         key={tab.label}
         className={bem.element('panel', selected ? 'selected' : 'hidden')}

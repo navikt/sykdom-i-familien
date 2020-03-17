@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from '@reach/router';
+import { Undertittel } from 'nav-frontend-typografi';
+import useWindowSize from '../../../hooks/useWindowSize';
+import { SanityContentHeadingLevel } from '../../../sanity/types';
+import { BlockContentObjectTypes } from '../../../sanity/types/objects';
+import { getHeadingLevelForChild, getHeadingTag } from '../../../sanity/utils';
+import styles from '../../../styles';
 import bemUtils from '../../../utils/bemUtils';
+import Select from './select/Select';
 import TabButton from './tab-button/TabButton';
 import TabPanel from './tab-panel/TabPanel';
-
 import './tabs.less';
-import Select from './select/Select';
-import { Undertittel } from 'nav-frontend-typografi';
-import { BlockContentObjectTypes } from '../../../sanity/types/objects';
-import useWindowSize from '../../../hooks/useWindowSize';
-import styles from '../../../styles';
-import { SanityContentHeadingLevel } from '../../../sanity/types';
-import { getHeadingTag, getHeadingLevelForChild } from '../../../sanity/utils';
 
 export enum PresentationMode {
     tabs = 'tabs',
@@ -23,6 +23,8 @@ export interface Tab {
     illustration?: React.ReactNode;
     contentTitle?: string;
     content: BlockContentObjectTypes[];
+    slug?: string;
+    sectionSlug?: string;
 }
 
 export interface TabsProps {
@@ -31,20 +33,26 @@ export interface TabsProps {
     bgcolor?: string;
     presentation: PresentationMode;
     headingLevel: SanityContentHeadingLevel;
+    sectionSlug?: string;
 }
 
 const bem = bemUtils('tabs');
+
+interface TabState {
+    index: number;
+}
 
 const Tabs: React.FunctionComponent<TabsProps> = ({
     tabs,
     presentation,
     title,
+    sectionSlug,
     headingLevel,
     bgcolor = styles.colors.themeLight
 }: TabsProps) => {
-    const [selectedTab, selectTab] = useState({ index: 0 });
+    const [selectedTab, setSelectedTab] = useState<TabState>({ index: 0 });
     const [mode, setMode] = useState<PresentationMode>(PresentationMode.dropdown);
-
+    const location = useLocation();
     //
     // React hydration fix:
     // Dersom denne ikke kjøres ved første render, vil en kunne havne i en
@@ -57,14 +65,27 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
             setMode(presentation || PresentationMode.tabs);
         }
     };
+
+    const checkUrlAndSetActiveTab = () => {
+        if (window && location) {
+            const { hash } = location;
+            const hashTab = hash !== '' && tabs.find((t) => t.slug !== undefined && hash.indexOf(t.slug) >= 0);
+            if (hashTab) {
+                setSelectedTab({ index: hashTab.index });
+            }
+        }
+    };
+
     const { width } = useWindowSize((size) => {
         checkAndSetMode(size.width);
     });
+
     useEffect(() => {
         checkAndSetMode(width);
+        checkUrlAndSetActiveTab();
     }, []);
-    // React hydration fix (end)
 
+    // React hydration fix (end)
     const renderTabs = () => (
         <div role="tablist" className={bem.element('tabs')}>
             {tabs.map((tab) => (
@@ -72,7 +93,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
                     key={tab.index}
                     label={tab.label}
                     icon={tab.illustration}
-                    onSelect={() => selectTab({ index: tab.index })}
+                    onSelect={() => setSelectedTab({ index: tab.index })}
                     isSelected={selectedTab.index === tab.index}
                     panelBkg={bgcolor}
                 />
@@ -85,7 +106,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
             <Select
                 panelBkg={bgcolor}
                 choices={tabs}
-                onChoiceSelect={(index) => selectTab({ index })}
+                onChoiceSelect={(index) => setSelectedTab({ index })}
                 selected={tabs[selectedTab.index]}
             />
         </div>
@@ -104,6 +125,12 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
 
     return (
         <div className={bem.modifier(mode)}>
+            {tabs
+                .filter((tab) => tab.slug)
+                .map(({ slug }) => {
+                    const sectionTabSlug = `${sectionSlug}--${slug}`;
+                    return <span key={sectionTabSlug} className="tabAnchor" id={sectionTabSlug} />;
+                })}
             {title && (
                 <Undertittel tag={getHeadingTag(headingLevel)} className={bem.element('title')}>
                     {title}
