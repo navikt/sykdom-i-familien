@@ -33,6 +33,7 @@ export interface TabsObject {
     presentation: TabsObjectPresentation;
     bgcolor?: string;
     content: TabObject[];
+    sectionSlug?: string;
 }
 
 export interface TabObject {
@@ -40,6 +41,7 @@ export interface TabObject {
     tabIllustration: IllustrationDocument;
     contentTitle?: LocaleStringObject;
     content: BlockContentObjectTypes[];
+    slug?: string;
 }
 export interface SectionObject {
     title: LocaleStringObject;

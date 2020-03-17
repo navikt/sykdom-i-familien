@@ -19,23 +19,29 @@ export const extractTabsData = (
     locale: Locale
 ): TabsProps => {
     const { title, presentation } = tabs;
+
     const tabsData: TabsProps = {
         presentation: presentation === 'dropdown' ? PresentationMode.dropdown : PresentationMode.tabs,
         title: getOptionalLocaleString({ obj: title, locale }),
         bgcolor: tabs.bgcolor,
         headingLevel,
-        tabs: tabs.content.map((tab, index: number) => ({
-            index,
-            label: getLocaleString(tab.title, locale),
-            illustration:
-                tab.tabIllustration && tab.tabIllustration.svg ? (
-                    <InlineSVG illustration={tab.tabIllustration.svg} width="3.5rem" />
-                ) : (
-                    undefined
-                ),
-            contentTitle: tab.contentTitle ? getLocaleString(tab.contentTitle, locale) : undefined,
-            content: tab.content
-        }))
+        sectionSlug: tabs.sectionSlug,
+        tabs: tabs.content.map((tab, index: number) => {
+            return {
+                index,
+                label: getLocaleString(tab.title, locale),
+                illustration:
+                    tab.tabIllustration && tab.tabIllustration.svg ? (
+                        <InlineSVG illustration={tab.tabIllustration.svg} width="3.5rem" />
+                    ) : (
+                        undefined
+                    ),
+                contentTitle: tab.contentTitle ? getLocaleString(tab.contentTitle, locale) : undefined,
+                content: tab.content,
+                slug: tab.slug,
+                sectionSlug: tabs.sectionSlug
+            };
+        })
     };
     return tabsData;
 };
