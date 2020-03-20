@@ -1,6 +1,8 @@
 # Sykdom i familien - inngang
 
-Kildekoden til informasjon vedrørende området sykdom i familien på nav.no
+Kildekoden til informasjon vedrørende området sykdom i familien på nav.no.
+
+Sanity + Gatsby
 
 ## Icon License
 
