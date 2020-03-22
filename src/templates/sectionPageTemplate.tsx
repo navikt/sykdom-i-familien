@@ -12,6 +12,7 @@ export const query = graphql`
             edges {
                 node {
                     showLanguageToggle
+                    showLeftMenu
                     slug {
                         current
                     }

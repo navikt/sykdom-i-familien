@@ -25,6 +25,7 @@ export interface SectionPageData {
     slug: { current: string };
     metadescription: string;
     content: any[];
+    showLeftMenu?: boolean;
 }
 
 interface SectionContent {
@@ -58,7 +59,8 @@ export const extractDataFromSanitySectionPage = (data: any, locale: Locale | str
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
         slug: data.slug,
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
-        content: data._rawContent
+        content: data._rawContent,
+        showLeftMenu: data.showLeftMenu === true
     };
 };
 
@@ -67,10 +69,14 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
     const { data, links: linksInContent } = getAndApplyLinksInContent(props.data);
     const dataWithTabs = createAnchorsForTabsWithinSections(data, intl.locale);
 
-    const { title, metadescription, showLanguageToggle, slug, content } = extractDataFromSanitySectionPage(
-        dataWithTabs,
-        intl.locale
-    );
+    const {
+        title,
+        metadescription,
+        showLanguageToggle,
+        slug,
+        content,
+        showLeftMenu
+    } = extractDataFromSanitySectionPage(dataWithTabs, intl.locale);
 
     return (
         <PageWithMenu
@@ -78,13 +84,17 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
             showLanguageToggle={showLanguageToggle}
             pageMetadescription={metadescription}
             slug={`${slug.current}`}
-            sectionMenuItems={[...content.filter((c) => c._type === 'section')].map((sectionRaw) => {
-                const section = extractSectionData(sectionRaw, intl.locale);
-                return {
-                    label: section.title || '',
-                    slug: section.slug
-                };
-            })}
+            sectionMenuItems={
+                showLeftMenu
+                    ? [...content.filter((c) => c._type === 'section')].map((sectionRaw) => {
+                          const section = extractSectionData(sectionRaw, intl.locale);
+                          return {
+                              label: section.title || '',
+                              slug: section.slug
+                          };
+                      })
+                    : []
+            }
             menuFooter={<Box />}
             header={<PageBannerCompact title={title} />}>
             {content.map((c) => {
