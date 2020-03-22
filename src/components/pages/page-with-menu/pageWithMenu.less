@@ -8,6 +8,11 @@
     margin: 0;
     padding-top: 4rem;
 
+    &--noSidebar {
+        .pageWithMenu__article {
+            max-width: @app-max-width-no-sidebar;
+        }
+    }
     @media print {
         padding-top: 0;
         &__header {
