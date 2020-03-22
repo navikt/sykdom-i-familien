@@ -14,6 +14,11 @@ export interface IllustrationDocument {
     children: string[];
 }
 
+export interface CusomComponentDocument {
+    name: string;
+    componentId: string;
+}
+
 export interface AlertStripeObject {
     style: 'feil' | 'advarsel' | 'info';
     title: LocaleStringObject;

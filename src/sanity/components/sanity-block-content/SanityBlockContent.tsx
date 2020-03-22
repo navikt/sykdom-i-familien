@@ -15,13 +15,14 @@ import {
 import { SanityContentHeadingLevel } from '../../types';
 import { AlertStripeObject, IllustrationDocument, MessageDocument } from '../../types/documents';
 import {
-    ExpandableContentObject, FaqObject, RasmusVeilederpanelObject, SectionObject, TabsObject,
-    TextblockObject, VeilederpanelObject
+    ExpandableContentObject, FaqObject, RasmusVeilederpanelObject, TabsObject, TextblockObject,
+    VeilederpanelObject
 } from '../../types/objects';
 import {
     getHeadingLevelForChild, getLocaleBlockContent, getLocaleString, getOptionalLocaleString
 } from '../../utils';
 import SanityBlock from '../sanity-block/SanityBlock';
+import SanityCustomComponent from '../sanity-custom-component/SanityCustomComponent';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import SanityMessage from '../sanity-message/SanityMessage';
 import SanityTabs from '../sanity-tabs/SanityTabs';
@@ -42,6 +43,9 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                 blocks={content}
                 serializers={{
                     types: {
+                        customComponent: ({ node }: { node: any }) => {
+                            return <SanityCustomComponent component={node} />;
+                        },
                         message: ({ node }: { node: MessageDocument }) => {
                             return (
                                 <Box padBottom="l">
