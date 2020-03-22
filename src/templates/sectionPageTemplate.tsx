@@ -1,0 +1,25 @@
+import React from 'react';
+import { graphql } from 'gatsby';
+import SanitySectionPage from '../sanity/components/sanity-sectionpage/SanitySectionPage';
+
+export default (props: any) => {
+    return <SanitySectionPage data={props.data.allSanitySectionPage.edges[0].node} />;
+};
+
+export const query = graphql`
+    query($slug: String!) {
+        allSanitySectionPage(filter: { slug: { current: { eq: $slug } } }) {
+            edges {
+                node {
+                    showLanguageToggle
+                    slug {
+                        current
+                    }
+                    _rawMetadescription
+                    _rawTitle
+                    _rawContent(resolveReferences: { maxDepth: 10 })
+                }
+            }
+        }
+    }
+`;

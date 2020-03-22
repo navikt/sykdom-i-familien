@@ -8,10 +8,6 @@ Sanity + Gatsby
 
 This project uses [Streamline Icons](http://www.streamlineicons.com/). If you use them in your project please adhere to the [Streamline Icons license agreement](http://www.streamlineicons.com/license.html).
 
-## Gatsby Cloud
-
-Preview av sidene ligger på gatsbycloud.
-
 ## BrowserStack
 
 [![BrowserStack logo](./browserstack-logo-600x315.png)](https://www.browserstack.com/)

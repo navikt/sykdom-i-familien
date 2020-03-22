@@ -48,6 +48,11 @@ export interface YtelsePageDocument {
     inShortTitle: LocaleStringObject;
     content: SectionObject[];
 }
+export interface SectionPageDocument {
+    slug: string;
+    title: LocaleStringObject;
+    content: SectionObject[];
+}
 export interface CustomPageDocument {
     slug: string;
     title: LocaleStringObject;

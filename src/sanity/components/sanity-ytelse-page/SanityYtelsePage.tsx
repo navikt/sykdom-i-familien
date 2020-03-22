@@ -1,10 +1,7 @@
 import React from 'react';
 import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import slugify from 'slugify';
-import traverse from 'traverse';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Element, Ingress } from 'nav-frontend-typografi';
-import CoronaWarning from '../../../components/corona-warning/CoronaWarning';
+import { Ingress } from 'nav-frontend-typografi';
 import LinkButton from '../../../components/elements/link-button/LinkButton';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import Box from '../../../components/layout/box/Box';
@@ -17,6 +14,9 @@ import {
     getSanityContentWithLocale, getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { IllustrationDocument, MessageDocument, YtelsePageDocument } from '../../types/documents';
+import {
+    createAnchorsForTabsWithinSections, getAndApplyLinksInContent
+} from '../../utils/prepLinksInDocument';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import SanityBlock from '../sanity-block/SanityBlock';
 import SanityMessage from '../sanity-message/SanityMessage';
@@ -49,7 +49,7 @@ interface Props {
     data: YtelsePageDocument;
 }
 
-export const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
+const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
     if (!data) {
         return [];
     }
@@ -66,7 +66,7 @@ export const extractSectionData = (data: any[], locale: Locale): SectionContent[
     });
 };
 
-export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
+const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
     return {
         showLanguageToggle: data.showLanguageToggle === true,
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
@@ -82,68 +82,6 @@ export const extractDataFromSanityYtelsePage = (data: any, locale: Locale | stri
         message: data._rawMessage
     };
 };
-
-const getAndApplyLinksInContent = (data: any) => {
-    const links: any[] = [];
-    const blocksWithMarks: any[] = [];
-    let linkCounter = 1;
-
-    const dataWithLinkNumbers = traverse(data).map((node) => {
-        if (node && typeof node === 'object') {
-            if (node._type === 'link' && node.href !== undefined) {
-                const isExternal = isUrlExternal(node.href);
-                const modifiedNode = { ...node, linkNumber: linkCounter, isExternal };
-                links.push(modifiedNode);
-                linkCounter++;
-                return modifiedNode;
-            } else if (node.marks) {
-                blocksWithMarks.push(node);
-            }
-        }
-        return node;
-    });
-
-    return {
-        data: dataWithLinkNumbers,
-        links: links.map((link) => {
-            const node = blocksWithMarks.find((block) => block.marks.find((m: any) => m === link._key));
-            return !node || !link.href
-                ? undefined
-                : {
-                      url: link.href,
-                      _key: link._key,
-                      text: node.text,
-                      isExternal: isUrlExternal(link.href),
-                      linkNumber: link.linkNumber
-                  };
-        })
-    };
-};
-const createAnchorsForTabsWithinSections = (data: any, locale: string) => {
-    let currentSection: any = null;
-
-    const dataWithTabSlugs = traverse(data).map((node) => {
-        if (node && typeof node === 'object') {
-            if (node._type === 'section') {
-                currentSection = node;
-            }
-            if (node._type === 'tabs' && currentSection !== undefined) {
-                const title = getSanityStringWithLocale(currentSection.title, locale);
-                return title ? { ...node, sectionSlug: slugify(title) } : node;
-            }
-            return node;
-        }
-        return node;
-    });
-
-    return dataWithTabSlugs;
-};
-
-const isUrlExternal = (url: string): boolean => {
-    return !url ? false : url.indexOf('nav.no') === -1;
-};
-
-export const extractLinksFromContent = {};
 
 const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
     const { intl } = props;
