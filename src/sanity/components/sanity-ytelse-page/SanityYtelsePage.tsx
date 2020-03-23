@@ -57,7 +57,7 @@ const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
         const title = getSanityStringWithLocale(section.title, locale);
         return {
             _key: section._key,
-            slug: slugify(title || ''),
+            slug: section.slug?.current || slugify(title || ''),
             title,
             formUrl: section.formUrl,
             illustration: section.illustration,

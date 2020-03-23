@@ -70,7 +70,7 @@ exports.createPages = async ({ graphql, actions }) => {
     /** Section pages */
     const sectionPages = await graphql(`
         query {
-            allSanitySectionPage {
+            allSanitySectionPage${includeNonPublicPagesOnlyInDevFilter} {
                 edges {
                     node {
                         slug {
