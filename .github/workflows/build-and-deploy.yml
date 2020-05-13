@@ -48,9 +48,9 @@ jobs:
       - id: set-image
         env:
             NAME: sykdom-i-familien
-        run: |               
-            echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
-            echo "::set-output name=image::${BASE_IMAGE}:${TAG}"
+        run: echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
+      - id: output-image:
+        run: echo "::set-output name=image::${BASE_IMAGE}:${TAG}"
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
