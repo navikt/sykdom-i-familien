@@ -47,6 +47,8 @@ jobs:
         run: echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
       - id: output-image
         run: echo "::set-output name=image::${BASE_IMAGE}:${TAG}"
+      - id: debug
+        run: echo "${BASE_IMAGE}:${TAG}"
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
@@ -78,6 +80,7 @@ jobs:
                   npm run build
             - name: export image
               run: |
+                echo ${{needs.set-image.outputs.image }}
                 echo ${{ needs.set-image.outputs.image }}
                 echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: Build Docker image
