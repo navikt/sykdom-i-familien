@@ -10,6 +10,10 @@ on:
         branches:
     deployment:
 
+env:
+  GITHUB_USERNAME: x-access-token
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
     test:
         name: Test Code
@@ -69,7 +73,7 @@ jobs:
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
-                  DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+                  DOCKER_PASSWORD: ${{ env.GITHUB_TOKEN }}
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
@@ -122,7 +126,7 @@ jobs:
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
-                  DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+                  DOCKER_PASSWORD: ${{ env.GITHUB_TOKEN }}
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
@@ -159,13 +163,11 @@ jobs:
                   cp docker_image/.docker_image .
                   cp docker_tag/.docker_tag .
             - name: deploy to dev-sbs
-              uses: navikt/deployment-cli/action@0.4.0
+              uses: nais/deploy/actions/deploy@v1
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  cluster: dev-sbs
-                  team: dusseldorf
-                  resources: nais/dev-sbs.yml
+                APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                CLUSTER: dev-sbs
+                RESOURCE: nais/dev-sbs.yml
 
     deploy-prod-sbs:
         name: deploy-prod-sbs
@@ -188,10 +190,8 @@ jobs:
                   cp docker_image/.docker_image .
                   cp docker_tag/.docker_tag .
             - name: deploy to prod-sbs
-              uses: navikt/deployment-cli/action@0.4.0
+              uses: nais/deploy/actions/deploy@v1
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  cluster: prod-sbs
-                  team: dusseldorf
-                  resources: nais/prod-sbs.yml
+                APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                CLUSTER: prod-sbs
+                RESOURCE: nais/prod-sbs.yml
