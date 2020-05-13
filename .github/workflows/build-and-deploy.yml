@@ -78,12 +78,9 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
-            - name: export image
-              run: |
-                echo ${{needs.set-image.outputs.image }}
-                echo ${{ needs.set-image.outputs.image }}
-                echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: Build Docker image
+              env:
+                IMAGE: ${{ needs.set-image.outputs.image }}
               run: |
                   docker build -t ${IMAGE} . -f Dockerfile-dev
             - name: Login to Github Package Registry
@@ -93,6 +90,8 @@ jobs:
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
+              env:
+                IMAGE: ${{ needs.set-image.outputs.image }}
               run: 'docker push ${IMAGE}'
 
     build-code-and-push-docker-prod:
@@ -120,10 +119,9 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
-            - name: export image
-              run: |
-                echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: Build Docker image
+              env:
+                IMAGE: ${{ needs.set-image.outputs.image }}
               run: |
                   docker build -t ${IMAGE} .
             - name: Login to Github Package Registry
@@ -148,6 +146,7 @@ jobs:
             - name: deploy to dev-sbs
               uses: nais/deploy/actions/deploy@v1
               env:
+                IMAGE: ${{ needs.set-image.outputs.image }}
                 APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
                 CLUSTER: dev-sbs
                 RESOURCE: nais/dev-sbs.yml
@@ -165,6 +164,7 @@ jobs:
             - name: deploy to prod-sbs
               uses: nais/deploy/actions/deploy@v1
               env:
+                IMAGE: ${{ needs.set-image.outputs.image }}
                 APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
                 CLUSTER: prod-sbs
                 RESOURCE: nais/prod-sbs.yml
