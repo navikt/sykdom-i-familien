@@ -55,6 +55,8 @@ jobs:
         if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') || (github.event.deployment.environment == 'dev-sbs' && github.event.deployment.ref == 'master') # Build and push docker if publish staging event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
+        env:
+          IMAGE: ${{ needs.set-image.outputs.image }}
         steps:
             - name: debug deployment webhook
               run: |
@@ -79,8 +81,6 @@ jobs:
                   npm i
                   npm run build
             - name: Build Docker image
-              env:
-                IMAGE: ${{ needs.set-image.outputs.image }}
               run: |
                   docker build -t ${IMAGE} . -f Dockerfile-dev
             - name: Login to Github Package Registry
@@ -90,8 +90,6 @@ jobs:
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
-              env:
-                IMAGE: ${{ needs.set-image.outputs.image }}
               run: 'docker push ${IMAGE}'
 
     build-code-and-push-docker-prod:
@@ -99,6 +97,8 @@ jobs:
         if: github.event.deployment.environment == 'prod-sbs' && github.event.deployment.ref == 'master' # Build and push docker if publish production event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
+        env:
+          IMAGE: ${{ needs.set-image.outputs.image }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
@@ -120,8 +120,6 @@ jobs:
                   npm i
                   npm run build
             - name: Build Docker image
-              env:
-                IMAGE: ${{ needs.set-image.outputs.image }}
               run: |
                   docker build -t ${IMAGE} .
             - name: Login to Github Package Registry
