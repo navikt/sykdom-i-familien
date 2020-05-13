@@ -43,7 +43,7 @@ jobs:
       outputs:
         image: ${{ steps.set-image.outputs.image }}
       steps:
-      - id: Checkout code
+      - id: checkout-code
         uses: actions/checkout@v1
       - id: set-image
         run: echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
