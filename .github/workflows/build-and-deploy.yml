@@ -98,7 +98,7 @@ jobs:
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
         if: github.event.deployment.environment == 'prod-sbs' && github.event.deployment.ref == 'master' # Build and push docker if publish production event from sanity studio
-        needs: set-image-tag
+        needs: set-image
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
