@@ -78,16 +78,6 @@ jobs:
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
               run: 'docker push ${IMAGE}:${TAG}'
-            - name: pass image file to next job.
-              uses: actions/upload-artifact@v1
-              with:
-                  name: docker_image
-                  path: .docker_image
-            - name: pass tag file to next job.
-              uses: actions/upload-artifact@v1
-              with:
-                  name: docker_tag
-                  path: .docker_tag
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
