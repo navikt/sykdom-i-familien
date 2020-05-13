@@ -43,13 +43,11 @@ jobs:
       outputs:
         image: ${{ steps.set-image.outputs.image }}
       steps:
-      - name: Checkout code
+      - id: Checkout code
         uses: actions/checkout@v1
       - id: set-image
-        env:
-            NAME: sykdom-i-familien
         run: echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
-      - id: output-image:
+      - id: output-image
         run: echo "::set-output name=image::${BASE_IMAGE}:${TAG}"
 
     build-code-and-push-docker-dev:
