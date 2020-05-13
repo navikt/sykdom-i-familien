@@ -2,8 +2,6 @@ const request = require('request');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-// Trigger build
-
 const requestDecorator = (callback) => {
   const url =
     process.env.NAIS_CLUSTER_NAME === 'dev-sbs'
