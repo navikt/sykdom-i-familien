@@ -11,6 +11,7 @@ on:
     deployment:
 
 env:
+  BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -64,12 +65,12 @@ jobs:
             - name: Create Docker tag
               env:
                   NAME: sykdom-i-familien
-              run: |
-                  echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$NAME" > .docker_image
-                  echo "$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" > .docker_tag
+              run: |               
+                  echo "::set-env name=IMAGE::$BASE_IMAGE:$(git rev-parse --short HEAD)"
+                  echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
             - name: Build Docker image
               run: |
-                  docker build -t $(cat .docker_image):$(cat .docker_tag) . -f Dockerfile-dev
+                  docker build -t ${IMAGE}:${TAG} . -f Dockerfile-dev
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
@@ -77,7 +78,7 @@ jobs:
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
-              run: 'docker push $(cat .docker_image):$(cat .docker_tag)'
+              run: 'docker push ${IMAGE}:${TAG}'
             - name: pass image file to next job.
               uses: actions/upload-artifact@v1
               with:
@@ -118,11 +119,11 @@ jobs:
               env:
                   NAME: sykdom-i-familien
               run: |
-                  echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$NAME" > .docker_image
-                  echo "$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" > .docker_tag
+                  echo "::set-env name=IMAGE::$BASE_IMAGE:$(git rev-parse --short HEAD)"
+                  echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
             - name: Build Docker image
               run: |
-                  docker build -t $(cat .docker_image):$(cat .docker_tag) .
+                  docker build -t ${IMAGE}:${TAG} .
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
@@ -130,17 +131,7 @@ jobs:
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
-              run: 'docker push $(cat .docker_image):$(cat .docker_tag)'
-            - name: pass image file to next job.
-              uses: actions/upload-artifact@v1
-              with:
-                  name: docker_image
-                  path: .docker_image
-            - name: pass tag file to next job.
-              uses: actions/upload-artifact@v1
-              with:
-                  name: docker_tag
-                  path: .docker_tag
+              run: 'docker push -t ${IMAGE}:${TAG}'
 
     deploy-dev-sbs:
         name: deploy-dev-sbs
@@ -149,19 +140,6 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
-              # Download the image and tag file to use for the deployment cli.
-            - name: Download image file
-              uses: actions/download-artifact@v1
-              with:
-                  name: docker_image
-            - name: Download tag file
-              uses: actions/download-artifact@v1
-              with:
-                  name: docker_tag
-            - name: unpack
-              run: |
-                  cp docker_image/.docker_image .
-                  cp docker_tag/.docker_tag .
             - name: deploy to dev-sbs
               uses: nais/deploy/actions/deploy@v1
               env:
@@ -176,19 +154,6 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
-              # Download the image and tag file to use for the deployment cli.
-            - name: Download image file
-              uses: actions/download-artifact@v1
-              with:
-                  name: docker_image
-            - name: Download tag file
-              uses: actions/download-artifact@v1
-              with:
-                  name: docker_tag
-            - name: unpack
-              run: |
-                  cp docker_image/.docker_image .
-                  cp docker_tag/.docker_tag .
             - name: deploy to prod-sbs
               uses: nais/deploy/actions/deploy@v1
               env:
