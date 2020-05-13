@@ -12,7 +12,6 @@ on:
 
 env:
   BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
-  TAG: ''
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -79,6 +78,7 @@ jobs:
                   npm run build
             - name: export image
               run: |
+                echo ${{ needs.set-image.outputs.image }}
                 echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: Build Docker image
               run: |
