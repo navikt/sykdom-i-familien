@@ -41,6 +41,8 @@ jobs:
       needs: test
       runs-on: ubuntu-latest
       steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
       - name: Create Docker tag
         env:
             NAME: sykdom-i-familien
