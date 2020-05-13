@@ -5,7 +5,7 @@ const { JSDOM } = jsdom;
 const requestDecorator = (callback) => {
   const url =
     process.env.NAIS_CLUSTER_NAME === 'dev-sbs'
-      ? 'https://appres-q0.nav.no/common-html/v4/navno'
+      ? 'https://appres-q0.nav.no/common-html/v4/navno/'
       : 'https://appres.nav.no/common-html/v4/navno?header-withmenu=true&styles=true&scripts=true&footer-withmenu=true';
   return request(url, callback);
 };
