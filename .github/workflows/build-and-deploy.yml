@@ -11,7 +11,7 @@ on:
     deployment:
 
 env:
-  BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -66,7 +66,6 @@ jobs:
               env:
                   NAME: sykdom-i-familien
               run: |               
-                  echo "::set-env name=IMAGE::$BASE_IMAGE:$(git rev-parse --short HEAD)"
                   echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
             - name: Build Docker image
               run: |
@@ -119,7 +118,6 @@ jobs:
               env:
                   NAME: sykdom-i-familien
               run: |
-                  echo "::set-env name=IMAGE::$BASE_IMAGE:$(git rev-parse --short HEAD)"
                   echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
             - name: Build Docker image
               run: |
