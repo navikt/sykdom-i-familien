@@ -11,7 +11,9 @@ on:
     deployment:
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
+  BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
+  TAG: ''
+  IMAGE: ''
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -34,10 +36,23 @@ jobs:
                   npm ci
                   npm run test
 
+    set-image-tag:
+      name: "Set image tag"
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+      - name: Create Docker tag
+        env:
+            NAME: sykdom-i-familien
+        run: |               
+            echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
+            echo "::set-env name=IMAGE::${BASE_IMAGE}:${TAG}"
+
+
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
         if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') || (github.event.deployment.environment == 'dev-sbs' && github.event.deployment.ref == 'master') # Build and push docker if publish staging event from sanity studio
-        needs: test
+        needs: set-image-tag
         runs-on: ubuntu-latest
         steps:
             - name: debug deployment webhook
@@ -62,14 +77,9 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
-            - name: Create Docker tag
-              env:
-                  NAME: sykdom-i-familien
-              run: |               
-                  echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
             - name: Build Docker image
               run: |
-                  docker build -t ${IMAGE}:${TAG} . -f Dockerfile-dev
+                  docker build -t ${IMAGE} . -f Dockerfile-dev
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
@@ -77,12 +87,12 @@ jobs:
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
-              run: 'docker push ${IMAGE}:${TAG}'
+              run: 'docker push ${IMAGE}'
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
         if: github.event.deployment.environment == 'prod-sbs' && github.event.deployment.ref == 'master' # Build and push docker if publish production event from sanity studio
-        needs: test
+        needs: set-image-tag
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
@@ -104,14 +114,9 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
-            - name: Create Docker tag
-              env:
-                  NAME: sykdom-i-familien
-              run: |
-                  echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
             - name: Build Docker image
               run: |
-                  docker build -t ${IMAGE}:${TAG} .
+                  docker build -t ${IMAGE} .
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
@@ -119,7 +124,7 @@ jobs:
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
-              run: 'docker push -t ${IMAGE}:${TAG}'
+              run: 'docker push -t ${IMAGE}'
 
     deploy-dev-sbs:
         name: deploy-dev-sbs
