@@ -4,7 +4,7 @@ metadata:
     name: sykdom-i-familien
     namespace: default
     labels:
-        team: '{{team}}'
+        team: dusseldorf
 spec:
     image: {{ image }}
     port: 8080
