@@ -36,25 +36,26 @@ jobs:
                   npm ci
                   npm run test
 
-    set-image-tag:
-      name: "Set image tag"
+    set-image:
+      name: "Set image"
       needs: test
       runs-on: ubuntu-latest
+      outputs:
+        image: ${{ steps.set-image.outputs.image }}
       steps:
       - name: Checkout code
         uses: actions/checkout@v1
-      - name: Create Docker tag
+      - id: set-image
         env:
             NAME: sykdom-i-familien
         run: |               
             echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
-            echo "::set-env name=IMAGE::${BASE_IMAGE}:${TAG}"
-
+            echo "::set-output name=image::${BASE_IMAGE}:${TAG}"
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
         if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') || (github.event.deployment.environment == 'dev-sbs' && github.event.deployment.ref == 'master') # Build and push docker if publish staging event from sanity studio
-        needs: set-image-tag
+        needs: set-image
         runs-on: ubuntu-latest
         steps:
             - name: debug deployment webhook
@@ -79,6 +80,9 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
+            - name: export image
+              run: |
+                echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: Build Docker image
               run: |
                   docker build -t ${IMAGE} . -f Dockerfile-dev
@@ -116,6 +120,9 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
+            - name: export image
+              run: |
+                echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: Build Docker image
               run: |
                   docker build -t ${IMAGE} .
@@ -130,11 +137,14 @@ jobs:
 
     deploy-dev-sbs:
         name: deploy-dev-sbs
-        needs: build-code-and-push-docker-dev # Depends on build-code-and-push-docker job
+        needs: [build-code-and-push-docker-dev, set-image] # Depends on build-code-and-push-docker job
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
+            - name: export image
+              run: |
+                echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: deploy to dev-sbs
               uses: nais/deploy/actions/deploy@v1
               env:
@@ -144,11 +154,14 @@ jobs:
 
     deploy-prod-sbs:
         name: deploy-prod-sbs
-        needs: build-code-and-push-docker-prod # Depends on build-code-and-push-docker job
+        needs: [build-code-and-push-docker-prod, set-image] # Depends on build-code-and-push-docker job
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
+            - name: export image
+              run: |
+                echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: deploy to prod-sbs
               uses: nais/deploy/actions/deploy@v1
               env:
