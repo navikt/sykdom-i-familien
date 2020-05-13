@@ -39,7 +39,7 @@ jobs:
       needs: test
       runs-on: ubuntu-latest
       outputs:
-        image: ${{ steps.set-image.outputs.image }}
+        image: ${{ steps.output-image.outputs.image }}
       steps:
       - id: checkout-code
         uses: actions/checkout@v1
