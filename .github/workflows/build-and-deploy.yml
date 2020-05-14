@@ -23,12 +23,11 @@ jobs:
         strategy:
             matrix:
                 node-version: [8.x]
-
         steps:
             - uses: actions/checkout@v1
             - name: debug deployment webhook
               env:
-                ENV: ${{ github.event.client_payload.event_type }}
+                ENV: ${{ github.event.event_type }}
                 REF: ${{ github.event.branch }}
               run: |
                   echo "environment - $ENV"
