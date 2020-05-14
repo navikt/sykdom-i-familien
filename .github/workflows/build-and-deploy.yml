@@ -24,7 +24,7 @@ jobs:
             matrix:
                 node-version: [8.x]
         steps:
-            - run: echo "${{toJSON(github.event)}}"
+            #- run: echo "${{toJSON(github.event)}}" # Debugs github event.
             - uses: actions/checkout@v1
             - name: Cache NPM dependencies
               uses: actions/cache@v1
@@ -64,7 +64,7 @@ jobs:
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
-        if: github.event.event_type == 'publish-dev-sbs' # Build and push docker if publish staging event from sanity studio
+        if: github.event.action == 'publish-dev-sbs' # Build and push docker if publish staging event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
         env:
@@ -97,7 +97,7 @@ jobs:
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
-        if: github.event.event_type == 'publish-prod-sbs' # Build and push docker if publish production event from sanity studio
+        if: github.event.action == 'publish-prod-sbs' # Build and push docker if publish production event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
         env:
