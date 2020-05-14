@@ -31,6 +31,7 @@ jobs:
                 ENV: ${{ github.event.repository_dispatch.client_payload.environment }}
                 REF: ${{ github.event.repository_dispatch.branch }}
               run: |
+                  echo "${{ github.event }}"
                   echo "environment - $ENV"
                   echo "ref - $REF"
             - name: Use Node.js ${{ matrix.node-version }}
