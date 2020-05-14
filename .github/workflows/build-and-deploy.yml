@@ -132,7 +132,7 @@ jobs:
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
-              run: 'docker push -t ${IMAGE}'
+              run: 'docker push ${IMAGE}'
 
     deploy-dev-sbs:
         name: deploy-dev-sbs
