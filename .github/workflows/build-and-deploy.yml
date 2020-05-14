@@ -15,7 +15,7 @@ env:
   BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  EVENT_TYPE: ${{ github.event.event_type }}
+  EVENT: ${{ github.event }}
 
 jobs:
     test:
@@ -25,7 +25,7 @@ jobs:
             matrix:
                 node-version: [8.x]
         steps:
-            - run: echo "${{env.EVENT_TYPE}}"
+            - run: echo "${{env.EVENT}}"
             - uses: actions/checkout@v1
             - name: Cache NPM dependencies
               uses: actions/cache@v1
