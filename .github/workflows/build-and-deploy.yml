@@ -65,7 +65,7 @@ jobs:
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
-        if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') || (github.event.event_type == 'publish-dev-sbs') # Build and push docker if publish staging event from sanity studio
+        if: github.event.event_type == 'publish-dev-sbs' # Build and push docker if publish staging event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
         env:
