@@ -9,7 +9,7 @@ on:
             - 'CODEOWNERS'
         branches:
     repository_dispatch:
-      types: [publish-content]
+      types: [publish-dev-sbs, publish-prod-sbs]
 
 env:
   BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
@@ -28,7 +28,7 @@ jobs:
             - uses: actions/checkout@v1
             - name: debug deployment webhook
               env:
-                ENV: ${{ github.event.client_payload.environment }}
+                ENV: ${{ github.event.client_payload.event_type }}
                 REF: ${{ github.event.branch }}
               run: |
                   echo "environment - $ENV"
@@ -60,7 +60,7 @@ jobs:
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
-        if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') || (github.event.client_payload.environment == 'dev-sbs') # Build and push docker if publish staging event from sanity studio
+        if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') || (github.event.event_type == 'publish-dev-sbs') # Build and push docker if publish staging event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
         env:
@@ -97,7 +97,7 @@ jobs:
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
-        if: github.event.client_payload.environment == 'prod-sbs' # Build and push docker if publish production event from sanity studio
+        if: github.event.event_type == 'publish-prod-sbs' # Build and push docker if publish production event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
         env:
