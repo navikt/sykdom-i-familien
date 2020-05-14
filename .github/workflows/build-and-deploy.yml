@@ -177,9 +177,6 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
-            - name: export image
-              run: |
-                echo "::set-env name=IMAGE::${{ needs.set-image.outputs.image }}"
             - name: deploy to prod-sbs
               uses: nais/deploy/actions/deploy@v1
               env:
