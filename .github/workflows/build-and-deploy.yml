@@ -25,7 +25,7 @@ jobs:
             matrix:
                 node-version: [8.x]
         steps:
-            - run: echo "${{env.EVENT}}"
+            - run: echo "${{toJSON(env.EVENT)}}"
             - uses: actions/checkout@v1
             - name: Cache NPM dependencies
               uses: actions/cache@v1
