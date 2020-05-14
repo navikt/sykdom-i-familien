@@ -26,6 +26,13 @@ jobs:
 
         steps:
             - uses: actions/checkout@v1
+            - name: debug deployment webhook
+              env:
+                ENV: ${{ github.event.repository_dispatch.client_payload.environment }}
+                REF: ${{ github.event.repository_dispatch.branch }}
+              run: |
+                  echo "environment - $ENV"
+                  echo "ref - $REF"
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
@@ -59,13 +66,6 @@ jobs:
         env:
           IMAGE: ${{ needs.set-image.outputs.image }}
         steps:
-            - name: debug deployment webhook
-              env:
-                ENV: ${{ github.event.repository_dispatch.client_payload.environment }}
-                REF: ${{ github.event.repository_dispatch.branch }}
-              run: |
-                  echo "environment - $ENV"
-                  echo "ref - $REF"
             - name: Checkout code
               uses: actions/checkout@v1
             - name: Use Node.js ${{ matrix.node-version }}
