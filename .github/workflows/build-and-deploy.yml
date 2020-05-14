@@ -61,7 +61,6 @@ jobs:
         steps:
             - name: debug deployment webhook
               run: |
-                  echo "ref - ${{ github.event.repository_dispatch.branch }}"
                   echo "environment - ${{ github.event.repository_dispatch.client_payload.environment }}"
             - name: Checkout code
               uses: actions/checkout@v1
