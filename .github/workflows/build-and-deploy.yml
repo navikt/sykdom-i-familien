@@ -53,7 +53,7 @@ jobs:
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
-        if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') || (github.event.repository_dispatch.client_payload.environment == 'dev-sbs' && github.event.repository_dispatch.branch == 'master') # Build and push docker if publish staging event from sanity studio
+        if: startsWith(github.ref, 'refs/heads/dev-') || startsWith(github.ref, 'refs/heads/master') || (github.event.repository_dispatch.client_payload.environment == 'dev-sbs') # Build and push docker if publish staging event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
         env:
@@ -61,9 +61,8 @@ jobs:
         steps:
             - name: debug deployment webhook
               run: |
-                  echo "ref - ${{ github.event.deployment.ref }}"
-                  echo "task - ${{ github.event.deployment.task }}"
-                  echo "environment - ${{ github.event.deployment.environment }}"
+                  echo "ref - ${{ github.event.repository_dispatch.branch }}"
+                  echo "environment - ${{ github.event.repository_dispatch.client_payload.environment }}"
             - name: Checkout code
               uses: actions/checkout@v1
             - name: Use Node.js ${{ matrix.node-version }}
@@ -95,7 +94,7 @@ jobs:
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
-        if: github.event.repository_dispatch.client_payload.environment == 'prod-sbs' && github.event.repository_dispatch.branch == 'master' # Build and push docker if publish production event from sanity studio
+        if: github.event.repository_dispatch.client_payload.environment == 'prod-sbs' # Build and push docker if publish production event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
         env:
