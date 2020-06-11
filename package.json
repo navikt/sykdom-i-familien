@@ -95,7 +95,7 @@
         "enzyme-adapter-react-16": "^1.15.2",
         "eslint": "^6.8.0",
         "eslint-plugin-react-hooks": "^2.3.0",
-        "gatsby-cli": "^2.8.29",
+        "gatsby-cli": "^2.12.45",
         "graphql-typescript-definitions": "^0.18.1",
         "hast-util-to-html": "^6.1.0",
         "identity-obj-proxy": "^3.0.0",
