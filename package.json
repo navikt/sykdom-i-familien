@@ -81,7 +81,7 @@
         "@types/node": "^12.12.56",
         "@types/react": "^16.9.49",
         "@types/react-aria-menubutton": "^6.2.5",
-        "@types/react-collapse": "^4.0.2",
+        "@types/react-collapse": "^5.0.0",
         "@types/react-dom": "^16.9.8",
         "@types/react-helmet": "^5.0.16",
         "@types/react-responsive": "^8.0.2",
