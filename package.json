@@ -56,7 +56,7 @@
         "nav-frontend-veilederpanel": "^0.1.29",
         "prop-types": "^15.7.2",
         "react": "^16.13.1",
-        "react-aria-menubutton": "6.2.0",
+        "react-aria-menubutton": "7.0.0",
         "react-collapse": "^5.0.1",
         "react-dom": "^16.13.1",
         "react-helmet": "^5.2.1",
