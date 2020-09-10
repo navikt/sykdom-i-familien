@@ -17,12 +17,6 @@ const config = {
             }
         },
         {
-            resolve: 'gatsby-plugin-anchor-links',
-            options: {
-                offset: -80
-            }
-        },
-        {
             resolve: 'gatsby-source-sanity',
             options: {
                 projectId: '8ux9tyb9',
