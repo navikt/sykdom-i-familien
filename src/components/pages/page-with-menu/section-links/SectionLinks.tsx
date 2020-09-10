@@ -1,9 +1,9 @@
 import React from 'react';
+import { AnchorLink } from 'gatsby-plugin-anchor-links';
 import bemUtils from '../../../../utils/bemUtils';
-import { SectionMenuItem } from '../PageWithMenu';
-import Lenke from 'nav-frontend-lenker';
-import './sectionLinks.less';
 import Columns from '../../../layout/columns/Columns';
+import { SectionMenuItem } from '../PageWithMenu';
+import './sectionLinks.less';
 
 interface Props {
     items: SectionMenuItem[];
@@ -20,7 +20,9 @@ interface SectionLinkProps {
 
 const SectionLink: React.FunctionComponent<SectionLinkProps> = ({ item, isActive }) => (
     <div key={item.slug} className={bem.classNames(bem.element('item', isActive ? 'active' : undefined))}>
-        <Lenke href={`#${item.slug}`}>{item.label}</Lenke>
+        <AnchorLink className="lenke" to={`#${item.slug}`}>
+            {item.label}
+        </AnchorLink>
     </div>
 );
 
