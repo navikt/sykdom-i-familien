@@ -36,7 +36,7 @@
         "gatsby-plugin-routes": "^1.0.0",
         "gatsby-plugin-tslint": "0.0.2",
         "gatsby-plugin-typescript": "^2.4.19",
-        "gatsby-source-sanity": "^5.0.6",
+        "gatsby-source-sanity": "^6.0.4",
         "gray-matter": "^4.0.2",
         "less": "^3.12.2",
         "lodash.chunk": "^4.2.0",
