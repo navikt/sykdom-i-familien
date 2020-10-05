@@ -30,7 +30,7 @@
         "gatsby-image": "^2.4.20",
         "gatsby-plugin-compile-es6-packages": "^2.1.0",
         "gatsby-plugin-intl": "^0.3.3",
-        "gatsby-plugin-less": "^3.2.9",
+        "gatsby-plugin-less": "^4.0.5",
         "gatsby-plugin-react-helmet": "^3.3.12",
         "gatsby-plugin-react-svg": "^3.0.0",
         "gatsby-plugin-routes": "^1.0.0",
