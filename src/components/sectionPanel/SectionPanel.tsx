@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import PanelBase from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import bemUtils from '../../utils/bemUtils';
 import TitleWithLine from '../elements/titleWithLine/TitleWithLine';
 
@@ -36,7 +36,7 @@ const SectionPanel = ({
                     illustration !== undefined && illustrationPlacement === 'outside'
                 )
             )}>
-            <PanelBase className={bem.element('panel')}>
+            <Panel className={bem.element('panel')}>
                 {illustration && <div className={bem.element('illustration')}>{illustration}</div>}
                 {title && (
                     <div className={bem.element('title')}>
@@ -44,7 +44,7 @@ const SectionPanel = ({
                     </div>
                 )}
                 {children}
-            </PanelBase>
+            </Panel>
         </section>
     );
 };
