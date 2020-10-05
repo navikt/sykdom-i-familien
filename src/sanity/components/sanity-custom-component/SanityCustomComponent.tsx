@@ -18,7 +18,7 @@ const SanityCustomComponent: React.FunctionComponent<Props> = ({ component: { co
         case RegisteredComponents.omsorgsdager_kalkulator:
             return <OmsorgsdagerKalkulator includeHeader={false} />;
         case RegisteredComponents.omsorgsdager_kalkulator_info:
-            return <OmsorgsdagerKalkulatorInfo kalkulatorHref={"#"} includeHeader={false}/>;
+            return <OmsorgsdagerKalkulatorInfo kalkulatorHref={"https://www.nav.no/familie/sykdom-i-familien/omsorgsdager_kalkulator"} includeHeader={false}/>;
         default:
             return (
                 <>
