@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import Chevron from 'nav-frontend-chevron';
 import classnames from 'classnames';
 import bemUtils from '../../../../utils/bemUtils';
