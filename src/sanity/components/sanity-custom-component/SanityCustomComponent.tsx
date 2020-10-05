@@ -1,10 +1,12 @@
 import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import OmsorgsdagerKalkis from '../../../custom-components/omsorgsdager-kalkis/OmsorgsdagerKalkis';
 import { CusomComponentDocument } from '../../types/documents';
+import OmsorgsdagerKalkulator from '@navikt/omsorgsdager-kalkulator/lib/OmsorgsdagerKalkulator';
+import OmsorgsdagerKalkulatorInfo from '@navikt/omsorgsdager-kalkulator/lib/OmsorgsdagerKalkulatorInfo';
 
 enum RegisteredComponents {
-    'omsorgspenger_kalkis' = 'omsorgspenger_kalkis'
+    'omsorgsdager_kalkulator_info' = 'omsorgsdager_kalkulator_info',
+    'omsorgsdager_kalkulator' = 'omsorgsdager_kalkulator'
 }
 
 interface Props {
@@ -13,8 +15,10 @@ interface Props {
 
 const SanityCustomComponent: React.FunctionComponent<Props> = ({ component: { componentId, name } }) => {
     switch (componentId) {
-        case RegisteredComponents.omsorgspenger_kalkis:
-            return <OmsorgsdagerKalkis />;
+        case RegisteredComponents.omsorgsdager_kalkulator:
+            return <OmsorgsdagerKalkulator includeHeader={false} />;
+        case RegisteredComponents.omsorgsdager_kalkulator_info:
+            return <OmsorgsdagerKalkulatorInfo kalkulatorHref={"https://www.nav.no/familie/sykdom-i-familien/nb/omsorgsdagerkalkulator-beregn"} includeHeader={false}/>;
         default:
             return (
                 <>
