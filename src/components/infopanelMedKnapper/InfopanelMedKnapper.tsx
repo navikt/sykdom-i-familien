@@ -1,16 +1,14 @@
 import * as React from 'react';
 import { InjectedIntlProps } from 'gatsby-plugin-intl';
 import Lenke from 'nav-frontend-lenker';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 import SanityBlock from '../../sanity/components/sanity-block/SanityBlock';
 import { isSanityContentHeadingLevel, SanityContentHeadingLevel } from '../../sanity/types';
 import { isInfopanelMedKnapper } from '../../sanity/types/guards';
 import { LocaleRichTextObject, LocaleStringObject } from '../../sanity/types/locale-objects';
 import { Lenkeknapp } from '../../sanity/types/objects';
-import {
-    getHeadingTag, getLocaleBlockContent, getLocaleString, getOptionalLocaleString
-} from '../../sanity/utils';
+import { getHeadingTag, getLocaleBlockContent, getLocaleString, getOptionalLocaleString } from '../../sanity/utils';
 import './infopanelMedKnapper.less';
 
 export const invalidInput = (

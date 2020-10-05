@@ -22,7 +22,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [8.x]
+              node-version: [12.x]
         steps:
             #- run: echo "${{toJSON(github.event)}}" # Debugs github event.
             - uses: actions/checkout@v1
