@@ -22,7 +22,7 @@
         "@babel/plugin-transform-async-to-generator": "^7.10.4",
         "@babel/plugin-transform-regenerator": "^7.10.4",
         "@babel/plugin-transform-runtime": "^7.11.5",
-        "@navikt/omsorgsdager-kalkulator": "^1.0.1",
+        "@navikt/omsorgsdager-kalkulator": "^1.0.2",
         "@sanity/block-content-to-react": "^2.0.7",
         "babel-polyfill": "^6.26.0",
         "canvas": "^2.6.1",
