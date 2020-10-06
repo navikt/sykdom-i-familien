@@ -3,8 +3,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { CusomComponentDocument } from '../../types/documents';
 import OmsorgsdagerKalkulator from '@navikt/omsorgsdager-kalkulator/lib/OmsorgsdagerKalkulator';
 import OmsorgsdagerKalkulatorInfo from '@navikt/omsorgsdager-kalkulator/lib/OmsorgsdagerKalkulatorInfo';
-import OmsorgsdagerKalkulatorInngang
-    from '../../../custom-components/omsorgsdager-kalkulator-inngang/OmsorgsdagerKalkulatorInngang';
+import OmsorgsdagerKalkulatorInngang from '../../../custom-components/omsorgsdager-kalkulator-inngang/OmsorgsdagerKalkulatorInngang';
 
 enum RegisteredComponents {
     'omsorgsdager_kalkulator_info' = 'omsorgsdager_kalkulator_info',
