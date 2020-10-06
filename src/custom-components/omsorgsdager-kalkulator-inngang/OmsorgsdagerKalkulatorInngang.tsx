@@ -13,7 +13,9 @@ const OmsorgsdagerKalkulatorInngang = () => (
         <SvgCalculatorLogo />
         <Undertittel className={bem.element('calcUndertittel')}>Kalkulator omsorgsdager</Undertittel>
         <Normaltekst>Med denne kalkulatoren kan du regne ut hvor mange omsorgsdager du kan ha rett på.</Normaltekst>
-        <Lenke href={"https://www.nav.no/familie/sykdom-i-familien/nb/omsorgsdagerkalkulator-info"}>Fortsett til kalkulator</Lenke>
+        <Lenke href={'https://www.nav.no/familie/sykdom-i-familien/nb/omsorgsdagerkalkulator-info'}>
+            Fortsett til kalkulator
+        </Lenke>
     </Panel>
 );
 

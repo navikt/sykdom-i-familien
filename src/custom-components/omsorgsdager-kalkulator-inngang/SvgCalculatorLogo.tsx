@@ -1,13 +1,7 @@
 import React from 'react';
 
 const SvgCalculatorLogo = () => (
-    <svg
-        focusable={false}
-        xmlns="http://www.w3.org/2000/svg"
-        width="65"
-        height="65"
-        fill="none"
-        viewBox="0 0 118 118">
+    <svg focusable={false} xmlns="http://www.w3.org/2000/svg" width="65" height="65" fill="none" viewBox="0 0 118 118">
         <circle cx="59" cy="59" r="59" fill="#D1C5F6"></circle>
         <rect width="42" height="66" x="38" y="26" fill="#3E3832" rx="2"></rect>
         <path fill="#D8D8D8" d="M42.2 32.188H75.80000000000001V46.626000000000005H42.2z"></path>
