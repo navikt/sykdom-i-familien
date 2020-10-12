@@ -19,7 +19,7 @@ interface Props {
     showLanguageToggle: boolean;
     pageTitle: string;
     pageMetadescription: string;
-    sectionMenuItems: SectionMenuItem[];
+    sectionMenuItems?: SectionMenuItem[];
     menuFooter?: React.ReactNode;
     children: React.ReactNode;
     header?: React.ReactNode;
@@ -33,7 +33,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     pageTitle,
     pageMetadescription,
     showLanguageToggle,
-    sectionMenuItems,
+    sectionMenuItems = [],
     menuFooter,
     header,
     slug,
@@ -59,6 +59,8 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
         </div>
     );
 
+    const hasMenu = sectionMenuItems.length > 0;
+
     return (
         <PageWrapper
             pageTitle={pageTitle}
@@ -71,9 +73,9 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
                     <Breadcrumbs slug={slug} title={pageTitle} />
                 </div>
             )}
-            <div className={bem.block}>
-                {!isBrowser && renderSidebar()}
-                {isBrowser && (
+            <div className={bem.classNames(bem.block, bem.modifierConditional('noSidebar', hasMenu === false))}>
+                {hasMenu && !isBrowser && renderSidebar()}
+                {hasMenu && isBrowser && (
                     <>
                         <MediaQuery minWidth={1072}>{renderSidebar()}</MediaQuery>
                         <MediaQuery maxWidth={1071}>

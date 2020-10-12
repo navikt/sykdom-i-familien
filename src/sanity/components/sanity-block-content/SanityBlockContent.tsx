@@ -13,7 +13,7 @@ import {
     getSanityContentWithLocale, getSanityStringWithLocale
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { SanityContentHeadingLevel } from '../../types';
-import { AlertStripeObject, IllustrationDocument } from '../../types/documents';
+import { AlertStripeObject, IllustrationDocument, MessageDocument } from '../../types/documents';
 import {
     ExpandableContentObject, FaqObject, RasmusVeilederpanelObject, TabsObject, TextblockObject,
     VeilederpanelObject
@@ -22,7 +22,9 @@ import {
     getHeadingLevelForChild, getLocaleBlockContent, getLocaleString, getOptionalLocaleString
 } from '../../utils';
 import SanityBlock from '../sanity-block/SanityBlock';
+import SanityCustomComponent from '../sanity-custom-component/SanityCustomComponent';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
+import SanityMessage from '../sanity-message/SanityMessage';
 import SanityTabs from '../sanity-tabs/SanityTabs';
 import SanityTextblock from '../sanity-textblock/SanityTextblock';
 
@@ -41,11 +43,21 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                 blocks={content}
                 serializers={{
                     types: {
+                        customComponent: ({ node }: { node: any }) => {
+                            return <SanityCustomComponent component={node} />;
+                        },
+                        message: ({ node }: { node: MessageDocument }) => {
+                            return (
+                                <Box padBottom="l">
+                                    <SanityMessage message={node} />
+                                </Box>
+                            );
+                        },
                         alertstripe: ({ node }: { node: AlertStripeObject }) => {
                             const title = getLocaleString(node.title, intl.locale);
                             const blockContent = getLocaleBlockContent(node.content, intl.locale);
                             return (
-                                <Box padBottom="xl">
+                                <Box padBottom="l">
                                     <AlertStripe type={node.style}>
                                         {title && <Element style={{ marginBottom: '.5rem' }}>{title}</Element>}
                                         <SanityBlock content={blockContent} />
@@ -60,6 +72,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 </Box>
                             );
                         },
+
                         expandableContent: ({ node: expandableContent }: { node: ExpandableContentObject }) => {
                             const title = getSanityStringWithLocale(expandableContent.title, intl.locale);
                             const blockContent = getSanityContentWithLocale(expandableContent.content, intl.locale);
@@ -73,6 +86,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 </Box>
                             );
                         },
+
                         veilederpanel: ({ node: veilederpanel }: { node: VeilederpanelObject }) => {
                             const contentBlocks = getSanityContentWithLocale(veilederpanel.content, intl.locale);
                             return (

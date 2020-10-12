@@ -1,6 +1,7 @@
 import BlockContent from '@sanity/block-content-to-react';
 import React from 'react';
 import Lenke from 'nav-frontend-lenker';
+import { Undertittel } from 'nav-frontend-typografi';
 import ExternalLinkIcon from '../../../components/elements/external-link-icon/ExternalLinkIcon';
 import { BlockContentType } from '../../types/parts';
 import './sanityBlock.less';
@@ -16,6 +17,13 @@ const ListItemRenderer = (props: { children: React.ReactNode; node: { style: str
 const BlockRenderer = (props: { children: React.ReactNode; node: { style: string } }) => {
     if (props.node.style === 'button') {
         return <div className="sanityLinkButtonWrapper">{props.children}</div>;
+    }
+    if (props.node.style === 'title') {
+        return (
+            <div style={{ marginBottom: '.5rem', paddingTop: '1rem' }}>
+                <Undertittel>{props.children}</Undertittel>
+            </div>
+        );
     }
     return <p>{props.children}</p>;
 };

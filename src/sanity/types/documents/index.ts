@@ -14,6 +14,11 @@ export interface IllustrationDocument {
     children: string[];
 }
 
+export interface CusomComponentDocument {
+    name: string;
+    componentId: string;
+}
+
 export interface AlertStripeObject {
     style: 'feil' | 'advarsel' | 'info';
     title: LocaleStringObject;
@@ -46,6 +51,11 @@ export interface YtelsePageDocument {
     illustration: IllustrationDocument;
     inShort: LocaleRichTextObject;
     inShortTitle: LocaleStringObject;
+    content: SectionObject[];
+}
+export interface SectionPageDocument {
+    slug: string;
+    title: LocaleStringObject;
     content: SectionObject[];
 }
 export interface CustomPageDocument {

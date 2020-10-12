@@ -43,6 +43,7 @@ exports.createPages = async ({ graphql, actions }) => {
         });
     });
 
+    /** FAQ pages */
     const customPages = await graphql(`
         query {
             allSanityCustomPage {
@@ -60,6 +61,32 @@ exports.createPages = async ({ graphql, actions }) => {
         createPage({
             path: node.slug.current,
             component: path.resolve(`./src/templates/customPageTemplate.tsx`),
+            context: {
+                slug: node.slug.current
+            }
+        });
+    });
+
+    /** Section pages */
+    const sectionPages = await graphql(`
+        query {
+            allSanitySectionPage${includeNonPublicPagesOnlyInDevFilter} {
+                edges {
+                    node {
+                        slug {
+                            current
+                        }
+                    }
+                }
+            }
+        }
+    `);
+
+    sectionPages.data.allSanitySectionPage.edges.forEach(({ node }) => {
+        console.log('Creating SectionPage', node.slug.current);
+        createPage({
+            path: node.slug.current,
+            component: path.resolve(`./src/templates/sectionPageTemplate.tsx`),
             context: {
                 slug: node.slug.current
             }

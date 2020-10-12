@@ -1,9 +1,9 @@
 import React from 'react';
-import bemUtils from '../../../../utils/bemUtils';
-import { SectionMenuItem } from '../PageWithMenu';
 import Lenke from 'nav-frontend-lenker';
-import './sectionLinks.less';
+import bemUtils from '../../../../utils/bemUtils';
 import Columns from '../../../layout/columns/Columns';
+import { SectionMenuItem } from '../PageWithMenu';
+import './sectionLinks.less';
 
 interface Props {
     items: SectionMenuItem[];
