@@ -129,7 +129,7 @@ jobs:
     #               npm run build
     #         - name: Build Docker image
     #           run: |
-    #               docker build -t ${IMAGE} . -f Dockerfile-dev
+    #               docker build -t ${IMAGE} . -f "./Dockerfile-dev"
     #         - name: Login to Github Package Registry
     #           env:
     #               DOCKER_USERNAME: x-access-token
