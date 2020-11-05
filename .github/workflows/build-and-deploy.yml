@@ -86,7 +86,7 @@ jobs:
             npm run build
         - name: Build Docker image
           run: |
-            docker build --tag ${IMAGE} . -f Dockerfile-dev
+            docker build -t ${IMAGE} . -f Dockerfile-dev
         - name: Login to Github Package Registry
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
