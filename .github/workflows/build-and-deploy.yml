@@ -156,7 +156,7 @@ jobs:
 
     deploy-dev-gcp:
       name: Deploy to dev-gcp
-      if: startsWith(github.ref, 'refs/heads/preview-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
+      if: github.event.action == 'publish-dev-sbs' || startsWith(github.ref, 'refs/heads/preview-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
       needs: build-code-and-push-docker-dev # Depends on build-code-and-push-docker job
       runs-on: ubuntu-latest
       steps:
