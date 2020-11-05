@@ -15,7 +15,6 @@ env:
   BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  PREVIEW_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien:${{ github.sha }}
 
 jobs:
     test:
@@ -66,8 +65,10 @@ jobs:
     build-code-and-push-docker-preview:
       name: Build code and push docker preview image
       if: startsWith(github.ref, 'refs/heads/preview-') || github.event.action == 'publish-dev-sbs' # Build and push docker if branch is either master or dev-*
-      needs: test
+      needs: set-image
       runs-on: ubuntu-latest
+      env:
+        IMAGE: ${{ needs.set-image.outputs.image }}
       steps:
         - name: Checkout code
           uses: actions/checkout@v1
@@ -87,13 +88,13 @@ jobs:
             npm run build
         - name: Build Docker image
           run: |
-            docker build -t ${PREVIEW_IMAGE} . -f Dockerfile-dev
+            docker build -t ${IMAGE} . -f Dockerfile-dev
         - name: Login to Github Package Registry
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
             docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-            docker push ${PREVIEW_IMAGE}
+            docker push ${IMAGE}
 
 
     # build-code-and-push-docker-dev:
