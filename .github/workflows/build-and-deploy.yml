@@ -15,8 +15,6 @@ env:
   BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-env:
   PREVIEW_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien:${{ github.sha }}
 
 jobs:
