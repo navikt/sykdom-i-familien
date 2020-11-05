@@ -1,0 +1,10 @@
+{
+    "app": "sykdom-i-familien",
+    "cluster": "dev-gcp",
+    "namespace": "dusseldorf",
+    "team": "dusseldorf",
+    "minReplicas": "1",
+    "maxReplicas": "1",
+    "ingresses": ["https://sykdom-i-familien.dev.nav.no"],
+    "env": {}
+}

@@ -83,7 +83,6 @@ jobs:
                     uses: actions/setup-node@v1
                     with:
                         node-version: ${{ matrix.node-version }}
-            
             - name: build code
               env:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
@@ -155,20 +154,33 @@ jobs:
             - name: Push Docker image
               run: 'docker push ${IMAGE}'
 
-    deploy-dev-sbs:
-        name: deploy-dev-sbs
-        needs: [build-code-and-push-docker-dev, set-image] # Depends on build-code-and-push-docker job
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v1
-            - name: deploy to dev-sbs
-              uses: nais/deploy/actions/deploy@v1
-              env:
-                IMAGE: ${{ needs.set-image.outputs.image }}
-                APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                CLUSTER: dev-sbs
-                RESOURCE: nais/dev-sbs.yml
+    deploy-dev-gcp:
+      name: Deploy to dev-gcp
+      if: startsWith(github.ref, 'refs/heads/preview-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
+      needs: build-code-and-push-docker-dev # Depends on build-code-and-push-docker job
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - uses: nais/deploy/actions/deploy@v1
+          env:
+            APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+            CLUSTER: dev-gcp
+            RESOURCE: nais/naiserator.yml
+            VARS: nais/dev-gcp.json
+    # deploy-dev-sbs:
+    #     name: deploy-dev-sbs
+    #     needs: [build-code-and-push-docker-dev, set-image] # Depends on build-code-and-push-docker job
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: Checkout code
+    #           uses: actions/checkout@v1
+    #         - name: deploy to dev-sbs
+    #           uses: nais/deploy/actions/deploy@v1
+    #           env:
+    #             IMAGE: ${{ needs.set-image.outputs.image }}
+    #             APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+    #             CLUSTER: dev-sbs
+    #             RESOURCE: nais/dev-sbs.yml
 
     deploy-prod-sbs:
         name: deploy-prod-sbs
