@@ -75,8 +75,14 @@ jobs:
           with:
             node-version: ${{ matrix.node-version }}
         - name: build code
+          env:
+            SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+            DATASET: multisite
+            ENV: dev
+            OVERLAY_DRAFTS: true
+            WATCH_MODE: true
           run: |
-            npm ci
+            npm i
             npm run build
         - name: Build Docker image
           run: |
