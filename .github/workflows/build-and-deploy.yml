@@ -92,7 +92,7 @@ jobs:
             DATASET: multisite
             ENV: dev
             OVERLAY_DRAFTS: true
-            WATCH_MODE: true
+            WATCH_MODE: false
           run: |
             npm i
             npm run build
