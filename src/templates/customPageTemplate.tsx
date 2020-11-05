@@ -14,6 +14,7 @@ export const query = graphql`
                     slug {
                         current
                     }
+                    site
                     _rawTitle
                     _rawIngress
                     _rawMetadescription

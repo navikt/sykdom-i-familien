@@ -2,22 +2,25 @@ import React from 'react';
 import { RouterProps } from '@reach/router';
 import { graphql } from 'gatsby';
 import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
-import SanityFrontpage from '../sanity/components/sanity-frontpage/SanityFrontpage';
-import { extractFrontpageData } from '../sanity/utils/frontpageUtils';
-import { Site } from '../utils/site';
+import SanityFrontpage from '../../sanity/components/sanity-frontpage/SanityFrontpage';
+import { extractFrontpageData } from '../../sanity/utils/frontpageUtils';
+import { Site } from '../../utils/site';
 
 interface Props {
     data: any;
 }
 
-const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & InjectedIntlProps & RouterProps) => {
+const ArbeidsgiverForside: React.FunctionComponent<Props> = ({
+    data,
+    intl,
+}: Props & InjectedIntlProps & RouterProps) => {
     const frontpageData = extractFrontpageData(data, intl.locale);
-    return <SanityFrontpage data={frontpageData} site={Site.sykdomIFamilien} />;
+    return <SanityFrontpage data={frontpageData} site={Site.arbeidsgiver} />;
 };
 
 export const pageQuery = graphql`
     {
-        allSanityFrontpage(filter: { _id: { eq: "frontpage-config" } }) {
+        allSanityFrontpage(filter: { _id: { eq: "frontpage-config-arbeidsgiver" } }) {
             nodes {
                 showLanguageToggle
                 _id
@@ -32,4 +35,4 @@ export const pageQuery = graphql`
     }
 `;
 
-export default injectIntl(Hovedside);
+export default injectIntl(ArbeidsgiverForside);
