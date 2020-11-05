@@ -62,49 +62,76 @@ jobs:
       - id: debug
         run: echo "${BASE_IMAGE}:${TAG}"
 
-    build-code-and-push-docker-dev:
-        name: staging-build-push-docker
-        if: github.event.action == 'publish-dev-sbs' # Build and push docker if publish staging event from sanity studio
-        needs: set-image
-        runs-on: ubuntu-latest
-        env:
-          IMAGE: ${{ needs.set-image.outputs.image }}
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v1
-            - name: Cache NPM dependencies
-              uses: actions/cache@v1
-              with:
-                path: node_modules
-                key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-                restore-keys: |
-                  ${{ runner.OS }}-npm-cache-
-                  - name: Use Node.js ${{ matrix.node-version }}
-                    uses: actions/setup-node@v1
-                    with:
-                        node-version: ${{ matrix.node-version }}
-            - name: build code
-              env:
-                  SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-                  DATASET: production
-                  ENV: dev
-                  OVERLAY_DRAFTS: true
-                  WATCH_MODE: true
-              run: |
-                  echo "Exported DATASET=$DATASET"
-                  npm i
-                  npm run build
-            - name: Build Docker image
-              run: |
-                  docker build -t ${IMAGE} . -f Dockerfile-dev
-            - name: Login to Github Package Registry
-              env:
-                  DOCKER_USERNAME: x-access-token
-                  DOCKER_PASSWORD: ${{ env.GITHUB_TOKEN }}
-              run: |
-                  echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
-            - name: Push Docker image
-              run: 'docker push ${IMAGE}'
+    build-code-and-push-docker-preview:
+      name: Build code and push docker preview image
+      if: startsWith(github.ref, 'refs/heads/preview-') || github.event.action == 'publish-dev-sbs' # Build and push docker if branch is either master or dev-*
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v1
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node-version }}
+        - name: build code
+          run: |
+            npm ci
+            npm run build
+        - name: Build Docker image
+          run: |
+            docker build --tag ${IMAGE} . -f Dockerfile-dev
+        - name: Login to Github Package Registry
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+            docker push ${IMAGE}
+
+
+    # build-code-and-push-docker-dev:
+    #     name: staging-build-push-docker
+    #     if: github.event.action == 'publish-dev-sbs' # Build and push docker if publish staging event from sanity studio
+    #     needs: set-image
+    #     runs-on: ubuntu-latest
+    #     env:
+    #       IMAGE: ${{ needs.set-image.outputs.image }}
+    #     steps:
+    #         - name: Checkout code
+    #           uses: actions/checkout@v1
+    #         - name: Cache NPM dependencies
+    #           uses: actions/cache@v1
+    #           with:
+    #             path: node_modules
+    #             key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+    #             restore-keys: |
+    #               ${{ runner.OS }}-npm-cache-
+    #               - name: Use Node.js ${{ matrix.node-version }}
+    #                 uses: actions/setup-node@v1
+    #                 with:
+    #                     node-version: ${{ matrix.node-version }}
+    #         - name: build code
+    #           env:
+    #               SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+    #               DATASET: production
+    #               ENV: dev
+    #               OVERLAY_DRAFTS: true
+    #               WATCH_MODE: true
+    #           run: |
+    #               echo "Exported DATASET=$DATASET"
+    #               npm i
+    #               npm run build
+    #         - name: Build Docker image
+    #           run: |
+    #               docker build -t ${IMAGE} . -f Dockerfile-dev
+    #         - name: Login to Github Package Registry
+    #           env:
+    #               DOCKER_USERNAME: x-access-token
+    #               DOCKER_PASSWORD: ${{ env.GITHUB_TOKEN }}
+    #           run: |
+    #               echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
+    #         - name: Push Docker image
+    #           run: 'docker push ${IMAGE}'
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
@@ -157,7 +184,7 @@ jobs:
     deploy-dev-gcp:
       name: Deploy to dev-gcp
       if: github.event.action == 'publish-dev-sbs' || startsWith(github.ref, 'refs/heads/preview-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
-      needs: build-code-and-push-docker-dev # Depends on build-code-and-push-docker job
+      needs: build-code-and-push-docker-preview
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v1
