@@ -3,6 +3,7 @@ import MediaQuery from 'react-responsive';
 import useActiveSections from '../../../hooks/useActiveSection';
 import bemUtils from '../../../utils/bemUtils';
 import { isBrowser } from '../../../utils/build';
+import { Site } from '../../../utils/site';
 import FlexSticky from '../../layout/flex-sticky/FlexSticky';
 import Breadcrumbs from '../page-wrapper/components/global-page-header/breadcrumbs/Breadcrumbs';
 import PageWrapper from '../page-wrapper/PageWrapper';
@@ -16,6 +17,7 @@ export interface SectionMenuItem {
 }
 
 interface Props {
+    site: Site;
     showLanguageToggle: boolean;
     pageTitle: string;
     pageMetadescription: string;
@@ -30,6 +32,7 @@ interface Props {
 const bem = bemUtils('pageWithMenu');
 
 const PageWithMenu: React.FunctionComponent<Props> = ({
+    site,
     pageTitle,
     pageMetadescription,
     showLanguageToggle,
@@ -38,7 +41,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     header,
     slug,
     children,
-    showBreadcrumbs = true
+    showBreadcrumbs = true,
 }) => {
     const sectionIds = sectionMenuItems.map((section) => section.slug);
     const [activSectionSlug, setActiceSectionSlug] = useState<string | undefined>(undefined);
@@ -70,7 +73,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
             {header && <div className={bem.element('header')}>{header}</div>}
             {showBreadcrumbs && (
                 <div className={bem.element('breadcrumbs')}>
-                    <Breadcrumbs slug={slug} title={pageTitle} />
+                    <Breadcrumbs slug={slug} title={pageTitle} site={site} />
                 </div>
             )}
             <div className={bem.classNames(bem.block, bem.modifierConditional('noSidebar', hasMenu === false))}>
