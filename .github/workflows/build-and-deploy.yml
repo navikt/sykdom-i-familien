@@ -15,6 +15,7 @@ env:
   BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  DATASET: multisite
   IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien-preview:${{ github.sha }}
 
 jobs:
@@ -91,9 +92,10 @@ jobs:
             SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
             DATASET: multisite
             ENV: dev
-            OVERLAY_DRAFTS: true
+            OVERLAY_DRAFTS: false
             WATCH_MODE: false
           run: |
+            echo "Exported DATASET=$DATASET"
             npm i
             npm run build
         - name: Build Docker image

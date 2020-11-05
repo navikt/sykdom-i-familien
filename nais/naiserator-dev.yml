@@ -42,3 +42,9 @@ spec:
         path: /metrics
     vault:
         enabled: false
+    env:
+        {{#each env}}
+            - name: {{@key}}
+                value: "{{this}}"
+            {{/each}}
+          
