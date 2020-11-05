@@ -2,7 +2,6 @@
 
 require('dotenv').config();
 require('source-map-support').install();
-const path = require('path');
 const svgoProps = require('./gatsbyUtils/svgoProps');
 const SVGO = require('svgo');
 const Sites = require('./build-utils/sites');
