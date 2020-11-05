@@ -96,7 +96,7 @@
         "hast-util-to-html": "^7.1.1",
         "identity-obj-proxy": "^3.0.0",
         "install": "^0.13.0",
-        "jest": "^26.4.2",
+        "jest": "^26.6.3",
         "jest-css-modules": "^2.1.0",
         "jsdom": "^16.4.0",
         "nav-frontend-alertstriper-style": "^2.0.17",
