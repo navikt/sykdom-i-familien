@@ -64,7 +64,7 @@ jobs:
 
     build-code-and-push-docker-dev:
         name: staging-build-push-docker
-        if: github.event.action == 'publish-dev-sbs' # Build and push docker if publish staging event from sanity studio
+        if: startsWith(github.ref, 'refs/heads/preview-') # Build and push docker if publish staging event from sanity studio
         needs: set-image
         runs-on: ubuntu-latest
         env:
@@ -83,7 +83,6 @@ jobs:
                     uses: actions/setup-node@v1
                     with:
                         node-version: ${{ matrix.node-version }}
-            
             - name: build code
               env:
                   SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
@@ -154,6 +153,20 @@ jobs:
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
               run: 'docker push ${IMAGE}'
+
+    deploy-dev-gcp:
+      name: Deploy to preview-gcp
+      if: startsWith(github.ref, 'refs/heads/preview-') # Build and push docker if branch is either master or preview-*
+      needs: [build-code-and-push-docker-dev, set-image] # Depends on build-code-and-push-docker job
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - uses: nais/deploy/actions/deploy@v1
+          env:
+            APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+            CLUSTER: dev-gcp
+            RESOURCE: nais/naiserator.yml
+            VARS: nais/dev-gcp.json
 
     deploy-dev-sbs:
         name: deploy-dev-sbs
