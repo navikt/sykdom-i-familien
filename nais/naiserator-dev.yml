@@ -29,6 +29,7 @@ spec:
         outbound:
             external:
             - host: www.nav.no
+            - host: "ryujtq87.sanity.io"
     ingresses:
       {{#each ingresses as |url|}}
        - {{url}}
