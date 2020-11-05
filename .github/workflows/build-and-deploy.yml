@@ -81,13 +81,13 @@ jobs:
             DATASET: multisite
             ENV: dev
             OVERLAY_DRAFTS: true
-            WATCH_MODE: true
+            WATCH_MODE: false
           run: |
             npm i
             npm run build
         - name: Build Docker image
           run: |
-            docker build -t ${IMAGE} .
+            docker build -t ${IMAGE} . -f Dockerfile-dev
         - name: Login to Github Package Registry
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
