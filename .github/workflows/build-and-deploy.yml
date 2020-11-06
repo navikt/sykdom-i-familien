@@ -97,7 +97,7 @@ jobs:
           run: |
             echo "Exported DATASET=$DATASET"
             npm i
-            npm run build
+            npm run build-preview
         - name: Build Docker image
           run: |
             docker build -t ${IMAGE} . -f Dockerfile-dev

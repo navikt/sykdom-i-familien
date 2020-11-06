@@ -6,6 +6,6 @@ COPY . .
 
 RUN ls -la
 
-CMD npm run develop
+CMD npm run serve-preview
 
 EXPOSE ${PORT}
