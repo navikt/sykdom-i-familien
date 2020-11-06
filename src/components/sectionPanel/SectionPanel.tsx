@@ -22,7 +22,7 @@ const SectionPanel = ({
     illustration,
     children,
     titleTag = 'h2',
-    illustrationPlacement = 'inside'
+    illustrationPlacement = 'inside',
 }: Props) => {
     return (
         <section
