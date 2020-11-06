@@ -7,13 +7,16 @@ import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
 import { Locale } from '../../../i18n/locale';
 import {
-    getSanityContentWithLocale, getSanityStringWithLocale
+    getSanityContentWithLocale,
+    getSanityStringWithLocale,
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import SanityBlock from '../sanity-block/SanityBlock';
+import { Site } from '../../../utils/site';
 
 export interface CustomPageData {
+    site: Site;
     showLanguageToggle: boolean;
     title: string;
     slug: { current: string };
@@ -30,6 +33,7 @@ interface Props {
 
 export const extractDataFromSanityCustomPage = (data: any, locale: Locale | string): CustomPageData => {
     return {
+        site: data.site,
         showLanguageToggle: data.showLanguageToggle === true,
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
         intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
@@ -37,7 +41,7 @@ export const extractDataFromSanityCustomPage = (data: any, locale: Locale | stri
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         ingress: getSanityContentWithLocale(data._rawIngress, locale) as string,
         content: data._rawContent,
-        illustration: data._rawIllustration
+        illustration: data._rawIllustration,
     };
 };
 
@@ -45,17 +49,19 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
     const { intl } = props;
     const { data } = props;
     const {
+        site,
         title,
         metadescription,
         illustration,
         showLanguageToggle,
         content,
         ingress,
-        slug
+        slug,
     } = extractDataFromSanityCustomPage(data, intl.locale);
 
     return (
         <CustomPage
+            site={site}
             intl={intl}
             pageTitle={title}
             showLanguageToggle={showLanguageToggle}
@@ -69,9 +75,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                         <Box textAlignCenter={true} margin="none">
                             <SectionIcon illustration={illustration} />
                         </Box>
-                    ) : (
-                        undefined
-                    )
+                    ) : undefined
                 }>
                 {ingress && (
                     <Ingress tag="div" style={{ marginBottom: '2rem' }}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { InjectedIntlProps } from 'gatsby-plugin-intl';
 import bemUtils from '../../../utils/bemUtils';
-import { getSiteTitle } from '../../../utils/site';
+import { getSiteTitle, Site } from '../../../utils/site';
 import PageBannerCompact from '../frontpage/components/page-banner_compact/PageBannerCompact';
 import Breadcrumbs from '../page-wrapper/components/global-page-header/breadcrumbs/Breadcrumbs';
 import PageWrapper from '../page-wrapper/PageWrapper';
@@ -14,6 +14,7 @@ export interface SectionMenuItem {
 }
 
 interface Props {
+    site: Site;
     showLanguageToggle: boolean;
     pageTitle: string;
     pageMetadescription: string;
@@ -27,13 +28,14 @@ interface Props {
 const bem = bemUtils('customPage');
 
 const CustomPage: React.FunctionComponent<Props & InjectedIntlProps> = ({
+    site,
     pageTitle,
     pageMetadescription,
     showLanguageToggle,
     slug,
     children,
     intl,
-    showBreadcrumbs = true
+    showBreadcrumbs = true,
 }) => {
     const siteMetadata = useStaticQuery(graphql`
         query {
@@ -59,7 +61,7 @@ const CustomPage: React.FunctionComponent<Props & InjectedIntlProps> = ({
             }
             {showBreadcrumbs && (
                 <div className={bem.element('breadcrumbs')}>
-                    <Breadcrumbs slug={slug} title={pageTitle} />
+                    <Breadcrumbs slug={slug} title={pageTitle} site={site} />
                 </div>
             )}
             <div className={bem.block}>

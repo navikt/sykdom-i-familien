@@ -8,7 +8,15 @@ on:
             - 'LICENCE'
             - 'CODEOWNERS'
         branches:
-    deployment:
+    repository_dispatch:
+      types: [publish-dev-sbs, publish-prod-sbs]
+
+env:
+  BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
+  GITHUB_USERNAME: x-access-token
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  DATASET: multisite
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien-preview:${{ github.sha }}
 
 jobs:
     test:
@@ -16,10 +24,21 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [8.x]
-
+              node-version: [12.x]
         steps:
+            #- run: echo "${{toJSON(github.event)}}" # Debugs github event.
             - uses: actions/checkout@v1
+            - name: Cache NPM dependencies
+              uses: actions/cache@v1
+              with:
+                path: node_modules
+                key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+                restore-keys: |
+                  ${{ runner.OS }}-npm-cache-
+                  - name: Use Node.js ${{ matrix.node-version }}
+                    uses: actions/setup-node@v1
+                    with:
+                        node-version: ${{ matrix.node-version }}
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
@@ -29,72 +48,88 @@ jobs:
                   npm ci
                   npm run test
 
-    build-code-and-push-docker-dev:
-        name: staging-build-push-docker
-        if: github.event.deployment.environment == 'dev-sbs' && github.event.deployment.ref == 'master' # Build and push docker if publish staging event from sanity studio
-        needs: test
-        runs-on: ubuntu-latest
-        steps:
-            - name: debug deployment webhook
-              run: |
-                  echo "ref - ${{ github.event.deployment.ref }}"
-                  echo "task - ${{ github.event.deployment.task }}"
-                  echo "environment - ${{ github.event.deployment.environment }}"
-            - name: Checkout code
-              uses: actions/checkout@v1
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v1
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - name: build code
-              env:
-                  SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-                  DATASET: production
-                  ENV: dev
-                  OVERLAY_DRAFTS: true
-                  WATCH_MODE: true
-              run: |
-                  echo "Exported DATASET=$DATASET"
-                  npm i
-                  npm run build
-            - name: Create Docker tag
-              env:
-                  NAME: sykdom-i-familien
-              run: |
-                  echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$NAME" > .docker_image
-                  echo "$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" > .docker_tag
-            - name: Build Docker image
-              run: |
-                  docker build -t $(cat .docker_image):$(cat .docker_tag) . -f Dockerfile-dev
-            - name: Login to Github Package Registry
-              env:
-                  DOCKER_USERNAME: x-access-token
-                  DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
-              run: |
-                  echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
-            - name: Push Docker image
-              run: 'docker push $(cat .docker_image):$(cat .docker_tag)'
-            - name: pass image file to next job.
-              uses: actions/upload-artifact@v1
-              with:
-                  name: docker_image
-                  path: .docker_image
-            - name: pass tag file to next job.
-              uses: actions/upload-artifact@v1
-              with:
-                  name: docker_tag
-                  path: .docker_tag
+    set-image:
+      name: "Set image"
+      needs: test
+      runs-on: ubuntu-latest
+      outputs:
+        image: ${{ steps.output-image.outputs.image }}
+      steps:
+      - id: checkout-code
+        uses: actions/checkout@v1
+      - id: set-image
+        run: echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
+      - id: output-image
+        run: echo "::set-output name=image::${BASE_IMAGE}:${TAG}"
+      - id: debug
+        run: echo "${BASE_IMAGE}:${TAG}"
+
+    build-code-and-push-docker-preview:
+      name: Build code and push docker preview image
+      if: startsWith(github.ref, 'refs/heads/preview-') || github.event.action == 'publish-dev-sbs' # Build and push docker if branch is either master or dev-*
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v1
+        - name: Cache NPM dependencies
+          uses: actions/cache@v1
+          with:
+            path: node_modules
+            key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.OS }}-npm-cache-
+              - name: Use Node.js ${{ matrix.node-version }}
+                uses: actions/setup-node@v1
+                with:
+                    node-version: ${{ matrix.node-version }}
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node-version }}
+        - name: build code
+          env:
+            SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+            DATASET: multisite
+            ENV: dev
+            OVERLAY_DRAFTS: true
+            WATCH_MODE: false
+          run: |
+            echo "Exported DATASET=$DATASET"
+            npm i
+            npm run build-preview
+        - name: Build Docker image
+          run: |
+            docker build -t ${IMAGE} . -f Dockerfile-dev
+        - name: Login to Github Package Registry
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+            docker push ${IMAGE}
+
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
-        if: github.event.deployment.environment == 'prod-sbs' && github.event.deployment.ref == 'master' # Build and push docker if publish production event from sanity studio
-        needs: test
+        if: github.event.action == 'publish-prod-sbs' # Build and push docker if publish production event from sanity studio
+        needs: set-image
         runs-on: ubuntu-latest
+        env:
+          IMAGE: ${{ needs.set-image.outputs.image }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
-            - name: Checkout code
-              uses: actions/checkout@v1
+            - name: Cache NPM dependencies
+              uses: actions/cache@v1
+              with:
+                path: node_modules
+                key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+                restore-keys: |
+                  ${{ runner.OS }}-npm-cache-
+                  - name: Use Node.js ${{ matrix.node-version }}
+                    uses: actions/setup-node@v1
+                    with:
+                        node-version: ${{ matrix.node-version }}
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
@@ -110,88 +145,43 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build
-            - name: Create Docker tag
-              env:
-                  NAME: sykdom-i-familien
-              run: |
-                  echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$NAME" > .docker_image
-                  echo "$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" > .docker_tag
             - name: Build Docker image
               run: |
-                  docker build -t $(cat .docker_image):$(cat .docker_tag) .
+                  docker build -t ${IMAGE} .
             - name: Login to Github Package Registry
               env:
                   DOCKER_USERNAME: x-access-token
-                  DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+                  DOCKER_PASSWORD: ${{ env.GITHUB_TOKEN }}
               run: |
                   echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
             - name: Push Docker image
-              run: 'docker push $(cat .docker_image):$(cat .docker_tag)'
-            - name: pass image file to next job.
-              uses: actions/upload-artifact@v1
-              with:
-                  name: docker_image
-                  path: .docker_image
-            - name: pass tag file to next job.
-              uses: actions/upload-artifact@v1
-              with:
-                  name: docker_tag
-                  path: .docker_tag
+              run: 'docker push ${IMAGE}'
 
-    deploy-dev-sbs:
-        name: deploy-dev-sbs
-        needs: build-code-and-push-docker-dev # Depends on build-code-and-push-docker job
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v1
-              # Download the image and tag file to use for the deployment cli.
-            - name: Download image file
-              uses: actions/download-artifact@v1
-              with:
-                  name: docker_image
-            - name: Download tag file
-              uses: actions/download-artifact@v1
-              with:
-                  name: docker_tag
-            - name: unpack
-              run: |
-                  cp docker_image/.docker_image .
-                  cp docker_tag/.docker_tag .
-            - name: deploy to dev-sbs
-              uses: navikt/deployment-cli/action@0.4.0
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  cluster: dev-sbs
-                  team: dusseldorf
-                  resources: nais/dev-sbs.yml
+    deploy-dev-gcp:
+      name: Deploy to dev-gcp
+      if: github.event.action == 'publish-dev-sbs' || startsWith(github.ref, 'refs/heads/preview-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
+      needs: build-code-and-push-docker-preview
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - uses: nais/deploy/actions/deploy@v1
+          env:
+            APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+            CLUSTER: dev-gcp
+            RESOURCE: nais/naiserator-dev.yml
+            VARS: nais/dev-gcp.json
 
     deploy-prod-sbs:
         name: deploy-prod-sbs
-        needs: build-code-and-push-docker-prod # Depends on build-code-and-push-docker job
+        needs: [build-code-and-push-docker-prod, set-image] # Depends on build-code-and-push-docker job
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
-              # Download the image and tag file to use for the deployment cli.
-            - name: Download image file
-              uses: actions/download-artifact@v1
-              with:
-                  name: docker_image
-            - name: Download tag file
-              uses: actions/download-artifact@v1
-              with:
-                  name: docker_tag
-            - name: unpack
-              run: |
-                  cp docker_image/.docker_image .
-                  cp docker_tag/.docker_tag .
             - name: deploy to prod-sbs
-              uses: navikt/deployment-cli/action@0.4.0
+              uses: nais/deploy/actions/deploy@v1
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  cluster: prod-sbs
-                  team: dusseldorf
-                  resources: nais/prod-sbs.yml
+                IMAGE: ${{ needs.set-image.outputs.image }}
+                APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                CLUSTER: prod-sbs
+                RESOURCE: nais/prod-sbs.yml

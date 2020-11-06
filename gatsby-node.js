@@ -2,103 +2,58 @@
 
 require('dotenv').config();
 require('source-map-support').install();
-const path = require('path');
 const svgoProps = require('./gatsbyUtils/svgoProps');
 const SVGO = require('svgo');
+const Sites = require('./build-utils/sites');
 
 const svgo = new SVGO(svgoProps);
 
 require('ts-node').register({
     compilerOptions: {
         module: 'commonjs',
-        target: 'es2017'
-    }
+        target: 'es2017',
+    },
 });
 
-exports.createPages = async ({ graphql, actions }) => {
-    const includeNonPublicPagesOnlyInDevFilter = process.env.ENV !== 'dev' ? ` (filter: {isPublic: {eq: true}})` : '';
-    console.log(includeNonPublicPagesOnlyInDevFilter, process.env.ENV);
-    const ytelsePages = await graphql(`
-        query {
-            allSanityYtelsePage${includeNonPublicPagesOnlyInDevFilter} {
-                edges {
-                    node {
-                        slug {
-                            current
-                        }
-                    }
-                }
-            }
-        }
-    `);
+const pageCreator = require('./build-utils/create-pages');
 
-    const { createPage } = actions;
-    ytelsePages.data.allSanityYtelsePage.edges.forEach(({ node }) => {
-        createPage({
-            path: node.slug.current,
-            component: path.resolve(`./src/templates/ytelsePageTemplate.tsx`),
-            context: {
-                slug: node.slug.current
-            }
-        });
-    });
-
-    /** FAQ pages */
-    const customPages = await graphql(`
-        query {
-            allSanityCustomPage {
-                edges {
-                    node {
-                        slug {
-                            current
-                        }
-                    }
-                }
-            }
-        }
-    `);
-    customPages.data.allSanityCustomPage.edges.forEach(({ node }) => {
-        createPage({
-            path: node.slug.current,
-            component: path.resolve(`./src/templates/customPageTemplate.tsx`),
-            context: {
-                slug: node.slug.current
-            }
-        });
-    });
-
-    /** Section pages */
-    const sectionPages = await graphql(`
-        query {
-            allSanitySectionPage${includeNonPublicPagesOnlyInDevFilter} {
-                edges {
-                    node {
-                        slug {
-                            current
-                        }
-                    }
-                }
-            }
-        }
-    `);
-
-    sectionPages.data.allSanitySectionPage.edges.forEach(({ node }) => {
-        console.log('Creating SectionPage', node.slug.current);
-        createPage({
-            path: node.slug.current,
-            component: path.resolve(`./src/templates/sectionPageTemplate.tsx`),
-            context: {
-                slug: node.slug.current
-            }
-        });
-    });
+const createPagesForSite = async (site, onlyPublicPages, { graphql, actions }) => {
+    await pageCreator.createPages(
+        'allSanityYtelsePage',
+        site,
+        onlyPublicPages,
+        { graphql, actions },
+        './src/templates/ytelsePageTemplate.tsx'
+    );
+    await pageCreator.createPages(
+        'allSanityCustomPage',
+        site,
+        onlyPublicPages,
+        { graphql, actions },
+        './src/templates/customPageTemplate.tsx'
+    );
+    await pageCreator.createPages(
+        'allSanitySectionPage',
+        site,
+        onlyPublicPages,
+        { graphql, actions },
+        './src/templates/sectionPageTemplate.tsx'
+    );
 };
 
-exports.onCreateWebpackConfig = ({ stage, rules, loaders, plugins, actions }) => {
+exports.createPages = async (tools) => {
+    const onlyPublicPages = process.env.ENV !== 'dev';
+    console.log('onlyPublicPages:', onlyPublicPages);
+    await createPagesForSite(Sites.sif, onlyPublicPages, tools);
+    await createPagesForSite(Sites.arbeidsgiver, onlyPublicPages, tools);
+    await createPagesForSite(Sites.samarbeid, onlyPublicPages, tools);
+};
+
+exports.onCreateWebpackConfig = ({ actions }) => {
     actions.setWebpackConfig({
         externals: {
-            canvas: 'commonjs canvas'
-        }
+            canvas: 'commonjs canvas',
+        },
     });
 };
 
@@ -116,8 +71,8 @@ async function onCreateNode({ node, actions, createNodeId, createContentDigest }
             parent: node.id,
             internal: {
                 contentDigest: createContentDigest({}),
-                type: 'optimizedSvg'
-            }
+                type: 'optimizedSvg',
+            },
         };
         const { createNode, createParentChildLink } = actions;
         createNode(svgNode);
