@@ -16,7 +16,7 @@ env:
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DATASET: multisite
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien-preview:${{ github.sha }}
+  # IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien-preview:${{ github.sha }}
 
 jobs:
     test:
@@ -67,7 +67,9 @@ jobs:
     build-code-and-push-docker-preview:
       name: Build code and push docker preview image
       if: startsWith(github.ref, 'refs/heads/preview-') || github.event.action == 'publish-dev-sbs' # Build and push docker if branch is either master or dev-*
-      needs: test
+      needs: set-image
+      env:
+        IMAGE: ${{ needs.set-image.outputs.image }}
       runs-on: ubuntu-latest
       steps:
         - name: Checkout code
@@ -92,7 +94,7 @@ jobs:
             SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
             DATASET: multisite
             ENV: dev
-            OVERLAY_DRAFTS: false
+            OVERLAY_DRAFTS: true
             WATCH_MODE: false
           run: |
             echo "Exported DATASET=$DATASET"
