@@ -9,13 +9,13 @@ spec:
     image: {{ image }}
     port: 8080
     liveness:
-        path: /isalive.txt
-        initialDelay: 20
+        path: /familie/sykdom-i-familien/isalive.txt
+        initialDelay: 3
         timeout: 1
         periodSeconds: 5
         failureThreshold: 10
     readiness:
-        path: /isready.txt
+        path: /familie/sykdom-i-familien/isready.txt
         initialDelay: 20
         timeout: 1
     resources:
