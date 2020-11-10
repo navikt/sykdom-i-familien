@@ -28,7 +28,7 @@ const getOptimizedSvgForIllustration = (
 
 const SanityIllustration: React.FunctionComponent<Props> = ({ illustration, ...props }) => {
     const data = useStaticQuery(graphql`
-        query some {
+        query {
             allOptimizedSvg {
                 edges {
                     node {

@@ -16,6 +16,7 @@ export const query = graphql`
                     slug {
                         current
                     }
+                    site
                     _rawMetadescription
                     _rawTitle
                     _rawContent(resolveReferences: { maxDepth: 10 })

@@ -5,12 +5,14 @@ import { Link } from 'gatsby-plugin-intl';
 import bemUtils from '../../../../../utils/bemUtils';
 
 import './linkPanel.less';
+import { Site } from '../../../../../utils/site';
 
 type LinkPanelLayout = 'frontpageImageAbove' | 'wideWithImage' | 'plain';
 
 interface Props {
     image?: React.ReactNode;
     title: string;
+    site?: Site;
     url: {
         url: string;
         isPageSlug: boolean;
@@ -20,7 +22,18 @@ interface Props {
 
 const bem = bemUtils('linkPanel');
 
-const LinkPanel: React.FunctionComponent<Props> = ({ title, url, image, layout = 'frontpageImageAbove', children }) => {
+const getPageUrl = (url: string, site?: Site): string => {
+    return site && site !== Site.sykdomIFamilien ? `/${site}${url}` : url;
+};
+
+const LinkPanel: React.FunctionComponent<Props> = ({
+    title,
+    url,
+    site,
+    image,
+    layout = 'frontpageImageAbove',
+    children,
+}) => {
     const includeChevron = layout === 'plain' || layout === 'wideWithImage';
     const content = (
         <>
@@ -39,7 +52,7 @@ const LinkPanel: React.FunctionComponent<Props> = ({ title, url, image, layout =
     return (
         <div className={bem.block}>
             {url.isPageSlug ? (
-                <Link tabIndex={0} to={url.url}>
+                <Link tabIndex={0} to={getPageUrl(url.url, site)}>
                     {content}
                 </Link>
             ) : (
