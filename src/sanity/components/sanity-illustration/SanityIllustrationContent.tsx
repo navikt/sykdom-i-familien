@@ -17,7 +17,7 @@ const getOptimizedSvgForIllustration = (
     illustration: IllustrationDocument,
     optimizedSvgs: OptimizedSvgNode[]
 ): string | undefined => {
-    if (optimizedSvgs && illustration.children.length === 1) {
+    if (optimizedSvgs && illustration && illustration.children && illustration.children.length === 1) {
         const optimizedSvg = optimizedSvgs.find((o) => o.id === illustration.children[0]);
         if (optimizedSvg) {
             return optimizedSvg.svg;
@@ -42,11 +42,13 @@ const SanityIllustration: React.FunctionComponent<Props> = ({ illustration, ...p
 
     const allOptimizedSvgs: OptimizedSvgNode[] = data.allOptimizedSvg.edges.map((e: any) => ({
         id: e.node.id,
-        svg: e.node.svg
+        svg: e.node.svg,
     }));
 
     const optimizedSvg = getOptimizedSvgForIllustration(illustration, allOptimizedSvgs);
-    return illustration.svg ? <InlineSVG {...props} illustration={optimizedSvg || illustration.svg} /> : null;
+    return illustration && illustration.svg ? (
+        <InlineSVG {...props} illustration={optimizedSvg || illustration.svg} />
+    ) : null;
 };
 
 export default SanityIllustration;
