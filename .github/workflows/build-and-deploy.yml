@@ -15,7 +15,7 @@ env:
   BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
   GITHUB_USERNAME: x-access-token
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  DATASET: multisite
+  DATASET: production
   IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien-preview:${{ github.sha }}
 
 jobs:
@@ -90,7 +90,7 @@ jobs:
         - name: build code
           env:
             SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-            DATASET: multisite
+            DATASET: production
             ENV: dev
             OVERLAY_DRAFTS: true
             WATCH_MODE: false

@@ -7,7 +7,7 @@
     "maxReplicas": "1",
     "ingresses": ["https://sykdom-i-familien.dev.nav.no"],
     "env": {
-        "DATASET": "multisite",
+        "DATASET": "production",
         "ENV": "dev",
         "OVERLAY_DRAFTS": true,
         "WATCH_MODE": false
