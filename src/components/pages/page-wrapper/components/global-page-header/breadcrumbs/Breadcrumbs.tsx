@@ -84,11 +84,6 @@ const Breadcrumbs = (props: Props) => {
                     </Link>
                 </div>
             );
-            crumbs.push(
-                <div key={`chevron_site`} aria-hidden={true}>
-                    <NavFrontendChevron type="høyre" />
-                </div>
-            );
         }
         crumbs.push(
             <div key={`chevron_site_page`} aria-hidden={true}>
