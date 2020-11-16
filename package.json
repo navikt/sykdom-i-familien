@@ -109,7 +109,7 @@
         "nav-frontend-paneler-style": "^0.3.28",
         "nav-frontend-typografi-style": "^1.0.29",
         "nav-frontend-veileder-style": "^2.0.22",
-        "nav-frontend-veilederpanel-style": "0.0.29",
+        "nav-frontend-veilederpanel-style": "0.0.38",
         "prettier": "^2.1.2",
         "react-test-renderer": "^16.13.1",
         "svg-parser": "^2.0.4",
