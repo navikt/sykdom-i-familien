@@ -33,8 +33,10 @@ const createPages = async (documentType, site, onlyPublicPages, { graphql, actio
     const pages = await graphql(query);
     pages.data[documentType].edges.forEach(({ node }) => {
         if (node && node.slug) {
+            const pagePath = getPagePath(site, node.slug.current),;
+            console.log(`Created page with path: ${pagePath}`)
             actions.createPage({
-                path: getPagePath(site, node.slug.current),
+                path: pagePath,
                 component: path.resolve(template),
                 context: {
                     slug: node.slug.current,
