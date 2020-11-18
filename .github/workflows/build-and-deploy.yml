@@ -21,7 +21,7 @@ env:
 jobs:
     test:
         name: Test Code
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         strategy:
             matrix:
               node-version: [12.x]
@@ -51,7 +51,7 @@ jobs:
     set-image:
       name: "Set image"
       needs: test
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-20.04
       outputs:
         image: ${{ steps.output-image.outputs.image }}
       steps:
@@ -69,7 +69,7 @@ jobs:
       name: Build code and push docker preview image
       if: startsWith(github.ref, 'refs/heads/preview-') || github.event.action == 'publish-dev-gcp' # Build and push docker if branch is either master or dev-*
       needs: test
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-20.04
       steps:
         - name: Checkout code
           uses: actions/checkout@v1
@@ -114,7 +114,7 @@ jobs:
         name: prod-build-push-docker
         if: github.event.action == 'publish-prod-sbs' # Build and push docker if publish production event from sanity studio
         needs: set-image
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         env:
           IMAGE: ${{ needs.set-image.outputs.image }}
         steps:
@@ -162,7 +162,7 @@ jobs:
       name: Deploy to dev-gcp
       if: github.event.action == 'publish-dev-gcp' || startsWith(github.ref, 'refs/heads/preview-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
       needs: build-code-and-push-docker-preview
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-20.04
       steps:
         - uses: actions/checkout@v1
         - uses: nais/deploy/actions/deploy@v1
@@ -175,7 +175,7 @@ jobs:
     deploy-prod-sbs:
         name: deploy-prod-sbs
         needs: [build-code-and-push-docker-prod, set-image] # Depends on build-code-and-push-docker job
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         steps:
             - name: Checkout code
               uses: actions/checkout@v1
