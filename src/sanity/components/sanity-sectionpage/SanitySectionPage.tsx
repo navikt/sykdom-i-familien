@@ -100,7 +100,7 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
             }
             menuFooter={<Box />}
             header={<PageBannerCompact title={title} />}>
-            {content.map((c) => {
+            {(content || []).map((c) => {
                 const key = c._id || c._key;
                 if (c._type === 'section') {
                     const section = extractSectionData(c, intl.locale);
