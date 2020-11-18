@@ -59,7 +59,7 @@ jobs:
         uses: actions/checkout@v1
       - id: set-image
         #run: echo "::set-env name=TAG::$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)"
-        run: echo "TAG=${date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD} >> $GITHUB_ENV"
+        run: echo "TAG=$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD) >> $GITHUB_ENV"
       - id: output-image
         run: echo "::set-output name=image::${BASE_IMAGE}:${TAG}"
       - id: debug
