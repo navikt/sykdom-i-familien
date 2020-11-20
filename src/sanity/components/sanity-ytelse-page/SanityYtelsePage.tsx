@@ -11,12 +11,11 @@ import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
 import { Locale } from '../../../i18n/locale';
 import {
-    getSanityContentWithLocale, getSanityStringWithLocale
+    getSanityContentWithLocale,
+    getSanityStringWithLocale,
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { IllustrationDocument, MessageDocument, YtelsePageDocument } from '../../types/documents';
-import {
-    createAnchorsForTabsWithinSections, getAndApplyLinksInContent
-} from '../../utils/prepLinksInDocument';
+import { createAnchorsForTabsWithinSections, getAndApplyLinksInContent } from '../../utils/prepLinksInDocument';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import SanityBlock from '../sanity-block/SanityBlock';
 import SanityMessage from '../sanity-message/SanityMessage';
@@ -61,7 +60,7 @@ const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
             title,
             formUrl: section.formUrl,
             illustration: section.illustration,
-            content: section.content
+            content: section.content,
         };
     });
 };
@@ -79,7 +78,7 @@ const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): Yt
         formUrl: data.ytelse.formUrl,
         sections: extractSectionData(data._rawContent, locale as Locale),
         illustration: data._rawIllustration,
-        message: data._rawMessage
+        message: data._rawMessage,
     };
 };
 
@@ -98,7 +97,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         sections,
         illustration,
         formUrl,
-        message
+        message,
     } = extractDataFromSanityYtelsePage(dataWithTabs, intl.locale);
 
     const inShortSection: SectionContent = {
@@ -106,7 +105,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         title: inShortTitle,
         content: inShort,
         illustration,
-        slug: slugify(title || '')
+        slug: slugify(title || ''),
     };
 
     return (
@@ -117,7 +116,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
             slug={`${slug.current}`}
             sectionMenuItems={[inShortSection, ...sections].map((section) => ({
                 label: section.title || '',
-                slug: section.slug
+                slug: section.slug,
             }))}
             header={<PageBannerCompact title={title} />}
             menuFooter={
@@ -140,9 +139,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             <Box textAlignCenter={true} margin="none">
                                 <SectionIcon illustration={illustration} />
                             </Box>
-                        ) : (
-                            undefined
-                        )
+                        ) : undefined
                     }
                     illustrationPlacement="outside">
                     {inShort && (
@@ -165,9 +162,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             <Box textAlignCenter={true} margin="none">
                                 <SectionIcon illustration={section.illustration} />
                             </Box>
-                        ) : (
-                            undefined
-                        )
+                        ) : undefined
                     }>
                     {section.content && <SanityBlockContent content={section.content} headingLevel={2} />}
                 </SectionPanel>
@@ -175,11 +170,13 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
             <PrintOnly>
                 <SectionPanel title="Lenker i dokumentet">
                     <ol start={1}>
-                        {linksInContent.map((link) => (
-                            <li key={link!._key}>
-                                <p style={{ wordBreak: 'break-all' }}>{link!.url}</p>
-                            </li>
-                        ))}
+                        {linksInContent.map((link) => {
+                            return link ? (
+                                <li key={link._key}>
+                                    <p style={{ wordBreak: 'break-all' }}>{link!.url}</p>
+                                </li>
+                            ) : null;
+                        })}
                     </ol>
                 </SectionPanel>
             </PrintOnly>

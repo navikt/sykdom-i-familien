@@ -132,11 +132,13 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
             <PrintOnly>
                 <SectionPanel title="Lenker i dokumentet">
                     <ol start={1}>
-                        {linksInContent.map((link) => (
-                            <li key={link!._key}>
-                                <p style={{ wordBreak: 'break-all' }}>{link!.url}</p>
-                            </li>
-                        ))}
+                        {linksInContent.map((link) => {
+                            return link ? (
+                                <li key={link._key}>
+                                    <p style={{ wordBreak: 'break-all' }}>{link!.url}</p>
+                                </li>
+                            ) : null;
+                        })}
                     </ol>
                 </SectionPanel>
             </PrintOnly>
