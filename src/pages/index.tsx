@@ -12,6 +12,9 @@ interface Props {
 
 const Hovedside: React.FunctionComponent<Props> = ({ data, intl }: Props & InjectedIntlProps & RouterProps) => {
     const frontpageData = extractFrontpageData(data, intl.locale);
+    if (!frontpageData) {
+        return <div>Det oppstod en feil under lasting av siden</div>;
+    }
     return <SanityFrontpage data={frontpageData} site={Site.sykdomIFamilien} />;
 };
 
@@ -19,6 +22,7 @@ export const pageQuery = graphql`
     {
         allSanityFrontpage(filter: { _id: { eq: "frontpage-config" } }) {
             nodes {
+                site
                 showLanguageToggle
                 _id
                 _rawMetadescription

@@ -1,4 +1,5 @@
 import { getSanityStringWithLocale } from '../../utils/sanity/getSanityContentWithLocale';
+import { Site } from '../../utils/site';
 import { IllustrationDocument, MessageDocument } from '../types/documents';
 
 interface FrontpageStory {
@@ -10,6 +11,7 @@ interface FrontpageStory {
 }
 
 export interface FrontpageSanityData {
+    site: Site;
     showLanguageToggle: boolean;
     title: string;
     metadescription: string;
@@ -18,8 +20,13 @@ export interface FrontpageSanityData {
     stories?: FrontpageStory[];
     message?: MessageDocument;
 }
-export const extractFrontpageData = (data: any, locale: string): FrontpageSanityData => {
+export const extractFrontpageData = (data: any, locale: string): FrontpageSanityData | undefined => {
+    const { nodes } = data?.allSanityFrontpage || {};
+    if (!nodes || nodes.length === 0) {
+        return undefined;
+    }
     const {
+        site,
         showLanguageToggle,
         _rawIllustration,
         _rawIngress,
@@ -27,9 +34,10 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         _rawMessage,
         _rawFrontpageStories,
         _rawMetadescription,
-    } = data.allSanityFrontpage.nodes[0];
+    } = nodes[0];
 
     return {
+        site,
         showLanguageToggle: showLanguageToggle === true,
         title: getSanityStringWithLocale(_rawTitle, locale),
         ingress: getSanityStringWithLocale(_rawIngress, locale),
@@ -38,10 +46,7 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         message: _rawMessage,
         stories: (_rawFrontpageStories || []).map((story: any) => {
             return {
-                title: getSanityStringWithLocale(
-                    story._type === 'frontpageLink' ? story.title : story.page.title,
-                    locale
-                ),
+                title: getSanityStringWithLocale(story.title || story.page.title, locale),
                 description: getSanityStringWithLocale(story.content, locale),
                 illustration: story.illustration,
                 isPageSlug: story._type === 'frontpagePageLink',

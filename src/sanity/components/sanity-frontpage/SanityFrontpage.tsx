@@ -18,18 +18,23 @@ interface Props {
 
 const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props & RouterProps) => {
     const { showLanguageToggle, title, metadescription, ingress, message, illustration, stories: linkPanels } = data;
-
+    const isDefaultSite = site === Site.sykdomIFamilien;
     return (
         <Frontpage
             showLanguageToggle={showLanguageToggle}
             pageTitle={title}
             pageMetaDescription={metadescription}
+            useWhiteBackground={isDefaultSite === false}
             header={
-                title && ingress ? (
+                title ? (
                     <PageBanner
                         title={title}
-                        illustration={<SanityIllustration illustration={illustration} maintainAspectRatio={true} />}>
-                        <SanityBlock content={ingress} />
+                        illustration={
+                            illustration ? (
+                                <SanityIllustration illustration={illustration} maintainAspectRatio={true} />
+                            ) : undefined
+                        }>
+                        {ingress && <SanityBlock content={ingress} />}
                     </PageBanner>
                 ) : undefined
             }>
@@ -38,9 +43,8 @@ const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props &
                     <SanityMessage message={message} />
                 </Box>
             )}
-
             <Box>
-                <FrontpagePanelWrapper>
+                <FrontpagePanelWrapper maxColumns={isDefaultSite ? 3 : 2}>
                     {linkPanels &&
                         linkPanels.map((story, index) => (
                             <LinkPanel

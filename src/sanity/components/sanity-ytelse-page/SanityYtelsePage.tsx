@@ -152,21 +152,23 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                     })}
                 </SectionPanel>
             </div>
-            {sections.map((section) => (
-                <SectionPanel
-                    key={section._key}
-                    id={section.slug}
-                    title={section.title}
-                    illustration={
-                        section.illustration ? (
-                            <Box textAlignCenter={true} margin="none">
-                                <SectionIcon illustration={section.illustration} />
-                            </Box>
-                        ) : undefined
-                    }>
-                    {section.content && <SanityBlockContent content={section.content} headingLevel={2} />}
-                </SectionPanel>
-            ))}
+            {sections.map((section) => {
+                return (
+                    <SectionPanel
+                        key={section._key}
+                        id={section.slug}
+                        title={section.title}
+                        illustration={
+                            section.illustration ? (
+                                <Box textAlignCenter={true} margin="none">
+                                    <SectionIcon illustration={section.illustration} />
+                                </Box>
+                            ) : undefined
+                        }>
+                        {section.content && <SanityBlockContent content={section.content} headingLevel={2} />}
+                    </SectionPanel>
+                );
+            })}
             <PrintOnly>
                 <SectionPanel title="Lenker i dokumentet">
                     <ol start={1}>

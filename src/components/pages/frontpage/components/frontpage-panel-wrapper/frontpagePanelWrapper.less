@@ -23,6 +23,20 @@
             > * {
                 height: 100%;
             }
+            .frontpagePanelWrapper--columns-2 & {
+                flex: 1 1 100%/2;
+                min-width: 100%/2;
+                max-width: 100%/2;
+            }
         }
+    }
+    .lenkepanel {
+        border: 0.125rem solid @c-theme-dark;
+        &:hover {
+            border-width: 0.125rem;
+        }
+        // &:focus {
+        //     box-shadow: 0 0 0 4px #254b6d;
+        // }
     }
 }

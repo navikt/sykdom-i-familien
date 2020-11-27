@@ -107,7 +107,6 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
                     return (
                         <Box margin="none" key={key} className="sectionPageContentWrapper">
                             <SectionPanel
-                                key={key}
                                 id={section.slug}
                                 title={section.title}
                                 illustration={

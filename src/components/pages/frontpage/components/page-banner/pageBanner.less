@@ -13,6 +13,12 @@
             max-width: @app-wide-max-width;
         }
     }
+    &--noIllustration {
+        padding-top: 1.5rem;
+        .pageBanner__contentWrapper {
+            padding-bottom: 1.5rem;
+        }
+    }
     &__footer {
         background-color: #3385d1;
         .pageBanner__contentWrapper {
@@ -43,12 +49,18 @@
         p {
             margin-top: 0;
         }
-        @media (min-width: @mobile-breakpoint) {
-            max-width: 55%;
+        .pageBanner--noIllustration & {
+            padding: 0;
+            min-height: 0;
         }
-        @media (min-width: @tablet-breakpoint) {
-            .pageBanner--wide & {
+        &:not(&.pageBanner--noIllustration) {
+            @media (min-width: @mobile-breakpoint) {
                 max-width: 55%;
+            }
+            @media (min-width: @tablet-breakpoint) {
+                .pageBanner--wide & {
+                    max-width: 55%;
+                }
             }
         }
     }
@@ -80,7 +92,6 @@
             }
         }
         @media (min-width: @tablet-breakpoint) {
-            // position: absolute;
             bottom: 0;
             right: 1rem;
             min-width: 25rem;

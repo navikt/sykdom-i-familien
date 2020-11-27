@@ -15,6 +15,9 @@ const ArbeidsgiverForside: React.FunctionComponent<Props> = ({
     intl,
 }: Props & InjectedIntlProps & RouterProps) => {
     const frontpageData = extractFrontpageData(data, intl.locale);
+    if (!frontpageData) {
+        return <div>Error in parsing data</div>;
+    }
     return <SanityFrontpage data={frontpageData} site={Site.arbeidsgiver} />;
 };
 
@@ -23,6 +26,7 @@ export const pageQuery = graphql`
         allSanityFrontpage(filter: { _id: { eq: "frontpage-config-arbeidsgiver" } }) {
             nodes {
                 showLanguageToggle
+                site
                 _id
                 _rawMetadescription
                 _rawTitle
