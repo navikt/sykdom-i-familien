@@ -6,7 +6,9 @@
     max-width: 800px;
     margin: 0 auto;
     width: 100%;
-
+    &--columns-2 {
+        max-width: @app-max-width + 48px;
+    }
     @media (min-width: @tablet-breakpoint) {
         display: flex;
         align-items: stretch;
@@ -27,6 +29,8 @@
                 flex: 1 1 100%/2;
                 min-width: 100%/2;
                 max-width: 100%/2;
+                padding: 0 0.5rem;
+                margin-bottom: 1rem;
             }
         }
     }
@@ -35,8 +39,5 @@
         &:hover {
             border-width: 0.125rem;
         }
-        // &:focus {
-        //     box-shadow: 0 0 0 4px #254b6d;
-        // }
     }
 }

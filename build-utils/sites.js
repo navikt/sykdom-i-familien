@@ -1,8 +1,14 @@
 module.exports = {
-    sif: {
+    privatperson: {
         key: 'sykdom-i-familien',
-        context: 'privatperson',
         path: '/',
+        context: 'privatperson',
+        breadcrumbs: [
+            {
+                url: 'https://www.nav.no/familie/sykdom-i-familien/',
+                title: 'Sykdom i familien',
+            },
+        ],
     },
     arbeidsgiver: {
         key: 'arbeidsgiver',

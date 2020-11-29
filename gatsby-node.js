@@ -4,7 +4,7 @@ require('dotenv').config();
 require('source-map-support').install();
 const svgoProps = require('./gatsbyUtils/svgoProps');
 const SVGO = require('svgo');
-const Sites = require('./build-utils/sites');
+const sites = require('./build-utils/sites');
 
 const svgo = new SVGO(svgoProps);
 
@@ -44,9 +44,9 @@ const createPagesForSite = async (site, onlyPublicPages, { graphql, actions }) =
 exports.createPages = async (tools) => {
     const onlyPublicPages = process.env.ENV !== 'dev';
     console.log('onlyPublicPages:', onlyPublicPages);
-    await createPagesForSite(Sites.sif, onlyPublicPages, tools);
-    await createPagesForSite(Sites.arbeidsgiver, onlyPublicPages, tools);
-    await createPagesForSite(Sites.samarbeid, onlyPublicPages, tools);
+    await createPagesForSite(sites.privatperson, onlyPublicPages, tools);
+    await createPagesForSite(sites.arbeidsgiver, onlyPublicPages, tools);
+    await createPagesForSite(sites.samarbeid, onlyPublicPages, tools);
 };
 
 exports.onCreateWebpackConfig = ({ actions }) => {
