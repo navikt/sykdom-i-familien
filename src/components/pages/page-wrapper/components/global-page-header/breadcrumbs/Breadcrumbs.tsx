@@ -1,12 +1,12 @@
 import React from 'react';
-import bemUtils from '../../../../../../utils/bemUtils';
-import useWindowSize from '../../../../../../hooks/useWindowSize';
-import { Link } from 'gatsby-plugin-intl';
+import { Link, useIntl } from 'gatsby-plugin-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
+import Lenke from 'nav-frontend-lenker';
+import useWindowSize from '../../../../../../hooks/useWindowSize';
+import bemUtils from '../../../../../../utils/bemUtils';
+import { getFrontpageUrlForSite, getSiteTitleForSite, Site, sites } from '../../../../../../utils/site';
 import SiteTitle from '../site-title/SiteTitle';
 import './breadcrumbs.less';
-import { getSiteTitleForSite, Site } from '../../../../../../utils/site';
-import Lenke from 'nav-frontend-lenker';
 
 const cls = bemUtils('breadcrumbs');
 
@@ -14,24 +14,15 @@ interface OwnProps {
     site: Site;
     slug: string;
     title: string;
+    locale: string;
 }
 
 type Props = OwnProps;
 
-const getFrontpageUrlForSite = (site: Site): string => {
-    switch (site) {
-        case Site.arbeidsgiver:
-        case Site.samarbeid:
-            return `/${site}`;
-        default:
-            return '/';
-    }
-};
-
 const Breadcrumbs = (props: Props) => {
     const { width } = useWindowSize();
     const { title, site } = props;
-    const frontpageUrl = getFrontpageUrlForSite(site);
+    const frontpageUrl = getFrontpageUrlForSite(site, props.locale);
 
     const crumbs: React.ReactNode[] = [];
     if (width && width < 576) {

@@ -19,6 +19,7 @@ export interface FrontpageSanityData {
     illustration: IllustrationDocument;
     stories?: FrontpageStory[];
     message?: MessageDocument;
+    content: any[];
 }
 export const extractFrontpageData = (data: any, locale: string): FrontpageSanityData | undefined => {
     const { nodes } = data?.allSanityFrontpage || {};
@@ -31,6 +32,7 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         _rawIllustration,
         _rawIngress,
         _rawTitle,
+        _rawContent,
         _rawMessage,
         _rawFrontpageStories,
         _rawMetadescription,
@@ -44,6 +46,7 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         metadescription: getSanityStringWithLocale(_rawMetadescription, locale),
         illustration: _rawIllustration,
         message: _rawMessage,
+        content: _rawContent,
         stories: (_rawFrontpageStories || []).map((story: any) => {
             return {
                 title: getSanityStringWithLocale(story.title || story.page.title, locale),

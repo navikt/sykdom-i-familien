@@ -18,12 +18,12 @@ const ArbeidsgiverForside: React.FunctionComponent<Props> = ({
     if (!frontpageData) {
         return <div>Error in parsing data</div>;
     }
-    return <SanityFrontpage data={frontpageData} site={Site.arbeidsgiver} />;
+    return <SanityFrontpage data={frontpageData} site={Site.samarbeid} />;
 };
 
 export const pageQuery = graphql`
     {
-        allSanityFrontpage(filter: { _id: { eq: "frontpage-config-arbeidsgiver" } }) {
+        allSanityFrontpage(filter: { _id: { eq: "frontpage-config-samarbeid" } }) {
             nodes {
                 showLanguageToggle
                 site
@@ -31,7 +31,7 @@ export const pageQuery = graphql`
                 _rawMetadescription
                 _rawTitle
                 _rawIngress
-                _rawContent(resolveReferences: { maxDepth: 4 })
+                _rawContent
                 _rawMessage(resolveReferences: { maxDepth: 4 })
                 _rawIllustration(resolveReferences: { maxDepth: 4 })
                 _rawFrontpageStories(resolveReferences: { maxDepth: 4 })

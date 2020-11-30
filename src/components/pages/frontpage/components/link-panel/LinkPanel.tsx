@@ -4,7 +4,7 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Undertittel } from 'nav-frontend-typografi';
 import bemUtils from '../../../../../utils/bemUtils';
-import { Site } from '../../../../../utils/site';
+import { Site, sites } from '../../../../../utils/site';
 import './linkPanel.less';
 import { Locale } from '../../../../../i18n/locale';
 
@@ -24,7 +24,10 @@ interface Props {
 const bem = bemUtils('linkPanel');
 
 export const getPageUrl = (url: string, locale: string, site?: Site): string => {
-    return site && site !== Site.sykdomIFamilien ? `/${locale}/${site}${url}` : url;
+    const u = site && site !== Site.sykdomIFamilien ? `/${locale}${sites[site].path}${url}` : url;
+    console.log(u);
+
+    return u;
 };
 
 const LinkPanel: React.FunctionComponent<Props> = ({

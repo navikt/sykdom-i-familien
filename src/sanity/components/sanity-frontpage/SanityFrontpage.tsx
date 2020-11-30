@@ -10,6 +10,7 @@ import SanityIllustration from '../../../sanity/components/sanity-illustration/S
 import SanityMessage from '../../../sanity/components/sanity-message/SanityMessage';
 import { FrontpageSanityData } from '../../../sanity/utils/frontpageUtils';
 import { Site } from '../../../utils/site';
+import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 
 interface Props {
     data: FrontpageSanityData;
@@ -17,7 +18,16 @@ interface Props {
 }
 
 const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props & RouterProps) => {
-    const { showLanguageToggle, title, metadescription, ingress, message, illustration, stories: linkPanels } = data;
+    const {
+        showLanguageToggle,
+        title,
+        metadescription,
+        ingress,
+        content,
+        message,
+        illustration,
+        stories: linkPanels,
+    } = data;
     const isDefaultSite = site === Site.sykdomIFamilien;
     return (
         <Frontpage
@@ -42,6 +52,11 @@ const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props &
                 <Box padBottom="xl" margin="l">
                     <SanityMessage message={message} />
                 </Box>
+            )}
+            {content && (
+                <div className={'frontpageContentWrapper'}>
+                    <SanityBlockContent content={content} headingLevel={1} />
+                </div>
             )}
             <Box>
                 <FrontpagePanelWrapper maxColumns={isDefaultSite ? 3 : 2}>

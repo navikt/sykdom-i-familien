@@ -61,7 +61,7 @@ const CustomPage: React.FunctionComponent<Props & InjectedIntlProps> = ({
             }
             {showBreadcrumbs && (
                 <div className={bem.element('breadcrumbs')}>
-                    <Breadcrumbs slug={slug} title={pageTitle} site={site} />
+                    <Breadcrumbs slug={slug} title={pageTitle} site={site} locale={intl.locale} />
                 </div>
             )}
             <div className={bem.block}>

@@ -5,6 +5,43 @@ export enum Site {
     arbeidsgiver = 'arbeidsgiver',
     samarbeid = 'samarbeid',
 }
+
+export const sites = {
+    [Site.sykdomIFamilien]: {
+        key: 'sykdom-i-familien',
+        path: '/',
+        context: 'privatperson',
+        breadcrumbs: [
+            {
+                url: 'https://www.nav.no/familie/sykdom-i-familien/',
+                title: 'Sykdom i familien',
+            },
+        ],
+    },
+    [Site.arbeidsgiver]: {
+        key: 'arbeidsgiver',
+        path: '/arbeidsgiver',
+        context: 'arbeidsgiver',
+        breadcrumbs: [
+            {
+                url: 'https://www.nav.no/familie/sykdom-i-familien/arbeidsgiver',
+                title: 'Sykdom i familien',
+            },
+        ],
+    },
+    [Site.samarbeid]: {
+        key: 'samarbeid',
+        path: '/samarbeidspartner',
+        context: 'samarbeidspartner',
+        breadcrumbs: [
+            {
+                url: 'https://www.nav.no/',
+                title: 'nav.no',
+            },
+        ],
+    },
+};
+
 interface SiteMetaGraphQLMetadata {
     site: {
         siteMetadata: {
@@ -39,4 +76,8 @@ export const getSiteTitleForSite = (site: Site) => {
         default:
             return 'Sykdom i familien';
     }
+};
+
+export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): string => {
+    return `/${locale}${sites[site].path}`;
 };

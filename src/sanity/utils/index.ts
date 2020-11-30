@@ -1,7 +1,10 @@
 import { defaultLocale, Locale } from '../../i18n/locale';
 import { SanityContentHeadingLevel } from '../types';
 import {
-    isValidLocaleObject, isValidLocaleStringObject, LocaleObject, LocaleStringObject
+    isValidLocaleObject,
+    isValidLocaleStringObject,
+    LocaleObject,
+    LocaleStringObject,
 } from '../types/locale-objects';
 import { BlockContentType } from '../types/parts';
 
@@ -23,7 +26,7 @@ export const getOptionalLocaleValue = (obj?: LocaleObject, locale?: Locale | str
 
 export const getOptionalLocaleString = ({
     obj,
-    locale
+    locale,
 }: {
     obj?: LocaleObject;
     locale: Locale | string;
@@ -38,6 +41,8 @@ export const getLocaleBlockContent = (
 
 export const getHeadingLevelForChild = (headingLevel: SanityContentHeadingLevel): SanityContentHeadingLevel => {
     switch (headingLevel) {
+        case 1:
+            return 2;
         case 2:
             return 3;
         case 3:

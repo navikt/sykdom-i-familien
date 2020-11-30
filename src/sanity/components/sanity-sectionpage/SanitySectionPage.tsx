@@ -61,7 +61,7 @@ export const extractDataFromSanitySectionPage = (data: any, locale: Locale | str
         slug: data.slug,
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         content: data._rawContent,
-        showLeftMenu: data.showLeftMenu === true,
+        showLeftMenu: data.showLeftMenu === true || data.showLeftMenu === null,
     };
 };
 

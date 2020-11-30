@@ -3,13 +3,14 @@ import MediaQuery from 'react-responsive';
 import useActiveSections from '../../../hooks/useActiveSection';
 import bemUtils from '../../../utils/bemUtils';
 import { isBrowser } from '../../../utils/build';
-import { Site } from '../../../utils/site';
+import { getFrontpageUrlForSite, Site } from '../../../utils/site';
 import FlexSticky from '../../layout/flex-sticky/FlexSticky';
-import Breadcrumbs from '../page-wrapper/components/global-page-header/breadcrumbs/Breadcrumbs';
 import PageWrapper from '../page-wrapper/PageWrapper';
 import MobileMenu from './mobile-menu/MobileMenu';
 import SidebarMenu from './sidebar-menu/SidebarMenu';
+import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
 import './pageWithMenu.less';
+import { useIntl } from 'gatsby-plugin-intl';
 
 export interface SectionMenuItem {
     label: string;
@@ -44,6 +45,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     showBreadcrumbs = true,
 }) => {
     const sectionIds = sectionMenuItems.map((section) => section.slug);
+    const { locale } = useIntl();
     const [activSectionSlug, setActiceSectionSlug] = useState<string | undefined>(undefined);
 
     useActiveSections(
@@ -63,6 +65,15 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     );
 
     const hasMenu = sectionMenuItems.length > 0;
+    if (isBrowser) {
+        const url = getFrontpageUrlForSite(site, locale);
+        console.log(url);
+
+        setBreadcrumbs([
+            { title: 'Sykdom i familien', url },
+            { title: pageTitle, url: slug },
+        ]);
+    }
 
     return (
         <PageWrapper
@@ -71,11 +82,6 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
             showFrontpageLink={false}
             showLanguageToggle={showLanguageToggle}>
             {header && <div className={bem.element('header')}>{header}</div>}
-            {showBreadcrumbs && (
-                <div className={bem.element('breadcrumbs')}>
-                    <Breadcrumbs slug={slug} title={pageTitle} site={site} />
-                </div>
-            )}
             <div className={bem.classNames(bem.block, bem.modifierConditional('noSidebar', hasMenu === false))}>
                 {hasMenu && !isBrowser && renderSidebar()}
                 {hasMenu && isBrowser && (
