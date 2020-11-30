@@ -7,12 +7,6 @@
     &__borderBox {
         border-bottom: 0.25rem solid @c-theme-dark;
     }
-    &--wide {
-        padding-top: 1rem;
-        .pageBanner__contentWrapper {
-            max-width: @app-wide-max-width;
-        }
-    }
     &--noIllustration {
         padding-top: 1.5rem;
         .pageBanner__contentWrapper {
@@ -30,7 +24,6 @@
     &__contentWrapper {
         display: flex;
         position: relative;
-        max-width: @app-max-width + 48px;
         margin: 0 auto;
         align-items: center;
         flex-direction: column;
@@ -57,11 +50,6 @@
             @media (min-width: @mobile-breakpoint) {
                 max-width: 55%;
             }
-            @media (min-width: @tablet-breakpoint) {
-                .pageBanner--wide & {
-                    max-width: 55%;
-                }
-            }
         }
     }
     &__illustration {
@@ -81,9 +69,6 @@
             max-height: 12rem;
             max-width: 25rem;
         }
-        .pageBanner--wide & {
-            padding: 1rem 0;
-        }
         @media (min-width: @mobile-breakpoint) {
             min-width: 20rem;
             max-width: 100%;
@@ -95,9 +80,6 @@
             bottom: 0;
             right: 1rem;
             min-width: 25rem;
-            .pageBanner--wide & {
-                min-width: 25rem;
-            }
             svg {
                 min-height: 9rem;
             }

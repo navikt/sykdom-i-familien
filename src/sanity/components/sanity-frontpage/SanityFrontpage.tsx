@@ -7,7 +7,6 @@ import PageBanner from '../../../components/pages/frontpage/components/page-bann
 import Frontpage from '../../../components/pages/frontpage/Frontpage';
 import SanityBlock from '../../../sanity/components/sanity-block/SanityBlock';
 import SanityIllustration from '../../../sanity/components/sanity-illustration/SanityIllustrationContent';
-import SanityMessage from '../../../sanity/components/sanity-message/SanityMessage';
 import { FrontpageSanityData } from '../../../sanity/utils/frontpageUtils';
 import { Site } from '../../../utils/site';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
@@ -18,16 +17,7 @@ interface Props {
 }
 
 const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props & RouterProps) => {
-    const {
-        showLanguageToggle,
-        title,
-        metadescription,
-        ingress,
-        content,
-        message,
-        illustration,
-        stories: linkPanels,
-    } = data;
+    const { showLanguageToggle, title, metadescription, ingress, content, illustration, stories: linkPanels } = data;
     const isDefaultSite = site === Site.sykdomIFamilien;
     return (
         <Frontpage
@@ -36,47 +26,39 @@ const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props &
             pageMetaDescription={metadescription}
             useWhiteBackground={isDefaultSite === false}
             header={
-                title ? (
-                    <PageBanner
-                        title={title}
-                        illustration={
-                            illustration ? (
-                                <SanityIllustration illustration={illustration} maintainAspectRatio={true} />
-                            ) : undefined
-                        }>
-                        {ingress && <SanityBlock content={ingress} />}
-                    </PageBanner>
-                ) : undefined
+                <PageBanner
+                    title={title}
+                    illustration={
+                        illustration ? (
+                            <SanityIllustration illustration={illustration} maintainAspectRatio={true} />
+                        ) : undefined
+                    }>
+                    {ingress && <SanityBlock content={ingress} />}
+                </PageBanner>
             }>
-            {message && (
-                <Box padBottom="xl" margin="l">
-                    <SanityMessage message={message} />
+            {content && (
+                <Box margin="l">
+                    <SanityBlockContent content={content} headingLevel={1} />
                 </Box>
             )}
-            {content && (
-                <div className={'frontpageContentWrapper'}>
-                    <SanityBlockContent content={content} headingLevel={1} />
-                </div>
-            )}
-            <Box>
+            {linkPanels && (
                 <FrontpagePanelWrapper maxColumns={isDefaultSite ? 3 : 2}>
-                    {linkPanels &&
-                        linkPanels.map((story, index) => (
-                            <LinkPanel
-                                key={index}
-                                title={story.title || ''}
-                                site={site}
-                                url={{ url: story.url, isPageSlug: story.isPageSlug }}
-                                image={
-                                    story.illustration ? (
-                                        <SanityIllustration illustration={story.illustration} />
-                                    ) : undefined
-                                }>
-                                {story.description && <SanityBlock content={story.description} />}
-                            </LinkPanel>
-                        ))}
+                    {linkPanels.map((story, index) => (
+                        <LinkPanel
+                            key={index}
+                            title={story.title || ''}
+                            site={site}
+                            url={{ url: story.url, isPageSlug: story.isPageSlug }}
+                            image={
+                                story.illustration ? (
+                                    <SanityIllustration illustration={story.illustration} />
+                                ) : undefined
+                            }>
+                            {story.description && <SanityBlock content={story.description} />}
+                        </LinkPanel>
+                    ))}
                 </FrontpagePanelWrapper>
-            </Box>
+            )}
         </Frontpage>
     );
 };

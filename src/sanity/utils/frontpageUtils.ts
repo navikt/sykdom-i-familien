@@ -1,6 +1,6 @@
 import { getSanityStringWithLocale } from '../../utils/sanity/getSanityContentWithLocale';
 import { Site } from '../../utils/site';
-import { IllustrationDocument, MessageDocument } from '../types/documents';
+import { IllustrationDocument } from '../types/documents';
 
 interface FrontpageStory {
     title?: string;
@@ -18,7 +18,6 @@ export interface FrontpageSanityData {
     ingress?: string;
     illustration: IllustrationDocument;
     stories?: FrontpageStory[];
-    message?: MessageDocument;
     content: any[];
 }
 export const extractFrontpageData = (data: any, locale: string): FrontpageSanityData | undefined => {
@@ -33,7 +32,6 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         _rawIngress,
         _rawTitle,
         _rawContent,
-        _rawMessage,
         _rawFrontpageStories,
         _rawMetadescription,
     } = nodes[0];
@@ -45,7 +43,6 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         ingress: getSanityStringWithLocale(_rawIngress, locale),
         metadescription: getSanityStringWithLocale(_rawMetadescription, locale),
         illustration: _rawIllustration,
-        message: _rawMessage,
         content: _rawContent,
         stories: (_rawFrontpageStories || []).map((story: any) => {
             return {

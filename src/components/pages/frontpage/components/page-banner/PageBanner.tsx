@@ -6,12 +6,11 @@ import './pageBanner.less';
 interface Props {
     title: string;
     illustration?: React.ReactNode;
-    footer?: React.ReactNode;
 }
 
 const bem = bemUtils('pageBanner');
 
-const PageBanner: React.FunctionComponent<Props> = ({ title, illustration, footer, children }) => {
+const PageBanner: React.FunctionComponent<Props> = ({ title, illustration, children }) => {
     return (
         <div
             className={bem.classNames(
@@ -31,11 +30,6 @@ const PageBanner: React.FunctionComponent<Props> = ({ title, illustration, foote
                     )}
                 </div>
             </div>
-            {footer && (
-                <div className={bem.element('footer')}>
-                    <div className={bem.element('contentWrapper')}>{footer}</div>
-                </div>
-            )}
         </div>
     );
 };

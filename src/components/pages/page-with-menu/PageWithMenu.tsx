@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import MediaQuery from 'react-responsive';
+import { useIntl } from 'gatsby-plugin-intl';
 import useActiveSections from '../../../hooks/useActiveSection';
 import bemUtils from '../../../utils/bemUtils';
 import { isBrowser } from '../../../utils/build';
-import { getFrontpageUrlForSite, Site } from '../../../utils/site';
+import { Site } from '../../../utils/site';
 import FlexSticky from '../../layout/flex-sticky/FlexSticky';
 import PageWrapper from '../page-wrapper/PageWrapper';
 import MobileMenu from './mobile-menu/MobileMenu';
 import SidebarMenu from './sidebar-menu/SidebarMenu';
-import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
+import useNavBreadcrumbs from '../../../hooks/useNavBreadcrumbs';
 import './pageWithMenu.less';
-import { useIntl } from 'gatsby-plugin-intl';
 
 export interface SectionMenuItem {
     label: string;
@@ -65,15 +65,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     );
 
     const hasMenu = sectionMenuItems.length > 0;
-    if (isBrowser) {
-        const url = getFrontpageUrlForSite(site, locale);
-        console.log(url);
-
-        setBreadcrumbs([
-            { title: 'Sykdom i familien', url },
-            { title: pageTitle, url: slug },
-        ]);
-    }
+    useNavBreadcrumbs(site, pageTitle, slug, locale);
 
     return (
         <PageWrapper

@@ -32,7 +32,6 @@ export const pageQuery = graphql`
                 _rawTitle
                 _rawIngress
                 _rawContent(resolveReferences: { maxDepth: 4 })
-                _rawMessage(resolveReferences: { maxDepth: 4 })
                 _rawIllustration(resolveReferences: { maxDepth: 4 })
                 _rawFrontpageStories(resolveReferences: { maxDepth: 4 })
             }

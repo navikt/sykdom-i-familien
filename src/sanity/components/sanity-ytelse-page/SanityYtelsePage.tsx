@@ -14,6 +14,7 @@ import {
     getSanityContentWithLocale,
     getSanityStringWithLocale,
 } from '../../../utils/sanity/getSanityContentWithLocale';
+import { Site } from '../../../utils/site';
 import { IllustrationDocument, MessageDocument, YtelsePageDocument } from '../../types/documents';
 import { createAnchorsForTabsWithinSections, getAndApplyLinksInContent } from '../../utils/prepLinksInDocument';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
@@ -26,6 +27,7 @@ export interface YtelsePageData {
     title: string;
     slug: { current: string };
     intro: string;
+    site: Site;
     inShort: string;
     inShortEkstraKomponenter: string[];
     metadescription: string;
@@ -67,6 +69,7 @@ const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
 
 const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
     return {
+        site: data.site,
         showLanguageToggle: data.showLanguageToggle === true,
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
         intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
@@ -95,6 +98,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         inShortTitle,
         inShortEkstraKomponenter,
         sections,
+        site,
         illustration,
         formUrl,
         message,
@@ -110,6 +114,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
 
     return (
         <PageWithMenu
+            site={site}
             pageTitle={title}
             showLanguageToggle={showLanguageToggle}
             pageMetadescription={metadescription}

@@ -24,10 +24,7 @@ interface Props {
 const bem = bemUtils('linkPanel');
 
 export const getPageUrl = (url: string, locale: string, site?: Site): string => {
-    const u = site && site !== Site.sykdomIFamilien ? `/${locale}${sites[site].path}${url}` : url;
-    console.log(u);
-
-    return u;
+    return site && site !== Site.sykdomIFamilien ? `/${locale}${sites[site].path}${url}` : url;
 };
 
 const LinkPanel: React.FunctionComponent<Props> = ({
