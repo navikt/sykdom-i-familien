@@ -2,6 +2,7 @@ import React from 'react';
 import { Sidetittel } from 'nav-frontend-typografi';
 import bemUtils from '../../../../../utils/bemUtils';
 import './pageBanner.less';
+import ContentWrapper from '../../../../layout/content-wrapper/ContentWrapper';
 
 interface Props {
     title: string;
@@ -18,7 +19,7 @@ const PageBanner: React.FunctionComponent<Props> = ({ title, illustration, child
                 bem.modifierConditional('noIllustration', illustration === undefined)
             )}>
             <div className={bem.element('borderBox')}>
-                <div className={bem.element('contentWrapper')}>
+                <ContentWrapper className={bem.element('contentWrapper')} maxWidth="wide">
                     <div className={bem.element('text')}>
                         <Sidetittel className={bem.element('title')}>{title}</Sidetittel>
                         <div className={bem.element('content')}>{children}</div>
@@ -28,7 +29,7 @@ const PageBanner: React.FunctionComponent<Props> = ({ title, illustration, child
                             {illustration}
                         </div>
                     )}
-                </div>
+                </ContentWrapper>
             </div>
         </div>
     );

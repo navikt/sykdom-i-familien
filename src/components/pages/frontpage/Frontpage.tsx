@@ -1,9 +1,8 @@
 import React from 'react';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import { RouterProps } from '@reach/router';
-import PageWrapper from '../page-wrapper/PageWrapper';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import bemUtils from '../../../utils/bemUtils';
-
+import PageWrapper from '../page-wrapper/PageWrapper';
 import './frontpage.less';
 
 interface Props {

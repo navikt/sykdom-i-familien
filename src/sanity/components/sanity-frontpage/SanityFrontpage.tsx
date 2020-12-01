@@ -10,6 +10,7 @@ import SanityIllustration from '../../../sanity/components/sanity-illustration/S
 import { FrontpageSanityData } from '../../../sanity/utils/frontpageUtils';
 import { Site } from '../../../utils/site';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
+import ContentWrapper from '../../../components/layout/content-wrapper/ContentWrapper';
 
 interface Props {
     data: FrontpageSanityData;
@@ -36,29 +37,31 @@ const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props &
                     {ingress && <SanityBlock content={ingress} />}
                 </PageBanner>
             }>
-            {content && (
-                <Box margin="l">
-                    <SanityBlockContent content={content} headingLevel={1} />
-                </Box>
-            )}
-            {linkPanels && (
-                <FrontpagePanelWrapper maxColumns={isDefaultSite ? 3 : 2}>
-                    {linkPanels.map((story, index) => (
-                        <LinkPanel
-                            key={index}
-                            title={story.title || ''}
-                            site={site}
-                            url={{ url: story.url, isPageSlug: story.isPageSlug }}
-                            image={
-                                story.illustration ? (
-                                    <SanityIllustration illustration={story.illustration} />
-                                ) : undefined
-                            }>
-                            {story.description && <SanityBlock content={story.description} />}
-                        </LinkPanel>
-                    ))}
-                </FrontpagePanelWrapper>
-            )}
+            <ContentWrapper>
+                {content && (
+                    <Box margin="l">
+                        <SanityBlockContent content={content} headingLevel={1} />
+                    </Box>
+                )}
+                {linkPanels && (
+                    <FrontpagePanelWrapper maxColumns={isDefaultSite ? 3 : 2}>
+                        {linkPanels.map((story, index) => (
+                            <LinkPanel
+                                key={index}
+                                title={story.title || ''}
+                                site={site}
+                                url={{ url: story.url, isPageSlug: story.isPageSlug }}
+                                image={
+                                    story.illustration ? (
+                                        <SanityIllustration illustration={story.illustration} />
+                                    ) : undefined
+                                }>
+                                {story.description && <SanityBlock content={story.description} />}
+                            </LinkPanel>
+                        ))}
+                    </FrontpagePanelWrapper>
+                )}
+            </ContentWrapper>
         </Frontpage>
     );
 };
