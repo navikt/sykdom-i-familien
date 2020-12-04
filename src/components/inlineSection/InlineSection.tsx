@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import bemUtils from '../../utils/bemUtils';
 import TitleWithLine from '../elements/titleWithLine/TitleWithLine';
-import './sectionPanel.less';
+// import './sectionPanel.less';
 
 const bem = bemUtils('sectionPanel');
 
@@ -13,7 +13,7 @@ interface Props {
     titleTag?: string;
 }
 
-const SectionPanel = ({ id, title, illustration, children, titleTag = 'h2' }: Props) => {
+const InlineSection = ({ id, title, illustration, children, titleTag = 'h2' }: Props) => {
     return (
         <section tabIndex={-1} id={id} aria-label={title} className={bem.block}>
             {illustration && <div className={bem.element('illustration')}>{illustration}</div>}
@@ -27,4 +27,4 @@ const SectionPanel = ({ id, title, illustration, children, titleTag = 'h2' }: Pr
     );
 };
 
-export default SectionPanel;
+export default InlineSection;

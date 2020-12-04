@@ -5,7 +5,6 @@ import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import Box from '../../../components/layout/box/Box';
 import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
 import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
-import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
 import { Locale } from '../../../i18n/locale';
 import {
@@ -16,7 +15,9 @@ import { Site } from '../../../utils/site';
 import { IllustrationDocument, SectionPageDocument } from '../../types/documents';
 import { createAnchorsForTabsWithinSections, getAndApplyLinksInContent } from '../../utils/prepLinksInDocument';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
+import PageSection from './PageSection';
 import './sectionPage.less';
+import InShortPageSection from './InShortPageSection';
 
 export interface SectionPageData {
     site: Site;
@@ -25,15 +26,20 @@ export interface SectionPageData {
     slug: { current: string };
     metadescription: string;
     content: any[];
+    inShort?: {
+        title?: string;
+        content: string;
+        illustration?: IllustrationDocument;
+    };
     showLeftMenu?: boolean;
 }
 
-interface SectionContent {
+export interface SanitySectionPageSectionContent {
     _id: string;
     _key: string;
     slug: string;
     title?: string;
-    illustration: IllustrationDocument;
+    illustration?: IllustrationDocument;
     content?: string;
 }
 
@@ -41,7 +47,7 @@ interface Props {
     data: SectionPageDocument;
 }
 
-const extractSectionData = (section: any, locale: string): SectionContent => {
+const extractSectionData = (section: any, locale: string): SanitySectionPageSectionContent => {
     const title = getSanityStringWithLocale(section.title, locale);
     return {
         _id: section._id,
@@ -61,6 +67,16 @@ export const extractDataFromSanitySectionPage = (data: any, locale: Locale | str
         slug: data.slug,
         metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
         content: data._rawContent,
+        inShort: data._rawInShort
+            ? {
+                  title: data._rawInShortTitle
+                      ? (getSanityStringWithLocale(data._rawInShortTitle, locale) as string)
+                      : undefined,
+                  content: getSanityContentWithLocale(data._rawInShort, locale) as string,
+                  illustration: data._rawInShortIllustration,
+              }
+            : undefined,
+
         showLeftMenu: data.showLeftMenu === true || data.showLeftMenu === null,
     };
 };
@@ -75,10 +91,24 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
         title,
         metadescription,
         showLanguageToggle,
+        inShort,
         slug,
         content,
         showLeftMenu,
     } = extractDataFromSanitySectionPage(dataWithTabs, intl.locale);
+
+    const inShortSection: SanitySectionPageSectionContent | undefined = inShort
+        ? {
+              _id: 'inShortSection',
+              _key: 'inShortSection',
+              title: inShort.title,
+              illustration: inShort.illustration,
+              content: inShort.content,
+              slug: slugify(inShort.title || ''),
+          }
+        : undefined;
+
+    const contentSections = [...content.filter((c) => c._type === 'section')];
 
     return (
         <PageWithMenu
@@ -89,7 +119,7 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
             slug={`${slug.current}`}
             sectionMenuItems={
                 showLeftMenu
-                    ? [...content.filter((c) => c._type === 'section')].map((sectionRaw) => {
+                    ? contentSections.map((sectionRaw) => {
                           const section = extractSectionData(sectionRaw, intl.locale);
                           return {
                               label: section.title || '',
@@ -100,28 +130,21 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
             }
             menuFooter={<Box />}
             header={<PageBannerCompact title={title} />}>
+            {inShortSection && (
+                <Box margin="none" className="sectionPageContentWrapper">
+                    <InShortPageSection section={inShortSection} />
+                </Box>
+            )}
             {(content || []).map((c) => {
                 const key = c._id || c._key;
                 if (c._type === 'section') {
                     const section = extractSectionData(c, intl.locale);
                     return (
                         <Box margin="none" key={key} className="sectionPageContentWrapper">
-                            <SectionPanel
-                                id={section.slug}
-                                title={section.title}
-                                illustration={
-                                    section.illustration ? (
-                                        <Box textAlignCenter={true} margin="none">
-                                            <SectionIcon illustration={section.illustration} />
-                                        </Box>
-                                    ) : undefined
-                                }>
-                                {section.content && <SanityBlockContent content={section.content} headingLevel={2} />}
-                            </SectionPanel>
+                            <PageSection section={section} />
                         </Box>
                     );
                 }
-
                 return (
                     <Box margin="none" key={key} className="sectionPageContentWrapper">
                         <SanityBlockContent content={c} headingLevel={2} />
