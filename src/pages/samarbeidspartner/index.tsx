@@ -10,7 +10,7 @@ interface Props {
     data: any;
 }
 
-const ArbeidsgiverForside: React.FunctionComponent<Props> = ({
+const SamarbeidspartnerForside: React.FunctionComponent<Props> = ({
     data,
     intl,
 }: Props & InjectedIntlProps & RouterProps) => {
@@ -26,12 +26,11 @@ export const pageQuery = graphql`
         allSanityFrontpage(filter: { _id: { eq: "frontpage-config-samarbeid" } }) {
             nodes {
                 showLanguageToggle
-                site
                 _id
                 _rawMetadescription
                 _rawTitle
                 _rawIngress
-                _rawContent(resolveReferences: { maxDepth: 4 })
+                _rawMessage(resolveReferences: { maxDepth: 4 })
                 _rawIllustration(resolveReferences: { maxDepth: 4 })
                 _rawFrontpageStories(resolveReferences: { maxDepth: 4 })
             }
@@ -39,4 +38,4 @@ export const pageQuery = graphql`
     }
 `;
 
-export default injectIntl(ArbeidsgiverForside);
+export default injectIntl(SamarbeidspartnerForside);
