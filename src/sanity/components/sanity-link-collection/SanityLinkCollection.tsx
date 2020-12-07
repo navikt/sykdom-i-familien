@@ -41,7 +41,7 @@ const SanityLinkCollection = (props: Props) => {
                 </Ingress>
             )}
             {ingress && (
-                <Box margin="l" padBottom="l">
+                <Box margin="m" padBottom="l">
                     <SanityBlockContent headingLevel={childHeadingLevel} content={ingress} />
                 </Box>
             )}
