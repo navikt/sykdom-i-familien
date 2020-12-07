@@ -1,11 +1,13 @@
 import React from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Link, useIntl } from 'gatsby-plugin-intl';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import { Link } from 'gatsby-plugin-intl';
+import { LenkepanelBase } from 'nav-frontend-lenkepanel';
+import { Undertittel } from 'nav-frontend-typografi';
 import bemUtils from '../../../../../utils/bemUtils';
-
+import { Site, sites } from '../../../../../utils/site';
 import './linkPanel.less';
-import { Site } from '../../../../../utils/site';
+import { SanityContentHeadingLevel } from '../../../../../sanity/types';
+import { getHeadingLevelForChild, getHeadingTag } from '../../../../../sanity/utils';
 
 type LinkPanelLayout = 'frontpageImageAbove' | 'wideWithImage' | 'plain';
 
@@ -18,12 +20,13 @@ interface Props {
         isPageSlug: boolean;
     };
     layout?: LinkPanelLayout;
+    headingLevel?: SanityContentHeadingLevel;
 }
 
 const bem = bemUtils('linkPanel');
 
-const getPageUrl = (url: string, site?: Site): string => {
-    return site && site !== Site.sykdomIFamilien ? `/${site}${url}` : url;
+export const getPageUrl = (url: string, locale: string, site?: Site): string => {
+    return site && site !== Site.sykdomIFamilien ? `/${locale}${sites[site].path}${url}` : url;
 };
 
 const LinkPanel: React.FunctionComponent<Props> = ({
@@ -33,13 +36,18 @@ const LinkPanel: React.FunctionComponent<Props> = ({
     image,
     layout = 'frontpageImageAbove',
     children,
+    headingLevel,
 }) => {
+    const { locale } = useIntl();
     const includeChevron = layout === 'plain' || layout === 'wideWithImage';
-    const content = (
+    const titleHeadingLevel = getHeadingLevelForChild(2);
+    const customContent = (
         <>
             {image && <div className={bem.element('image')}>{image}</div>}
             <div className={bem.element('content')}>
-                <Undertittel className={bem.element('title')}>{title}</Undertittel>
+                <Undertittel tag={getHeadingTag(titleHeadingLevel)} className={bem.element('title')}>
+                    {title}
+                </Undertittel>
                 <div>{children}</div>
             </div>
             {includeChevron && (
@@ -49,18 +57,28 @@ const LinkPanel: React.FunctionComponent<Props> = ({
             )}
         </>
     );
-    return (
+    return site === Site.sykdomIFamilien ? (
         <div className={bem.block}>
             {url.isPageSlug ? (
-                <Link tabIndex={0} to={getPageUrl(url.url, site)}>
-                    {content}
+                <Link tabIndex={0} to={getPageUrl(url.url, locale, site)}>
+                    {customContent}
                 </Link>
             ) : (
                 <a href={url.url} rel="noopener">
-                    {content}
+                    {customContent}
                 </a>
             )}
         </div>
+    ) : (
+        <LenkepanelBase border={true} href={url.isPageSlug ? getPageUrl(url.url, locale, site) : url.url}>
+            <div className={bem.classNames('frontpageLenkepanel')}>
+                {image && <div className="frontpageLenkepanel__image">{image}</div>}
+                <Undertittel tag={getHeadingTag(titleHeadingLevel)} className="frontpageLenkepanel__title">
+                    {title}
+                </Undertittel>
+                {children && <div>{children}</div>}
+            </div>
+        </LenkepanelBase>
     );
 };
 

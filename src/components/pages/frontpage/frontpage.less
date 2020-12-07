@@ -1,13 +1,23 @@
 @import '../../../styles/assets.less';
 
 .frontpage {
+    &--whiteBkg {
+        background-color: white;
+    }
     &__content {
         max-width: 1100px;
         margin: 0 auto;
         position: relative;
-        padding: 2rem 2rem 4rem 2rem;
+        padding: 2rem 0 4rem 0;
         @media (max-width: @tablet-breakpoint) {
             padding: 1rem;
         }
+    }
+}
+.frontpageContentWrapper {
+    max-width: @app-max-width + 48px;
+    margin: 1rem auto 0 auto;
+    .typo-undertittel {
+        font-size: 1.5rem;
     }
 }

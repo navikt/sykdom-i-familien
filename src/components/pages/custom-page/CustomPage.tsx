@@ -4,7 +4,6 @@ import { InjectedIntlProps } from 'gatsby-plugin-intl';
 import bemUtils from '../../../utils/bemUtils';
 import { getSiteTitle, Site } from '../../../utils/site';
 import PageBannerCompact from '../frontpage/components/page-banner_compact/PageBannerCompact';
-import Breadcrumbs from '../page-wrapper/components/global-page-header/breadcrumbs/Breadcrumbs';
 import PageWrapper from '../page-wrapper/PageWrapper';
 import './customPage.less';
 
@@ -22,7 +21,6 @@ interface Props {
     children: React.ReactNode;
     header?: React.ReactNode;
     slug: string;
-    showBreadcrumbs?: boolean;
 }
 
 const bem = bemUtils('customPage');
@@ -35,7 +33,6 @@ const CustomPage: React.FunctionComponent<Props & InjectedIntlProps> = ({
     slug,
     children,
     intl,
-    showBreadcrumbs = true,
 }) => {
     const siteMetadata = useStaticQuery(graphql`
         query {
@@ -59,11 +56,6 @@ const CustomPage: React.FunctionComponent<Props & InjectedIntlProps> = ({
                     <PageBannerCompact title={siteTitle} />
                 </div>
             }
-            {showBreadcrumbs && (
-                <div className={bem.element('breadcrumbs')}>
-                    <Breadcrumbs slug={slug} title={pageTitle} site={site} />
-                </div>
-            )}
             <div className={bem.block}>
                 <article className={bem.element('article')}>{children}</article>
             </div>

@@ -1,9 +1,15 @@
 const getDecorator = require('./getDecorator');
 const path = require('path');
 const fsExtra = require('fs-extra');
+const sites = require('../../build-utils/sites');
 
-function createDocumentFragments(fragments) {
-  const fragmentsFile = path.resolve(`${__dirname}/fetched/_fragments.ts`);
+const getFragmentsFilePath = (site) => {
+  const sitePart = site && site.key ? `_${site.key}` : '';
+  return path.resolve(`${__dirname}/fetched/_fragments${sitePart}.ts`);
+};
+
+function createDocumentFragments(fragments, site) {
+  const fragmentsFile = getFragmentsFilePath(site);
   fsExtra.ensureFile(fragmentsFile).then((f) => {
     const fileString = `export const decoratorFragments = {
       NAV_SCRIPTS: ${JSON.stringify(fragments.NAV_SCRIPTS)},
@@ -17,4 +23,6 @@ function createDocumentFragments(fragments) {
   });
 }
 
-getDecorator().then(createDocumentFragments);
+getDecorator(sites.privatperson).then((fragments) => createDocumentFragments(fragments, sites.privatperson));
+getDecorator(sites.arbeidsgiver).then((fragments) => createDocumentFragments(fragments, sites.arbeidsgiver));
+getDecorator(sites.samarbeid).then((fragments) => createDocumentFragments(fragments, sites.samarbeid));

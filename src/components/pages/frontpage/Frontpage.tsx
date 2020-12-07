@@ -1,9 +1,8 @@
 import React from 'react';
-import { injectIntl, InjectedIntlProps } from 'gatsby-plugin-intl';
 import { RouterProps } from '@reach/router';
-import PageWrapper from '../page-wrapper/PageWrapper';
+import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import bemUtils from '../../../utils/bemUtils';
-
+import PageWrapper from '../page-wrapper/PageWrapper';
 import './frontpage.less';
 
 interface Props {
@@ -12,6 +11,7 @@ interface Props {
     pageMetaDescription: string;
     header?: React.ReactNode;
     menu?: React.ReactNode;
+    useWhiteBackground: boolean;
 }
 
 const bem = bemUtils('frontpage');
@@ -21,14 +21,15 @@ const Frontpage: React.FunctionComponent<Props & InjectedIntlProps & RouterProps
     showLanguageToggle,
     pageTitle,
     pageMetaDescription,
-    header
+    header,
+    useWhiteBackground,
 }) => {
     return (
         <PageWrapper
             pageTitle={pageTitle}
             pageMetaDescription={pageMetaDescription}
             showLanguageToggle={showLanguageToggle}>
-            <div className={bem.block}>
+            <div className={bem.classNames(bem.block, bem.modifierConditional('whiteBkg', useWhiteBackground))}>
                 {header && <>{header}</>}
                 <div className={bem.element('content')}>
                     <article>{children}</article>

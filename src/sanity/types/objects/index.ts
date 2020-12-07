@@ -13,6 +13,7 @@ export interface ExpandableContentObject {
     content: LocaleRichTextObject;
 }
 export interface FrontpageLinkObject {
+    _type: 'frontpageLink';
     title: LocaleStringObject;
     content: LocaleRichTextObject;
     illustration: IllustrationDocument;
@@ -20,10 +21,10 @@ export interface FrontpageLinkObject {
 }
 
 export interface FrontpagePageLinkObject {
+    _type: 'frontpagePageLink';
     page: YtelsePageDocument;
     content: LocaleRichTextObject;
     illustration: IllustrationDocument;
-    url: string;
 }
 
 export type TabsObjectPresentation = 'tabs' | 'dropdown';
@@ -65,6 +66,12 @@ export interface TextblockObject {
 export interface Lenkeknapp {
     text: LocaleStringObject;
     url: string;
+}
+
+export interface LinkCollectionObject {
+    title: LocaleStringObject;
+    ingress: LocaleRichTextObject;
+    links: Array<FrontpagePageLinkObject | FrontpageLinkObject>;
 }
 
 export type VeilederpanelVeiledertype = 'normal' | 'rasmus' | 'temafarge';

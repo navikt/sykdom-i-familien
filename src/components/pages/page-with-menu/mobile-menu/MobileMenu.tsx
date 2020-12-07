@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { SectionMenuItem } from '../PageWithMenu';
-import bemUtils from '../../../../utils/bemUtils';
-import MobileMenuHeader from './MobileMenuHeader';
-import SectionLinks from '../section-links/SectionLinks';
-import SiteLink from '../site-link/SiteLink';
-
-import './mobileMenu.less';
 import { Undertittel } from 'nav-frontend-typografi';
+import bemUtils from '../../../../utils/bemUtils';
+import { SectionMenuItem } from '../PageWithMenu';
+import SectionLinks from '../section-links/SectionLinks';
+import MobileMenuHeader from './MobileMenuHeader';
+import './mobileMenu.less';
 
 interface Props {
     pageTitle: string;
@@ -38,9 +36,6 @@ const MobileMenu: React.FunctionComponent<Props> = ({ items, pageTitle, activeSe
             />
             {isOpen && (
                 <>
-                    <div className={bem.element('pageTitle')}>
-                        <SiteLink />
-                    </div>
                     <Undertittel className={bem.element('itemsHeader')}>Velg seksjon</Undertittel>
                     <div className={bem.element('items')} onClick={closeInItemClicked}>
                         <SectionLinks items={items} activeSectionSlug={activeSectionSlug} columns={2} />

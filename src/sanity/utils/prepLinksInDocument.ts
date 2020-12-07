@@ -33,9 +33,9 @@ export const getAndApplyLinksInContent = (data: any) => {
                       _key: link._key,
                       text: node.text,
                       isExternal: isUrlExternal(link.href),
-                      linkNumber: link.linkNumber
+                      linkNumber: link.linkNumber,
                   };
-        })
+        }),
     };
 };
 

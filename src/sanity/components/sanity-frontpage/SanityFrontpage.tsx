@@ -7,9 +7,10 @@ import PageBanner from '../../../components/pages/frontpage/components/page-bann
 import Frontpage from '../../../components/pages/frontpage/Frontpage';
 import SanityBlock from '../../../sanity/components/sanity-block/SanityBlock';
 import SanityIllustration from '../../../sanity/components/sanity-illustration/SanityIllustrationContent';
-import SanityMessage from '../../../sanity/components/sanity-message/SanityMessage';
 import { FrontpageSanityData } from '../../../sanity/utils/frontpageUtils';
 import { Site } from '../../../utils/site';
+import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
+import ContentWrapper from '../../../components/layout/content-wrapper/ContentWrapper';
 
 interface Props {
     data: FrontpageSanityData;
@@ -17,32 +18,43 @@ interface Props {
 }
 
 const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props & RouterProps) => {
-    const { showLanguageToggle, title, metadescription, ingress, message, illustration, stories: linkPanels } = data;
-
+    const {
+        showLanguageToggle,
+        title,
+        metadescription,
+        ingress,
+        content,
+        footerContent,
+        illustration,
+        stories: linkPanels,
+    } = data;
+    const isDefaultSite = site === Site.sykdomIFamilien;
     return (
         <Frontpage
             showLanguageToggle={showLanguageToggle}
             pageTitle={title}
             pageMetaDescription={metadescription}
+            useWhiteBackground={isDefaultSite === false}
             header={
-                title && ingress ? (
-                    <PageBanner
-                        title={title}
-                        illustration={<SanityIllustration illustration={illustration} maintainAspectRatio={true} />}>
-                        <SanityBlock content={ingress} />
-                    </PageBanner>
-                ) : undefined
+                <PageBanner
+                    title={title}
+                    illustration={
+                        illustration ? (
+                            <SanityIllustration illustration={illustration} maintainAspectRatio={true} />
+                        ) : undefined
+                    }>
+                    {ingress && <SanityBlock content={ingress} />}
+                </PageBanner>
             }>
-            {message && (
-                <Box padBottom="xl" margin="l">
-                    <SanityMessage message={message} />
-                </Box>
-            )}
-
-            <Box>
-                <FrontpagePanelWrapper>
-                    {linkPanels &&
-                        linkPanels.map((story, index) => (
+            <ContentWrapper>
+                {content && (
+                    <Box margin="l">
+                        <SanityBlockContent content={content} headingLevel={1} />
+                    </Box>
+                )}
+                {linkPanels && (
+                    <FrontpagePanelWrapper maxColumns={isDefaultSite ? 3 : 2}>
+                        {linkPanels.map((story, index) => (
                             <LinkPanel
                                 key={index}
                                 title={story.title || ''}
@@ -56,8 +68,14 @@ const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props &
                                 {story.description && <SanityBlock content={story.description} />}
                             </LinkPanel>
                         ))}
-                </FrontpagePanelWrapper>
-            </Box>
+                    </FrontpagePanelWrapper>
+                )}
+                {footerContent && (
+                    <Box margin="xl">
+                        <SanityBlockContent content={footerContent} headingLevel={2} />
+                    </Box>
+                )}
+            </ContentWrapper>
         </Frontpage>
     );
 };

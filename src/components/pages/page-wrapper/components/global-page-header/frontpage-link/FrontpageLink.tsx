@@ -16,7 +16,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const Breadcrumbs = (props: Props & InjectedIntlProps) => {
+const FrontpageLink = (props: Props & InjectedIntlProps) => {
     const { width } = useWindowSize();
     const { title, intl } = props;
     const siteMetadata = useStaticQuery(graphql`
@@ -69,4 +69,4 @@ const Breadcrumbs = (props: Props & InjectedIntlProps) => {
     );
 };
 
-export default injectIntl(Breadcrumbs);
+export default injectIntl(FrontpageLink);

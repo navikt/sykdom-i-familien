@@ -19,6 +19,9 @@ export const query = graphql`
                     site
                     _rawMetadescription
                     _rawTitle
+                    _rawInShort
+                    _rawInShortTitle
+                    _rawInShortIllustration(resolveReferences: { maxDepth: 4 })
                     _rawContent(resolveReferences: { maxDepth: 10 })
                 }
             }

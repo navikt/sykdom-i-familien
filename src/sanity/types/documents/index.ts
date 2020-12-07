@@ -45,7 +45,7 @@ export interface YtelseDocument {
 
 export interface YtelsePageDocument {
     ytelse: YtelseDocument;
-    slug: string;
+    slug: { current: string };
     banner: IllustrationDocument;
     title: LocaleStringObject;
     illustration: IllustrationDocument;

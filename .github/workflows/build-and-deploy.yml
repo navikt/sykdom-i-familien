@@ -91,7 +91,7 @@ jobs:
         - name: build code
           env:
             SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-            DATASET: production
+            DATASET: preprod
             ENV: dev
             OVERLAY_DRAFTS: true
             WATCH_MODE: false

@@ -7,10 +7,14 @@
     &__borderBox {
         border-bottom: 0.25rem solid @c-theme-dark;
     }
-    &--wide {
-        padding-top: 1rem;
+    &--noIllustration {
+        padding-top: 1.5rem;
+        text-align: center;
+        .pageBanner__title {
+            text-align: center;
+        }
         .pageBanner__contentWrapper {
-            max-width: @app-wide-max-width;
+            padding-bottom: 1.5rem;
         }
     }
     &__footer {
@@ -24,8 +28,7 @@
     &__contentWrapper {
         display: flex;
         position: relative;
-        max-width: @app-max-width + 48px;
-        margin: 0 auto;
+        padding: 0 1rem;
         align-items: center;
         flex-direction: column;
         @media (min-width: @tablet-breakpoint) {
@@ -35,7 +38,7 @@
     &__text {
         display: flex;
         flex-direction: column;
-        padding: 1rem 1rem 2rem 1rem;
+        padding: 1rem 0 2rem 0;
         line-height: 1.45rem;
         z-index: 1;
         width: 100%;
@@ -43,11 +46,12 @@
         p {
             margin-top: 0;
         }
-        @media (min-width: @mobile-breakpoint) {
-            max-width: 55%;
+        .pageBanner--noIllustration & {
+            padding: 0;
+            min-height: 0;
         }
-        @media (min-width: @tablet-breakpoint) {
-            .pageBanner--wide & {
+        &:not(&.pageBanner--noIllustration) {
+            @media (min-width: @mobile-breakpoint) {
                 max-width: 55%;
             }
         }
@@ -69,9 +73,6 @@
             max-height: 12rem;
             max-width: 25rem;
         }
-        .pageBanner--wide & {
-            padding: 1rem 0;
-        }
         @media (min-width: @mobile-breakpoint) {
             min-width: 20rem;
             max-width: 100%;
@@ -80,21 +81,20 @@
             }
         }
         @media (min-width: @tablet-breakpoint) {
-            // position: absolute;
             bottom: 0;
             right: 1rem;
             min-width: 25rem;
-            .pageBanner--wide & {
-                min-width: 25rem;
-            }
             svg {
                 min-height: 9rem;
             }
         }
     }
     &__title {
-        font-size: 2.25rem;
+        font-size: 2rem;
         margin-bottom: 0.5rem;
+        .pageBanner--noIllustration & {
+            margin-bottom: 0;
+        }
     }
     @media print {
         background-color: transparent;

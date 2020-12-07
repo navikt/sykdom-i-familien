@@ -15,12 +15,43 @@ const getPagePath = (site, slug) => {
     return `${site.path}${slug}`;
 };
 
+const createFrontpage = async (site, { graphql, actions }, template) => {
+    const query = `
+    query {
+        allSanityFrontpage(filter: {site: {eq: "${site.key}"}}) {
+            edges {
+                node {
+                    _id
+                    site
+                }
+            }
+        }
+    }`;
+
+    const pages = await graphql(query);
+    pages.data["allSanityFrontpage"].edges.forEach(({ node }) => {
+        if (node && node._id) {
+            console.log(`Created frontpage with path: ${site.path}`)
+            actions.createPage({
+                path: site.path,
+                component: path.resolve(template),
+                context: {
+                    _id: node._id,
+                    site: node.site,
+                },
+            });
+        } else {
+            console.error('Undefined node or node._id', node);
+        }
+    });
+};
 const createPages = async (documentType, site, onlyPublicPages, { graphql, actions }, template) => {
     const query = `
     query {
         ${documentType}${getPageFilter(site, onlyPublicPages)} {
             edges {
                 node {
+                    _id
                     slug {
                         current
                     }
@@ -39,6 +70,7 @@ const createPages = async (documentType, site, onlyPublicPages, { graphql, actio
                 path: pagePath,
                 component: path.resolve(template),
                 context: {
+                    _id: node._id,
                     slug: node.slug.current,
                     site: node.site,
                 },
@@ -50,5 +82,6 @@ const createPages = async (documentType, site, onlyPublicPages, { graphql, actio
 };
 
 module.exports = {
+    createFrontpage,
     createPages,
 };
