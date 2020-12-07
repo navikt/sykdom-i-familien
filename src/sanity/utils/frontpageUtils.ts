@@ -18,8 +18,19 @@ export interface FrontpageSanityData {
     ingress?: string;
     illustration: IllustrationDocument;
     stories?: FrontpageStory[];
+    links?: FrontpageStory[];
     content: any[];
+    footerContent: any[];
 }
+
+const mapFrontpageStory = (story: any, locale: string): FrontpageStory => ({
+    title: getSanityStringWithLocale(story.title || story.page.title, locale),
+    description: getSanityStringWithLocale(story.content, locale),
+    illustration: story.illustration,
+    isPageSlug: story._type === 'frontpagePageLink',
+    url: story._type === 'frontpageLink' ? story.url : story.page.slug ? `/${story.page.slug.current}` : '',
+});
+
 export const extractFrontpageData = (data: any, locale: string): FrontpageSanityData | undefined => {
     const { nodes } = data?.allSanityFrontpage || {};
     if (!nodes || nodes.length === 0) {
@@ -32,7 +43,9 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         _rawIngress,
         _rawTitle,
         _rawContent,
+        _rawFooterContent,
         _rawFrontpageStories,
+        _rawFrontpageLinks,
         _rawMetadescription,
     } = nodes[0];
 
@@ -44,14 +57,8 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         metadescription: getSanityStringWithLocale(_rawMetadescription, locale),
         illustration: _rawIllustration,
         content: _rawContent,
-        stories: (_rawFrontpageStories || []).map((story: any) => {
-            return {
-                title: getSanityStringWithLocale(story.title || story.page.title, locale),
-                description: getSanityStringWithLocale(story.content, locale),
-                illustration: story.illustration,
-                isPageSlug: story._type === 'frontpagePageLink',
-                url: story._type === 'frontpageLink' ? story.url : story.page.slug ? `/${story.page.slug.current}` : '',
-            };
-        }),
+        footerContent: _rawFooterContent,
+        stories: (_rawFrontpageStories || []).map((story: any) => mapFrontpageStory(story, locale)),
+        links: (_rawFrontpageLinks || []).map((story: any) => mapFrontpageStory(story, locale)),
     };
 };

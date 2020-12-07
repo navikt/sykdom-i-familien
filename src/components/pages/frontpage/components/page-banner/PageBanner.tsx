@@ -19,7 +19,7 @@ const PageBanner: React.FunctionComponent<Props> = ({ title, illustration, child
                 bem.modifierConditional('noIllustration', illustration === undefined)
             )}>
             <div className={bem.element('borderBox')}>
-                <ContentWrapper className={bem.element('contentWrapper')} maxWidth="wide">
+                <ContentWrapper className={bem.element('contentWrapper')}>
                     <div className={bem.element('text')}>
                         <Sidetittel className={bem.element('title')}>{title}</Sidetittel>
                         <div className={bem.element('content')}>{children}</div>

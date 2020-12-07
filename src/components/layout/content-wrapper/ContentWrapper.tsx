@@ -9,7 +9,7 @@ interface Props extends HTMLProps<HTMLDivElement> {
 
 const bem = bemUtils('contentWrapper');
 
-const ContentWrapper = ({ children, className, maxWidth = 'wide', ...rest }: Props) => (
+const ContentWrapper = ({ children, className, maxWidth = 'normal', ...rest }: Props) => (
     <div className={bem.classNames(bem.block, className, bem.modifier(maxWidth))} {...rest}>
         {children}
     </div>
