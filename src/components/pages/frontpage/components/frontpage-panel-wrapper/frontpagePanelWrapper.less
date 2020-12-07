@@ -8,7 +8,7 @@
     @media (min-width: @tablet-breakpoint) {
         display: flex;
         align-items: stretch;
-        justify-content: center;
+        justify-content: left;
     }
     &__item {
         margin-bottom: 1rem;
@@ -34,7 +34,8 @@
                 min-width: 100%/2;
                 max-width: 100%/2;
                 padding: 0 0.5rem;
-                margin-bottom: 1rem;
+                margin-bottom: 0;
+                height: calc(100% - 1rem);
                 &:nth-child(2n + 1) {
                     padding-left: 0;
                 }
