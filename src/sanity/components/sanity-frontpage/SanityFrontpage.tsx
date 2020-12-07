@@ -18,7 +18,16 @@ interface Props {
 }
 
 const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props & RouterProps) => {
-    const { showLanguageToggle, title, metadescription, ingress, content, illustration, stories: linkPanels } = data;
+    const {
+        showLanguageToggle,
+        title,
+        metadescription,
+        ingress,
+        content,
+        footerContent,
+        illustration,
+        stories: linkPanels,
+    } = data;
     const isDefaultSite = site === Site.sykdomIFamilien;
     return (
         <Frontpage
@@ -60,6 +69,11 @@ const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props &
                             </LinkPanel>
                         ))}
                     </FrontpagePanelWrapper>
+                )}
+                {footerContent && (
+                    <Box margin="xl">
+                        <SanityBlockContent content={footerContent} headingLevel={2} />
+                    </Box>
                 )}
             </ContentWrapper>
         </Frontpage>

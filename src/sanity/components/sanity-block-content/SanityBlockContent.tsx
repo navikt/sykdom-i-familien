@@ -5,28 +5,34 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Element } from 'nav-frontend-typografi';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
 import InfopanelMedKnapperView, {
-    InfopanelMedKnapper
+    InfopanelMedKnapper,
 } from '../../../components/infopanelMedKnapper/InfopanelMedKnapper';
 import Box from '../../../components/layout/box/Box';
 import Veileder from '../../../components/veileder/Veileder';
 import {
-    getSanityContentWithLocale, getSanityStringWithLocale
+    getSanityContentWithLocale,
+    getSanityStringWithLocale,
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { SanityContentHeadingLevel } from '../../types';
 import { AlertStripeObject, IllustrationDocument, MessageDocument } from '../../types/documents';
 import {
-    ExpandableContentObject, FaqObject, RasmusVeilederpanelObject, TabsObject, TextblockObject,
-    VeilederpanelObject
+    ExpandableContentObject,
+    FaqObject,
+    RasmusVeilederpanelObject,
+    TabsObject,
+    LinkCollectionObject,
+    TextblockObject,
+    VeilederpanelObject,
 } from '../../types/objects';
-import {
-    getHeadingLevelForChild, getLocaleBlockContent, getLocaleString, getOptionalLocaleString
-} from '../../utils';
+import { getHeadingLevelForChild, getLocaleBlockContent, getLocaleString, getOptionalLocaleString } from '../../utils';
 import SanityBlock from '../sanity-block/SanityBlock';
 import SanityCustomComponent from '../sanity-custom-component/SanityCustomComponent';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
 import SanityMessage from '../sanity-message/SanityMessage';
 import SanityTabs from '../sanity-tabs/SanityTabs';
 import SanityTextblock from '../sanity-textblock/SanityTextblock';
+import SanityLinkCollection from '../sanity-link-collection/SanityLinkCollection';
+import { mapLinkCollectionItem } from '../../utils/linkCollectionUtils';
 
 interface Props {
     content: string | any;
@@ -181,8 +187,21 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                 intl={intl}
                                 headingLevel={headingLevel}
                             />
-                        )
-                    }
+                        ),
+                        linkCollection: ({ node }: { node: LinkCollectionObject }) => {
+                            const title = getSanityStringWithLocale(node.title, intl.locale);
+                            const ingress = getSanityContentWithLocale(node.ingress, intl.locale);
+                            const links = node.links.map((item) => mapLinkCollectionItem(item, intl.locale));
+                            return (
+                                <SanityLinkCollection
+                                    title={title}
+                                    ingress={ingress}
+                                    links={links}
+                                    headingLevel={headingLevel}
+                                />
+                            );
+                        },
+                    },
                 }}
             />
         </div>

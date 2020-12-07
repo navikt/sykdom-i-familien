@@ -6,7 +6,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import bemUtils from '../../../../../utils/bemUtils';
 import { Site, sites } from '../../../../../utils/site';
 import './linkPanel.less';
-import { Locale } from '../../../../../i18n/locale';
+import { SanityContentHeadingLevel } from '../../../../../sanity/types';
+import { getHeadingLevelForChild, getHeadingTag } from '../../../../../sanity/utils';
 
 type LinkPanelLayout = 'frontpageImageAbove' | 'wideWithImage' | 'plain';
 
@@ -19,6 +20,7 @@ interface Props {
         isPageSlug: boolean;
     };
     layout?: LinkPanelLayout;
+    headingLevel?: SanityContentHeadingLevel;
 }
 
 const bem = bemUtils('linkPanel');
@@ -34,14 +36,18 @@ const LinkPanel: React.FunctionComponent<Props> = ({
     image,
     layout = 'frontpageImageAbove',
     children,
+    headingLevel,
 }) => {
     const { locale } = useIntl();
     const includeChevron = layout === 'plain' || layout === 'wideWithImage';
+    const titleHeadingLevel = getHeadingLevelForChild(2);
     const customContent = (
         <>
             {image && <div className={bem.element('image')}>{image}</div>}
             <div className={bem.element('content')}>
-                <Undertittel className={bem.element('title')}>{title}</Undertittel>
+                <Undertittel tag={getHeadingTag(titleHeadingLevel)} className={bem.element('title')}>
+                    {title}
+                </Undertittel>
                 <div>{children}</div>
             </div>
             {includeChevron && (
@@ -67,7 +73,9 @@ const LinkPanel: React.FunctionComponent<Props> = ({
         <LenkepanelBase border={true} href={url.isPageSlug ? getPageUrl(url.url, locale, site) : url.url}>
             <div className={bem.classNames('frontpageLenkepanel')}>
                 {image && <div className="frontpageLenkepanel__image">{image}</div>}
-                <Undertittel className="frontpageLenkepanel__title">{title}</Undertittel>
+                <Undertittel tag={getHeadingTag(titleHeadingLevel)} className="frontpageLenkepanel__title">
+                    {title}
+                </Undertittel>
                 {children && <div>{children}</div>}
             </div>
         </LenkepanelBase>
