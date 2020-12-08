@@ -11,9 +11,9 @@ const bem = bemUtils('pageBannerCompact');
 
 const PageBannerCompact: React.FunctionComponent<Props> = ({ title, children }) => {
     return (
-        <header className={bem.classNames(bem.block)}>
+        <div className={bem.classNames(bem.block)}>
             <Sidetittel className={bem.element('title')}>{title}</Sidetittel>
-        </header>
+        </div>
     );
 };
 

@@ -17,7 +17,7 @@ const bem = bemUtils('sidebarMenu');
 
 const SidebarMenu: React.FunctionComponent<Props> = ({ items, footer, activeSectionSlug }) => {
     return (
-        <nav className={bem.block}>
+        <nav className={bem.block} aria-label="Sideinnhold">
             <div className={bem.element('icon')}>
                 <CircleMask color={styles.colors.theme} size="5rem" scaleSvg={false}>
                     <RocketSVG size="3rem" />
