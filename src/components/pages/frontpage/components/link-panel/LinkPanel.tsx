@@ -36,11 +36,11 @@ const LinkPanel: React.FunctionComponent<Props> = ({
     image,
     layout = 'frontpageImageAbove',
     children,
-    headingLevel,
+    headingLevel = 2,
 }) => {
     const { locale } = useIntl();
     const includeChevron = layout === 'plain' || layout === 'wideWithImage';
-    const titleHeadingLevel = getHeadingLevelForChild(2);
+    const titleHeadingLevel = getHeadingLevelForChild(headingLevel);
     const customContent = (
         <>
             {image && <div className={bem.element('image')}>{image}</div>}
@@ -73,10 +73,12 @@ const LinkPanel: React.FunctionComponent<Props> = ({
         <LenkepanelBase border={true} href={url.isPageSlug ? getPageUrl(url.url, locale, site) : url.url}>
             <div className={bem.classNames('frontpageLenkepanel')}>
                 {image && <div className="frontpageLenkepanel__image">{image}</div>}
-                <Undertittel tag={getHeadingTag(titleHeadingLevel)} className="frontpageLenkepanel__title">
+                <Undertittel
+                    tag={getHeadingTag(titleHeadingLevel)}
+                    className="frontpageLenkepanel__title lenkepanel__heading">
                     {title}
                 </Undertittel>
-                {children && <div>{children}</div>}
+                {children && <p>{children}</p>}
             </div>
         </LenkepanelBase>
     );

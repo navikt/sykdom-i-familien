@@ -80,7 +80,7 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
                     <>
                         <MediaQuery minWidth={1072}>{renderSidebar()}</MediaQuery>
                         <MediaQuery maxWidth={1071}>
-                            <aside className={bem.element('mobilMenu')}>
+                            <aside className={bem.element('mobilMenu')} aria-label="Sideinnhold">
                                 <MobileMenu
                                     pageTitle={pageTitle}
                                     items={sectionMenuItems}
