@@ -15,10 +15,10 @@ const getPagePath = (site, slug) => {
     return `${site.path}${slug}`;
 };
 
-const createFrontpage = async (site, { graphql, actions }, template) => {
+const createFrontpage = async (site, { graphql, actions }, onlyPublicPages, template) => {
     const query = `
     query {
-        allSanityFrontpage(filter: {site: {eq: "${site.key}"}}) {
+        allSanityFrontpage${getPageFilter(site, onlyPublicPages)} {
             edges {
                 node {
                     _id
