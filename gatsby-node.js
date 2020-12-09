@@ -18,7 +18,12 @@ require('ts-node').register({
 const pageCreator = require('./build-utils/create-pages');
 
 const createPagesForSite = async (site, onlyPublicPages, { graphql, actions }) => {
-    await pageCreator.createFrontpage(site, { graphql, actions }, './src/templates/frontpagePageTemplate.tsx');
+    await pageCreator.createFrontpage(
+        site,
+        { graphql, actions },
+        onlyPublicPages,
+        './src/templates/frontpagePageTemplate.tsx'
+    );
     await pageCreator.createPages(
         'allSanityYtelsePage',
         site,
