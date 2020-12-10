@@ -10,6 +10,7 @@
         "DATASET": "production",
         "ENV": "dev",
         "OVERLAY_DRAFTS": true,
-        "WATCH_MODE": false
+        "WATCH_MODE": false,
+        "GATSBY_PATH_PREFIX": ""
     }
 }
