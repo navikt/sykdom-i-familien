@@ -23,7 +23,7 @@
     "dependencies": {
         "@babel/plugin-transform-async-to-generator": "^7.10.4",
         "@babel/plugin-transform-regenerator": "^7.10.4",
-        "@babel/plugin-transform-runtime": "^7.11.5",
+        "@babel/plugin-transform-runtime": "^7.12.10",
         "@navikt/nav-dekoratoren-moduler": "^1.0.21",
         "@navikt/omsorgsdager-kalkulator": "1.0.8",
         "@sanity/block-content-to-react": "^2.0.7",
