@@ -80,5 +80,5 @@ export const getSiteTitleForSite = (site: Site) => {
 };
 
 export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): string => {
-    return `${process.env.GATSBY_PATH_PREFIX}/${locale}${sites[site].path}`;
+    return `${process.env.GATSBY_PATH_PREFIX || ''}/${locale}${sites[site].path}`;
 };
