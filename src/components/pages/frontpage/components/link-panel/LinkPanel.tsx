@@ -4,7 +4,7 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Undertittel } from 'nav-frontend-typografi';
 import bemUtils from '../../../../../utils/bemUtils';
-import { Site, sites } from '../../../../../utils/site';
+import { getPageUrl, Site } from '../../../../../utils/site';
 import './linkPanel.less';
 import { SanityContentHeadingLevel } from '../../../../../sanity/types';
 import { getHeadingLevelForChild, getHeadingTag } from '../../../../../sanity/utils';
@@ -24,10 +24,6 @@ interface Props {
 }
 
 const bem = bemUtils('linkPanel');
-
-export const getPageUrl = (url: string, locale: string, site?: Site): string => {
-    return site && site !== Site.sykdomIFamilien ? `/${locale}${sites[site].path}${url}` : url;
-};
 
 const LinkPanel: React.FunctionComponent<Props> = ({
     title,
