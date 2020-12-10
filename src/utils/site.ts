@@ -1,4 +1,5 @@
 import { Locale } from '../i18n/locale';
+import { isBrowser } from './build';
 
 export enum Site {
     sykdomIFamilien = 'sykdom-i-familien',
@@ -79,5 +80,5 @@ export const getSiteTitleForSite = (site: Site) => {
 };
 
 export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): string => {
-    return `/${locale}${sites[site].path}`;
+    return `${process.env.GATSBY_PATH_PREFIX}/${locale}${sites[site].path}`;
 };

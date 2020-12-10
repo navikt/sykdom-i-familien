@@ -158,6 +158,7 @@ jobs:
                   ENV: prod
                   OVERLAY_DRAFTS: false
                   WATCH_MODE: false
+                  GATSBY_PATH_PREFIX: /familie/sykdom-i-familien
               run: |
                   echo "Exported DATASET=$DATASET"
                   npm i
