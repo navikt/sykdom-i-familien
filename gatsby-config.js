@@ -3,7 +3,7 @@ require('dotenv').config();
 console.log(`Using dataset [${process.env.DATASET}]`);
 
 const config = {
-    pathPrefix: `${process.env.GATSBY_PATH_PREFIX}`,
+    pathPrefix: `/familie/sykdom-i-familien`,
     siteMetadata: {
         title: `Sykdom i familien`,
         title_nb: `Sykdom i familien`,
