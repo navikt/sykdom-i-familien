@@ -33,13 +33,20 @@ import SanityTabs from '../sanity-tabs/SanityTabs';
 import SanityTextblock from '../sanity-textblock/SanityTextblock';
 import SanityLinkCollection from '../sanity-link-collection/SanityLinkCollection';
 import { mapLinkCollectionItem } from '../../utils/linkCollectionUtils';
+import { Site } from '../../../utils/site';
 
 interface Props {
     content: string | any;
     headingLevel: SanityContentHeadingLevel;
+    site: Site;
 }
 
-const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({ content, headingLevel, intl }) => {
+const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = ({
+    content,
+    headingLevel,
+    site,
+    intl,
+}) => {
     if (!content) {
         return null;
     }
@@ -198,6 +205,7 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                     ingress={ingress}
                                     links={links}
                                     headingLevel={headingLevel}
+                                    site={site}
                                 />
                             );
                         },

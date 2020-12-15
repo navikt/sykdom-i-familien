@@ -8,13 +8,14 @@ import { getHeadingLevelForChild, getHeadingTag } from '../../../../../sanity/ut
 import bemUtils from '../../../../../utils/bemUtils';
 import { getPageUrl, Site } from '../../../../../utils/site';
 import './linkPanel.less';
+import Lenke from 'nav-frontend-lenker';
 
 type LinkPanelLayout = 'frontpageImageAbove' | 'wideWithImage' | 'plain';
 
 interface Props {
     image?: React.ReactNode;
     title: string;
-    site?: Site;
+    site: Site;
     url: {
         url: string;
         isPageSlug: boolean;
@@ -56,9 +57,9 @@ const LinkPanel: React.FunctionComponent<Props> = ({
     return site === Site.sykdomIFamilien ? (
         <div className={bem.block}>
             {url.isPageSlug ? (
-                <Link tabIndex={0} to={getPageUrl(url.url, locale, site)}>
+                <a tabIndex={0} href={getPageUrl(url.url, locale, site)} style={{ display: 'block' }}>
                     {customContent}
-                </Link>
+                </a>
             ) : (
                 <a href={url.url} rel="noopener">
                     {customContent}
