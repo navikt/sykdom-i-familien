@@ -82,16 +82,18 @@ const hasValue = (value?: string): boolean => {
     return value !== undefined && value !== '';
 };
 
-const addSitePrefixToUrl = (url: string): string => {
-    return hasValue(process.env.GATSBY_SITE_URL) ? `${process.env.GATSBY_SITE_URL}/${url}` : url;
-};
-
-const addGatsbyPrefixToUrl = (url: string): string => {
-    return hasValue(process.env.GATSBY_PATH_PREFIX) ? `${process.env.GATSBY_PATH_PREFIX}/${url}` : url;
-};
-
 const buildUrl = (site: Site, locale: string = 'nb', url?: string) => {
-    return addSitePrefixToUrl(addGatsbyPrefixToUrl(`${locale}/${sites[site].path}${url ? `/${url}` : ''}`));
+    const { GATSBY_SITE_URL, GATSBY_PATH_PREFIX } = process.env;
+    const parts: string[] = [];
+    const sitePart = hasValue(GATSBY_SITE_URL) ? `${GATSBY_SITE_URL}` : '';
+    if (hasValue(GATSBY_PATH_PREFIX)) {
+        parts.push[`${GATSBY_PATH_PREFIX}`];
+    }
+    parts.push(locale);
+    if (url) {
+        parts.push(url);
+    }
+    return `${sitePart}/${parts.join('/')}`;
 };
 
 export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): string => {
