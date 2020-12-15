@@ -79,12 +79,16 @@ export const getSiteTitleForSite = (site: Site) => {
     }
 };
 
+const hasValue = (value?: string): boolean => {
+    return value !== undefined && value !== '';
+};
+
 const addSitePrefixToUrl = (url: string): string => {
-    return `${process.env.GATSBY_SITE_URL || ''}/${url}`;
+    return hasValue(process.env.GATSBY_SITE_URL) ? `${process.env.GATSBY_SITE_URL}/${url}` : url;
 };
 
 const addGatsbyPrefixToUrl = (url: string): string => {
-    return `/${process.env.GATSBY_PATH_PREFIX || ''}/${url}`;
+    return hasValue(process.env.GATSBY_PATH_PREFIX) ? `${process.env.GATSBY_PATH_PREFIX}/${url}` : url;
 };
 
 const prefixUrl = (url: string) => {
