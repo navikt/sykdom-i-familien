@@ -64,8 +64,6 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     );
 
     const hasMenu = sectionMenuItems.length > 0;
-    console.log(slug);
-
     useNavBreadcrumbs(site, pageTitle, slug, locale);
 
     return (

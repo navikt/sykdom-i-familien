@@ -3,11 +3,11 @@ import { Link, useIntl } from 'gatsby-plugin-intl';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Undertittel } from 'nav-frontend-typografi';
+import { SanityContentHeadingLevel } from '../../../../../sanity/types';
+import { getHeadingLevelForChild, getHeadingTag } from '../../../../../sanity/utils';
 import bemUtils from '../../../../../utils/bemUtils';
 import { getPageUrl, Site } from '../../../../../utils/site';
 import './linkPanel.less';
-import { SanityContentHeadingLevel } from '../../../../../sanity/types';
-import { getHeadingLevelForChild, getHeadingTag } from '../../../../../sanity/utils';
 
 type LinkPanelLayout = 'frontpageImageAbove' | 'wideWithImage' | 'plain';
 
