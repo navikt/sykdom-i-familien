@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useIntl } from 'gatsby-plugin-intl';
+import { useIntl } from 'gatsby-plugin-intl';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -8,7 +8,6 @@ import { getHeadingLevelForChild, getHeadingTag } from '../../../../../sanity/ut
 import bemUtils from '../../../../../utils/bemUtils';
 import { getPageUrl, Site } from '../../../../../utils/site';
 import './linkPanel.less';
-import Lenke from 'nav-frontend-lenker';
 
 type LinkPanelLayout = 'frontpageImageAbove' | 'wideWithImage' | 'plain';
 
