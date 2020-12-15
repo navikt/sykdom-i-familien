@@ -14,21 +14,13 @@ import ContentWrapper from '../../../components/layout/content-wrapper/ContentWr
 
 interface Props {
     data: FrontpageSanityData;
-    site?: Site;
+    site: Site;
 }
 
 const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props & RouterProps) => {
-    const {
-        showLanguageToggle,
-        title,
-        metadescription,
-        ingress,
-        content,
-        footerContent,
-        illustration,
-        stories: linkPanels,
-    } = data;
+    const { showLanguageToggle, title, metadescription, ingress, content, footerContent, illustration, stories } = data;
     const isDefaultSite = site === Site.sykdomIFamilien;
+
     return (
         <Frontpage
             showLanguageToggle={showLanguageToggle}
@@ -49,12 +41,12 @@ const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props &
             <ContentWrapper>
                 {content && (
                     <Box margin="l">
-                        <SanityBlockContent content={content} headingLevel={1} />
+                        <SanityBlockContent content={content} headingLevel={1} site={site} />
                     </Box>
                 )}
-                {linkPanels && (
+                {stories && (
                     <FrontpagePanelWrapper maxColumns={isDefaultSite ? 3 : 2}>
-                        {linkPanels.map((story, index) => (
+                        {stories.map((story, index) => (
                             <LinkPanel
                                 key={index}
                                 title={story.title || ''}
@@ -72,7 +64,7 @@ const SanityFrontpage: React.FunctionComponent<Props> = ({ data, site }: Props &
                 )}
                 {footerContent && (
                     <Box margin="xl">
-                        <SanityBlockContent content={footerContent} headingLevel={2} />
+                        <SanityBlockContent content={footerContent} headingLevel={2} site={site} />
                     </Box>
                 )}
             </ContentWrapper>

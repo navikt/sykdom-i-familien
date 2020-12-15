@@ -28,7 +28,7 @@ const mapFrontpageStory = (story: any, locale: string): FrontpageStory => ({
     description: getSanityStringWithLocale(story.content, locale),
     illustration: story.illustration,
     isPageSlug: story._type === 'frontpagePageLink',
-    url: story._type === 'frontpageLink' ? story.url : story.page.slug ? `/${story.page.slug.current}` : '',
+    url: story._type === 'frontpageLink' ? story.url : story.page.slug ? `${story.page.slug.current}` : '',
 });
 
 export const extractFrontpageData = (data: any, locale: string): FrontpageSanityData | undefined => {

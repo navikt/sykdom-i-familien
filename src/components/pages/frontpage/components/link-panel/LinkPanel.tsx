@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useIntl } from 'gatsby-plugin-intl';
+import { useIntl } from 'gatsby-plugin-intl';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -14,7 +14,7 @@ type LinkPanelLayout = 'frontpageImageAbove' | 'wideWithImage' | 'plain';
 interface Props {
     image?: React.ReactNode;
     title: string;
-    site?: Site;
+    site: Site;
     url: {
         url: string;
         isPageSlug: boolean;
@@ -56,9 +56,9 @@ const LinkPanel: React.FunctionComponent<Props> = ({
     return site === Site.sykdomIFamilien ? (
         <div className={bem.block}>
             {url.isPageSlug ? (
-                <Link tabIndex={0} to={getPageUrl(url.url, locale, site)}>
+                <a tabIndex={0} href={getPageUrl(url.url, locale, site)} style={{ display: 'block' }}>
                     {customContent}
-                </Link>
+                </a>
             ) : (
                 <a href={url.url} rel="noopener">
                     {customContent}

@@ -23,7 +23,7 @@ interface Props {
     title?: string;
     ingress?: string | string[];
     links: LinkCollectionItem[];
-    site?: Site;
+    site: Site;
     headingLevel: SanityContentHeadingLevel;
     isFrontPage?: boolean;
 }
@@ -42,7 +42,7 @@ const SanityLinkCollection = (props: Props) => {
             )}
             {ingress && (
                 <Box margin="m" padBottom="l">
-                    <SanityBlockContent headingLevel={childHeadingLevel} content={ingress} />
+                    <SanityBlockContent headingLevel={childHeadingLevel} content={ingress} site={site} />
                 </Box>
             )}
             {links.map((link, index) => (
