@@ -96,6 +96,7 @@ jobs:
                   ENV: dev
                   OVERLAY_DRAFTS: true
                   WATCH_MODE: false
+                  GATSBY_SITE_URL: https://www.nav.no
               run: |
                   echo "Exported DATASET=$DATASET"
                   npm i
