@@ -91,7 +91,7 @@ const addGatsbyPrefixToUrl = (url: string): string => {
 };
 
 const buildUrl = (site: Site, locale: string = 'nb', url?: string) => {
-    return addSitePrefixToUrl(addGatsbyPrefixToUrl(`/${locale}/${sites[site].path}${url ? `/${url}` : ''}`));
+    return addSitePrefixToUrl(addGatsbyPrefixToUrl(`${locale}/${sites[site].path}${url ? `/${url}` : ''}`));
 };
 
 export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): string => {
