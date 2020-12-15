@@ -82,11 +82,12 @@ const hasValue = (value?: string): boolean => {
     return value !== undefined && value !== '';
 };
 
-const buildUrl = (site: Site, locale: string = 'nb', url?: string) => {
+const buildUrl = (site: Site, locale: string = 'nb', url?: string, fixedUrl?: boolean) => {
     const GATSBY_INGRESS = process.env.GATSBY_INGRESS;
     const GATSBY_PATH_PREFIX = process.env.GATSBY_PATH_PREFIX || '/familie/sykdom-i-familien';
     const parts: string[] = [];
     const ingress = hasValue(GATSBY_INGRESS) ? `${GATSBY_INGRESS}` : '';
+
     if (hasValue(GATSBY_PATH_PREFIX)) {
         parts.push(`${GATSBY_PATH_PREFIX}`);
     }
@@ -97,7 +98,8 @@ const buildUrl = (site: Site, locale: string = 'nb', url?: string) => {
     if (url) {
         parts.push(url);
     }
-    return `${ingress}/${parts.join('/')}`;
+    const newUrl = `${ingress}${parts.join('/')}`;
+    return newUrl;
 };
 
 export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): string => {
@@ -105,5 +107,5 @@ export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): strin
 };
 
 export const getPageUrl = (url: string, locale: string, site: Site): string => {
-    return buildUrl(site, locale, url);
+    return buildUrl(site, locale, url, false);
 };
