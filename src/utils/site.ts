@@ -1,4 +1,5 @@
 import { Locale } from '../i18n/locale';
+import { isBrowser } from './build';
 
 export enum Site {
     sykdomIFamilien = 'sykdom-i-familien',
@@ -83,7 +84,9 @@ const hasValue = (value?: string): boolean => {
 };
 
 const buildUrl = (site: Site, locale: string = 'nb', url?: string) => {
-    const { GATSBY_SITE_URL, GATSBY_PATH_PREFIX } = process.env;
+    const GATSBY_SITE_URL = process.env.GATSBY_SITE_URL;
+    const GATSBY_PATH_PREFIX = process.env.GATSBY_PATH_PREFIX;
+
     const parts: string[] = [];
     const sitePart = hasValue(GATSBY_SITE_URL) ? `${GATSBY_SITE_URL}` : '';
     if (hasValue(GATSBY_PATH_PREFIX)) {
