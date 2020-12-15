@@ -9,7 +9,7 @@ export enum Site {
 export const sites = {
     [Site.sykdomIFamilien]: {
         key: 'sykdom-i-familien',
-        path: '/',
+        path: '',
         context: 'privatperson',
         breadcrumbs: [
             {
@@ -20,7 +20,7 @@ export const sites = {
     },
     [Site.arbeidsgiver]: {
         key: 'arbeidsgiver',
-        path: '/arbeidsgiver',
+        path: 'arbeidsgiver',
         context: 'arbeidsgiver',
         breadcrumbs: [
             {
@@ -31,7 +31,7 @@ export const sites = {
     },
     [Site.samarbeid]: {
         key: 'samarbeid',
-        path: '/samarbeidspartner',
+        path: 'samarbeidspartner',
         context: 'samarbeidspartner',
         breadcrumbs: [
             {
@@ -90,14 +90,14 @@ const addGatsbyPrefixToUrl = (url: string): string => {
     return hasValue(process.env.GATSBY_PATH_PREFIX) ? `${process.env.GATSBY_PATH_PREFIX}/${url}` : url;
 };
 
-const prefixUrl = (url: string) => {
-    return addSitePrefixToUrl(addGatsbyPrefixToUrl(url));
+const buildUrl = (site: Site, locale: string = 'nb', url?: string) => {
+    return addSitePrefixToUrl(addGatsbyPrefixToUrl(`/${locale}/${sites[site].path}${url ? `/${url}` : ''}`));
 };
 
 export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): string => {
-    return prefixUrl(`${locale}${sites[site].path}`);
+    return buildUrl(site, locale);
 };
 
 export const getPageUrl = (url: string, locale: string, site: Site): string => {
-    return prefixUrl(`/${locale}${sites[site].path}${url}`);
+    return buildUrl(site, locale, url);
 };
