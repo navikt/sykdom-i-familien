@@ -84,7 +84,9 @@ const hasValue = (value?: string): boolean => {
 
 const buildUrl = (site: Site, locale: string = 'nb', url?: string) => {
     const GATSBY_INGRESS = process.env.GATSBY_INGRESS;
-    const GATSBY_PATH_PREFIX = process.env.GATSBY_PATH_PREFIX;
+    const GATSBY_PATH_PREFIX = process.env.GATSBY_PATH_PREFIX || '/familie/sykdom-i-familien';
+
+    // console.log(GATSBY_PATH_PREFIX);
 
     const parts: string[] = [];
     const ingress = hasValue(GATSBY_INGRESS) ? `${GATSBY_INGRESS}` : '';
