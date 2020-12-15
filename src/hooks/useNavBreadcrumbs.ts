@@ -3,10 +3,12 @@ import { useEffect } from 'react';
 import { isBrowser } from '../utils/build';
 import { getFrontpageUrlForSite, Site } from '../utils/site';
 
-const useNavBreadcumbs = (site: Site, pageTitle: string, slug: string, locale: string) => {
+const useNavBreadcrumbs = (site: Site, pageTitle: string, slug: string, locale: string) => {
     useEffect(() => {
         if (isBrowser) {
             const url = getFrontpageUrlForSite(site, locale);
+            console.log(url, site);
+
             setBreadcrumbs([
                 { title: 'Sykdom i familien', url },
                 { title: pageTitle, url: slug },
@@ -15,4 +17,4 @@ const useNavBreadcumbs = (site: Site, pageTitle: string, slug: string, locale: s
     }, [site, pageTitle, slug, locale]);
 };
 
-export default useNavBreadcumbs;
+export default useNavBreadcrumbs;

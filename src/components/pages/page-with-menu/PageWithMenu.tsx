@@ -42,7 +42,6 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     header,
     slug,
     children,
-    showBreadcrumbs = true,
 }) => {
     const sectionIds = sectionMenuItems.map((section) => section.slug);
     const { locale } = useIntl();
@@ -65,6 +64,8 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     );
 
     const hasMenu = sectionMenuItems.length > 0;
+    console.log(slug);
+
     useNavBreadcrumbs(site, pageTitle, slug, locale);
 
     return (
