@@ -79,14 +79,22 @@ export const getSiteTitleForSite = (site: Site) => {
     }
 };
 
+const addSitePrefixToUrl = (url: string): string => {
+    return `${process.env.GATSBY_SITE_URL || ''}/${url}`;
+};
+
 const addGatsbyPrefixToUrl = (url: string): string => {
-    return `${process.env.GATSBY_PATH_PREFIX || ''}/${url}`;
+    return `/${process.env.GATSBY_PATH_PREFIX || ''}/${url}`;
+};
+
+const prefixUrl = (url: string) => {
+    return addSitePrefixToUrl(addGatsbyPrefixToUrl(url));
 };
 
 export const getFrontpageUrlForSite = (site: Site, locale: string = 'nb'): string => {
-    return addGatsbyPrefixToUrl(`${locale}${sites[site].path}`);
+    return prefixUrl(`${locale}${sites[site].path}`);
 };
 
 export const getPageUrl = (url: string, locale: string, site?: Site): string => {
-    return site && site !== Site.sykdomIFamilien ? addGatsbyPrefixToUrl(`${locale}${sites[site].path}${url}`) : url;
+    return site && site !== Site.sykdomIFamilien ? prefixUrl(`${locale}${sites[site].path}${url}`) : url;
 };

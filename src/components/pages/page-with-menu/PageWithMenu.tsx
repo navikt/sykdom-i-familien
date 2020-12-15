@@ -42,7 +42,6 @@ const PageWithMenu: React.FunctionComponent<Props> = ({
     header,
     slug,
     children,
-    showBreadcrumbs = true,
 }) => {
     const sectionIds = sectionMenuItems.map((section) => section.slug);
     const { locale } = useIntl();

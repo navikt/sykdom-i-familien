@@ -11,6 +11,7 @@
         "ENV": "dev",
         "OVERLAY_DRAFTS": true,
         "WATCH_MODE": false,
-        "GATSBY_PATH_PREFIX": ""
+        "GATSBY_PATH_PREFIX": "",
+        "GATSBY_SITE_URL": "https://sykdom-i-familien.dev.nav.no"
     }
 }

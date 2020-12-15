@@ -159,6 +159,7 @@ jobs:
                   OVERLAY_DRAFTS: false
                   WATCH_MODE: false
                   GATSBY_PATH_PREFIX: /familie/sykdom-i-familien
+                  GATSBY_SITE_URL: https://www.nav.no
               run: |
                   echo "Exported DATASET=$DATASET"
                   npm i
