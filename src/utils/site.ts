@@ -90,6 +90,7 @@ const buildUrl = (site: Site, locale: string = 'nb', url?: string) => {
         parts.push[`${GATSBY_PATH_PREFIX}`];
     }
     parts.push(locale);
+    parts.push(sites[site].path);
     if (url) {
         parts.push(url);
     }
