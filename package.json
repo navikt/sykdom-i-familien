@@ -25,7 +25,7 @@
         "@babel/plugin-transform-regenerator": "^7.10.4",
         "@babel/plugin-transform-runtime": "^7.11.5",
         "@navikt/nav-dekoratoren-moduler": "^1.0.21",
-        "@navikt/omsorgsdager-kalkulator": "^1.0.9",
+        "@navikt/omsorgsdager-kalkulator": "^1.0.10",
         "@sanity/block-content-to-react": "^2.0.7",
         "babel-polyfill": "^6.26.0",
         "classnames": "^2.2.6",
