@@ -3,6 +3,7 @@ import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import slugify from 'slugify';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import Box from '../../../components/layout/box/Box';
+import { SectionMenuItem } from '../../../components/pages/custom-page/CustomPage';
 import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
 import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
@@ -15,9 +16,9 @@ import { Site } from '../../../utils/site';
 import { IllustrationDocument, SectionPageDocument } from '../../types/documents';
 import { createAnchorsForTabsWithinSections, getAndApplyLinksInContent } from '../../utils/prepLinksInDocument';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
+import InShortPageSection from './InShortPageSection';
 import PageSection from './PageSection';
 import './sectionPage.less';
-import InShortPageSection from './InShortPageSection';
 
 export interface SectionPageData {
     site: Site;
@@ -109,6 +110,22 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
         : undefined;
 
     const contentSections = [...content.filter((c) => c._type === 'section')];
+    const sectionMenuItems: SectionMenuItem[] = showLeftMenu
+        ? contentSections.map((sectionRaw) => {
+              const section = extractSectionData(sectionRaw, intl.locale);
+              return {
+                  label: section.title || '',
+                  slug: section.slug,
+              };
+          })
+        : [];
+
+    if (inShortSection) {
+        sectionMenuItems.unshift({
+            label: inShortSection.title || '',
+            slug: inShortSection.slug,
+        });
+    }
 
     return (
         <PageWithMenu
@@ -117,17 +134,7 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
             showLanguageToggle={showLanguageToggle}
             pageMetadescription={metadescription}
             slug={`${slug.current}`}
-            sectionMenuItems={
-                showLeftMenu
-                    ? contentSections.map((sectionRaw) => {
-                          const section = extractSectionData(sectionRaw, intl.locale);
-                          return {
-                              label: section.title || '',
-                              slug: section.slug,
-                          };
-                      })
-                    : []
-            }
+            sectionMenuItems={sectionMenuItems}
             menuFooter={<Box />}
             header={<PageBannerCompact title={title} />}>
             {inShortSection && (
@@ -147,7 +154,7 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
                 }
                 return (
                     <Box margin="none" key={key} className="sectionPageContentWrapper">
-                        <SanityBlockContent content={c} headingLevel={2} />
+                        <SanityBlockContent content={c} headingLevel={2} site={site} />
                     </Box>
                 );
             })}
