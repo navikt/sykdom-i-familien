@@ -3,14 +3,18 @@ import React from 'react';
 import Box from '../../../components/layout/box/Box';
 import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
+import { Site } from '../../../utils/site';
+import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import SanityBlock from '../sanity-block/SanityBlock';
 import { SanitySectionPageSectionContent } from './SanitySectionPage';
 
 interface Props {
     section: SanitySectionPageSectionContent;
+    site: Site;
+    inShortEkstraKomponenter: string[];
 }
 
-const InShortPageSection = ({ section }: Props) => {
+const InShortPageSection = ({ section, site, inShortEkstraKomponenter }: Props) => {
     const { slug, title, illustration, content } = section;
     return (
         <div className="inShortSection">
@@ -32,6 +36,11 @@ const InShortPageSection = ({ section }: Props) => {
                             <SanityBlock content={content} />
                         </Ingress>
                     )}
+                    {(inShortEkstraKomponenter || []).map((infopanel: string, infopanelIndex) => {
+                        return (
+                            <SanityBlockContent site={site} content={infopanel} headingLevel={3} key={infopanelIndex} />
+                        );
+                    })}
                 </SectionPanel>
             </Box>
         </div>

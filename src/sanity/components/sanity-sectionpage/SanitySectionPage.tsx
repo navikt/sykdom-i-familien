@@ -32,6 +32,7 @@ export interface SectionPageData {
         content: string;
         illustration?: IllustrationDocument;
     };
+    inShortEkstraKomponenter: string[];
     showLeftMenu?: boolean;
 }
 
@@ -77,7 +78,7 @@ export const extractDataFromSanitySectionPage = (data: any, locale: Locale | str
                   illustration: data._rawInShortIllustration,
               }
             : undefined,
-
+        inShortEkstraKomponenter: data._rawInShortEkstraKomponenter as string[],
         showLeftMenu: data.showLeftMenu === true || data.showLeftMenu === null,
     };
 };
@@ -95,6 +96,7 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
         inShort,
         slug,
         content,
+        inShortEkstraKomponenter,
         showLeftMenu,
     } = extractDataFromSanitySectionPage(dataWithTabs, intl.locale);
 
@@ -139,7 +141,11 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
             header={<PageBannerCompact title={title} />}>
             {inShortSection && (
                 <Box margin="none" className="sectionPageContentWrapper">
-                    <InShortPageSection section={inShortSection} />
+                    <InShortPageSection
+                        section={inShortSection}
+                        site={site}
+                        inShortEkstraKomponenter={inShortEkstraKomponenter}
+                    />
                 </Box>
             )}
             {(content || []).map((c) => {
