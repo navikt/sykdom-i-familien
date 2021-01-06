@@ -153,7 +153,9 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                         </Ingress>
                     )}
                     {(inShortEkstraKomponenter || []).map((infopanel: string, infopanelIndex) => {
-                        return <SanityBlockContent content={infopanel} headingLevel={3} key={infopanelIndex} />;
+                        return (
+                            <SanityBlockContent content={infopanel} headingLevel={3} key={infopanelIndex} site={site} />
+                        );
                     })}
                 </SectionPanel>
             </div>
@@ -170,7 +172,9 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                                 </Box>
                             ) : undefined
                         }>
-                        {section.content && <SanityBlockContent content={section.content} headingLevel={2} />}
+                        {section.content && (
+                            <SanityBlockContent content={section.content} headingLevel={2} site={site} />
+                        )}
                     </SectionPanel>
                 );
             })}
