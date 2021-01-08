@@ -66,7 +66,7 @@ jobs:
 
     build-code-and-push-docker-preview:
         name: Build code and push docker preview image
-        if: startsWith(github.ref, 'refs/heads/preview-') || github.event.action == 'publish-dev-gcp' # Build and push docker if branch is either master or dev-*
+        if: startsWith(github.ref, 'refs/heads/preview') || github.event.action == 'publish-dev-gcp' # Build and push docker if branch is either master or dev-*
         needs: set-image
         runs-on: ubuntu-20.04
         env:
