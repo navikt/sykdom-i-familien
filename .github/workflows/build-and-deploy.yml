@@ -116,7 +116,7 @@ jobs:
 
     deploy-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.event.action == 'publish-dev-gcp' || startsWith(github.ref, 'refs/heads/preview-') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
+        if: github.event.action == 'publish-dev-gcp' || startsWith(github.ref, 'refs/heads/preview') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
         needs: [build-code-and-push-docker-preview, set-image]
         env:
             IMAGE: ${{ needs.set-image.outputs.image }}
