@@ -5,9 +5,12 @@ import SanityBlock from '../../../sanity/components/sanity-block/SanityBlock';
 import { SanityContentHeadingLevel } from '../../../sanity/types';
 import { BlockContentType } from '../../../sanity/types/parts';
 import { getHeadingTag } from '../../../sanity/utils';
+import bemUtils from '../../../utils/bemUtils';
 import PrintOnly from '../print-only/PrintOnly';
 import ScreenOnly from '../screen-only/ScreenOnly';
+import './faqElement.less';
 
+const bem = bemUtils('faqElement');
 interface Props {
     title: string;
     headingLevel: SanityContentHeadingLevel;
@@ -15,11 +18,11 @@ interface Props {
 }
 
 const FaqElement = ({ title, headingLevel, blockContent }: Props) => (
-    <>
+    <div className={bem.block}>
         <ScreenOnly>
             <Ekspanderbartpanel
                 tittel={
-                    <Element tag={getHeadingTag(headingLevel)} className={'faqTitle'}>
+                    <Element tag={getHeadingTag(headingLevel)} className={bem.element('title')}>
                         {title}
                     </Element>
                 }
@@ -28,10 +31,12 @@ const FaqElement = ({ title, headingLevel, blockContent }: Props) => (
             </Ekspanderbartpanel>
         </ScreenOnly>
         <PrintOnly>
-            <Systemtittel tag={getHeadingTag(headingLevel)}>{title}</Systemtittel>
+            <Systemtittel tag={getHeadingTag(headingLevel)} className={bem.element('title')}>
+                {title}
+            </Systemtittel>
             <SanityBlock content={blockContent} />
         </PrintOnly>
-    </>
+    </div>
 );
 
 export default FaqElement;
