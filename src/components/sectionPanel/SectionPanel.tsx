@@ -4,6 +4,7 @@ import bemUtils from '../../utils/bemUtils';
 import TitleWithLine from '../elements/titleWithLine/TitleWithLine';
 
 import './sectionPanel.less';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 const bem = bemUtils('sectionPanel');
 
@@ -14,6 +15,7 @@ interface Props {
     children: ReactNode;
     titleTag?: string;
     illustrationPlacement?: 'inside' | 'outside';
+    titleStyle?: 'center' | 'plain';
 }
 
 const SectionPanel = ({
@@ -23,6 +25,7 @@ const SectionPanel = ({
     children,
     titleTag = 'h2',
     illustrationPlacement = 'inside',
+    titleStyle = 'center',
 }: Props) => {
     return (
         <section
@@ -34,13 +37,15 @@ const SectionPanel = ({
                 bem.modifierConditional(
                     'illustrationOutside',
                     illustration !== undefined && illustrationPlacement === 'outside'
-                )
+                ),
+                bem.modifierConditional('plainTitle', titleStyle === 'plain')
             )}>
             <Panel className={bem.element('panel')}>
                 {illustration && <div className={bem.element('illustration')}>{illustration}</div>}
                 {title && (
                     <div className={bem.element('title')}>
-                        <TitleWithLine title={title} tag={titleTag} />
+                        {titleStyle === 'center' && <TitleWithLine title={title} tag={titleTag} />}
+                        {titleStyle === 'plain' && <Systemtittel tag={titleTag}>{title}</Systemtittel>}
                     </div>
                 )}
                 {children}

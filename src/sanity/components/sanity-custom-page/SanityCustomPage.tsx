@@ -14,6 +14,7 @@ import { IllustrationDocument, YtelsePageDocument } from '../../types/documents'
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import SanityBlock from '../sanity-block/SanityBlock';
 import { Site } from '../../../utils/site';
+import { fontsize } from '../../../../__mocks__/file-mock';
 
 export interface CustomPageData {
     site: Site;
@@ -76,13 +77,14 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             <SectionIcon illustration={illustration} />
                         </Box>
                     ) : undefined
-                }>
+                }
+                titleStyle="plain">
                 {ingress && (
-                    <Ingress tag="div" style={{ marginBottom: '2rem' }}>
+                    <Ingress tag="div" style={{ marginBottom: '2rem', fontSize: '1rem' }}>
                         <SanityBlock content={ingress} />
                     </Ingress>
                 )}
-                <SanityBlockContent content={content} headingLevel={2} />
+                <SanityBlockContent content={content} headingLevel={2} site={site} />
             </SectionPanel>
         </CustomPage>
     );
