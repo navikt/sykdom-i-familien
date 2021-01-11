@@ -4,6 +4,7 @@ import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Element } from 'nav-frontend-typografi';
 import CollapsableTextBlock from '../../../components/elements/collapsable-text-block/CollapsableTextblock';
+import FaqElement from '../../../components/elements/faq-element/FaqElement';
 import InfopanelMedKnapperView, {
     InfopanelMedKnapper,
 } from '../../../components/infopanelMedKnapper/InfopanelMedKnapper';
@@ -13,27 +14,27 @@ import {
     getSanityContentWithLocale,
     getSanityStringWithLocale,
 } from '../../../utils/sanity/getSanityContentWithLocale';
+import { Site } from '../../../utils/site';
 import { SanityContentHeadingLevel } from '../../types';
 import { AlertStripeObject, IllustrationDocument, MessageDocument } from '../../types/documents';
 import {
     ExpandableContentObject,
     FaqObject,
+    LinkCollectionObject,
     RasmusVeilederpanelObject,
     TabsObject,
-    LinkCollectionObject,
     TextblockObject,
     VeilederpanelObject,
 } from '../../types/objects';
 import { getHeadingLevelForChild, getLocaleBlockContent, getLocaleString, getOptionalLocaleString } from '../../utils';
+import { mapLinkCollectionItem } from '../../utils/linkCollectionUtils';
 import SanityBlock from '../sanity-block/SanityBlock';
 import SanityCustomComponent from '../sanity-custom-component/SanityCustomComponent';
 import SanityIllustration from '../sanity-illustration/SanityIllustrationContent';
+import SanityLinkCollection from '../sanity-link-collection/SanityLinkCollection';
 import SanityMessage from '../sanity-message/SanityMessage';
 import SanityTabs from '../sanity-tabs/SanityTabs';
 import SanityTextblock from '../sanity-textblock/SanityTextblock';
-import SanityLinkCollection from '../sanity-link-collection/SanityLinkCollection';
-import { mapLinkCollectionItem } from '../../utils/linkCollectionUtils';
-import { Site } from '../../../utils/site';
 
 interface Props {
     content: string | any;
@@ -138,13 +139,12 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             const title = getSanityStringWithLocale(node.title, intl.locale);
                             const blockContent = getLocaleBlockContent(node.content, intl.locale);
                             return (
-                                <Box padBottom="xl">
-                                    <CollapsableTextBlock
-                                        isFaq={true}
+                                <Box padBottom="l">
+                                    <FaqElement
                                         title={title}
-                                        headingLevel={getHeadingLevelForChild(headingLevel)}>
-                                        <SanityBlock content={blockContent} />
-                                    </CollapsableTextBlock>
+                                        headingLevel={getHeadingLevelForChild(headingLevel)}
+                                        blockContent={blockContent}
+                                    />
                                 </Box>
                             );
                         },
@@ -160,7 +160,6 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                                     <Box padBottom="xl">
                                         <CollapsableTextBlock
                                             title={title}
-                                            isFaq={textblock.layout === 'faq'}
                                             headingLevel={getHeadingLevelForChild(headingLevel)}>
                                             <SanityBlock content={blockContent} />
                                         </CollapsableTextBlock>
@@ -169,13 +168,14 @@ const SanityBlockContent: React.FunctionComponent<Props & InjectedIntlProps> = (
                             }
                             if (textblock.layout && textblock.layout === 'faq' && title !== undefined) {
                                 const blockContent = getLocaleBlockContent(textblock.content, intl.locale);
+                                const headingLevelForChild = getHeadingLevelForChild(headingLevel);
                                 return (
                                     <Box padBottom="xl">
-                                        <CollapsableTextBlock
+                                        <FaqElement
                                             title={title}
-                                            headingLevel={getHeadingLevelForChild(headingLevel)}>
-                                            <SanityBlock content={blockContent} />
-                                        </CollapsableTextBlock>
+                                            headingLevel={headingLevelForChild}
+                                            blockContent={blockContent}
+                                        />
                                     </Box>
                                 );
                             }

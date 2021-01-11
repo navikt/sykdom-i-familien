@@ -26,11 +26,9 @@ interface Props {
 const bem = bemUtils('customPage');
 
 const CustomPage: React.FunctionComponent<Props & InjectedIntlProps> = ({
-    site,
     pageTitle,
     pageMetadescription,
     showLanguageToggle,
-    slug,
     children,
     intl,
 }) => {

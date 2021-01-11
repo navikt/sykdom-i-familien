@@ -13,7 +13,8 @@ import {
 import { IllustrationDocument, YtelsePageDocument } from '../../types/documents';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import SanityBlock from '../sanity-block/SanityBlock';
-import { Site } from '../../../utils/site';
+import { getPageUrl, Site } from '../../../utils/site';
+import BackLink from '../../../components/back-link/BackLink';
 
 export interface CustomPageData {
     site: Site;
@@ -22,6 +23,10 @@ export interface CustomPageData {
     slug: { current: string };
     intro: string;
     metadescription: string;
+    parentPage?: {
+        slug: string;
+        linkText?: string;
+    };
     ingress: any;
     content: string;
     illustration?: IllustrationDocument;
@@ -32,6 +37,14 @@ interface Props {
 }
 
 export const extractDataFromSanityCustomPage = (data: any, locale: Locale | string): CustomPageData => {
+    const parentPage = data._rawParentPagePage?.slug?.current
+        ? {
+              slug: data._rawParentPagePage.slug.current,
+              linkText: data._rawParentPageLinkText
+                  ? getSanityStringWithLocale(data._rawParentPageLinkText, locale)
+                  : undefined,
+          }
+        : undefined;
     return {
         site: data.site,
         showLanguageToggle: data.showLanguageToggle === true,
@@ -42,6 +55,7 @@ export const extractDataFromSanityCustomPage = (data: any, locale: Locale | stri
         ingress: getSanityContentWithLocale(data._rawIngress, locale) as string,
         content: data._rawContent,
         illustration: data._rawIllustration,
+        parentPage,
     };
 };
 
@@ -54,6 +68,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         metadescription,
         illustration,
         showLanguageToggle,
+        parentPage,
         content,
         ingress,
         slug,
@@ -67,6 +82,11 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
             showLanguageToggle={showLanguageToggle}
             pageMetadescription={metadescription}
             slug={`${slug.current}`}>
+            {parentPage && (
+                <BackLink href={getPageUrl(parentPage.slug, intl.locale, site)}>
+                    {parentPage.linkText || 'Tilbake'}
+                </BackLink>
+            )}
             <SectionPanel
                 title={title}
                 illustrationPlacement="outside"
@@ -76,13 +96,14 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             <SectionIcon illustration={illustration} />
                         </Box>
                     ) : undefined
-                }>
+                }
+                titleStyle="plain">
                 {ingress && (
-                    <Ingress tag="div" style={{ marginBottom: '2rem' }}>
+                    <Ingress tag="div" style={{ marginBottom: '2rem', fontSize: '1rem' }}>
                         <SanityBlock content={ingress} />
                     </Ingress>
                 )}
-                <SanityBlockContent content={content} headingLevel={2} />
+                <SanityBlockContent content={content} headingLevel={2} site={site} />
             </SectionPanel>
         </CustomPage>
     );
