@@ -18,6 +18,8 @@ export const query = graphql`
                     _rawTitle
                     _rawIngress
                     _rawMetadescription
+                    _rawParentPagePage(resolveReferences: { maxDepth: 2 })
+                    _rawParentPageLinkText
                     _rawIllustration(resolveReferences: { maxDepth: 5 })
                     _rawContent(resolveReferences: { maxDepth: 5 })
                 }
