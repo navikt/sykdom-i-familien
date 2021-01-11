@@ -66,6 +66,7 @@ jobs:
 
     set-preview-image:
         name: 'Set preview image'
+        if: startsWith(github.ref, 'refs/heads/preview') || github.event.action == 'publish-dev-gcp' # Build and push docker if branch is either master or dev-*
         needs: test
         runs-on: ubuntu-20.04
         outputs:
