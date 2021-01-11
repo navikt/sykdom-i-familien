@@ -73,7 +73,7 @@ jobs:
             IMAGE: ${{ needs.set-image.outputs.image }}
         steps:
             - name: Checkout code
-              uses: actions/checkout@v1
+              uses: actions/checkout@v2
               with:
                 ref: preview
             - name: Cache NPM dependencies
@@ -122,7 +122,7 @@ jobs:
             IMAGE: ${{ needs.set-image.outputs.image }}
         runs-on: ubuntu-20.04
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v2
             - uses: nais/deploy/actions/deploy@v1
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
