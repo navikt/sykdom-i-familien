@@ -41,7 +41,7 @@
         "gatsby-plugin-typescript": "^2.9.0",
         "gatsby-source-sanity": "^6.0.4",
         "gray-matter": "^4.0.2",
-        "less": "^4.0.0",
+        "less": "^4.1.0",
         "lodash.chunk": "^4.2.0",
         "nav-frontend-alertstriper": "^3.0.38",
         "nav-frontend-chevron": "^1.0.24",
