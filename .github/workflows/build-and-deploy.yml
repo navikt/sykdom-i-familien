@@ -64,13 +64,32 @@ jobs:
               run: |
                   echo "output image=$BASE_IMAGE:$TAG"
 
+    set-preview-image:
+        name: 'Set preview image'
+        needs: test
+        runs-on: ubuntu-20.04
+        outputs:
+            preview_image: ${{ steps.output-image.outputs.preview_image }}
+        steps:
+            - id: checkout-code
+              uses: actions/checkout@v2
+              with:
+                ref: preview
+            - id: set-image
+              run: echo "TAG=$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+            - id: output-preview-image
+              run: echo "::set-output name=preview_image::$BASE_IMAGE:$TAG"
+            - id: debug
+              run: |
+                  echo "output preview_image=$BASE_IMAGE:$TAG"
+
     build-code-and-push-docker-preview:
         name: Build code and push docker preview image
         if: startsWith(github.ref, 'refs/heads/preview') || github.event.action == 'publish-dev-gcp' # Build and push docker if branch is either master or dev-*
-        needs: set-image
+        needs: set-preview-image
         runs-on: ubuntu-20.04
         env:
-            IMAGE: ${{ needs.set-image.outputs.image }}
+            PREVIEW_IMAGE: ${{ needs.set-preview-image.outputs.preview_image }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -104,22 +123,22 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build-preview
-            - name: Build Docker image
+            - name: Build Docker preview_image
               run: |
-                  docker build -t ${IMAGE} . -f Dockerfile-dev
+                  docker build -t ${PREVIEW_IMAGE} . -f Dockerfile-dev
             - name: Login to Github Package Registry
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-                  docker push ${IMAGE}
+                  docker push ${PREVIEW_IMAGE}
 
     deploy-dev-gcp:
         name: Deploy to dev-gcp
         if: github.event.action == 'publish-dev-gcp' || startsWith(github.ref, 'refs/heads/preview') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
-        needs: [build-code-and-push-docker-preview, set-image]
+        needs: [build-code-and-push-docker-preview, set-preview-image]
         env:
-            IMAGE: ${{ needs.set-image.outputs.image }}
+            IMAGE: ${{ needs.set-preview-image.outputs.preview_image }}
         runs-on: ubuntu-20.04
         steps:
             - uses: actions/checkout@v2
