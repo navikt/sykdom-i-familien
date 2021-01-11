@@ -69,7 +69,7 @@ jobs:
         needs: test
         runs-on: ubuntu-20.04
         outputs:
-            preview_image: ${{ steps.output-image.outputs.preview_image }}
+            previewImage: ${{ steps.output-preview-image.outputs.previewImage }}
         steps:
             - id: checkout-code
               uses: actions/checkout@v2
@@ -78,10 +78,10 @@ jobs:
             - id: set-image
               run: echo "TAG=$(date "+%Y.%m.%d.%H.%M")-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
             - id: output-preview-image
-              run: echo "::set-output name=preview_image::$BASE_IMAGE:$TAG"
+              run: echo "::set-output name=previewImage::$BASE_IMAGE:$TAG"
             - id: debug
               run: |
-                  echo "output preview_image=$BASE_IMAGE:$TAG"
+                  echo "output previewImage=$BASE_IMAGE:$TAG"
 
     build-code-and-push-docker-preview:
         name: Build code and push docker preview image
@@ -89,7 +89,7 @@ jobs:
         needs: set-preview-image
         runs-on: ubuntu-20.04
         env:
-            PREVIEW_IMAGE: ${{ needs.set-preview-image.outputs.preview_image }}
+            PREVIEW_IMAGE: ${{ needs.set-preview-image.outputs.previewImage }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -123,7 +123,7 @@ jobs:
                   echo "Exported DATASET=$DATASET"
                   npm i
                   npm run build-preview
-            - name: Build Docker preview_image
+            - name: Build Docker previewImage
               run: |
                   docker build -t ${PREVIEW_IMAGE} . -f Dockerfile-dev
             - name: Login to Github Package Registry
@@ -138,7 +138,7 @@ jobs:
         if: github.event.action == 'publish-dev-gcp' || startsWith(github.ref, 'refs/heads/preview') || startsWith(github.ref, 'refs/heads/master') # Build and push docker if branch is either master or dev-*
         needs: [build-code-and-push-docker-preview, set-preview-image]
         env:
-            IMAGE: ${{ needs.set-preview-image.outputs.preview_image }}
+            IMAGE: ${{ needs.set-preview-image.outputs.previewImage }}
         runs-on: ubuntu-20.04
         steps:
             - uses: actions/checkout@v2
