@@ -49,7 +49,7 @@ const createPagesForSite = async (site, onlyPublicPages, { graphql, actions }) =
 
 exports.createPages = async (tools) => {
     const onlyPublicPages = process.env.ENV !== 'dev';
-    console.log('onlyPublicPages:', onlyPublicPages);
+    console.log('Use only public pages:', onlyPublicPages);
     await createPagesForSite(sites.privatperson, onlyPublicPages, tools);
     await createPagesForSite(sites.arbeidsgiver, onlyPublicPages, tools);
     await createPagesForSite(sites.samarbeid, onlyPublicPages, tools);

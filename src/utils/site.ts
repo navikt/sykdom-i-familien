@@ -6,7 +6,7 @@ export enum Site {
     samarbeid = 'samarbeid',
 }
 
-export const sites = {
+const sites = {
     [Site.sykdomIFamilien]: {
         key: 'sykdom-i-familien',
         path: '',
@@ -31,12 +31,16 @@ export const sites = {
     },
     [Site.samarbeid]: {
         key: 'samarbeid',
-        path: 'samarbeidspartner',
+        path: 'helsepersonell',
         context: 'samarbeidspartner',
         breadcrumbs: [
+            // {
+            //     url: 'https://www.nav.no/no/samarbeidspartner',
+            //     title: 'Samarbeidspartner',
+            // },
             {
-                url: 'https://www.nav.no/',
-                title: 'nav.no',
+                url: 'https://www.nav.no/no/nav-og-samfunn/samarbeid/leger-og-andre-behandlere',
+                title: 'Leger og andre behandlere',
             },
         ],
     },
@@ -76,6 +80,10 @@ export const getSiteTitleForSite = (site: Site) => {
         default:
             return 'Sykdom i familien';
     }
+};
+
+export const getSiteCrumbs = (site: Site) => {
+    return sites[site]?.breadcrumbs;
 };
 
 const hasValue = (value?: string): boolean => {

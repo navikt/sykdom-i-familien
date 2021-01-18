@@ -2,7 +2,7 @@ import React from 'react';
 import sites from '../../build-utils/sites';
 import { decoratorFragments } from './fetched/_fragments_sykdom-i-familien';
 import { decoratorFragments as decoratorFragments_arbeidsgiver } from './fetched/_fragments_arbeidsgiver';
-import { decoratorFragments as decoratorFragments_samarbeid } from './fetched/_fragments_samarbeidspartner';
+import { decoratorFragments as decoratorFragments_samarbeid } from './fetched/_fragments_samarbeid';
 
 const getFragmentsForPath = (pathname = '') => {
   if (pathname.indexOf(sites.arbeidsgiver.path) >= 0) {

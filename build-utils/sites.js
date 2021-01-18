@@ -23,12 +23,16 @@ module.exports = {
     },
     samarbeid: {
         key: 'samarbeid',
-        path: '/samarbeidspartner/',
+        path: '/helsepersonell/',
         context: 'samarbeidspartner',
         breadcrumbs: [
             {
-                url: 'https://www.nav.no/',
-                title: 'nav.no',
+                url: 'https://www.nav.no/no/nav-og-samfunn/samarbeid/leger-og-andre-behandlere',
+                title: 'Leger og andre behandlere',
+            },
+            {
+                url: 'https://www.nav.no/familie/sykdom-i-familien/helsepersonell',
+                title: 'Sykdom i familien',
             },
         ],
     },
