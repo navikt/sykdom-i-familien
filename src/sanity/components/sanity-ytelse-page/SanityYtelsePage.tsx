@@ -1,6 +1,7 @@
 import React from 'react';
 import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import slugify from 'slugify';
+import Lenke from 'nav-frontend-lenker';
 import { Ingress } from 'nav-frontend-typografi';
 import LinkButton from '../../../components/elements/link-button/LinkButton';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
@@ -14,7 +15,7 @@ import {
     getSanityContentWithLocale,
     getSanityStringWithLocale,
 } from '../../../utils/sanity/getSanityContentWithLocale';
-import { Site } from '../../../utils/site';
+import { getPageUrl, Site } from '../../../utils/site';
 import { IllustrationDocument, MessageDocument, YtelsePageDocument } from '../../types/documents';
 import { createAnchorsForTabsWithinSections, getAndApplyLinksInContent } from '../../utils/prepLinksInDocument';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
@@ -36,6 +37,10 @@ export interface YtelsePageData {
     sections: SectionContent[];
     illustration: IllustrationDocument;
     message?: MessageDocument;
+    faq?: {
+        title: string;
+        slug: string;
+    };
 }
 
 interface SectionContent {
@@ -68,7 +73,7 @@ const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
 };
 
 const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
-    return {
+    const pageData: YtelsePageData = {
         site: data.site,
         showLanguageToggle: data.showLanguageToggle === true,
         title: getSanityStringWithLocale(data._rawTitle, locale) as string,
@@ -83,6 +88,15 @@ const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): Yt
         illustration: data._rawIllustration,
         message: data._rawMessage,
     };
+    if (data._rawFaq) {
+        pageData.faq = {
+            title: data._rawFaqMenuTitle
+                ? (getSanityStringWithLocale(data._rawFaqMenuTitle, locale) as string)
+                : 'Ofte stilte spørsmål',
+            slug: data._rawFaq.slug.current,
+        };
+    }
+    return pageData;
 };
 
 const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (props) => {
@@ -102,6 +116,7 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         illustration,
         formUrl,
         message,
+        faq,
     } = extractDataFromSanityYtelsePage(dataWithTabs, intl.locale);
 
     const inShortSection: SectionContent = {
@@ -125,9 +140,18 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
             }))}
             header={<PageBannerCompact title={title} />}
             menuFooter={
-                <LinkButton href={formUrl} alignCenter={true}>
-                    Søk nå
-                </LinkButton>
+                <>
+                    {faq && (
+                        <div style={{ marginTop: '-1rem' }}>
+                            <Box padBottom="xl">
+                                <Lenke href={getPageUrl(faq.slug, intl.locale, site)}>{faq.title}</Lenke>
+                            </Box>
+                        </div>
+                    )}
+                    <LinkButton href={formUrl} alignCenter={true}>
+                        Søk nå
+                    </LinkButton>
+                </>
             }>
             {message && (
                 <div style={{ marginBottom: '4rem' }}>

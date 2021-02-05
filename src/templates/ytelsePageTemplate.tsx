@@ -31,6 +31,8 @@ export const query = graphql`
                     _rawMessage(resolveReferences: { maxDepth: 4 })
                     _rawInShort
                     _rawContent(resolveReferences: { maxDepth: 10 })
+                    _rawFaq(resolveReferences: { maxDepth: 2 })
+                    _rawFaqMenuTitle
                 }
             }
         }
