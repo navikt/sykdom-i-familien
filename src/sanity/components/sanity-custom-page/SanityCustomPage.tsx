@@ -5,7 +5,7 @@ import Box from '../../../components/layout/box/Box';
 import CustomPage from '../../../components/pages/custom-page/CustomPage';
 import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
-import { Locale } from '../../../i18n/locale';
+import { getLocaleToUse, Locale } from '../../../i18n/locale';
 import {
     getSanityContentWithLocale,
     getSanityStringWithLocale,
@@ -37,6 +37,9 @@ interface Props {
 }
 
 export const extractDataFromSanityCustomPage = (data: any, locale: Locale | string): CustomPageData => {
+    const showLanguageToggle = data.showLanguageToggle === true;
+    const localeToUse = getLocaleToUse(showLanguageToggle, locale);
+
     const parentPage = data._rawParentPagePage?.slug?.current
         ? {
               slug: data._rawParentPagePage.slug.current,
@@ -47,12 +50,12 @@ export const extractDataFromSanityCustomPage = (data: any, locale: Locale | stri
         : undefined;
     return {
         site: data.site,
-        showLanguageToggle: data.showLanguageToggle === true,
-        title: getSanityStringWithLocale(data._rawTitle, locale) as string,
-        intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
+        showLanguageToggle,
+        title: getSanityStringWithLocale(data._rawTitle, localeToUse) as string,
+        intro: getSanityContentWithLocale(data._rawIntro, localeToUse) as string,
         slug: data.slug,
-        metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
-        ingress: getSanityContentWithLocale(data._rawIngress, locale) as string,
+        metadescription: getSanityContentWithLocale(data._rawMetadescription, localeToUse) as string,
+        ingress: getSanityContentWithLocale(data._rawIngress, localeToUse) as string,
         content: data._rawContent,
         illustration: data._rawIllustration,
         parentPage,
