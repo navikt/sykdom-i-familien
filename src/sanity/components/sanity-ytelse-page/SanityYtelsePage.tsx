@@ -9,7 +9,7 @@ import PageBannerCompact from '../../../components/pages/frontpage/components/pa
 import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
 import SectionIcon from '../../../components/sectionPanel/SectionIcon';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
-import { Locale } from '../../../i18n/locale';
+import { getLocaleToUse, Locale } from '../../../i18n/locale';
 import {
     getSanityContentWithLocale,
     getSanityStringWithLocale,
@@ -72,18 +72,20 @@ const extractSectionData = (data: any[], locale: Locale): SectionContent[] => {
 };
 
 const extractDataFromSanityYtelsePage = (data: any, locale: Locale | string): YtelsePageData => {
+    const showLanguageToggle = data.showLanguageToggle === true;
+    const localeToUse = getLocaleToUse(showLanguageToggle, locale);
     const pageData: YtelsePageData = {
+        showLanguageToggle,
         site: data.site,
-        showLanguageToggle: data.showLanguageToggle === true,
-        title: getSanityStringWithLocale(data._rawTitle, locale) as string,
-        intro: getSanityContentWithLocale(data._rawIntro, locale) as string,
+        title: getSanityStringWithLocale(data._rawTitle, localeToUse) as string,
+        intro: getSanityContentWithLocale(data._rawIntro, localeToUse) as string,
         slug: data.slug,
-        metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
-        inShort: getSanityContentWithLocale(data._rawInShort, locale) as string,
+        metadescription: getSanityContentWithLocale(data._rawMetadescription, localeToUse) as string,
+        inShort: getSanityContentWithLocale(data._rawInShort, localeToUse) as string,
         inShortEkstraKomponenter: data._rawInShortEkstraKomponenter as string[],
-        inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, locale) as string,
+        inShortTitle: getSanityStringWithLocale(data._rawInShortTitle, localeToUse) as string,
         formUrl: data.ytelse.formUrl,
-        sections: extractSectionData(data._rawContent, locale as Locale),
+        sections: extractSectionData(data._rawContent, localeToUse),
         illustration: data._rawIllustration,
         message: data._rawMessage,
     };
@@ -113,7 +115,6 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
         sections,
         site,
         illustration,
-        formUrl,
         message,
         faq,
     } = extractDataFromSanityYtelsePage(dataWithTabs, intl.locale);

@@ -1,3 +1,4 @@
+import { getLocaleToUse } from '../../i18n/locale';
 import { getSanityStringWithLocale } from '../../utils/sanity/getSanityContentWithLocale';
 import { Site } from '../../utils/site';
 import { IllustrationDocument } from '../types/documents';
@@ -49,16 +50,18 @@ export const extractFrontpageData = (data: any, locale: string): FrontpageSanity
         _rawMetadescription,
     } = nodes[0];
 
+    const localeToUse = getLocaleToUse(showLanguageToggle === true, locale);
+
     return {
         site,
         showLanguageToggle: showLanguageToggle === true,
-        title: getSanityStringWithLocale(_rawTitle, locale),
-        ingress: getSanityStringWithLocale(_rawIngress, locale),
-        metadescription: getSanityStringWithLocale(_rawMetadescription, locale),
+        title: getSanityStringWithLocale(_rawTitle, localeToUse),
+        ingress: getSanityStringWithLocale(_rawIngress, localeToUse),
+        metadescription: getSanityStringWithLocale(_rawMetadescription, localeToUse),
         illustration: _rawIllustration,
         content: _rawContent,
         footerContent: _rawFooterContent,
-        stories: (_rawFrontpageStories || []).map((story: any) => mapFrontpageStory(story, locale)),
-        links: (_rawFrontpageLinks || []).map((story: any) => mapFrontpageStory(story, locale)),
+        stories: (_rawFrontpageStories || []).map((story: any) => mapFrontpageStory(story, localeToUse)),
+        links: (_rawFrontpageLinks || []).map((story: any) => mapFrontpageStory(story, localeToUse)),
     };
 };

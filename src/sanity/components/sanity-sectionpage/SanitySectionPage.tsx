@@ -7,7 +7,7 @@ import { SectionMenuItem } from '../../../components/pages/custom-page/CustomPag
 import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
 import PageWithMenu from '../../../components/pages/page-with-menu/PageWithMenu';
 import SectionPanel from '../../../components/sectionPanel/SectionPanel';
-import { Locale } from '../../../i18n/locale';
+import { getLocaleToUse, Locale } from '../../../i18n/locale';
 import {
     getSanityContentWithLocale,
     getSanityStringWithLocale,
@@ -62,19 +62,21 @@ const extractSectionData = (section: any, locale: string): SanitySectionPageSect
 };
 
 export const extractDataFromSanitySectionPage = (data: any, locale: Locale | string): SectionPageData => {
+    const showLanguageToggle = data.showLanguageToggle === true;
+    const localeToUse = getLocaleToUse(showLanguageToggle, locale);
     return {
         site: data.site,
-        showLanguageToggle: data.showLanguageToggle === true,
-        title: getSanityStringWithLocale(data._rawTitle, locale) as string,
+        showLanguageToggle,
+        title: getSanityStringWithLocale(data._rawTitle, localeToUse) as string,
         slug: data.slug,
-        metadescription: getSanityContentWithLocale(data._rawMetadescription, locale) as string,
+        metadescription: getSanityContentWithLocale(data._rawMetadescription, localeToUse) as string,
         content: data._rawContent,
         inShort: data._rawInShort
             ? {
                   title: data._rawInShortTitle
-                      ? (getSanityStringWithLocale(data._rawInShortTitle, locale) as string)
+                      ? (getSanityStringWithLocale(data._rawInShortTitle, localeToUse) as string)
                       : undefined,
-                  content: getSanityContentWithLocale(data._rawInShort, locale) as string,
+                  content: getSanityContentWithLocale(data._rawInShort, localeToUse) as string,
                   illustration: data._rawInShortIllustration,
               }
             : undefined,
