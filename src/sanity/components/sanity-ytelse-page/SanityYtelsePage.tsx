@@ -3,7 +3,6 @@ import { InjectedIntlProps, injectIntl } from 'gatsby-plugin-intl';
 import slugify from 'slugify';
 import Lenke from 'nav-frontend-lenker';
 import { Ingress } from 'nav-frontend-typografi';
-import LinkButton from '../../../components/elements/link-button/LinkButton';
 import PrintOnly from '../../../components/elements/print-only/PrintOnly';
 import Box from '../../../components/layout/box/Box';
 import PageBannerCompact from '../../../components/pages/frontpage/components/page-banner_compact/PageBannerCompact';
