@@ -148,9 +148,10 @@ const SanityYtelsePage: React.FunctionComponent<Props & InjectedIntlProps> = (pr
                             </Box>
                         </div>
                     )}
-                    <LinkButton href={formUrl} alignCenter={true}>
+                    {/* Midlertidig tatt bort på grunn av at ingen bruker denne
+                     <LinkButton href={formUrl} alignCenter={true}>
                         Søk nå
-                    </LinkButton>
+                    </LinkButton> */}
                 </>
             }>
             {message && (
