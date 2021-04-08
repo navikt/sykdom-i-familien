@@ -89,7 +89,6 @@ async function onCreateNode({ node, actions, createNodeId, createContentDigest }
         const pdfNode = {
             id: createNodeId(`pdf-${node.id}`),
             url: getFileUrlFromRef(node.file.asset._ref),
-            name: node.name,
             children: [],
             parent: node.id,
             internal: {

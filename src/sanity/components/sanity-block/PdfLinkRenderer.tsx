@@ -11,7 +11,6 @@ interface PdfLinkMark {
 
 interface PdfLink {
     id: string;
-    name: string;
     url: string;
 }
 
@@ -34,7 +33,6 @@ const PdfLinkRenderer = (props: Props) => {
                 edges {
                     node {
                         id
-                        name
                         url
                     }
                 }
@@ -43,7 +41,6 @@ const PdfLinkRenderer = (props: Props) => {
     `);
     const allPdfLinks: PdfLink[] = data.allPdfLink.edges.map((e: any) => ({
         id: e.node.id,
-        name: e.node.name,
         url: e.node.url,
     }));
 
