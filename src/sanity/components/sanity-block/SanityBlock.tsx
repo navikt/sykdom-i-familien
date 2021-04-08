@@ -5,6 +5,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import ExternalLinkIcon from '../../../components/elements/external-link-icon/ExternalLinkIcon';
 import { BlockContentType } from '../../types/parts';
 import './sanityBlock.less';
+import { graphql, useStaticQuery } from 'gatsby';
+import PdfLinkRenderer from './PdfLinkRenderer';
 
 interface Props {
     content: BlockContentType;
@@ -57,9 +59,10 @@ const SanityBlock: React.FunctionComponent<Props> = ({ content }) => {
             serializers={{
                 listItem: ListItemRenderer,
                 marks: {
-                    link: LinkRenderer
+                    link: LinkRenderer,
+                    pdfLink: PdfLinkRenderer,
                 },
-                block: BlockRenderer
+                block: BlockRenderer,
             }}
         />
     );
