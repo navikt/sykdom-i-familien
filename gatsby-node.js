@@ -2,14 +2,12 @@
 
 require('dotenv').config();
 require('source-map-support').install();
-const svgoProps = require('./gatsbyUtils/svgoProps');
-const SVGO = require('svgo');
+
+const { optimize, extendDefaultPlugins } = require('svgo');
 const sites = require('./build-utils/sites');
 
 const SANITY_PROJECT_ID = '8ux9tyb9';
 const SANITY_DATASET = process.env.DATASET;
-
-const svgo = new SVGO(svgoProps);
 
 require('ts-node').register({
     compilerOptions: {
@@ -107,7 +105,7 @@ async function onCreateNode({ node, actions, createNodeId, createContentDigest }
     }
 
     if (node.svg) {
-        const optimizedSvg = await svgo.optimize(node.svg);
+        const optimizedSvg = await optimize(node.svg);
         const svgNode = {
             id: createNodeId(`svgo-${node.id}`),
             svg: optimizedSvg.data,
