@@ -6,6 +6,9 @@ const svgoProps = require('./gatsbyUtils/svgoProps');
 const SVGO = require('svgo');
 const sites = require('./build-utils/sites');
 
+const SANITY_PROJECT_ID = '8ux9tyb9';
+const SANITY_DATASET = process.env.DATASET;
+
 const svgo = new SVGO(svgoProps);
 
 require('ts-node').register({
@@ -63,7 +66,42 @@ exports.onCreateWebpackConfig = ({ actions }) => {
     });
 };
 
+exports.createSchemaCustomization = ({ actions }) => {
+    const { createTypes, createFieldExtension } = actions;
+
+    const typeDefs = `
+      type pdfLink implements Node @childOf(types: ["SanityPdf"]) {
+        id: ID!
+      }
+      type optimizedSvg implements Node @childOf(types: ["SanityIllustration"]) {
+        id: ID!
+      }
+    `;
+    createTypes(typeDefs);
+};
+const getFileUrlFromRef = (ref) => {
+    const [_file, id, extension] = ref.split('-');
+    return `https://cdn.sanity.io/files/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${id}.${extension}`;
+};
+
 async function onCreateNode({ node, actions, createNodeId, createContentDigest }) {
+    if (node.internal.type === 'SanityPdf' && node.file) {
+        const pdfNode = {
+            id: createNodeId(`pdf-${node.id}`),
+            url: getFileUrlFromRef(node.file.asset._ref),
+            children: [],
+            parent: node.id,
+            internal: {
+                contentDigest: createContentDigest({}),
+                type: 'pdfLink',
+            },
+        };
+        const { createNode, createParentChildLink } = actions;
+        createNode(pdfNode);
+        createParentChildLink({ parent: node, child: pdfNode });
+        return;
+    }
+
     if (node.internal.type !== 'SanityIllustration') {
         return;
     }
