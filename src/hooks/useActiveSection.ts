@@ -13,7 +13,7 @@ function getSectionPositions(sectionIds: string[]): SectionPosition[] | undefine
                 const pos = el
                     ? {
                           id,
-                          yPos: el.offsetTop
+                          yPos: el.offsetTop,
                       }
                     : undefined;
                 return pos;
@@ -42,7 +42,7 @@ const useActiveSections = (
         const activeSection = getActiveSection(evt.currPos.y, positions, offset);
         callback(activeSection);
     };
-    useScrollInfo(handleScrollChange, deps, false, undefined, 200);
+    useScrollInfo(handleScrollChange, deps, false, undefined, 400);
 };
 
 export default useActiveSections;
