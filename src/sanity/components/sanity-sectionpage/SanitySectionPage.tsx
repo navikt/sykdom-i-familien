@@ -13,12 +13,13 @@ import {
     getSanityStringWithLocale,
 } from '../../../utils/sanity/getSanityContentWithLocale';
 import { Site } from '../../../utils/site';
-import { IllustrationDocument, SectionPageDocument } from '../../types/documents';
+import { IllustrationDocument, MessageDocument, SectionPageDocument } from '../../types/documents';
 import { createAnchorsForTabsWithinSections, getAndApplyLinksInContent } from '../../utils/prepLinksInDocument';
 import SanityBlockContent from '../sanity-block-content/SanityBlockContent';
 import InShortPageSection from './InShortPageSection';
 import PageSection from './PageSection';
 import './sectionPage.less';
+import SanityMessage from '../sanity-message/SanityMessage';
 
 export interface SectionPageData {
     site: Site;
@@ -33,6 +34,7 @@ export interface SectionPageData {
         illustration?: IllustrationDocument;
     };
     inShortEkstraKomponenter: string[];
+    message?: MessageDocument;
     showLeftMenu?: boolean;
 }
 
@@ -82,6 +84,7 @@ export const extractDataFromSanitySectionPage = (data: any, locale: Locale | str
             : undefined,
         inShortEkstraKomponenter: data._rawInShortEkstraKomponenter as string[],
         showLeftMenu: data.showLeftMenu === true || data.showLeftMenu === null,
+        message: data._rawMessage,
     };
 };
 
@@ -100,6 +103,7 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
         content,
         inShortEkstraKomponenter,
         showLeftMenu,
+        message,
     } = extractDataFromSanitySectionPage(dataWithTabs, intl.locale);
 
     const inShortSection: SanitySectionPageSectionContent | undefined = inShort
@@ -141,6 +145,12 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
             sectionMenuItems={sectionMenuItems}
             menuFooter={<Box />}
             header={<PageBannerCompact title={title} />}>
+            {message && (
+                <div style={{ marginBottom: '2rem' }}>
+                    <SanityMessage message={message} />
+                </div>
+            )}
+
             {inShortSection && (
                 <Box margin="none" className="sectionPageContentWrapper">
                     <InShortPageSection
