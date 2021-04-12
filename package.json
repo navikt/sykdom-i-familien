@@ -104,7 +104,7 @@
         "install": "^0.13.0",
         "jest": "^26.6.3",
         "jest-css-modules": "^2.1.0",
-        "jsdom": "^16.5.2",
+        "jsdom": "^16.5.3",
         "nav-frontend-alertstriper-style": "^2.1.1",
         "nav-frontend-chevron-style": "^1.0.4",
         "nav-frontend-ekspanderbartpanel-style": "^1.1.1",
