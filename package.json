@@ -59,7 +59,7 @@
         "nav-frontend-spinner-style": "^1.0.2",
         "nav-frontend-tekstomrade": "^2.1.1",
         "nav-frontend-typografi": "^3.1.1",
-        "nav-frontend-veileder": "^2.1.1",
+        "nav-frontend-veileder": "^2.1.4",
         "nav-frontend-veilederpanel": "^1.1.1",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",
