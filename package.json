@@ -96,7 +96,7 @@
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-15": "^1.4.3",
         "enzyme-adapter-react-16": "^1.15.6",
-        "eslint": "^7.23.0",
+        "eslint": "^7.27.0",
         "eslint-plugin-react-hooks": "^4.2.0",
         "graphql-typescript-definitions": "^0.23.2",
         "hast-util-to-html": "^7.1.2",
