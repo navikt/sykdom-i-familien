@@ -98,7 +98,7 @@
         "enzyme-adapter-react-16": "^1.15.6",
         "eslint": "^7.23.0",
         "eslint-plugin-react-hooks": "^4.2.0",
-        "graphql-typescript-definitions": "^0.23.2",
+        "graphql-typescript-definitions": "^2.0.0",
         "hast-util-to-html": "^7.1.2",
         "identity-obj-proxy": "^3.0.0",
         "install": "^0.13.0",
