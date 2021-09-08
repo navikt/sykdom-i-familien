@@ -20,6 +20,7 @@ import InShortPageSection from './InShortPageSection';
 import PageSection from './PageSection';
 import './sectionPage.less';
 import SanityMessage from '../sanity-message/SanityMessage';
+import { guid } from 'nav-frontend-js-utils';
 
 export interface SectionPageData {
     site: Site;
@@ -181,7 +182,7 @@ const SanitySectionPage: React.FunctionComponent<Props & InjectedIntlProps> = (p
                     <ol start={1}>
                         {linksInContent.map((link) => {
                             return link ? (
-                                <li key={link._key}>
+                                <li key={guid()}>
                                     <p style={{ wordBreak: 'break-all' }}>{link!.url}</p>
                                 </li>
                             ) : null;
