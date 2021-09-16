@@ -3,6 +3,9 @@ kind: "Application"
 metadata:
     name: sykdom-i-familien
     namespace: dusseldorf
+    metadata:
+        annotations:
+            nais.io/read-only-file-system: "false"
     labels:
         team: dusseldorf
 spec:
