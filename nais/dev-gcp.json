@@ -6,6 +6,8 @@
     "minReplicas": "1",
     "maxReplicas": "1",
     "ingresses": ["https://sykdom-i-familien.dev.nav.no"],
+    "livenessPath": "/isalive.txt",
+    "readinessPath": "/isready.txt",
     "env": {
         "DATASET": "production",
         "ENV": "dev",

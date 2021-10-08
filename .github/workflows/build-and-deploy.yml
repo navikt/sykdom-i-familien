@@ -9,7 +9,7 @@ on:
             - 'CODEOWNERS'
         branches:
     repository_dispatch:
-        types: [publish-dev-gcp, publish-prod-sbs]
+        types: [publish-dev-gcp, publish-prod-gcp]
 
 env:
     BASE_IMAGE: docker.pkg.github.com/${{ github.repository }}/sykdom-i-familien
@@ -152,7 +152,7 @@ jobs:
 
     build-code-and-push-docker-prod:
         name: prod-build-push-docker
-        if: github.event.action == 'publish-prod-sbs' # Build and push docker if publish production event from sanity studio
+        if: github.event.action == 'publish-prod-gcp' # Build and push docker if publish production event from sanity studio
         needs: set-image
         runs-on: ubuntu-20.04
         env:
@@ -200,17 +200,17 @@ jobs:
             - name: Push Docker image
               run: 'docker push ${IMAGE}'
 
-    deploy-prod-sbs:
-        name: deploy-prod-sbs
+    deploy-prod-gcp:
+        name: Deploy to prod-gcp
         needs: [build-code-and-push-docker-prod, set-image] # Depends on build-code-and-push-docker job
+        env:
+            IMAGE: ${{ needs.set-image.outputs.image }}
         runs-on: ubuntu-20.04
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v1
-            - name: deploy to prod-sbs
-              uses: nais/deploy/actions/deploy@v1
+            - uses: actions/checkout@v2
+            - uses: nais/deploy/actions/deploy@v1
               env:
-                  IMAGE: ${{ needs.set-image.outputs.image }}
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: prod-sbs
-                  RESOURCE: nais/prod-sbs.yml
+                  CLUSTER: prod-gcp
+                  RESOURCE: nais/naiserator-dev.yml
+                  VARS: nais/prod-gcp.json
