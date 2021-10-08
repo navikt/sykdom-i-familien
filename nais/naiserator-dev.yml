@@ -1,26 +1,26 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-    name: sykdom-i-familien
-    namespace: dusseldorf
+    name: {{app}}
+    namespace: {{namespace}}
     annotations:
         nais.io/read-only-file-system: "false"
         nais.io/run-as-user: "1001"
         nais.io/run-as-group: "1002"
         nais.io/security-does-not-matter: "true"
     labels:
-        team: dusseldorf
+        team: {{team}}
 spec:
     image: {{ image }}
     port: 8080
     liveness:
-        path: /isalive.txt
+        path: {{livenessPath}}
         initialDelay: 3
         timeout: 1
         periodSeconds: 5
         failureThreshold: 10
     readiness:
-        path: /isready.txt
+        path: {{readinessPath}}
         initialDelay: 20
         timeout: 1
     resources:

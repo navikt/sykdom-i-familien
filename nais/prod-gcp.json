@@ -1,0 +1,19 @@
+{
+    "app": "sykdom-i-familien",
+    "cluster": "prod-gcp",
+    "namespace": "dusseldorf",
+    "team": "dusseldorf",
+    "minReplicas": "1",
+    "maxReplicas": "1",
+    "ingresses": ["https://www.nav.no/familie/sykdom-i-familien"],
+    "livenessPath": "/familie/sykdom-i-familien/isalive.txt",
+    "readinessPath": "/familie/sykdom-i-familien/isready.txt",
+    "env": {
+        "DATASET": "production",
+        "ENV": "prod",
+        "OVERLAY_DRAFTS": false,
+        "WATCH_MODE": false,
+        "GATSBY_PATH_PREFIX": "/familie/sykdom-i-familien",
+        "GATSBY_INGRESS": "https://www.nav.no"
+    }
+}
