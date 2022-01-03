@@ -10,6 +10,7 @@ const config = {
         title_nn: `Sjukdom i familien`,
     },
     plugins: [
+        'gatsby-plugin-nodejs',
         {
             resolve: `gatsby-plugin-compile-es6-packages`,
             options: {
