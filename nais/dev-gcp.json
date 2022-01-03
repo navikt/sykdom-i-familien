@@ -5,15 +5,15 @@
     "team": "dusseldorf",
     "minReplicas": "1",
     "maxReplicas": "1",
-    "ingresses": ["https://sykdom-i-familien.dev.nav.no"],
-    "livenessPath": "/isalive.txt",
-    "readinessPath": "/isready.txt",
+    "ingresses": ["https://sykdom-i-familien.dev.nav.no/familie/sykdom-i-familien"],
+    "livenessPath": "/familie/sykdom-i-familien/isalive.txt",
+    "readinessPath": "/familie/sykdom-i-familien/isready.txt",
     "env": {
         "DATASET": "production",
         "ENV": "dev",
         "OVERLAY_DRAFTS": true,
         "WATCH_MODE": false,
-        "GATSBY_PATH_PREFIX": "",
+        "GATSBY_PATH_PREFIX": "/familie/sykdom-i-familien",
         "GATSBY_INGRESS": "https://sykdom-i-familien.dev.nav.no"
     }
 }

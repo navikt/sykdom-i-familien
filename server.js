@@ -1,12 +1,14 @@
 const express = require('express');
 const gatsby = require('gatsby-plugin-nodejs');
+const compression = require('compression');
 
-const app = express();
+const server = express();
+server.use(compression());
 
-gatsby.prepare({ app }, () => {
+gatsby.prepare({ app: server }, () => {
     // Here you can define your routes
 });
 
 const port = process.env.PORT || 8080;
 
-app.listen(port, () => console.log(`listening on port ${port}`));
+server.listen(port, () => console.log(`listening on port ${port}`));
